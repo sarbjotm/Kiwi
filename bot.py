@@ -29,4 +29,4 @@ async def randomnumber(ctx, num1, num2):
 async def banAlly(ctx):
     await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
-client.run('NzczMDgxMDc0NDE4NzEyNTc2.X6EB2w.Ln-Dan-4jbLpkJiAIP9WbtChNFo')
+client.run('')
