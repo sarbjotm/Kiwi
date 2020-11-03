@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import random
+import time
 from discord.ext import commands
 
 client = commands.Bot(command_prefix = '^')
@@ -21,12 +22,21 @@ async def waves(ctx,member : discord.Member):
 
 @client.command(aliases = ['rand'])
 async def randomnumber(ctx, num1, num2):
-   
-    num = random.randint(int(num1),int(num2))
-    await ctx.send(f"{num} is your special number")
+       num = random.randint(int(num1),int(num2))
+       await ctx.send(f"{num} is your special number")
+
+@client.command(aliases = ['remindme'])
+async def reminder(ctx, rtime, *, reminder):
+    await ctx.message.delete(delay = 0)
+    await ctx.send(f"{ctx.message.author.mention} reminder has been set")
+    time.sleep(int(rtime))
+    await ctx.send(f"{ctx.message.author.mention} here is your reminder to {reminder}")
 
 @client.command(aliases = ["bringpeace"])
 async def banAlly(ctx):
     await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
-client.run('NzczMDgxMDc0NDE4NzEyNTc2.X6EB2w.Ln-Dan-4jbLpkJiAIP9WbtChNFo')
+f = open("specialCode.txt", "r")
+Token = str(f.readline()).strip('\n')
+
+client.run(Token)
