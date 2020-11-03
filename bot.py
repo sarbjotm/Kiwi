@@ -36,11 +36,8 @@ async def reminder(ctx, rtime, *, reminder):
 async def banAlly(ctx):
     await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
-<<<<<<< HEAD
+
 f = open("specialCode.txt", "r")
 Token = str(f.readline()).strip('\n')
-
 client.run(Token)
-=======
-client.run('')
->>>>>>> 932677981eadf1df11d77165fd4164f449a7d983
+
