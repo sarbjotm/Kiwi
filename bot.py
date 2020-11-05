@@ -4,7 +4,7 @@ import random
 import time
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = '^')
+client = commands.Bot(command_prefix = ',')
 
 @client.event
 async def on_ready():
@@ -37,6 +37,32 @@ async def reminder(ctx, rtime, *, reminder):
     await ctx.send(f"{ctx.message.author.mention} reminder has been set")
     time.sleep(int(rtime))
     await ctx.send(f"{ctx.message.author.mention} here is your reminder to {reminder}")
+
+@client.command(aliases = ['8ball'])
+async def _8ball(ctx, *, question):
+    responses = {"As I see it, yes",
+                "Ask again later",
+                "Better not tell you now",
+                "Cannot predict now",
+                "Concentrate and ask again",
+                "Don’t count on it",
+                "It is certain",
+                "It is decidedly so",
+                "Most likely",
+                "My reply is no",
+                "My sources say no",
+                "Outlook not so good",
+                "Outlook good",
+                "Reply hazy, try again",
+                "Signs point to yes",
+                "Very doubtful",
+                "Without a doubt",
+                "Yes",
+                "Yes – definitely",
+                " You may rely on it"
+            }
+    await ctx.send(f"{question} \nOutlook: {random.choice(responses)}")
+
 
 @client.command(aliases = ["bringpeace"])
 async def banAlly(ctx):
