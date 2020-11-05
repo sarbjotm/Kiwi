@@ -40,7 +40,7 @@ async def reminder(ctx, rtime, *, reminder):
 
 @client.command(aliases = ['8ball'])
 async def _8ball(ctx, *, question):
-    responses = {"As I see it, yes",
+    responses = ["As I see it, yes",
                 "Ask again later",
                 "Better not tell you now",
                 "Cannot predict now",
@@ -60,7 +60,7 @@ async def _8ball(ctx, *, question):
                 "Yes",
                 "Yes – definitely",
                 " You may rely on it"
-            }
+            ]
     await ctx.send(f"{question} \nOutlook: {random.choice(responses)}")
 
 
