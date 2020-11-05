@@ -2,7 +2,7 @@ import discord
 import asyncio
 import random
 import time
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 client = commands.Bot(command_prefix = ',')
 
@@ -68,8 +68,20 @@ async def _8ball(ctx, *, question):
 async def banAlly(ctx):
     await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
+@tasks.loop(minutes = 1)
+async def goodAfternoon():
+    message_channel = client.get_channel(744817323973804093)
+    await message_channel.send("Good Afternoon!")
+
+@goodAfternoon.before_loop
+async def before():
+    await client.wait_until_ready()
+
+
 
 f = open("specialCode.txt", "r")
 Token = str(f.readline()).strip('\n')
+
+goodAfternoon.start()
 client.run(Token)
 
