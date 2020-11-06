@@ -29,7 +29,7 @@ async def hugs(ctx,member : discord.Member):
 @client.command(aliases = ['hugRole'])
 async def hugsRole(ctx,role : discord.Role):
     await ctx.message.delete(delay = 0)
-    await ctx.send(f"{ctx.message.author.mention} gibs beeeeg group hug to {member.mention}")
+    await ctx.send(f"{ctx.message.author.mention} gibs beeeeg group hug to {role.mention}")
     await ctx.send("https://media.tenor.com/images/0a1652de311806ce55820a7115993853/tenor.gif")
 
 
