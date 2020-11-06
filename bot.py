@@ -92,6 +92,18 @@ async def goodAfternoon():
 async def before():
     await client.wait_until_ready()
 
+@client.command()
+async def fireworks(ctx, *, message):
+    emoji = "✨"
+    messageList = message.split()
+    fireworkString = ""
+    for i in range(0, len(messageList)):
+        if(i == len(messageList) - 1):
+            fireworkString += messageList[i]
+        else:
+            fireworkString += (messageList[i] + emoji)
+    await ctx.send(f"{fireworkString}")
+    
 
 
 f = open("specialCode.txt", "r")
