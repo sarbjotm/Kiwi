@@ -68,10 +68,25 @@ async def _8ball(ctx, *, question):
 async def banAlly(ctx):
     await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
-@tasks.loop(minutes = 1)
+@client.command()
+async def spongebob(ctx, *, message):
+    new = list(message)
+    for i in range(0,len(new)):
+        if( i % 2 == 0):
+            new[i] = new[i].upper()
+            "".join(new[i])
+        else:
+            new[i] = new[i].lower()
+            "".join(new[i])
+    str1 = ''
+    for i in new:
+        str1 += i 
+    await ctx.send(f"{str1}")
+
+@tasks.loop(hours = 24)
 async def goodAfternoon():
     message_channel = client.get_channel(744817323973804093)
-    await message_channel.send("Good Afternoon!")
+    await message_channel.send("Good Evening!")
 
 @goodAfternoon.before_loop
 async def before():
