@@ -20,6 +20,12 @@ async def waves(ctx,member : discord.Member):
     await ctx.send(f"{ctx.message.author.mention} waves to {member.mention}")
     await ctx.send("https://media.tenor.com/images/ba69533b59d3ceaae8775a0550ff8037/tenor.gif")
 
+@client.command(aliases = ['hug'])
+async def hugs(ctx,member : discord.Member):
+    await ctx.message.delete(delay = 0)
+    await ctx.send(f"{ctx.message.author.mention} gibs beeeeg hug to {member.mention}")
+    await ctx.send("https://media.tenor.com/images/0a1652de311806ce55820a7115993853/tenor.gif")
+
 @client.command(aliases = ['waveRole'])
 async def wavesRole(ctx,role : discord.Role):
     await ctx.message.delete(delay = 0)
