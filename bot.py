@@ -117,6 +117,15 @@ async def fireworks(ctx, *, message):
             fireworkString += (messageList[i] + emoji)
     await ctx.send(f"{fireworkString}")
 
+@client.command(aliases = ["sp","space","spaces"])
+async def spaced(ctx, *, message):
+    noSpaceString = message.replace(" ", "")
+    spacedString = ""
+    for i in range(0, len(noSpaceString)):
+        spacedString += noSpaceString[i]
+        spacedString += " "
+    await ctx.send(f"{spacedString}")
+
 f = open("specialCode.txt", "r")
 Token = str(f.readline()).strip('\n')
 
