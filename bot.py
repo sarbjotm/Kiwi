@@ -126,6 +126,15 @@ async def spaced(ctx, *, message):
         spacedString += " "
     await ctx.send(f"{spacedString}")
 
+@client.command(aliases = ["flip", "cf", "coin_flip"])
+async def coinflip(ctx):
+    coin = random.randint(0, 1)
+    if(coin > 0):
+        await ctx.send(f"Heads!")
+    else:
+        await ctx.send(f"Tails")
+    
+
 f = open("specialCode.txt", "r")
 Token = str(f.readline()).strip('\n')
 
