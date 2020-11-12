@@ -74,7 +74,7 @@ async def _8ball(ctx, *, question):
                 "Yes – definitely",
                 " You may rely on it"
             ]
-    await ctx.send(f"Question: {question}\nOutlook: {random.choice(responses)}")
+    await ctx.send(f"{ctx.message.author.mention}'s Question: {question}\nOutlook: {random.choice(responses)}")
 
 
 @client.command(aliases = ["bringpeace"])
