@@ -15,9 +15,8 @@ class Utilities(commands.Cog):
     @commands.cooldown(1,86400, commands.BucketType.user)
     async def collect(self,ctx):
         roles = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snow Dodo', 'Gift Dodo', 'Grinch Dodo']
-        roleAssign = random.choices(roles, weights = [5,5,10,30,50])
-        role = discord.utils.get(ctx.guild.roles, name = roleAssign[0])
-        await ctx.message.author.add_roles(role)
+        roleAssign = random.choices(roles, weights = [5,5,10,30,50])[0]
+        await ctx.message.author.add_roles(roleAssign)
         await ctx.send(f'You have drawn the {roleAssign[0]} role! Your next chance to role is in 24 hours')
 
     @collect.error
