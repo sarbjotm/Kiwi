@@ -19,14 +19,6 @@ async def on_member_remove(member):
     channel = client.get_channel(777046531214671902)    
     await channel.send(f"Goodbye {member.display_name}")
 
-@tasks.loop(hours = 24)
-async def goodAfternoon():
-    message_channel = client.get_channel(777046531214671902)
-    await message_channel.send("Good Evening!")
-
-@goodAfternoon.before_loop
-async def before():
-    await client.wait_until_ready()
 
 #Adding Cogs to Bot
 for filename in os.listdir("./cogs"):

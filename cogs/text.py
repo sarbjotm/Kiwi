@@ -8,7 +8,7 @@ class Text(commands.Cog):
         self._last_member = None
 
     @commands.command()
-    async def spongebob(ctx, *, message):
+    async def spongebob(self,ctx, *, message):
         new = list(message)
         for i in range(0,len(new)):
             if( i % 2 == 0):
@@ -23,19 +23,16 @@ class Text(commands.Cog):
         await ctx.send(f"{str1}")
 
     @commands.command(aliases = ["fw"])
-    async def fireworks(ctx, *, message):
+    async def fireworks(self,ctx, *, message):
         emoji = "✨"
         messageList = message.split()
         fireworkString = ""
         for i in range(0, len(messageList)):
-            if(i == len(messageList) - 1):
-                fireworkString += messageList[i]
-            else:
-                fireworkString += (messageList[i] + emoji)
+            fireworkString += (messageList[i] + emoji)
         await ctx.send(f"{fireworkString}")
 
     @commands.command(aliases = ["sp","space","spaces"])
-    async def spaced(ctx, *, message):
+    async def spaced(self,ctx, *, message):
         noSpaceString = message.replace(" ", "")
         spacedString = ""
         for i in range(0, len(noSpaceString)):

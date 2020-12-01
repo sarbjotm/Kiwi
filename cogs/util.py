@@ -9,13 +9,13 @@ class Utilities(commands.Cog):
         self._last_member = None
 
     @commands.command()
-    async def ping(ctx):
+    async def ping(self,ctx):
         await ctx.send(f'Pong! {round(client.latency*1000)}ms')
     
 
     @commands.command()
     @commands.cooldown(1,1440, commands.BucketType.user)
-    async def collect(ctx, member):
+    async def collect(self,ctx, member):
         roles = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snow Dodo', 'Gift Dodo', 'Grinch Dodo']
         roleAssign = random.choice(roles, weights = [5,5,10,30,50])
         await ctx.send(f'You have drawn the {roleAssign} role! Your next chance to role is in 24 hours')
