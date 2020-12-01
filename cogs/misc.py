@@ -2,12 +2,10 @@ import discord
 from discord.ext import commands
 import random
 
-#Chances
-class Randomness(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        self._last_member = None
-        
+class MiscCommands(commands.Cog):
+    def __init__(self, client):
+        self.client = client
+
     @commands.command(aliases = ['rand'])
     async def randomnumber(self,ctx, num1, num2):
         num = random.randint(int(num1),int(num2))
@@ -45,6 +43,5 @@ class Randomness(commands.Cog):
             await ctx.send(f"Heads!")
         else:
             await ctx.send(f"Tails")
-
 def setup(client):
-    client.add_cog(Randomness(client))
+    client.add_cog(MiscCommands(client))

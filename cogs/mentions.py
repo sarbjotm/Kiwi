@@ -2,10 +2,9 @@ import discord
 from discord.ext import commands
 
 #Mentions
-class Mentions(commands.Cog):
+class Interactions(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self._last_member = None
 
     @commands.command(aliases = ['wave'])
     async def waves(self,ctx,member : discord.Member):
@@ -37,4 +36,4 @@ class Mentions(commands.Cog):
         await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
 def setup(client):
-    client.add_cog(Mentions(client))
+    client.add_cog(Interactions(client))
