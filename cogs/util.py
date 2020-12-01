@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import time
+import random
 
 #Utils
 class Utilities(commands.Cog):
@@ -11,13 +11,16 @@ class Utilities(commands.Cog):
     @commands.command()
     async def ping(ctx):
         await ctx.send(f'Pong! {round(client.latency*1000)}ms')
-        
-    @commands.command(aliases = ['remindme'])
-    async def reminder(ctx, rtime, *, reminder):
-        await ctx.message.delete(delay = 0)
-        await ctx.send(f"{ctx.message.author.mention} reminder has been set")
-        time.sleep(int(rtime))
-        await ctx.send(f"{ctx.message.author.mention} here is your reminder to {reminder}")
+    
 
+    @commands.command()
+    @commands.cooldown(1,1440, commands.BucketType.user)
+    async def collect(ctx, member):
+        roles = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snow Dodo', 'Gift Dodo', 'Grinch Dodo']
+        roleAssign = random.choice(roles, weights = [5,5,10,30,50])
+        await ctx.send(f'You have drawn the {roleAssign} role! Your next chance to role is in 24 hours')
+        await client.add_roles(member, roleAssign)
+        
+   
 def setup(client):
     client.add_cog(Utilities(client))
