@@ -25,7 +25,7 @@ class Text(commands.Cog):
     async def fireworks(self,ctx, *, message):
         emoji = "✨"
         messageList = message.split()
-        fireworkString = ""
+        fireworkString = emoji
         for i in range(0, len(messageList)):
             fireworkString += (messageList[i] + emoji)
         await ctx.send(f"{fireworkString}")
