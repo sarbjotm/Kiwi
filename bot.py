@@ -33,7 +33,7 @@ async def help(ctx):
     embed.add_field(name=",8ball question", value="Gives the user an answer to their question", inline=False)
     embed.add_field(name=",coinflip", value="Heads or Tails", inline=False)
     embed.add_field(name=",collect", value="Collect one of the time-limited event roles", inline=False)
-    embed.add_field(name=",trade role1 @user role2", value="Trade role1 with another users role 2", inline=False)
+    embed.add_field(name=",trade \"role1\" @user \"role2\" ", value="Trade role1 with another users role 2", inline=False)
     embed.add_field(name=",randomnumber a b", value="Displays a random number between a and b inclusvely", inline=False)
     embed.add_field(name=",fw message", value="Seperate the message with sparkles", inline=False)
     embed.add_field(name=",spaced message", value="Add spaces into the message", inline=False)
