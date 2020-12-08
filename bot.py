@@ -40,6 +40,7 @@ async def help(ctx):
     embed.add_field(name=",spongebob message", value="Convert the message into Spongebob Meme Format", inline=False)
     embed.add_field(name=",banAlly", value="Speak the truth", inline=False)
     embed.add_field(name=",ping", value="Pong", inline=False)
+    embed.add_field(name=",roles", value="Display a list of collectable roles", inline=False)
     embed.add_field(name=",help", value="Display this message", inline=False)
     await ctx.send(embed=embed)
 

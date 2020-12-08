@@ -63,6 +63,20 @@ class Utilities(commands.Cog):
             else:
                 await ctx.send(f'Try again in {minutes} minutes')
 
+    @commands.command()
+    async def roles(self,ctx):
+        embed=discord.Embed(title="Collectable Roles List" , color=0xe392fe)
+        embed.add_field(name="Grinch Dodo - 30%", value="Show off your cranky side and dislike of christmas", inline=False)
+        embed.add_field(name="Gift Dodo - 30%", value="Be the gift that we need", inline=False)
+        embed.add_field(name="Reindodo - 10%", value="Choosen Dodo to lead the sleigh", inline=False)
+        embed.add_field(name="Conductor Dodo - 10%", value="The train to the mysterious dodo server", inline=False)
+        embed.add_field(name="Frosty The Snowman Dodo - 10%", value="Frosty the Snowdodo was a jolly happy soul", inline=False)
+        embed.add_field(name="Elf Dodo - 5%", value="Buddy The Elf Dodo!", inline=False)
+        embed.add_field(name="Santa Dodo - 5%", value="Secret Santa", inline=False)
+        await ctx.send(embed=embed)
+
+    
+
 #setup
 def setup(client):
     client.add_cog(Utilities(client))
