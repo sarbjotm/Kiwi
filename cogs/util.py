@@ -1,4 +1,5 @@
 import discord
+from datetime import datetime, timedelta
 from discord.ext import commands
 import random
 import csv 
@@ -6,6 +7,7 @@ import asyncio
 
 
 #Utils
+
 class Utilities(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -46,17 +48,6 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        '''
-        Name Grinch Gift Reindodo Conductor Frosty Elf Santa
-        '''
-        fileCSV = open('roleDataBase.csv','r+')
-        reader = csv.reader(fileCSV)
-        for row in reader:
-            try:
-                if (row[0] == ctx.message.author):
-                    break
-            except:
-                pass 
         rolesList = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snowman Dodo', 'Gift Dodo', 'Grinch Dodo','Reindodo','Conductor Dodo']
         roleAssign = random.choices(rolesList, weights = [5,5,10,30,30,10,10])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
@@ -67,9 +58,9 @@ class Utilities(commands.Cog):
     async def collect_error(self,ctx,error):
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
-            hours = seconds // 3600
+            hours = int(seconds // 3600)
             seconds %= 3600
-            minutes = seconds // 60
+            minutes = int(seconds // 60)
             if hours != 0:
                 await ctx.send(f'Try again in {hours} hours and {minutes} minutes')
             else:
@@ -86,8 +77,6 @@ class Utilities(commands.Cog):
         embed.add_field(name="Elf Dodo - 5%", value="Buddy The Elf Dodo!", inline=False)
         embed.add_field(name="Santa Dodo - 5%", value="Secret Santa", inline=False)
         await ctx.send(embed=embed)
-
-    
 
 #setup
 def setup(client):
