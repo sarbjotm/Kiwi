@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import csv 
 import asyncio
 
 
@@ -45,6 +46,17 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
+        '''
+        Name Grinch Gift Reindodo Conductor Frosty Elf Santa
+        '''
+        fileCSV = open('roleDataBase.csv','r+')
+        reader = csv.reader(fileCSV)
+        for row in reader:
+            try:
+                if (row[0] == ctx.message.author):
+                    break
+            except:
+                pass 
         rolesList = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snowman Dodo', 'Gift Dodo', 'Grinch Dodo','Reindodo','Conductor Dodo']
         roleAssign = random.choices(rolesList, weights = [5,5,10,30,30,10,10])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
