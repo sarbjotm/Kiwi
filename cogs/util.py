@@ -2,7 +2,6 @@ import discord
 from datetime import datetime, timedelta
 from discord.ext import commands
 import random
-import csv 
 import asyncio
 
 
@@ -48,11 +47,13 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        rolesList = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snowman Dodo', 'Gift Dodo', 'Grinch Dodo','Reindodo','Conductor Dodo']
-        roleAssign = random.choices(rolesList, weights = [5,5,10,30,30,10,10])[0]
-        role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
-        await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! Your next chance to role is in 12 hours')
+        # rolesList = ['Santa Dodo', 'Elf Dodo', 'Frosty The Snowman Dodo', 'Gift Dodo', 'Grinch Dodo','Reindodo','Conductor Dodo']
+        # roleAssign = random.choices(rolesList, weights = [5,5,10,30,30,10,10])[0]
+        # role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
+        # await ctx.message.author.add_roles(role)
+        # await ctx.send(f'You have drawn the {role} role! Your next chance to role is in 12 hours')
+        await ctx.send(f'This command is under maintenance until the database is completed')   
+
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -68,15 +69,16 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def roles(self,ctx):
-        embed=discord.Embed(title="Collectable Roles List" , color=0xe392fe)
-        embed.add_field(name="Grinch Dodo - 30%", value="Show off your cranky side and dislike of christmas", inline=False)
-        embed.add_field(name="Gift Dodo - 30%", value="Be the gift that we need", inline=False)
-        embed.add_field(name="Reindodo - 10%", value="Choosen Dodo to lead the sleigh", inline=False)
-        embed.add_field(name="Conductor Dodo - 10%", value="The train to the mysterious dodo server", inline=False)
-        embed.add_field(name="Frosty The Snowman Dodo - 10%", value="Frosty the Snowdodo was a jolly happy soul", inline=False)
-        embed.add_field(name="Elf Dodo - 5%", value="Buddy The Elf Dodo!", inline=False)
-        embed.add_field(name="Santa Dodo - 5%", value="Secret Santa", inline=False)
-        await ctx.send(embed=embed)
+        await ctx.send(f'This command is under maintenance until the database is completed')   
+        # embed=discord.Embed(title="Collectable Roles List" , color=0xe392fe)
+        # embed.add_field(name="Grinch Dodo - 30%", value="Show off your cranky side and dislike of christmas", inline=False)
+        # embed.add_field(name="Gift Dodo - 30%", value="Be the gift that we need", inline=False)
+        # embed.add_field(name="Reindodo - 10%", value="Choosen Dodo to lead the sleigh", inline=False)
+        # embed.add_field(name="Conductor Dodo - 10%", value="The train to the mysterious dodo server", inline=False)
+        # embed.add_field(name="Frosty The Snowman Dodo - 10%", value="Frosty the Snowdodo was a jolly happy soul", inline=False)
+        # embed.add_field(name="Elf Dodo - 5%", value="Buddy The Elf Dodo!", inline=False)
+        # embed.add_field(name="Santa Dodo - 5%", value="Secret Santa", inline=False)
+        # await ctx.send(embed=embed)
 
 #setup
 def setup(client):

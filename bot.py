@@ -46,8 +46,15 @@ async def help(ctx):
 
 # @client.event
 # async def on_member_join(member):
-#     channel = client.get_channel(777046531214671902)    
-#     await channel.send(f"Welcome {member.mention}!")
+#     db = sqlite3.connect('dodo.sqlite')
+#     cursor = db.cursor()
+#     cursor.execute(f"SELECT member FROM Members WHERE name = {member}")
+#     result = cursor.fetchone()
+#     if result is None:
+#         sql = (f"INSERT INTO Member(name,money,santa,elf,frosty,gift,reindodo,grinch) VALUES(?,?,?,?,?,?,?,?)")
+#         val = (f"{member},0,0,0,0,0,0,0")
+    
+
 
 # @client.event
 # async def on_member_remove(member):
