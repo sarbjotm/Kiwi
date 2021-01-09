@@ -14,6 +14,11 @@ class Utilities(commands.Cog):
     @commands.command()
     async def ping(self,ctx):
         await ctx.send(f'Pong!')
+    
+    @commands.command()
+    async def userid(self,ctx,member : discord.Member):
+        await ctx.send(f'{ctx.message.author.id} is who sent the message and {member.id} is the tagged person' )
+
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
