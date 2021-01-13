@@ -2,10 +2,14 @@ import discord
 import asyncio
 import os
 import random
+import sqlite3
 from discord.ext import commands, tasks
 
 client = commands.Bot(command_prefix = ',')
 client.remove_command('help')
+
+conn = sqlite3.connect('members.db')
+c = conn.cursor()
 
 @client.command()
 async def load(ctx,extension):
@@ -22,6 +26,45 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
+    c.execute("""
+    DROP TABLE dodos
+    """)
+    conn.commit()
+
+    # c.execute("""
+    # CREATE TABLE IF NOT EXISTS dodos(
+    #     id real,
+    #     money real,
+    #     Red real,
+    #     Orange real,
+    #     Yellow real,
+    #     Green real,
+    #     Teal real,
+    #     Copyright real,
+    #     Bluev2 real,
+    #     Blue real,
+    #     Purplev2 real,
+    #     Purple real,
+    #     Pinkv2 real,
+    #     Pink real
+    # ) 
+    # """)
+    conn.commit()
+    for guild in client.guilds:
+            for member in guild.members:
+                try:
+                    c.execute(f"""SELECT id 
+                            FROM dodos 
+                            WHERE id='{member.id}'
+                        """)
+                except: 
+                    c.execute(f"""INSERT INTO dodos 
+                        VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                    """)
+                    conn.commit()
+
+
+
 
 @client.command(pass_context=True)
 async def help(ctx):
@@ -43,18 +86,6 @@ async def help(ctx):
     embed.add_field(name=",roles", value="Display a list of collectable roles", inline=False)
     embed.add_field(name=",help", value="Display this message", inline=False)
     await ctx.send(embed=embed)
-
-# @client.event
-# async def on_member_join(member):
-#     db = sqlite3.connect('dodo.sqlite')
-#     cursor = db.cursor()
-#     cursor.execute(f"SELECT member FROM Members WHERE name = {member}")
-#     result = cursor.fetchone()
-#     if result is None:
-#         sql = (f"INSERT INTO Member(name,money,santa,elf,frosty,gift,reindodo,grinch) VALUES(?,?,?,?,?,?,?,?)")
-#         val = (f"{member},0,0,0,0,0,0,0")
-    
-
 
 # @client.event
 # async def on_member_remove(member):
