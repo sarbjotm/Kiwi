@@ -8,9 +8,6 @@ from discord.ext import commands, tasks
 client = commands.Bot(command_prefix = ',')
 client.remove_command('help')
 
-conn = sqlite3.connect('members.db')
-c = conn.cursor()
-
 @client.command()
 async def load(ctx,extension):
     client.load_extension(f'cogs.{extension}')
@@ -26,46 +23,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    c.execute("""
-    DROP TABLE dodos
-    """)
-    conn.commit()
-
-    # c.execute("""
-    # CREATE TABLE IF NOT EXISTS dodos(
-    #     id real,
-    #     money real,
-    #     Red real,
-    #     Orange real,
-    #     Yellow real,
-    #     Green real,
-    #     Teal real,
-    #     Copyright real,
-    #     Bluev2 real,
-    #     Blue real,
-    #     Purplev2 real,
-    #     Purple real,
-    #     Pinkv2 real,
-    #     Pink real
-    # ) 
-    # """)
-    conn.commit()
-    for guild in client.guilds:
-            for member in guild.members:
-                try:
-                    c.execute(f"""SELECT id 
-                            FROM dodos 
-                            WHERE id='{member.id}'
-                        """)
-                except: 
-                    c.execute(f"""INSERT INTO dodos 
-                        VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                    """)
-                    conn.commit()
-
-
-
-
+    
 @client.command(pass_context=True)
 async def help(ctx):
     embed=discord.Embed(title="Help Command", description="List of all commands", color=0x59cbf0)
@@ -81,9 +39,10 @@ async def help(ctx):
     embed.add_field(name=",fw message", value="Seperate the message with sparkles", inline=False)
     embed.add_field(name=",spaced message", value="Add spaces into the message", inline=False)
     embed.add_field(name=",spongebob message", value="Convert the message into Spongebob Meme Format", inline=False)
-    embed.add_field(name=",banAlly", value="Speak the truth", inline=False)
     embed.add_field(name=",ping", value="Pong", inline=False)
-    embed.add_field(name=",roles", value="Display a list of collectable roles", inline=False)
+    embed.add_field(name=",roles", value="Display a list of colour roles", inline=False)
+    embed.add_field(name=",activate \"role\" ", value="Activate the role as your colour", inline=False)
+    embed.add_field(name=",myroles", value="Display all your roles", inline=False)
     embed.add_field(name=",help", value="Display this message", inline=False)
     await ctx.send(embed=embed)
 

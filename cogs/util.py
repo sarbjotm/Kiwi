@@ -1,6 +1,7 @@
 import discord
 from datetime import datetime, timedelta
 from discord.ext import commands
+import os
 import random
 import sqlite3
 import asyncio
@@ -8,13 +9,11 @@ import asyncio
 
 #Utils
 
-
 class Utilities(commands.Cog):
-    conn = sqlite3.connect('members.db')
-    c = conn.cursor()
-
     def __init__(self, client):
         self.client = client
+    
+    
 
     @commands.command()
     async def ping(self,ctx):
@@ -27,7 +26,10 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
-        if ((role in ctx.message.author.roles) and (roleOther in member.roles)):    
+        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+        if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
+            await ctx.send("Trade only collectable roles")
+        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):    
             await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleOther}')
             await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
             try:
@@ -41,8 +43,17 @@ class Utilities(commands.Cog):
                 if msg == 'yes':
                     await ctx.message.author.add_roles(roleOther)
                     await member.add_roles(role)
-                    await ctx.message.author.remove_roles(role)
-                    await member.remove_roles(roleOther)
+                    await ctx.message.authour.remove_roles(role)
+                    await member.add_roles(roleOther)
+                    role = str(role)
+                    role = role.split()[1]
+                    roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+                    await ctx.message.author.remove_roles(roleRemove)
+                    roleOther = str(roleOther)
+                    roleOther = roleOther.split()[1]
+                    roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
+                    await member.remove_roles(roleRemove)
+                    
                     await ctx.send(f'Trade Completed!')
                 elif msg == 'no':
                     await ctx.send(f'Trade Rejected!')
@@ -55,30 +66,13 @@ class Utilities(commands.Cog):
             await ctx.send(f'You or the user you want to trade with does not have the role listed in the trade')   
 
     @commands.command()
-    @commands.cooldown(1,10, commands.BucketType.user)
+    @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        rolesList = ['Dodo Red','Dodo Orange']
-        roleAssign = random.choices(rolesList, weights = [1,1])[0]
+        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! Your next chance to role is in 24 hours')
-        role = str(role)
-        role = role.split()[1]
-        c.execute(f"""SELECT {role} 
-                    FROM dodos 
-                    WHERE id='{ctx.message.author.id}'
-                """)
-        c.execute(f"""UPDATE dodos 
-                  SET {role} = {c.fetchone()[0]} + 1 
-                  WHERE id='{ctx.message.author.id}'
-            """)
-        conn.commit()
-        c.execute(f"""SELECT {role} 
-                    FROM dodos 
-                    WHERE id='{ctx.message.author.id}'
-                """)
-        await ctx.send(f'You now have {c.fetchone()[0]} {role} roles')  
-        await ctx.send(f'test message') 
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate command. Your next chance to roll is in 12 hours')
 
 
     @collect.error
@@ -88,10 +82,11 @@ class Utilities(commands.Cog):
             hours = int(seconds // 3600)
             seconds %= 3600
             minutes = int(seconds // 60)
+            seconds %= 60
             if hours != 0:
-                await ctx.send(f'Try again in {hours} hours and {minutes} minutes')
+                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {seconds} seconds')
             else:
-                await ctx.send(f'Try again in {minutes} minutes')
+                await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
 
 
 
@@ -112,7 +107,6 @@ class Utilities(commands.Cog):
             await ctx.message.author.add_roles(roleAssign)
         else:
             await ctx.send("You do not have that role")
-
 
 
     @commands.command()
