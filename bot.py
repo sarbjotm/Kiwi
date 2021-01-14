@@ -53,6 +53,6 @@ async def help(ctx):
 
 
 #Blackbox
-f = open("specialCode.txt", "r")
-Token = str(f.readline()).strip('\n')
-client.run(Token)
+# f = open("specialCode.txt", "r")
+# Token = str(f.readline()).strip('\n')
+client.run(os.environ('TOKEN'))

@@ -1,5 +1,9 @@
 <p align=center><img src="kiwi.png" height="200" width="200"></p1>
 
+# SFU Anime Club - Ren
+[![discord.py](https://img.shields.io/badge/discord-py-blue.svg)](https://github.com/Rapptz/discord.py)
+[![Build Status](https://api.travis-ci.org/SFUAnime/Ren.svg?branch=V3/prod)](https://travis-ci.org/SFUAnime/Ren)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 **Kiwi** is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on heroku.
 
