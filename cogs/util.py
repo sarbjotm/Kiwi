@@ -72,7 +72,7 @@ class Utilities(commands.Cog):
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate command. Your next chance to roll is in 12 hours')
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
 
 
     @collect.error
@@ -84,7 +84,7 @@ class Utilities(commands.Cog):
             minutes = int(seconds // 60)
             seconds %= 60
             if hours != 0:
-                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {seconds} seconds')
+                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {int(seconds)} seconds')
             else:
                 await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
 
@@ -92,21 +92,27 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
+        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
         activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
-        if (role in ctx.message.author.roles):
+        if ((str(role) not in rolesList)):
+            await ctx.send("Only can activate collected Colour Roles")
+        
+        elif (role in ctx.message.author.roles):
             for r in activateRoles:
-                try:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
-                    await ctx.message.author.remove_roles(roleRemove)
-                except:
-                    pass
+                    if(roleRemove in ctx.message.author.roles):
+                        await ctx.message.author.remove_roles(roleRemove)
+                        break
+            print(role)
             role = str(role)
             role = role.split()[1]
+            print(role)
             roleAssign = discord.utils.get(ctx.guild.roles, name=role)
-            
             await ctx.message.author.add_roles(roleAssign)
+        
         else:
             await ctx.send("You do not have that role")
+
 
 
     @commands.command()
