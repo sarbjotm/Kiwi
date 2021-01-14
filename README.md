@@ -1,84 +1,11 @@
-# Kiwi
-
-Kiwi, the distant relative of the Dodo, is a discord bot which is hosted on Heroku.  
-
-## Features
-Currently, Kiwi is capable of doing the following commands
+<p align=center><img src="kiwi.png" height="200" width="200"></p1>
 
 
-```py
-,help
-```
-Returns the custom embedded help command, and shows what commands are possible and syntax on discord
+**Kiwi** is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on heroku.
 
-```py
-,collect
-```
-Collect one of the time-limited event roles
-```py
-,trade "role1" @user "role2"
-```
-Trade role1 with another users role 2
+# Contribute
+We welcome changes that benefit the server as a whole! Please feel free to discuss in
+our discord server! 
 
-
-```py
-,coinflip
-```
-Flips a coin, and returns either heads or tail. Useful when deciding between two decisions/choices. 
-
-
-```py
-,waves @user
-```
-Waves at the designate user
-
-
-```py
-,waves @userRole
-```
-Waves at the designate roles
-
-
-```pys
-,hugs @user
-```
-Gives the designate user a virtual hug
-
-
-```pys
-,hugsRole @role
-```
-Virtual group hug!
-
-
-```pys
-,8ball question
-```
-Gives the user an answer to their question
-
-
-```pys
-,hugs @user
-```
-Gives the designate user a virtual hug
-
-
-```py
-,randomnumber a b
-```
-Displays a random number between a and b inclusively
-```pys
-,fw message
-```
-Separate the message with sparkles
-```pys
-,spaced message
-```
-Add spaces into the message
-
-```pys
-,spongebob message
-```
-Convert the message into Spongebob Meme Format
-
-
+# Commands
+Kiwi's functionality ranges from minigames to basic string manipulation. 
