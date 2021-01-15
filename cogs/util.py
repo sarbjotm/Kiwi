@@ -77,8 +77,9 @@ class Utilities(commands.Cog):
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
         try:
-            c.execute(f"""Update dodos
+            c.execute(f"""UPDATE dodos
             SET {roleAssign} = {roleAssign} + 1
             WHERE id = {ctx.message.author.id}
             """)
@@ -93,7 +94,6 @@ class Utilities(commands.Cog):
         except:
             print("Error in getting role")
             
-        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
         await ctx.send(f'You now have {c.fetchone()[0]} {role} roles!')
 
 
