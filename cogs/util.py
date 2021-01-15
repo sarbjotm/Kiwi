@@ -7,6 +7,7 @@ import sqlite3
 import asyncio
 from pathlib import Path
 
+#TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
 
 #Utils
 d = Path(__file__).resolve().parents[1]
@@ -71,12 +72,13 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        roleAssign = random.choices(rolesList, weights = [1000,1,1,1,1,1,1,1,1,1,1,1])[0]
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        #TODO: EDIT split statement below
         roleAssign.split()
-        #FIX THIS SQL STATEMENT roleAssign[1] prints out 
+        #FIX THIS SQL STATEMENT roleAssign[1] prints out 'o'
         print(f"{roleAssign[1]}")
         try:
             c.execute(f"""UPDATE dodos
@@ -134,10 +136,11 @@ class Utilities(commands.Cog):
         else:
             await ctx.send("You do not have that role")
 
+    #Statements all work fine
     @commands.command()
     async def addme(self,ctx):
         c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
-                VALUES ('{ctx.message.author.id}','1',1,0,0,0,0,0,0,0,0,0,0,0)
+                VALUES ('{ctx.message.author.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
 
         """)
         conn.commit()
