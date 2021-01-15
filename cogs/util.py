@@ -78,7 +78,7 @@ class Utilities(commands.Cog):
         roleAssign.split()
         try:
             c.execute(f"""UPDATE dodos
-            SET {roleAssign[1]} = {roleAssign[1]} + 1
+            SET {roleAssign[1]} = 767986908
             WHERE id = {ctx.message.author.id}
             """)
             print("Adding...")
@@ -139,6 +139,11 @@ class Utilities(commands.Cog):
             """)
             conn.commit()
             await ctx.send("Added into database")
+            c.execute(f"""SELECT *
+                  FROM dodos
+                  WHERE id = {ctx.message.author.id}
+            """)
+            print(c.fetchone())
 
 
 
