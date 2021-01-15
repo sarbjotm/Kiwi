@@ -86,7 +86,7 @@ class Utilities(commands.Cog):
         except:
             pass
         try:
-            c.execute(f"""SELECT {roleAssign}} 
+            c.execute(f"""SELECT {roleAssign} 
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
