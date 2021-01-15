@@ -29,33 +29,33 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    for guild in client.guilds:
-            for member in guild.members:
-                try:
-                    print(member)
-                    c.execute(f"""SELECT id 
-                            FROM dodos 
-                            WHERE id ='{member.id}'
-                        """)
-                except: 
-                    c.execute(f"""INSERT INTO dodos 
-                        VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                    """)
-                    conn.commit()
+    # for guild in client.guilds:
+    #         for member in guild.members:
+    #             try:
+    #                 print(member)
+    #                 c.execute(f"""SELECT id 
+    #                         FROM dodos 
+    #                         WHERE id ='{member.id}'
+    #                     """)
+    #             except: 
+    #                 c.execute(f"""INSERT INTO dodos 
+    #                     VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+    #                 """)
+    #                 conn.commit()
     
-    for member in guild.members:
-        for r in rolesList:
-            role = discord.utils.get(guild.roles, name=r)
-            if (role in member.roles):
-                role = str(role)
-                role = role.split()[1]
-                c.execute(f"""Update dodos
-                SET {role} = {role} + 1
-                WHERE id = {member.id}
-                """)
-                conn.commit()
-            else:
-                pass
+    # for member in guild.members:
+    #     for r in rolesList:
+    #         role = discord.utils.get(guild.roles, name=r)
+    #         if (role in member.roles):
+    #             role = str(role)
+    #             role = role.split()[1]
+    #             c.execute(f"""Update dodos
+    #             SET {role} = {role} + 1
+    #             WHERE id = {member.id}
+    #             """)
+    #             conn.commit()
+    #         else:
+    #             pass
     
 
 
