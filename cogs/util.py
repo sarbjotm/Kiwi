@@ -161,7 +161,7 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def updateme(self,ctx):
-        c.execute(f"""UPDATE persons 
+        c.execute(f"""UPDATE dodos 
                     SET Red = 929131
                     WHERE id='{ctx.message.author.id}'
                 """)
@@ -170,6 +170,16 @@ class Utilities(commands.Cog):
         c.execute(f"""SELECT *
                 FROM dodos
         """)
+        print(c.fetchall())
+    
+    @commands.command()
+    async def lookme(self,ctx):
+        c.execute(f"""SELECT *
+                    FROM dodos
+                    WHERE id='{ctx.message.author.id}'
+                """)
+        conn.commit()
+        await ctx.send("Looked up from database")
         print(c.fetchall())
 
 
