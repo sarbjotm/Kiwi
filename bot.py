@@ -9,8 +9,8 @@ from discord.ext import commands, tasks
 client = commands.Bot(command_prefix = ',')
 client.remove_command('help')
 
-# conn = sqlite3.connect('members.db')
-# c = conn.cursor()
+conn = sqlite3.connect('members.db')
+c = conn.cursor()
 
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 
@@ -29,8 +29,9 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    # c.execute("""DROP TABLE dodos""")
-    # conn.commit()
+    c.execute("""DROP TABLE dodos""")
+    print("Let's see...")
+    conn.commit()
     # c.execute("""
     #     CREATE TABLE IF NOT EXISTS dodos(
     #         id real,
