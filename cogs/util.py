@@ -75,16 +75,17 @@ class Utilities(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        roleAssign.split()
         try:
             c.execute(f"""UPDATE dodos
-            SET {roleAssign} = {roleAssign} + 1
+            SET {roleAssign[1]} = {roleAssign[1]} + 1
             WHERE id = {ctx.message.author.id}
             """)
             print("Adding...")
         except:
             print("Error in adding role...")
         try:
-            c.execute(f"""SELECT {roleAssign} 
+            c.execute(f"""SELECT {roleAssign[1]} 
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
@@ -92,6 +93,7 @@ class Utilities(commands.Cog):
             conn.commit()
         except:
             print("Error in getting role")
+        await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
             
 
     @collect.error
@@ -133,10 +135,11 @@ class Utilities(commands.Cog):
     @commands.command()
     async def addme(self,ctx):
             c.execute(f"""INSERT INTO dodos
-                  VALUES ('{ctx.message.author.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                  VALUES ('{ctx.message.author.id}',1,0,0,0,0,0,0,0,0,0,0,0,0)
             """)
+            conn.commit()
             await ctx.send("Added into database")
-            
+
 
 
 
