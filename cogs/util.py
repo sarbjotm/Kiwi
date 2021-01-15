@@ -84,14 +84,14 @@ class Utilities(commands.Cog):
             """)
             conn.commit()
         except:
-            pass
+            print("Error in adding role...")
         try:
             c.execute(f"""SELECT {roleAssign} 
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
         except:
-            pass
+            print("Error in getting role")
             
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
         await ctx.send(f'You now have {c.fetchone()[0]} {role} roles!')
