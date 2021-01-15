@@ -83,7 +83,7 @@ class Utilities(commands.Cog):
             SET {roleAssign} = {roleAssign} + 1
             WHERE id = {ctx.message.author.id}
             """)
-            conn.commit()
+            print("Adding...")
         except:
             print("Error in adding role...")
         try:
@@ -91,11 +91,12 @@ class Utilities(commands.Cog):
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
+            print("Looking up..,")
         except:
             print("Error in getting role")
             
         await ctx.send(f'You now have {c.fetchone()[0]} {role} roles!')
-
+        conn.commit()
 
     @collect.error
     async def collect_error(self,ctx,error):
