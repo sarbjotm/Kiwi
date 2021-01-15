@@ -63,7 +63,7 @@ async def on_ready():
     
     for member in guild.members:
         for r in rolesList:
-            role = discord.utils.get(guild.roles, name=role)
+            role = discord.utils.get(guild.roles, name=r)
             if (role in member.roles):
                 role = str(role)
                 role = role.split()[1]
