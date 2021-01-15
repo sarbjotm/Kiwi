@@ -144,7 +144,7 @@ class Utilities(commands.Cog):
                   FROM dodos
                   WHERE id = {ctx.message.author.id}
             """)
-            print(c.fetchone())
+            print(c.fetchall())
 
 
 
