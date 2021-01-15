@@ -9,10 +9,10 @@ from pathlib import Path
 
 
 #Utils
-# d = Path(__file__).resolve().parents[1]
-# d = d/'members.db'
-# conn = sqlite3.connect(str(d))
-# c = conn.cursor()
+d = Path(__file__).resolve().parents[1]
+d = d/'members.db'
+conn = sqlite3.connect(str(d))
+c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
 
@@ -75,23 +75,24 @@ class Utilities(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        # try:
-        #     c.execute(f"""UPDATE dodos
-        #     SET {roleAssign} = {roleAssign} + 1
-        #     WHERE id = {ctx.message.author.id}
-        #     """)
-        #     print("Adding...")
-        # except:
-        #     print("Error in adding role...")
-        # try:
-        #     c.execute(f"""SELECT {roleAssign} 
-        #                 FROM dodos 
-        #                 WHERE id='{ctx.message.author.id}'
-        #             """)
-        #     print("Looking up..,")
-        # except:
-        #     print("Error in getting role")
-        #             conn.commit()
+        try:
+            c.execute(f"""UPDATE dodos
+            SET {roleAssign} = {roleAssign} + 1
+            WHERE id = {ctx.message.author.id}
+            """)
+            print("Adding...")
+        except:
+            print("Error in adding role...")
+        try:
+            c.execute(f"""SELECT {roleAssign} 
+                        FROM dodos 
+                        WHERE id='{ctx.message.author.id}'
+                    """)
+            print("Looking up..,")
+            conn.commit()
+        except:
+            print("Error in getting role")
+            
 
     @collect.error
     async def collect_error(self,ctx,error):
