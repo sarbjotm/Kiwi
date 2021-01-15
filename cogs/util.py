@@ -135,7 +135,7 @@ class Utilities(commands.Cog):
     @commands.command()
     async def addme(self,ctx):
             c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
-                  VALUES ('{ctx.message.author.id}',1,0,0,0,0,0,0,0,0,0,0,0,0)
+                  VALUES ('{ctx.message.author.id}','1',1,0,0,0,0,0,0,0,0,0,0,0)
 
             """)
             conn.commit()
