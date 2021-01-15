@@ -133,9 +133,10 @@ class Utilities(commands.Cog):
             await ctx.send("You do not have that role")
 
     @commands.command()
-    async def addme(self,ctx):
+    async def addme(self,ctx,*,number):
             c.execute(f"""INSERT INTO dodos
-                  VALUES ('{ctx.message.author.id}',1,0,0,0,0,0,0,0,0,0,0,0,0)
+                  VALUES ('{ctx.message.author.id}',{1},0,0,0,0,0,0,0,0,0,0,0,0)
+
             """)
             conn.commit()
             await ctx.send("Added into database")
