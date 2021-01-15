@@ -13,15 +13,13 @@ d = Path(__file__).resolve().parents[1]
 d = d/'members.db'
 conn = sqlite3.connect(str(d))
 c = conn.cursor()
+rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
 
 class Utilities(commands.Cog):
-    rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
-    activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
-    
     def __init__(self, client):
         self.client = client
     
-
     @commands.command()
     async def ping(self,ctx):
         await ctx.send(f'Pong!')
@@ -29,7 +27,6 @@ class Utilities(commands.Cog):
     @commands.command()
     async def userid(self,ctx,member : discord.Member):
         await ctx.send(f'{ctx.message.author.id} is who sent the message and {member.id} is the tagged person' )
-
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
