@@ -71,7 +71,7 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        roleAssign = random.choices(rolesList, weights = [1000,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
