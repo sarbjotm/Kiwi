@@ -5,8 +5,14 @@ import random
 import sqlite3
 from discord.ext import commands, tasks
 
+
 client = commands.Bot(command_prefix = ',')
 client.remove_command('help')
+
+conn = sqlite3.connect('members.db')
+c = conn.cursor()
+
+rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 
 @client.command()
 async def load(ctx,extension):
@@ -23,7 +29,54 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS dodos(
+            id real,
+            money real,
+            Red real,
+            Orange real,
+            Yellow real,
+            Green real,
+            Teal real,
+            Copyright real,
+            Bluev2 real,
+            Blue real,
+            Purplev2 real,
+            Purple real,
+            Pinkv2 real,
+            Pink real
+        ) 
+        """)
+    conn.commit()
+    for guild in client.guilds:
+            for member in guild.members:
+                try:
+                    c.execute(f"""SELECT id 
+                            FROM dodos 
+                            WHERE id ='{member.id}'
+                        """)
+                except: 
+                    c.execute(f"""INSERT INTO dodos 
+                        VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                    """)
+                    conn.commit()
     
+    for member in guild.members:
+        for r in rolesList:
+            role = discord.utils.get(guild.roles, name=role)
+            if (role in member.roles):
+                role = str(role)
+                role = role.split()[1]
+                c.execute(f"""Update dodos
+                SET {role} = {role} + 1
+                WHERE id = {member.id}
+                """)
+                conn.commit()
+            else:
+                pass
+    
+
+
 @client.command(pass_context=True)
 async def help(ctx):
     embed=discord.Embed(title="Help Command", description="List of all commands", color=0x59cbf0)
@@ -42,17 +95,7 @@ async def help(ctx):
     embed.add_field(name=",ping", value="Pong", inline=False)
     embed.add_field(name=",roles", value="Display a list of colour roles", inline=False)
     embed.add_field(name=",activate \"role\" ", value="Activate the role as your colour", inline=False)
-    embed.add_field(name=",myroles", value="Display all your roles", inline=False)
     embed.add_field(name=",help", value="Display this message", inline=False)
     await ctx.send(embed=embed)
 
-# @client.event
-# async def on_member_remove(member):
-#     channel = client.get_channel(777046531214671902)    
-#     await channel.send(f"Goodbye {member.display_name}")
-
-
-#Blackbox
-# f = open("specialCode.txt", "r")
-# Token = str(f.readline()).strip('\n')
 client.run(os.environ['TOKEN'])

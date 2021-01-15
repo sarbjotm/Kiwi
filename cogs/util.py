@@ -5,14 +5,21 @@ import os
 import random
 import sqlite3
 import asyncio
+from pathlib import Path
 
 
 #Utils
+d = Path(__file__).resolve().parents[1]
+d = d/'members.db'
+conn = sqlite3.connect(str(d))
+c = conn.cursor()
 
 class Utilities(commands.Cog):
+    rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+    activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
+    
     def __init__(self, client):
         self.client = client
-    
     
 
     @commands.command()
@@ -26,7 +33,6 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
-        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
         if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
             await ctx.send("Trade only collectable roles")
         elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):    
@@ -68,11 +74,27 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
+        try:
+            c.execute(f"""Update dodos
+            SET {roleAssign} = {roleAssign} + 1
+            WHERE id = {ctx.message.author.id}
+            """)
+            conn.commit()
+        except:
+            pass
+        try:
+            c.execute(f"""SELECT {roleAssign}} 
+                        FROM dodos 
+                        WHERE id='{ctx.message.author.id}'
+                    """)
+        except:
+            pass
+            
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        await ctx.send(f'You now have {c.fetchone()[0]} {role} roles!')
 
 
     @collect.error
@@ -92,8 +114,6 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
-        rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
-        activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles")
         
