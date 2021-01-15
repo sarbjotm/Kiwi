@@ -134,18 +134,43 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def addme(self,ctx):
-            c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
-                  VALUES ('{ctx.message.author.id}','1',1,0,0,0,0,0,0,0,0,0,0,0)
+        c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
+                VALUES ('{ctx.message.author.id}','1',1,0,0,0,0,0,0,0,0,0,0,0)
 
-            """)
-            conn.commit()
-            await ctx.send("Added into database")
-            c.execute(f"""SELECT *
-                  FROM dodos
-                  WHERE id = {ctx.message.author.id}
-            """)
-            print(c.fetchall())
+        """)
+        conn.commit()
+        await ctx.send("Added into database")
+        c.execute(f"""SELECT *
+                FROM dodos
+                WHERE id = {ctx.message.author.id}
+        """)
+        print(c.fetchall())
 
+    @commands.command()
+    async def deleteme(self,ctx):
+        c.execute(f"""DELETE from dodos 
+                WHERE id='{ctx.message.author.id}'
+        """)
+        conn.commit()
+        await ctx.send("Deleted user from database")
+        c.execute(f"""SELECT *
+                FROM dodos
+
+        """)
+        print(c.fetchall())
+
+    @commands.command()
+    async def updateme(self,ctx):
+        c.execute(f"""UPDATE persons 
+                    SET Red = 929131
+                    WHERE id='{ctx.message.author.id}'
+                """)
+        conn.commit()
+        await ctx.send("Updated red role from database")
+        c.execute(f"""SELECT *
+                FROM dodos
+        """)
+        print(c.fetchall())
 
 
 
