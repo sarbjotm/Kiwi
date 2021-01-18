@@ -75,7 +75,7 @@ class Utilities(commands.Cog):
                     conn.commit()
                     c.execute(f"""
                         UPDATE dodos
-                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
+                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} -1
                         WHERE id = {member.id}
 
                     """)
@@ -187,13 +187,16 @@ class Utilities(commands.Cog):
     
     @commands.command()
     async def myroles(self,ctx):
+        embed=discord.Embed(title="Your Roles" , color=0xe392fe)
+        
         for role in activateRoles:
             c.execute(f"""SELECT {role}
                           FROM dodos
                           WHERE id = {ctx.message.author.id}
             """)
-            await ctx.send(f"You have {c.fetchone()[0]} \"Dodo {role}\" roles")
-
+            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+            embed.add_field(name=roleCount, value=" ", inline=False)
+        await ctx.send(embed=embed)
     #Statements all work fine
     # @commands.command()
     # async def addme(self,ctx):
