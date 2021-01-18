@@ -39,7 +39,16 @@ async def on_ready():
                 VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
                 """)
         conn.commit()
+
         print(f"Adding {m} as {m.id}")
+        c.execute(f"""SELECT *
+                        FROM dodos
+                        WHERE id = {m.id}
+        """)
+        print(c.fetchall())
+    
+
+    for m in memberList:
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
