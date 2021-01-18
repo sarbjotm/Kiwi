@@ -35,18 +35,15 @@ async def on_ready():
     memberList = guild.members
     print(memberList)
     for m in memberList:
-        try:
-            c.execute(f"""INSERT INTO dodos 
-                    VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                    """)
-        except:
-            print(f"FAILURE. FAILED TO ADD {m.id}")
+        c.execute(f"""INSERT INTO dodos 
+                      VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                      """)
         conn.commit()
 
         print(f"Adding {m} into database as {m.id}")
         c.execute(f"""SELECT *
-                        FROM dodos
-                        WHERE id = {m.id}
+                      FROM dodos
+                      WHERE id = {m.id}
         """)
         conn.commit()
         print(c.fetchall())
@@ -58,26 +55,16 @@ async def on_ready():
             if (roleDiscord in m.roles):
                 role = role.split(" ")
                 c.execute(f"""UPDATE dodos
-                        SET {role[1]} = 1
-                        WHERE id = {m.id}
+                              SET {role[1]} = 1
+                              WHERE id = {m.id}
 
                     """)
                 conn.commit()
                 c.execute(f"""SELECT *
-                            FROM dodos
-                            WHERE id = {m.id}
+                              FROM dodos
+                              WHERE id = {m.id}
             """)
                 print(c.fetchall())
-    
-    c.execute(f"""INSERT INTO dodos 
-                    VALUES (688601337327648778,0,0,0,0,0,0,0,0,0,0,0,0,0)
-                    """)
-    c.execute(f"""SELECT *
-                    FROM dodos
-                    WHERE id = 688601337327648778
-            """)
-    print(f"Adding 688601337327648778 {c.fetchall()}")
-
 
 
 @client.command(pass_context=True)
