@@ -187,8 +187,9 @@ class Utilities(commands.Cog):
     
     @commands.command()
     async def myroles(self,ctx):
-        embed=discord.Embed(title="Your Roles" , color=0xe392fe)
-        
+        user = str(ctx.message.author)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
         for role in activateRoles:
             c.execute(f"""SELECT {role}
                           FROM dodos

@@ -54,38 +54,44 @@ async def on_ready():
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
                 role = role.split(" ")
-                c.execute(f"""UPDATE dodos
-                              SET {role[1]} = 1
+                if(role[1] == "Yellow" and m.id == "309711741812604929"):
+                    c.execute(f"""UPDATE dodos
+                              SET {role[1]} = 2
                               WHERE id = {m.id}
+                """)
+                elif(role[1] == "Red" and m.id == "690023463762788378"):
+                    c.execute(f"""UPDATE dodos
+                                SET {role[1]} = 2
+                                WHERE id = {m.id}
 
                     """)
-                conn.commit()
-                c.execute(f"""SELECT *
-                              FROM dodos
-                              WHERE id = {m.id}
-            """)
+                else:
+                    conn.commit()
+                    c.execute(f"""SELECT *
+                                FROM dodos
+                                WHERE id = {m.id}
+                """)
                 print(c.fetchall())
+
+@client.event
+async def on_member_join(member):
+    c.execute(f"""INSERT INTO dodos 
+                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+              """)
+    conn.commit()
 
 
 @client.command(pass_context=True)
 async def help(ctx):
-    embed=discord.Embed(title="Help Command", description="List of all commands", color=0x59cbf0)
-    embed.add_field(name=",waves", value="Wave at a user", inline=False)
-    embed.add_field(name=",wavesRole @role", value="Waves at a role", inline=False)
-    embed.add_field(name=",hug @user", value="Give @user a hug", inline=False)
-    embed.add_field(name=",hugsRole @role", value="Grouphug with @role members", inline=False)
-    embed.add_field(name=",8ball question", value="Gives the user an answer to their question", inline=False)
-    embed.add_field(name=",coinflip", value="Heads or Tails", inline=False)
-    embed.add_field(name=",collect", value="Collect one of the time-limited event roles", inline=False)
-    embed.add_field(name=",trade \"role1\" @user \"role2\" ", value="Trade role1 with another users role 2", inline=False)
-    embed.add_field(name=",randomnumber a b", value="Displays a random number between a and b inclusvely", inline=False)
-    embed.add_field(name=",fw message", value="Seperate the message with sparkles", inline=False)
-    embed.add_field(name=",spaced message", value="Add spaces into the message", inline=False)
-    embed.add_field(name=",spongebob message", value="Convert the message into Spongebob Meme Format", inline=False)
-    embed.add_field(name=",ping", value="Pong", inline=False)
-    embed.add_field(name=",roles", value="Display a list of colour roles", inline=False)
-    embed.add_field(name=",activate \"role\" ", value="Activate the role as your colour", inline=False)
-    embed.add_field(name=",help", value="Display this message", inline=False)
+    embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x59cbf0)
+    embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
+    embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up")
+    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug")
+    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin")
+    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=True)
+    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space our your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=True)
+    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=True)
+
     await ctx.send(embed=embed)
 
 client.run(os.environ['TOKEN'])
