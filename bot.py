@@ -35,9 +35,12 @@ async def on_ready():
     memberList = guild.members
     print(memberList)
     for m in memberList:
-        c.execute(f"""INSERT INTO dodos 
-                VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                """)
+        try:
+            c.execute(f"""INSERT INTO dodos 
+                    VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                    """)
+        except:
+            print(f"FAILURE. FAILED TO ADD {m.id}")
         conn.commit()
 
         print(f"Adding {m} into database as {m.id}")
