@@ -75,7 +75,7 @@ class Utilities(commands.Cog):
                     conn.commit()
                     c.execute(f"""
                         UPDATE dodos
-                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} -1
+                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
                         WHERE id = {member.id}
 
                     """)
@@ -89,7 +89,7 @@ class Utilities(commands.Cog):
                     
                     """)
                     if(int(c.fetchone()[0]) == 0):
-                        await ctx.message.authour.remove_roles(role)
+                        await ctx.message.author.remove_roles(role)
 
                     c.execute(f"""
                         SELECT {str(roleOther).split(" ")[1]}
