@@ -54,7 +54,7 @@ async def on_ready():
                             FROM dodos
                             WHERE id = {m.id}
             """)
-                print(c.fetchone())
+                print(c.fetchall())
 
 
 
