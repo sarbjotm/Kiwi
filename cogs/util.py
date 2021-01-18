@@ -124,29 +124,30 @@ class Utilities(commands.Cog):
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
-        role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
+        print(roleAssign)
+        role = discord.utils.get(ctx.guild.roles, name=roleAssign)
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        # roleAssign = roleAssign.split(" ")
-        # print(f"{roleAssign[1]}")
-        # try:
-        #     c.execute(f"""UPDATE dodos
-        #     SET {roleAssign[1]} = {roleAssign[1]} + 1
-        #     WHERE id = {ctx.message.author.id}
-        #     """)
-        #     print("Adding...")
-        # except:
-        #     print("Error in adding role...")
-        # try:
-        #     c.execute(f"""SELECT {roleAssign[1]} 
-        #                 FROM dodos 
-        #                 WHERE id='{ctx.message.author.id}'
-        #             """)
-        #     print("Looking up..,")
-        #     conn.commit()
-        # except:
-        #     print("Error in getting role")
-        # await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
+        roleAssign = roleAssign.split(" ")
+        print(f"{roleAssign[1]}")
+        try:
+            c.execute(f"""UPDATE dodos
+            SET {roleAssign[1]} = {roleAssign[1]} + 1
+            WHERE id = {ctx.message.author.id}
+            """)
+            print("Adding...")
+        except:
+            print("Error in adding role...")
+        try:
+            c.execute(f"""SELECT {roleAssign[1]} 
+                        FROM dodos 
+                        WHERE id='{ctx.message.author.id}'
+                    """)
+            print("Looking up..,")
+            conn.commit()
+        except:
+            print("Error in getting role")
+        await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
             
 
     @collect.error
