@@ -45,7 +45,7 @@ async def on_ready():
             if (roleDiscord in m.roles):
                 role = role.split(" ")
                 c.execute(f"""UPDATE dodos
-                        SET {role[1]} = {role.split()[1]} - 1
+                        SET {role[1]} = {role[1]} - 1
                         WHERE id = {m.id}
 
                     """)
