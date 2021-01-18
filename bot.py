@@ -6,8 +6,8 @@ import sqlite3
 from discord.ext import commands, tasks
 
 #TODO: Have bot add members to database with according values when it is run
-
-client = commands.Bot(command_prefix = ',')
+intents = discord.Intents(messages=True, members=True)
+client = commands.Bot(command_prefix = ',',intents=intents))
 client.remove_command('help')
 
 conn = sqlite3.connect('members.db')
