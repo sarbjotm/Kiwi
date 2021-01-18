@@ -30,7 +30,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    guild = client.get_guild('744817281871249428')
+    guild = client.get_guild(744817281871249428)
     print(f"{guild}")
     memberList = guild.members
     print(memberList)
