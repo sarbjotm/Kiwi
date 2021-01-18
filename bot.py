@@ -13,10 +13,6 @@ client.remove_command('help')
 
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
-guild = client.get_guild('744817281871249428')
-print(f"{guild}")
-memberList = guild.members
-print(memberList)
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 
 @client.command()
@@ -34,6 +30,10 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
+    guild = client.get_guild('744817281871249428')
+    print(f"{guild}")
+    memberList = guild.members
+    print(memberList)
     for m in memberList:
         c.execute(f"""INSERT INTO dodos 
                 VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
