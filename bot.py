@@ -70,7 +70,7 @@ async def on_ready():
                 print(c.fetchall())
     
     c.execute(f"""INSERT INTO dodos 
-                    VALUES ('688601337327648778,0,0,0,0,0,0,0,0,0,0,0,0,0)
+                    VALUES (688601337327648778,0,0,0,0,0,0,0,0,0,0,0,0,0)
                     """)
     c.execute(f"""SELECT *
                     FROM dodos
