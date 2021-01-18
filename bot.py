@@ -40,11 +40,12 @@ async def on_ready():
                 """)
         conn.commit()
 
-        print(f"Adding {m} as {m.id}")
+        print(f"Adding {m} into database as {m.id}")
         c.execute(f"""SELECT *
                         FROM dodos
                         WHERE id = {m.id}
         """)
+        conn.commit()
         print(c.fetchall())
     
 
