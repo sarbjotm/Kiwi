@@ -127,7 +127,7 @@ class Utilities(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        roleAssign.split(" ")
+        roleAssign = roleAssign.split(" ")
         print(f"{roleAssign[1]}")
         try:
             c.execute(f"""UPDATE dodos

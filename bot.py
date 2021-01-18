@@ -12,7 +12,8 @@ client.remove_command('help')
 
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
-
+guild = client.get_guild('744817281871249428')
+memberList = guild.members
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 
 @client.command()
@@ -30,33 +31,28 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    # for guild in client.guilds:
-    #         for member in guild.members:
-    #             try:
-    #                 print(member)
-    #                 c.execute(f"""SELECT id 
-    #                         FROM dodos 
-    #                         WHERE id ='{member.id}'
-    #                     """)
-    #             except: 
-    #                 c.execute(f"""INSERT INTO dodos 
-    #                     VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-    #                 """)
-    #                 conn.commit()
-    
-    # for member in guild.members:
-    #     for r in rolesList:
-    #         role = discord.utils.get(guild.roles, name=r)
-    #         if (role in member.roles):
-    #             role = str(role)
-    #             role = role.split()[1]
-    #             c.execute(f"""Update dodos
-    #             SET {role} = {role} + 1
-    #             WHERE id = {member.id}
-    #             """)
-    #             conn.commit()
-    #         else:
-    #             pass
+    for m in memberList:
+        c.execute(f"""INSERT INTO dodos 
+                VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                """)
+        conn.commit()
+        print(f"Adding {m} as {m.id}")
+        for role in rolesList:
+            roleDiscord = discord.utils.get(guild.roles, name=role)
+            if (roleDiscord in m.roles):
+                role = role.split(" ")
+                c.execute(f"""UPDATE dodos
+                        SET {role[1]} = {role.split()[1]} - 1
+                        WHERE id = {m.id}
+
+                    """)
+                conn.commit()
+                c.execute(f"""SELECT *
+                            FROM dodos
+                            WHERE id = {m.id}
+            """)
+                print(c.fetchone())
+
 
 
 @client.command(pass_context=True)
