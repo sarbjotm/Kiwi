@@ -68,6 +68,15 @@ async def on_ready():
                             WHERE id = {m.id}
             """)
                 print(c.fetchall())
+    
+    c.execute(f"""INSERT INTO dodos 
+                    VALUES ('688601337327648778,0,0,0,0,0,0,0,0,0,0,0,0,0)
+                    """)
+    c.execute(f"""SELECT *
+                    FROM dodos
+                    WHERE id = 688601337327648778
+            """)
+    print(c.fetchall())
 
 
 
