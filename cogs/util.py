@@ -45,11 +45,11 @@ class Utilities(commands.Cog):
                 )
                 msg = msg.content.strip().lower()
                 if msg == 'yes':
-                    await ctx.message.author.add_roles(roleOther) #Add role (Make SQL Here)
-                    #SQL
+                    await ctx.message.author.add_roles(roleOther) 
+                    #
                     c.execute(f"""
                         UPDATE dodos
-                        SET {roleOther.split()[1]} = {roleOther.split()[1]} + 1
+                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} + 1
                         WHERE id = {ctx.message.author.id}
 
                     
@@ -57,7 +57,7 @@ class Utilities(commands.Cog):
                     conn.commit()
                     c.execute(f"""
                         UPDATE dodos
-                        SET {role[1]} = {role.split()[1]} - 1
+                        SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} - 1
                         WHERE id = {ctx.message.author.id}
 
                     
@@ -102,7 +102,7 @@ class Utilities(commands.Cog):
                     #SQL HERE
                     role = str(role)
                     role = role.split(" ")[1]
-                    roleRemove = discord.utils.get(ctx.guild.roles, name=role) #T
+                    roleRemove = discord.utils.get(ctx.guild.roles, name=role)
                     await ctx.message.author.remove_roles(roleRemove)
                     roleOther = str(roleOther)
                     roleOther = roleOther.split()[1]
@@ -129,7 +129,6 @@ class Utilities(commands.Cog):
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
         roleAssign = roleAssign.split(" ")
-        print(f"{roleAssign[1]}")
         try:
             c.execute(f"""UPDATE dodos
             SET {roleAssign[1]} = {roleAssign[1]} + 1
