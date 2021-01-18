@@ -58,6 +58,26 @@ async def on_ready():
     #         else:
     #             pass
     
+@commands.command()
+@has_permission(administrator=True)
+async def addmembers(ctx):
+    members = ctx.guild.members
+    for member in members:
+        c.execute(f"""INSERT INTO dodos 
+                    VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                     """)
+        conn.commit()
+        print(f"Adding {member} as {member.id}")
+        for role in rolesList:
+            roleDiscord = discord.utils.get(ctx.guild.roles, name=role)
+            if (roleDiscord in member.roles):
+                role = role.split(" ")
+                c.execute(f"""UPDATE dodos
+                        SET {role[1]} = {role.split()[1]} - 1
+                        WHERE id = {ctx.message.author.id}
+
+                    """)
+
 
 
 @client.command(pass_context=True)

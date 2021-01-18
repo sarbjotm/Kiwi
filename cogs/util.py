@@ -45,18 +45,69 @@ class Utilities(commands.Cog):
                 )
                 msg = msg.content.strip().lower()
                 if msg == 'yes':
-                    await ctx.message.author.add_roles(roleOther)
-                    await member.add_roles(role)
-                    await ctx.message.authour.remove_roles(role)
-                    await member.add_roles(roleOther)
+                    await ctx.message.author.add_roles(roleOther) #Add role (Make SQL Here)
+                    #SQL
+                    c.execute(f"""
+                        UPDATE dodos
+                        SET {roleOther.split()[1]} = {roleOther.split()[1]} + 1
+                        WHERE id = {ctx.message.author.id}
+
+                    
+                    """)
+                    conn.commit()
+                    c.execute(f"""
+                        UPDATE dodos
+                        SET {role[1]} = {role.split()[1]} - 1
+                        WHERE id = {ctx.message.author.id}
+
+                    
+                    """)
+
+                    conn.commit()
+                    await member.add_roles(role) #Add role (Make SQL Here)
+                    #SQL
+                    c.execute(f"""
+                        UPDATE dodos
+                        SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} + 1
+                        WHERE id = {member.id}
+
+                    """)
+                    conn.commit()
+                    c.execute(f"""
+                        UPDATE dodos
+                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} -1
+                        WHERE id = {member.id}
+
+                    """)
+                    conn.commit()
+                    #SQL HERE CHECK IF == 1 THEN REMOVE
+                    c.execute(f"""
+                        SELECT {str(role).split(" ")[1]}
+                        FROM dodos
+                        WHERE {ctx.message.author.id}
+                    
+                    
+                    """)
+                    if(int(c.fetchone()[0]) == 0):
+                        await ctx.message.authour.remove_roles(role)
+
+                    c.execute(f"""
+                        SELECT {str(roleOther).split(" ")[1]}
+                        FROM dodos
+                        WHERE {member.id}
+                    
+                    """)
+                    if(int(c.fetchone()[0]) == 0):
+                        await member.remove_roles(roleOther)
+                    #SQL HERE
                     role = str(role)
-                    role = role.split()[1]
-                    roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+                    role = role.split(" ")[1]
+                    roleRemove = discord.utils.get(ctx.guild.roles, name=role) #T
                     await ctx.message.author.remove_roles(roleRemove)
                     roleOther = str(roleOther)
                     roleOther = roleOther.split()[1]
                     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
-                    await member.remove_roles(roleRemove)
+                    await member.remove_roles(roleRemove) 
                     
                     await ctx.send(f'Trade Completed!')
                 elif msg == 'no':
@@ -76,13 +127,11 @@ class Utilities(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name= str(roleAssign))
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        #TODO: EDIT split statement below
-        roleAssign.split()
-        #FIX THIS SQL STATEMENT roleAssign[1] prints out 'o'
+        roleAssign.split(" ")
         print(f"{roleAssign[1]}")
         try:
             c.execute(f"""UPDATE dodos
-            SET {roleAssign[1]} = 767986908
+            SET {roleAssign[1]} = {roleAssign[1]} + 1
             WHERE id = {ctx.message.author.id}
             """)
             print("Adding...")
@@ -135,57 +184,66 @@ class Utilities(commands.Cog):
         
         else:
             await ctx.send("You do not have that role")
-
-    #Statements all work fine
-    @commands.command()
-    async def addme(self,ctx):
-        c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
-                VALUES ('{ctx.message.author.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-
-        """)
-        conn.commit()
-        await ctx.send("Added into database")
-        c.execute(f"""SELECT *
-                FROM dodos
-                WHERE id = {ctx.message.author.id}
-        """)
-        print(c.fetchall())
-
-    @commands.command()
-    async def deleteme(self,ctx):
-        c.execute(f"""DELETE from dodos 
-                WHERE id='{ctx.message.author.id}'
-        """)
-        conn.commit()
-        await ctx.send("Deleted user from database")
-        c.execute(f"""SELECT *
-                FROM dodos
-
-        """)
-        print(c.fetchall())
-
-    @commands.command()
-    async def updateme(self,ctx):
-        c.execute(f"""UPDATE dodos 
-                    SET Red = 929131
-                    WHERE id='{ctx.message.author.id}'
-                """)
-        conn.commit()
-        await ctx.send("Updated red role from database")
-        c.execute(f"""SELECT *
-                FROM dodos
-        """)
-        print(c.fetchall())
     
     @commands.command()
-    async def lookme(self,ctx):
-        c.execute(f"""SELECT *
-                    FROM dodos
-                    WHERE id='{ctx.message.author.id}'
-                """)
-        conn.commit()
-        await ctx.send("Looked up from database")
-        print(c.fetchall())
+    async def myroles(self,ctx):
+        for role in activateRoles:
+            c.execute(f"""SELECT {role}
+                          FROM dodos
+                          WHERE id = {ctx.message.author.id}
+            """)
+            await ctx.send(f"You have {c.fetchone()[0]} \"Dodo {role}\" roles")
+
+    #Statements all work fine
+    # @commands.command()
+    # async def addme(self,ctx):
+    #     c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
+    #             VALUES ('{ctx.message.author.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+
+    #     """)
+    #     conn.commit()
+    #     await ctx.send("Added into database")
+    #     c.execute(f"""SELECT *
+    #             FROM dodos
+    #             WHERE id = {ctx.message.author.id}
+    #     """)
+    #     print(c.fetchall())
+
+    # @commands.command()
+    # async def deleteme(self,ctx):
+    #     c.execute(f"""DELETE from dodos 
+    #             WHERE id='{ctx.message.author.id}'
+    #     """)
+    #     conn.commit()
+    #     await ctx.send("Deleted user from database")
+    #     c.execute(f"""SELECT *
+    #             FROM dodos
+
+    #     """)
+    #     print(c.fetchall())
+
+    # @commands.command()
+    # async def updateme(self,ctx):
+    #     c.execute(f"""UPDATE dodos 
+    #                 SET Red = 929131
+    #                 WHERE id='{ctx.message.author.id}'
+    #             """)
+    #     conn.commit()
+    #     await ctx.send("Updated red role from database")
+    #     c.execute(f"""SELECT *
+    #             FROM dodos
+    #     """)
+    #     print(c.fetchall())
+    
+    # @commands.command()
+    # async def lookme(self,ctx):
+    #     c.execute(f"""SELECT *
+    #                 FROM dodos
+    #                 WHERE id='{ctx.message.author.id}'
+    #             """)
+    #     conn.commit()
+    #     await ctx.send("Looked up from database")
+    #     print(c.fetchall())
 
 
 
