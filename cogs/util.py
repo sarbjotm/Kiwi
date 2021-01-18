@@ -195,7 +195,7 @@ class Utilities(commands.Cog):
                           WHERE id = {ctx.message.author.id}
             """)
             roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value=" ", inline=False)
+            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
         await ctx.send(embed=embed)
     #Statements all work fine
     # @commands.command()
