@@ -76,7 +76,7 @@ async def on_ready():
                     FROM dodos
                     WHERE id = 688601337327648778
             """)
-    print(c.fetchall())
+    print(f"Adding 688601337327648778 c.fetchall()")
 
 
 
