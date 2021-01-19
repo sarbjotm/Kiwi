@@ -75,12 +75,17 @@ async def on_ready():
                     user = str(m.id)
                     embed=discord.Embed(title= m + "'s Roles" , color=0xe392fe)
                     embed.set_thumbnail(url=m.avatar_url)
-                    c.execute(f"""SELECT {role}
+                    c.execute(f"""SELECT {role[1]}
                                 FROM dodos
                                 WHERE id = {m.id}
             """)
                     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
                     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+                    c.execute(f"""SELECT *
+                                FROM dodos
+                                WHERE id = {m.id}
+                    """)
+                    print(c.fetchall())
         await channel.send(embed=embed)
 
 
@@ -109,7 +114,6 @@ async def help(ctx):
     embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
     embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space our your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=False)
-
     await ctx.send(embed=embed)
 
 client.run(os.environ['TOKEN'])
