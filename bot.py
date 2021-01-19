@@ -51,6 +51,8 @@ async def on_ready():
     
 
     for m in memberList:
+        user = str(m)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
@@ -66,15 +68,14 @@ async def on_ready():
                               WHERE id = {m.id}
             """)
                 user = str(m)
-                embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
                 embed.set_thumbnail(url=m.avatar_url)
-                c.execute(f"""SELECT {role}
+                c.execute(f"""SELECT {role[1]}
                             FROM dodos
                             WHERE id = {m.id}
                 """)
                 roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
                 embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-                await channel.send(embed=embed)
+        await channel.send(embed=embed)
 
 
 @client.event
