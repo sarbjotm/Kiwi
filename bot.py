@@ -75,7 +75,7 @@ async def on_ready():
                 """)
                 roleCount = (c.fetchone()[0])
                 roleCount = str(roleCount)
-                roleCount = roleCount + " Dodo " + str(role) + " roles"
+                roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
                 embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
         await channel.send(embed=embed)
 
@@ -91,7 +91,9 @@ async def on_member_join(member):
 async def on_command_error(ctx,error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
-    elif(error,commands.CommandNotFound):
+    elif isinstance(error,commands.CommandOnCooldown):
+        pass
+    elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
 
