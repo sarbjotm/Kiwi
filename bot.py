@@ -73,7 +73,8 @@ async def on_ready():
                             FROM dodos
                             WHERE id = {m.id}
                 """)
-                roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+                roleCount = (c.fetchone()[0])
+                roleCount = str(roleCount) + " Dodo " + role + " roles"
                 embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
         await channel.send(embed=embed)
 
