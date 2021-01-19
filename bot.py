@@ -146,7 +146,7 @@ async def on_command_error(ctx,error):
 
 @client.event
 async def on_command_completion(ctx):
-    if ctx.message == ",collect":
+    if ctx.command == "collect":
         guild = client.get_guild(744817281871249428)
         channel = guild.get_channel(800965152132431892)
         user = str(ctx.message.author)
@@ -160,8 +160,7 @@ async def on_command_completion(ctx):
             roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
             embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
         await channel.send(embed=embed)
-    else:
-        pass
+
 
 @client.command(pass_context=True)
 async def help(ctx):
