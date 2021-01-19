@@ -46,7 +46,6 @@ async def on_ready():
                       WHERE id = {m.id}
         """)
         conn.commit()
-        print(c.fetchall())
     
 
     for m in memberList:
@@ -71,7 +70,6 @@ async def on_ready():
                                 FROM dodos
                                 WHERE id = {m.id}
                 """)
-                print(c.fetchall())
 
 @client.event
 async def on_member_join(member):
@@ -79,6 +77,13 @@ async def on_member_join(member):
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
     conn.commit()
+
+@client.event
+async def on_command_error(ctx,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
+    elif(error,commands.CommandNotFound):
+        await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
 
 @client.command(pass_context=True)

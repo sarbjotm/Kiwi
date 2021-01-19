@@ -110,6 +110,29 @@ class Utilities(commands.Cog):
                     await member.remove_roles(roleRemove) 
                     
                     await ctx.send(f'Trade Completed!')
+                    channel = client.get_channel(800965152132431892)
+                    user = str(ctx.message.author)
+                    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+                    embed.set_thumbnail(url=ctx.message.author.avatar_url)
+                    for role in activateRoles:
+                        c.execute(f"""SELECT {role}
+                                    FROM dodos
+                                    WHERE id = {ctx.message.author.id}
+                        """)
+                        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+                        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+                    await channel.send(embed=embed) 
+                    user = str(member)
+                    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+                    embed.set_thumbnail(url=member.avatar_url)
+                    for role in activateRoles:
+                        c.execute(f"""SELECT {role}
+                                    FROM dodos
+                                    WHERE id = {member.author.id}
+                        """)
+                        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+                        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+                    await channel.send(embed=embed) 
                 elif msg == 'no':
                     await ctx.send(f'Trade Rejected!')
                 else:
@@ -147,7 +170,18 @@ class Utilities(commands.Cog):
         except:
             print("Error in getting role")
         await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-            
+        channel = client.get_channel(800965152132431892)
+        user = str(ctx.message.author)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        for role in activateRoles:
+            c.execute(f"""SELECT {role}
+                          FROM dodos
+                          WHERE id = {ctx.message.author.id}
+            """)
+            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        await channel.send(embed=embed)    
 
     @collect.error
     async def collect_error(self,ctx,error):
