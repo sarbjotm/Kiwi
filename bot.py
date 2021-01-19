@@ -144,7 +144,6 @@ async def on_command_error(ctx,error):
     elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
-@collect.complete
 @client.event
 async def on_command_completion(ctx):
     user = str(ctx.message.author)
