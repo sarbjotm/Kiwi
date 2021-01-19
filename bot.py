@@ -42,14 +42,6 @@ async def on_ready():
                       """)
         conn.commit()
 
-        print(f"Adding {m} into database as {m.id}")
-        c.execute(f"""SELECT *
-                      FROM dodos
-                      WHERE id = {m.id}
-        """)
-        conn.commit()
-        print(c.fetchall())
-
 
     for m in memberList:
         user = str(m)
@@ -58,7 +50,7 @@ async def on_ready():
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
-                if((m.id == "264645255427522560") and role == ("Dodo Copyright")):
+                if((m.id == '264645255427522560') and role == ('Dodo Copyrght')):
                     role = role.split(" ")
                     c.execute(f"""UPDATE dodos
                                 SET {role[1]} = 2
@@ -70,7 +62,7 @@ async def on_ready():
                     roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
                     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
 
-                elif((m.id == "233048072375107584") and (role == "Dodo Yellow")):
+                elif((m.id == '233048072375107584') and (role == 'Dodo Yellow')):
                     role = role.split(" ")
                     role = role.split(" ")
                     c.execute(f"""UPDATE dodos
@@ -83,7 +75,7 @@ async def on_ready():
                     roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
                     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
 
-                elif((m.id == "632326508949798925") and (role == "Dodo Bluev2")):
+                elif((m.id == '632326508949798925') and (role == 'Dodo Bluev2')):
                     role = role.split(" ")
                     c.execute(f"""UPDATE dodos
                                 SET {role[1]} = 2
@@ -96,7 +88,7 @@ async def on_ready():
                     roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
                     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
                 
-                elif((m.id == "200035991598268416") and (role == "Dodo Pinkv2")):
+                elif((m.id == '200035991598268416') and (role == 'Dodo Pinkv2')):
                     role = role.split(" ")
                     c.execute(f"""UPDATE dodos
                                 SET {role[1]} = 2
@@ -159,20 +151,19 @@ async def on_command_error(ctx,error):
 
 @client.event
 async def on_command_completion(ctx):
-    if ctx.command == "collect":
-        guild = client.get_guild(744817281871249428)
-        channel = guild.get_channel(800965152132431892)
-        user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        for role in activateRoles:
-            c.execute(f"""SELECT {role}
-                            FROM dodos
-                            WHERE id = {ctx.message.author.id}
-            """)
-            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        await channel.send(embed=embed)
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
+    user = str(ctx.message.author)
+    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+    embed.set_thumbnail(url=ctx.message.author.avatar_url)
+    for role in activateRoles:
+        c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+        """)
+        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+    await channel.send(embed=embed)
 
 
 @client.command(pass_context=True)
