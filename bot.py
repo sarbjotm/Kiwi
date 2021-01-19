@@ -84,19 +84,19 @@ async def on_member_join(member):
               """)
     conn.commit()
 
-# @client.event
-# async def on_command_error(ctx,error):
-#     if isinstance(error, commands.MissingRequiredArgument):
-#         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
-#     elif(error,commands.CommandNotFound):
-#         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
+@client.event
+async def on_command_error(ctx,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
+    elif(error,commands.CommandNotFound):
+        await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
 
 @client.command(pass_context=True)
 async def help(ctx):
     embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x59cbf0)
     embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
-    embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up")
+    embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up", inline=False)
     embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=False)
     embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin", inline=False)
     embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
