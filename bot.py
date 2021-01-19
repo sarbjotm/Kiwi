@@ -14,7 +14,6 @@ client.remove_command('help')
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
-channel = client.get_channel(800965152132431892)
 
 @client.command()
 async def load(ctx,extension):
@@ -32,6 +31,7 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     print("Bot is Ready")
     guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
     print(f"{guild}")
     memberList = guild.members
     print(memberList)

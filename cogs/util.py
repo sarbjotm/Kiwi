@@ -16,11 +16,12 @@ conn = sqlite3.connect(str(d))
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
-channel = client.get_channel(800965152132431892)
 
 class Utilities(commands.Cog):
     def __init__(self, client):
         self.client = client
+        guild = client.get_guild(744817281871249428)
+        channel = guild.get_channel(800965152132431892)
     
     @commands.command()
     async def ping(self,ctx):
@@ -171,7 +172,7 @@ class Utilities(commands.Cog):
         except:
             print("Error in getting role")
         await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-        channel = client.get_channel(800965152132431892)
+        channel = guild.get_channel(800965152132431892)
         user = str(ctx.message.author)
         embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
         embed.set_thumbnail(url=ctx.message.author.avatar_url)
