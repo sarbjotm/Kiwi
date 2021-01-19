@@ -14,6 +14,7 @@ client.remove_command('help')
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
 
 @client.command()
 async def load(ctx,extension):
@@ -48,7 +49,7 @@ async def on_ready():
         """)
         conn.commit()
         print(c.fetchall())
-    
+
 
     for m in memberList:
         user = str(m)
@@ -143,6 +144,20 @@ async def on_command_error(ctx,error):
     elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
+@collect.complete
+@client.event
+async def on_command_completion(ctx):
+    user = str(ctx.message.author)
+    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+    embed.set_thumbnail(url=ctx.message.author.avatar_url)
+    for role in activateRoles:
+        c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+        """)
+        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+    await ctx.send(embed=embed)
 
 @client.command(pass_context=True)
 async def help(ctx):
