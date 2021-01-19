@@ -14,6 +14,7 @@ client.remove_command('help')
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
+channel = client.get_channel(800965152132431892)
 
 @client.command()
 async def load(ctx,extension):
@@ -64,7 +65,6 @@ async def on_ready():
                               FROM dodos
                               WHERE id = {m.id}
             """)
-                channel = client.get_channel(800965152132431892)
                 user = str(m)
                 embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
                 embed.set_thumbnail(url=m.avatar_url)
