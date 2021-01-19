@@ -8,7 +8,7 @@ import asyncio
 from pathlib import Path
 botfile = os.path.dirname(os.getcwd())
 botfile = os.path.join(botfile, 'bot')
-from botfile import client
+# from botfile import client
 
 
 #TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
@@ -20,8 +20,6 @@ conn = sqlite3.connect(str(d))
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
-guild = client.get_guild(744817281871249428)
-channel = guild.get_channel(800965152132431892)
 
 class Utilities(commands.Cog):
     def __init__(self, client):
@@ -177,18 +175,18 @@ class Utilities(commands.Cog):
         except:
             print("Error in getting role")
         await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-        channel = guild.get_channel(800965152132431892)
-        user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        for role in activateRoles:
-            c.execute(f"""SELECT {role}
-                          FROM dodos
-                          WHERE id = {ctx.message.author.id}
-            """)
-            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        await channel.send(embed=embed)    
+        # channel = guild.get_channel(800965152132431892)
+        # user = str(ctx.message.author)
+        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        # for role in activateRoles:
+        #     c.execute(f"""SELECT {role}
+        #                   FROM dodos
+        #                   WHERE id = {ctx.message.author.id}
+        #     """)
+        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        #     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        # await channel.send(embed=embed)    
 
     @collect.error
     async def collect_error(self,ctx,error):
