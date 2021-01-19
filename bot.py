@@ -64,7 +64,17 @@ async def on_ready():
                               FROM dodos
                               WHERE id = {m.id}
             """)
-                print(c.fetchall())
+                channel = client.get_channel(800965152132431892)
+                user = str(m)
+                embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+                embed.set_thumbnail(url=m.avatar_url)
+                c.execute(f"""SELECT {role}
+                            FROM dodos
+                            WHERE id = {m.id}
+                """)
+                roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+                embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        await channel.send(embed=embed)
 
 
 @client.event
@@ -74,12 +84,12 @@ async def on_member_join(member):
               """)
     conn.commit()
 
-@client.event
-async def on_command_error(ctx,error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
-    elif(error,commands.CommandNotFound):
-        await ctx.send(f"That command does not exist. Use ,help for a list of commands")
+# @client.event
+# async def on_command_error(ctx,error):
+#     if isinstance(error, commands.MissingRequiredArgument):
+#         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
+#     elif(error,commands.CommandNotFound):
+#         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
 
 
 @client.command(pass_context=True)
