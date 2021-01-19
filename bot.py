@@ -104,11 +104,11 @@ async def help(ctx):
     embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x59cbf0)
     embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
     embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up")
-    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug")
-    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin")
-    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=True)
-    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space our your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=True)
-    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=True)
+    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=False)
+    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin", inline=False)
+    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
+    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space our your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
+    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=False)
 
     await ctx.send(embed=embed)
 
