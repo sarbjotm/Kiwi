@@ -46,47 +46,25 @@ async def on_ready():
                       WHERE id = {m.id}
         """)
         conn.commit()
+        print(c.fetchall())
     
+
     for m in memberList:
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
                 role = role.split(" ")
-                if(role[1] == "Yellow" and m.id == "309711741812604929"):
-                    c.execute(f"""UPDATE dodos
-                              SET {role[1]} = 2
+                c.execute(f"""UPDATE dodos
+                              SET {role[1]} = 1
                               WHERE id = {m.id}
-                """)
-                    conn.commit()
-                elif(role[1] == "Red" and m.id == "690023463762788378"):
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 2
-                                WHERE id = {m.id}
 
                     """)
-                    conn.commit()
-                else:
-                    c.execute(f"""Update dodos
-                                SET {role[1]} = 1
-                                WHERE id = {m.id}
-                """)
-                    conn.commit()
-                    channel = client.get_channel(800965152132431892)
-                    user = str(m.id)
-                    embed=discord.Embed(title= m + "'s Roles" , color=0xe392fe)
-                    embed.set_thumbnail(url=m.avatar_url)
-                    c.execute(f"""SELECT {role[1]}
-                                FROM dodos
-                                WHERE id = {m.id}
+                conn.commit()
+                c.execute(f"""SELECT *
+                              FROM dodos
+                              WHERE id = {m.id}
             """)
-                    roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-                    c.execute(f"""SELECT *
-                                FROM dodos
-                                WHERE id = {m.id}
-                    """)
-                    print(c.fetchall())
-        await channel.send(embed=embed)
+                print(c.fetchall())
 
 
 @client.event
