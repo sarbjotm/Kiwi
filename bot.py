@@ -47,7 +47,6 @@ async def on_ready():
         """)
         conn.commit()
     
-
     for m in memberList:
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
@@ -58,18 +57,32 @@ async def on_ready():
                               SET {role[1]} = 2
                               WHERE id = {m.id}
                 """)
+                    conn.commit()
                 elif(role[1] == "Red" and m.id == "690023463762788378"):
                     c.execute(f"""UPDATE dodos
                                 SET {role[1]} = 2
                                 WHERE id = {m.id}
 
                     """)
-                else:
                     conn.commit()
-                    c.execute(f"""SELECT *
-                                FROM dodos
+                else:
+                    c.execute(f"""Update dodos
+                                SET {role[1]} = 1
                                 WHERE id = {m.id}
                 """)
+                    conn.commit()
+                    channel = client.get_channel(800965152132431892)
+                    user = str(m.id)
+                    embed=discord.Embed(title= m + "'s Roles" , color=0xe392fe)
+                    embed.set_thumbnail(url=m.avatar_url)
+                    c.execute(f"""SELECT {role}
+                                FROM dodos
+                                WHERE id = {m.id}
+            """)
+                    roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        await channel.send(embed=embed)
+
 
 @client.event
 async def on_member_join(member):
