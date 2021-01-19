@@ -134,6 +134,19 @@ async def on_member_join(member):
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
     conn.commit()
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
+    user = str(member)
+    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+    embed.set_thumbnail(url=member.avatar_url)
+    for role in activateRoles:
+        c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {member.id}
+        """)
+        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+    await channel.send(embed=embed)
 
 @client.event
 async def on_command_error(ctx,error):
