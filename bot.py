@@ -100,19 +100,19 @@ async def on_command_error(ctx,error):
     channel = guild.get_channel(800965152132431892)
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
-        await channel.send(f"{ctx.message.author} didn't pass all arguments for {ctx.message}")
+        await channel.send(f"{ctx.message.author} didn't pass all arguments {error}")
     elif isinstance(error,commands.CommandOnCooldown):
         pass
     elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
-        await channel.send(f"{ctx.message.author} tried to use a command that does not exist")
+        await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
 
 
 @client.event
 async def on_command_completion(ctx):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(800965152132431892)
-    await channel.send(f"{ctx.message.author} successfully used {ctx.message}")
+    await channel.send(f"{ctx.message.author} successfully used a command")
 
 
 @client.command(pass_context=True)
