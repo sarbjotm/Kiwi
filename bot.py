@@ -51,73 +51,21 @@ async def on_ready():
         for role in rolesList:
             roleDiscord = discord.utils.get(guild.roles, name=role)
             if (roleDiscord in m.roles):
-                if((m.id == '264645255427522560') and role == ('Dodo Copyrght')):
-                    role = role.split(" ")
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 2
-                                WHERE id = {m.id}
+                role = role.split(" ")
+                c.execute(f"""UPDATE dodos
+                            SET {role[1]} = 1
+                            WHERE id = {m.id}
 
-                        """)
-                    roleCount = (c.fetchone()[0])
-                    roleCount = str(roleCount)
-                    roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-
-                elif((m.id == '233048072375107584') and (role == 'Dodo Yellow')):
-                    role = role.split(" ")
-                    role = role.split(" ")
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 2
-                                WHERE id = {m.id}
-
-                        """)
-                    roleCount = (c.fetchone()[0])
-                    roleCount = str(roleCount)
-                    roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-
-                elif((m.id == '632326508949798925') and (role == 'Dodo Bluev2')):
-                    role = role.split(" ")
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 2
-                                WHERE id = {m.id}
-
-                        """)
-                    role = role.split(" ")
-                    roleCount = (c.fetchone()[0])
-                    roleCount = str(roleCount)
-                    roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-                
-                elif((m.id == '200035991598268416') and (role == 'Dodo Pinkv2')):
-                    role = role.split(" ")
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 2
-                                WHERE id = {m.id}
-
-                        """)
-                    role = role.split(" ")
-                    roleCount = (c.fetchone()[0])
-                    roleCount = str(roleCount)
-                    roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-                    
-                else:
-                    role = role.split(" ")
-                    c.execute(f"""UPDATE dodos
-                                SET {role[1]} = 1
-                                WHERE id = {m.id}
-
-                        """)
-                    conn.commit()
-                    c.execute(f"""SELECT {role[1]}
-                                FROM dodos
-                                WHERE id = {m.id}
                     """)
-                    roleCount = (c.fetchone()[0])
-                    roleCount = str(roleCount)
-                    roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                    embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+                conn.commit()
+                c.execute(f"""SELECT {role[1]}
+                            FROM dodos
+                            WHERE id = {m.id}
+                """)
+                roleCount = (c.fetchone()[0])
+                roleCount = str(roleCount)
+                roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
+                embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
         await channel.send(embed=embed)
 
 
