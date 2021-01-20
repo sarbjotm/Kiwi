@@ -18,8 +18,8 @@ d = Path(__file__).resolve().parents[1]
 d = d/'members.db'
 conn = sqlite3.connect(str(d))
 c = conn.cursor()
-rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
-activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
+rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
+activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 
 class Utilities(commands.Cog):
     def __init__(self, client):
@@ -151,7 +151,7 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
         await ctx.message.author.add_roles(role)
@@ -162,7 +162,6 @@ class Utilities(commands.Cog):
             SET {roleAssign[1]} = {roleAssign[1]} + 1
             WHERE id = {ctx.message.author.id}
             """)
-            print("Adding...")
         except:
             print("Error in adding role...")
         try:
@@ -170,23 +169,22 @@ class Utilities(commands.Cog):
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
-            print("Looking up..,")
             conn.commit()
         except:
             print("Error in getting role")
         await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-        # channel = guild.get_channel(800965152132431892)
-        # user = str(ctx.message.author)
-        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        # for role in activateRoles:
-        #     c.execute(f"""SELECT {role}
-        #                   FROM dodos
-        #                   WHERE id = {ctx.message.author.id}
-        #     """)
-        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-        #     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        # await channel.send(embed=embed)    
+        channel = ctx.guild.get_channel(800965152132431892)
+        user = str(ctx.message.author)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        for role in activateRoles:
+            c.execute(f"""SELECT {role}
+                          FROM dodos
+                          WHERE id = {ctx.message.author.id}
+            """)
+            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        await channel.send(embed=embed)    
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -205,9 +203,11 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
+        role = str(role)
+        role = role[0].upper() + role[1:4].lower()+" "+role[5].upper()+role[6:].lower()
+        role = discord.utils.get(ctx.guild.roles,name=role)
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles")
-        
         elif (role in ctx.message.author.roles):
             for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
@@ -222,7 +222,7 @@ class Utilities(commands.Cog):
             await ctx.message.author.add_roles(roleAssign)
         
         else:
-            await ctx.send("You do not have that role")
+            await ctx.send("You do not have that role.")
     
     @commands.command()
     async def myroles(self,ctx):
@@ -298,12 +298,13 @@ class Utilities(commands.Cog):
         embed.add_field(name="Dodo Green", value="Green colouring", inline=False)
         embed.add_field(name="Dodo Teal", value="Teal colouring", inline=False)
         embed.add_field(name="Dodo Copyright", value="Some sort of blue", inline=False)
-        embed.add_field(name="Dodo Bluev2", value="Bluev2 colouring", inline=False)
+        embed.add_field(name="Dodo Cyan", value="Cyan colouring", inline=False)
         embed.add_field(name="Dodo Blue", value="Blue colouring", inline=False)
-        embed.add_field(name="Dodo Purplev2", value="Purplev2 colouring", inline=False)
+        embed.add_field(name="Dodo Grape", value="Grape colouring", inline=False)
         embed.add_field(name="Dodo Purple", value="Purple colouring", inline=False)
-        embed.add_field(name="Dodo Pinkv2", value="Pinkv2 colouring", inline=False)
+        embed.add_field(name="Dodo Rose", value="Rose colouring", inline=False)
         embed.add_field(name="Dodo Pink", value="Pink colouring", inline=False)
+        embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=False)
         await ctx.send(embed=embed)
 
     # @commands.command()

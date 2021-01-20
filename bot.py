@@ -13,8 +13,8 @@ client.remove_command('help')
 
 conn = sqlite3.connect('members.db')
 c = conn.cursor()
-rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Bluev2','Dodo Blue','Dodo Purplev2','Dodo Purple','Dodo Pinkv2','Dodo Pink']
-activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Bluev2','Blue','Purplev2','Purple','Pinkv2','Pink']
+rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
+activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 
 @client.command()
 async def load(ctx,extension):
@@ -142,28 +142,23 @@ async def on_member_join(member):
 
 @client.event
 async def on_command_error(ctx,error):
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
+        await channel.send(f"{ctx.message.author} didn't pass all arguments for {ctx.message}")
     elif isinstance(error,commands.CommandOnCooldown):
         pass
     elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
+        await channel.send(f"{ctx.message.author} tried to use a command that does not exist")
+
 
 @client.event
 async def on_command_completion(ctx):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(800965152132431892)
-    user = str(ctx.message.author)
-    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-    embed.set_thumbnail(url=ctx.message.author.avatar_url)
-    for role in activateRoles:
-        c.execute(f"""SELECT {role}
-                        FROM dodos
-                        WHERE id = {ctx.message.author.id}
-        """)
-        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-    await channel.send(embed=embed)
+    await channel.send(f"{ctx.message.author} successfully used {ctx.message}")
 
 
 @client.command(pass_context=True)
