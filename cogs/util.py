@@ -203,12 +203,8 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
-        role = str(role)
-        role = role[0].upper() + role[1:4].lower()+" "+role[5].upper()+role[6:].lower()
-        print(role)
-        role = discord.utils.get(ctx.guild.roles,name=role)
         if ((str(role) not in rolesList)):
-            await ctx.send("Only can activate collected Colour Roles")
+            await ctx.send("Only can activate collected Colour Roles. Make sure that you have entered the role correctly. Example: ,activate \"Dodo Red\" ")
         elif (role in ctx.message.author.roles):
             for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)

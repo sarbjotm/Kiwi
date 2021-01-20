@@ -88,8 +88,9 @@ async def on_member_join(member):
         roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
         embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
     await channel.send(embed=embed)
+    
     for role in autoroles:
-        roleAssign = discord.utils.get(guild.roles, name= role)
+        roleAssign = discord.utils.get(guild.roles, name=role)
         await member.add_roles(roleAssign)
         await channel.send(f"Added {role} to {member}")
 
