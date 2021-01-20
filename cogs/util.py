@@ -207,6 +207,8 @@ class Utilities(commands.Cog):
     async def activate(self,ctx,role: discord.Role):
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles.")
+            await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
+            await ctx.send("Example usage: ,activate \"Dodo Red\" ")
         elif (role in ctx.message.author.roles):
             for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
@@ -222,13 +224,9 @@ class Utilities(commands.Cog):
         
         else:
             await ctx.send("You do not have that role.")
+            await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
+            await ctx.send("Example usage: ,activate \"Dodo Red\" ")
         
-    @activate.error()
-    async def activate_error(self,ctx,error):
-        channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
-        await ctx.send("Example usage: ,activate \"Dodo Red\" ")
-        await channel.send(f"{ctx.message.author} experienced a {error}")
 
     @commands.command()
     async def myroles(self,ctx):
