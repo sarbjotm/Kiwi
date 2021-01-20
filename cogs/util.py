@@ -188,6 +188,7 @@ class Utilities(commands.Cog):
 
     @collect.error
     async def collect_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
             hours = int(seconds // 3600)
@@ -198,13 +199,14 @@ class Utilities(commands.Cog):
                 await ctx.send(f'Try again in {hours} hours {minutes} minutes and {int(seconds)} seconds')
             else:
                 await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
+            await channel.send(f"{ctx.message.author} experienced a {error}")
 
 
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
         if ((str(role) not in rolesList)):
-            await ctx.send("Only can activate collected Colour Roles. Make sure that you have entered the role correctly. Example: ,activate \"Dodo Red\" ")
+            await ctx.send("Only can activate collected Colour Roles.")
         elif (role in ctx.message.author.roles):
             for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
@@ -220,7 +222,14 @@ class Utilities(commands.Cog):
         
         else:
             await ctx.send("You do not have that role.")
-    
+        
+    @activate.error()
+    async def activate_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
+        await ctx.send("Example usage: ,activate \"Dodo Red\" ")
+        await channel.send(f"{ctx.message.author} experienced a {error}")
+
     @commands.command()
     async def myroles(self,ctx):
         user = str(ctx.message.author)
