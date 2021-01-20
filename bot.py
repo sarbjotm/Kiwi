@@ -15,6 +15,7 @@ conn = sqlite3.connect('members.db')
 c = conn.cursor()
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
+autoroles = ["Dodo Proper", "--------------- Colours---------------","------------- Holiday Roles -------------","--------------- Misc ---------------"]
 
 @client.command()
 async def load(ctx,extension):
@@ -139,6 +140,11 @@ async def on_member_join(member):
         roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
         embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
     await channel.send(embed=embed)
+    for role in autoroles:
+        roleAssign = discord.utils.get(guild.roles, name= role)
+        await member.add_roles(roleAssign)
+        await channel.send(f"Added {role} to {member}")
+
 
 @client.event
 async def on_command_error(ctx,error):
