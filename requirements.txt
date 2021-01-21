@@ -1,2 +1,2 @@
 discord.py[voice]
-my-sql-connector
+https://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.1.15.tar.gz 
