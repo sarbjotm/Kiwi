@@ -5,6 +5,7 @@ import os
 import random
 import sqlite3
 import asyncio
+import mysql
 from pathlib import Path
 botfile = os.path.dirname(os.getcwd())
 botfile = os.path.join(botfile, 'bot')
@@ -14,10 +15,13 @@ botfile = os.path.join(botfile, 'bot')
 #TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
 
 #Utils
-d = Path(__file__).resolve().parents[1]
-d = d/'members.db'
-conn = sqlite3.connect(str(d))
-c = conn.cursor()
+db = mysql.connector.connect(
+    host= os.environ['HOST'],
+    user = os.environ['USER'],
+    password = os.environ['PASSWORD']
+)
+
+c = db.cursor
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 
@@ -59,7 +63,7 @@ class Utilities(commands.Cog):
 
                     
                     """)
-                    conn.commit()
+
                     c.execute(f"""
                         UPDATE dodos
                         SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} - 1
@@ -68,7 +72,6 @@ class Utilities(commands.Cog):
                     
                     """)
 
-                    conn.commit()
                     await member.add_roles(role) #Add role (Make SQL Here)
                     #SQL
                     c.execute(f"""
@@ -77,14 +80,12 @@ class Utilities(commands.Cog):
                         WHERE id = {member.id}
 
                     """)
-                    conn.commit()
                     c.execute(f"""
                         UPDATE dodos
-                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} -1
+                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
                         WHERE id = {member.id}
 
                     """)
-                    conn.commit()
                     #SQL HERE CHECK IF == 1 THEN REMOVE
                     c.execute(f"""
                         SELECT {str(role).split(" ")[1]}
@@ -93,18 +94,24 @@ class Utilities(commands.Cog):
                     
                     
                     """)
-                    if(int(c.fetchone()[0]) == 0):
-                        await ctx.message.author.remove_roles(role)
+                    roleCount = c.fetchone()[0]
+                    print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
+                    if(int(roleCount) == 0):
+                        await ctx.message.author.remove_roles(role)
+                        print(f"Removed role")
+                    
                     c.execute(f"""
                         SELECT {str(roleOther).split(" ")[1]}
                         FROM dodos
                         WHERE {member.id}
                     
                     """)
-                    if(int(c.fetchone()[0]) == 0):
+                    print(f"{member} has {roleCount} {str(role)}")
+                    roleCount = c.fetchone()[0]
+                    if(int(roleCount) == 0):
                         await member.remove_roles(roleOther)
-                    #SQL HERE
+                    
                     role = str(role)
                     role = role.split(" ")[1]
                     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
@@ -169,7 +176,6 @@ class Utilities(commands.Cog):
                         FROM dodos 
                         WHERE id='{ctx.message.author.id}'
                     """)
-            conn.commit()
         except:
             print("Error in getting role")
         await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
@@ -215,7 +221,6 @@ class Utilities(commands.Cog):
                     if(roleRemove in ctx.message.author.roles):
                         await ctx.message.author.remove_roles(roleRemove)
                         break
-            print(role)
             role = str(role)
             role = role.split()[1]
             print(role)
@@ -239,7 +244,7 @@ class Utilities(commands.Cog):
                           WHERE id = {ctx.message.author.id}
             """)
             roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+            embed.add_field(name=roleCount, inline=False)
         await ctx.send(embed=embed)
     #Statements all work fine
     # @commands.command()

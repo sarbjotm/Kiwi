@@ -2,7 +2,7 @@ import discord
 import asyncio
 import os
 import random
-import sqlite3
+import mysql.connector
 from discord.ext import commands, tasks
 
 #TODO: Have bot add members to database with according values when it is run
@@ -11,8 +11,14 @@ intents.members = True
 client = commands.Bot(command_prefix = ',',intents=intents)
 client.remove_command('help')
 
-conn = sqlite3.connect('members.db')
-c = conn.cursor()
+db = mysql.connector.connect(
+    host= os.environ['HOST'],
+    user = os.environ['USER'],
+    password = os.environ['PASSWORD']
+)
+
+c = db.cursor
+
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 autoroles = ["Dodo Proper", "--------------- Colours---------------","------------- Holiday Roles -------------","--------------- Misc ---------------"]
@@ -41,7 +47,6 @@ async def on_ready():
         c.execute(f"""INSERT INTO dodos 
                       VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
                       """)
-        conn.commit()
 
 
     for m in memberList:
@@ -53,11 +58,11 @@ async def on_ready():
             if (roleDiscord in m.roles):
                 role = role.split(" ")
                 c.execute(f"""UPDATE dodos
-                            SET {role[1]} = 1
+                            SET {role[1]} = 2
                             WHERE id = {m.id}
 
                     """)
-                conn.commit()
+                
                 c.execute(f"""SELECT {role[1]}
                             FROM dodos
                             WHERE id = {m.id}
@@ -74,7 +79,7 @@ async def on_member_join(member):
     c.execute(f"""INSERT INTO dodos 
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
-    conn.commit()
+    
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(800965152132431892)
     user = str(member)
