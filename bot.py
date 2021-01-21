@@ -44,10 +44,10 @@ async def on_ready():
     print(f"{guild}")
     memberList = guild.members
     print(memberList)
-    # for m in memberList:
-    #     c.execute(f"""INSERT INTO dodos 
-    #                   VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-    #                   """)
+    for m in memberList:
+        c.execute(f"""INSERT INTO dodos 
+                      VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                      """)
 
 
     for m in memberList:
@@ -71,7 +71,7 @@ async def on_ready():
                 roleCount = (c.fetchone()[0])
                 roleCount = str(roleCount)
                 roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+                embed.add_field(name=roleCount,inline=False)
         await channel.send(embed=embed)
 
 
