@@ -44,10 +44,10 @@ async def on_ready():
     print(f"{guild}")
     memberList = guild.members
     print(memberList)
-    for m in memberList:
-        c.execute(f"""INSERT INTO dodos 
-                      VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                      """)
+    # for m in memberList:
+    #     c.execute(f"""INSERT INTO dodos 
+    #                   VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+    #                   """)
 
 
     for m in memberList:
