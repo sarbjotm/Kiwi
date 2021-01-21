@@ -71,7 +71,7 @@ async def on_ready():
                 roleCount = (c.fetchone()[0])
                 roleCount = str(roleCount)
                 roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                embed.add_field(name=roleCount,value=" ",inline=False)
+                embed.add_field(name=roleCount,value = "Role info",inline=False)
         await channel.send(embed=embed)
 
 
