@@ -18,7 +18,8 @@ botfile = os.path.join(botfile, 'bot')
 db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
-    password = os.environ['PASSWORD']
+    password = os.environ['PASSWORD'],
+    database = "heroku_a92c96d7f576fa5"
 )
 
 c = db.cursor
