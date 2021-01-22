@@ -2,7 +2,7 @@
 
 # SFU Dodo Club - Kiwi
 [![discord.py](https://img.shields.io/badge/discord-py-blue.svg)](https://github.com/Rapptz/discord.py)
-[![discord.Dodo Club](https://img.shields.io/badge/discord-blue.svg)](discord.gg/nMCftGkjnC)
+[![Dodo Club](https://img.shields.io/badge/discord-blue.svg)](discord.gg/nMCftGkjnC)
 
 **Kiwi** is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on Heroku and has an MySQL Database connected to it. 
 
