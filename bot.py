@@ -39,41 +39,8 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    # guild = client.get_guild(744817281871249428)
-    # channel = guild.get_channel(800965152132431892)
-    # print(f"{guild}")
-    # memberList = guild.members
-    # print(memberList)
-    # for m in memberList:
-    #     c.execute(f"""INSERT INTO dodos 
-    #                   VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-    #                   """)
-    #     db.commit()
-
-    # for m in memberList:
-    #     user = str(m)
-    #     embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-    #     embed.set_thumbnail(url=m.avatar_url)
-    #     for role in rolesList:
-    #         roleDiscord = discord.utils.get(guild.roles, name=role)
-    #         if (roleDiscord in m.roles):
-    #             role = role.split(" ")
-    #             c.execute(f"""UPDATE dodos
-    #                         SET {role[1]} = 2
-    #                         WHERE id = {m.id}
-
-    #                 """)
-    #             db.commit()
-                
-    #             c.execute(f"""SELECT {role[1]}
-    #                         FROM dodos
-    #                         WHERE id = {m.id}
-    #             """)
-    #             roleCount = (c.fetchone()[0])
-    #             roleCount = str(roleCount)
-    #             roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-    #             embed.add_field(name=roleCount,value = "Role info",inline=False)
-    #     await channel.send(embed=embed)
+    channel = client.get_channel(744817323973804093)
+    await channel.send("Napkin does not drink water!")
 
 
 @client.event
@@ -130,18 +97,6 @@ async def help(ctx):
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=False)
     await ctx.send(embed=embed)
 
-
-@client.command()
-async def testingsql(ctx,message):
-    c.execute(f"""SELECT {message}
-                    FROM dodos
-                    WHERE id = {ctx.message.author.id}
-    
-    
-    """)
-    roleCount = ''.join(map(str,c.fetchall()[0]))
-    print(roleCount)
-    await ctx.send(f"{roleCount}")
 
 client.run(os.environ['TOKEN'])
 
