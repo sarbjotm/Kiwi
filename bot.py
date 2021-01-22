@@ -135,4 +135,16 @@ async def help(ctx):
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b]", inline=False)
     await ctx.send(embed=embed)
 
+
+@client.command()
+async def testingsql(ctx,message):
+    c.execute(f"""SELECT {message}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+    """)
+    await ctx.send(f"{c.fetchall()[0]}")
+
 client.run(os.environ['TOKEN'])
+

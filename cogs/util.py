@@ -206,16 +206,6 @@ class Utilities(commands.Cog):
 
 
     @commands.command()
-    async def testingsql(self,ctx,message):
-        c.execute(f"""SELECT {message}
-                      FROM dodos
-                      WHERE id = {ctx.message.author.id}
-        
-        
-        """)
-        print(c.fetchone())
-        
-    @commands.command()
     async def activate(self,ctx,role: discord.Role):
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles.")
@@ -241,17 +231,19 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def myroles(self,ctx):
-        user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        for role in activateRoles:
-            c.execute(f"""SELECT {role}
-                          FROM dodos
-                          WHERE id = {ctx.message.author.id}
-            """)
-            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount,value = "Role info",inline=False)
-        await ctx.send(embed=embed)
+        await ctx.send("Under maintenance")
+        # user = str(ctx.message.author)
+        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        # for role in activateRoles:
+        #     c.execute(f"""SELECT {role}
+        #                   FROM dodos
+        #                   WHERE id = {ctx.message.author.id}
+        #     """)
+        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        #     embed.add_field(name=roleCount,value = "Role info",inline=False)
+        # await ctx.send(embed=embed)
+        
     #Statements all work fine
     # @commands.command()
     # async def addme(self,ctx):
