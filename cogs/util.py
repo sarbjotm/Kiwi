@@ -7,10 +7,6 @@ import asyncio
 import mysql
 from pathlib import Path
 
-
-#TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
-
-#Utils
 db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
@@ -19,6 +15,10 @@ db = mysql.connector.connect(
 )
 
 c = db.cursor()
+
+#TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
+
+#Utils
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 
@@ -26,7 +26,6 @@ class Utilities(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    
     @commands.command()
     async def ping(self,ctx):
         await ctx.send(f'Pong!')
@@ -157,40 +156,38 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
-        print(roleAssign)
-        role = discord.utils.get(ctx.guild.roles, name=roleAssign)
-        await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        roleAssign = roleAssign.split(" ")
-        try:
-            c.execute(f"""UPDATE dodos
-            SET {roleAssign[1]} = {roleAssign[1]} + 1
-            WHERE id = {ctx.message.author.id}
-            """)
-            db.commit()
-        except:
-            print("Error in adding role...")
-        try:
-            c.execute(f"""SELECT {roleAssign[1]} 
-                        FROM dodos 
-                        WHERE id='{ctx.message.author.id}'
-                    """)
-        except:
-            print("Error in getting role")
-        await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-        channel = ctx.guild.get_channel(800965152132431892)
-        user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        for role in activateRoles:
-            c.execute(f"""SELECT {role}
-                          FROM dodos
-                          WHERE id = {ctx.message.author.id}
-            """)
-            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        await channel.send(embed=embed)    
+        await ctx.send("Under maintenance")
+        # roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        # print(roleAssign)
+        # role = discord.utils.get(ctx.guild.roles, name=roleAssign)
+        # await ctx.message.author.add_roles(role)
+        # await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        # roleAssign = roleAssign.split(" ")
+
+        # c.execute(f"""UPDATE dodos
+        # SET {roleAssign[1]} = {roleAssign[1]} + 1
+        # WHERE id = {ctx.message.author.id}
+        # """)
+        # db.commit()
+
+        # c.execute(f"""SELECT {roleAssign[1]} 
+        #             FROM dodos 
+        #             WHERE id='{ctx.message.author.id}'
+        #         """)
+            
+        # await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
+        # channel = ctx.guild.get_channel(800965152132431892)
+        # user = str(ctx.message.author)
+        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        # for role in activateRoles:
+        #     c.execute(f"""SELECT {role}
+        #                   FROM dodos
+        #                   WHERE id = {ctx.message.author.id}
+        #     """)
+        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+        #     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        # await channel.send(embed=embed)    
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -208,7 +205,16 @@ class Utilities(commands.Cog):
             await channel.send(f"{ctx.message.author} experienced a {error}")
 
 
-
+    @commands.command()
+    async def testingsql(self,ctx,message):
+        c.execute(f"""SELECT {message}
+                      FROM dodos
+                      WHERE id = {ctx.message.author.id}
+        
+        
+        """)
+        print(c.fetchone())
+        
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
         if ((str(role) not in rolesList)):

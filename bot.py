@@ -39,41 +39,41 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
-    print(f"{guild}")
-    memberList = guild.members
-    print(memberList)
-    for m in memberList:
-        c.execute(f"""INSERT INTO dodos 
-                      VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-                      """)
-        db.commit()
+    # guild = client.get_guild(744817281871249428)
+    # channel = guild.get_channel(800965152132431892)
+    # print(f"{guild}")
+    # memberList = guild.members
+    # print(memberList)
+    # for m in memberList:
+    #     c.execute(f"""INSERT INTO dodos 
+    #                   VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+    #                   """)
+    #     db.commit()
 
-    for m in memberList:
-        user = str(m)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=m.avatar_url)
-        for role in rolesList:
-            roleDiscord = discord.utils.get(guild.roles, name=role)
-            if (roleDiscord in m.roles):
-                role = role.split(" ")
-                c.execute(f"""UPDATE dodos
-                            SET {role[1]} = 2
-                            WHERE id = {m.id}
+    # for m in memberList:
+    #     user = str(m)
+    #     embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+    #     embed.set_thumbnail(url=m.avatar_url)
+    #     for role in rolesList:
+    #         roleDiscord = discord.utils.get(guild.roles, name=role)
+    #         if (roleDiscord in m.roles):
+    #             role = role.split(" ")
+    #             c.execute(f"""UPDATE dodos
+    #                         SET {role[1]} = 2
+    #                         WHERE id = {m.id}
 
-                    """)
-                db.commit()
+    #                 """)
+    #             db.commit()
                 
-                c.execute(f"""SELECT {role[1]}
-                            FROM dodos
-                            WHERE id = {m.id}
-                """)
-                roleCount = (c.fetchone()[0])
-                roleCount = str(roleCount)
-                roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
-                embed.add_field(name=roleCount,value = "Role info",inline=False)
-        await channel.send(embed=embed)
+    #             c.execute(f"""SELECT {role[1]}
+    #                         FROM dodos
+    #                         WHERE id = {m.id}
+    #             """)
+    #             roleCount = (c.fetchone()[0])
+    #             roleCount = str(roleCount)
+    #             roleCount = roleCount + " Dodo " + str(role[0]) + " " + str(role[1]) + " roles"
+    #             embed.add_field(name=roleCount,value = "Role info",inline=False)
+    #     await channel.send(embed=embed)
 
 
 @client.event
