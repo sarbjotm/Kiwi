@@ -157,37 +157,37 @@ class Utilities(commands.Cog):
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
         await ctx.send("Under maintenance")
-        # roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
-        # print(roleAssign)
-        # role = discord.utils.get(ctx.guild.roles, name=roleAssign)
-        # await ctx.message.author.add_roles(role)
-        # await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-        # roleAssign = roleAssign.split(" ")
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        print(roleAssign)
+        role = discord.utils.get(ctx.guild.roles, name=roleAssign)
+        await ctx.message.author.add_roles(role)
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        roleAssign = roleAssign.split(" ")
 
-        # c.execute(f"""UPDATE dodos
-        # SET {roleAssign[1]} = {roleAssign[1]} + 1
-        # WHERE id = {ctx.message.author.id}
-        # """)
-        # db.commit()
+        c.execute(f"""UPDATE dodos
+        SET {roleAssign[1]} = {roleAssign[1]} + 1
+        WHERE id = {ctx.message.author.id}
+        """)
+        db.commit()
 
-        # c.execute(f"""SELECT {roleAssign[1]} 
-        #             FROM dodos 
-        #             WHERE id='{ctx.message.author.id}'
-        #         """)
-            
-        # await ctx.send(f'You now have {c.fetchone()[0]} {str(role)} roles')
-        # channel = ctx.guild.get_channel(800965152132431892)
-        # user = str(ctx.message.author)
-        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        # for role in activateRoles:
-        #     c.execute(f"""SELECT {role}
-        #                   FROM dodos
-        #                   WHERE id = {ctx.message.author.id}
-        #     """)
-        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-        #     embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        # await channel.send(embed=embed)    
+        c.execute(f"""SELECT {roleAssign[1]} 
+                    FROM dodos 
+                    WHERE id='{ctx.message.author.id}'
+                """)
+        
+        await ctx.send(f'You now have {c.fetchall()[0]} {str(role)} roles')
+        channel = ctx.guild.get_channel(800965152132431892)
+        user = str(ctx.message.author)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        for role in activateRoles:
+            c.execute(f"""SELECT {role}
+                          FROM dodos
+                          WHERE id = {ctx.message.author.id}
+            """)
+            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
+            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
+        await channel.send(embed=embed)    
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -314,28 +314,19 @@ class Utilities(commands.Cog):
         embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=False)
         await ctx.send(embed=embed)
 
-    # @commands.command()
-    # async def admembers(self,ctx):
-    #     admin = discord.utils.get(ctx.guild.roles, name = "Dodo Op")
-    #     if (admin in ctx.message.author.roles):
-    #         members = ctx.guild.members
-    #         for member in members:
-    #             c.execute(f"""INSERT INTO dodos 
-    #                         VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
-    #                         """)
-    #             conn.commit()
-    #             print(f"Adding {member} as {member.id}")
-    #             for role in rolesList:
-    #                 roleDiscord = discord.utils.get(ctx.guild.roles, name=role)
-    #                 if (roleDiscord in member.roles):
-    #                     role = role.split(" ")
-    #                     c.execute(f"""UPDATE dodos
-    #                             SET {role[1]} = {role.split()[1]} - 1
-    #                             WHERE id = {ctx.message.author.id}
+    @commands.command()
+    async def testingsqltwo(self,ctx,message):
+        c.execute(f"""SELECT {message}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+        
+        
+        """)
+        roleCount = ''.join(map(str,c.fetchall()[0]))
+        print(roleCount)
+        await ctx.send(f"{roleCount}")
 
-    #                         """)
-    #     else:
-    #         await ctx.send("Invalid permissions")
+
 
 #setup
 def setup(client):
