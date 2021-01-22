@@ -162,7 +162,6 @@ class Utilities(commands.Cog):
         await ctx.message.author.add_roles(role)
         await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
         roleAssign = roleAssign.split(" ")
-
         c.execute(f"""UPDATE dodos
         SET {roleAssign[1]} = {roleAssign[1]} + 1
         WHERE id = {ctx.message.author.id}
@@ -175,7 +174,8 @@ class Utilities(commands.Cog):
     
     
         """)
-        roleCount = ''.join(map(str,c.fetchall()[0]))
+        roleCount = ''.join(map(str,c.fetchone()[0]))
+        print(roleCount)
         await ctx.send(f'You now have {roleCount} {str(role)} roles')
 
     @collect.error
