@@ -40,7 +40,6 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     print("Bot is Ready")
     channel = client.get_channel(744817323973804093)
-    await channel.send("Napkin does not drink water!")
 
 
 @client.event

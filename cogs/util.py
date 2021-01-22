@@ -7,14 +7,15 @@ import asyncio
 import mysql
 from pathlib import Path
 
-db = mysql.connector.connect(
-    host= os.environ['HOST'],
-    user = os.environ['USER'],
-    password = os.environ['PASSWORD'],
-    database = os.environ['DATABASE']
-)
 
-c = db.cursor()
+# db = mysql.connector.connect(
+#     host= os.environ['HOST'],
+#     user = os.environ['USER'],
+#     password = os.environ['PASSWORD'],
+#     database = os.environ['DATABASE']
+# )
+
+# c = db.cursor()
 
 #TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
 
@@ -38,7 +39,14 @@ class Utilities(commands.Cog):
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
         if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
             await ctx.send("Trade only collectable roles")
-        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):    
+        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):  
+            db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+            c = db.cursor()  
             await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleOther}')
             await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
             try:
@@ -118,7 +126,8 @@ class Utilities(commands.Cog):
                     roleOther = roleOther.split()[1]
                     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
                     await member.remove_roles(roleRemove) 
-                    
+                    c.close()
+                    db.close()
                     await ctx.send(f'Trade Completed!')
                     # channel = client.get_channel(800965152132431892)
                     # user = str(ctx.message.author)
@@ -156,6 +165,13 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
@@ -177,6 +193,8 @@ class Utilities(commands.Cog):
         roleCount = ''.join(map(str,c.fetchall()[0]))
         print(roleCount)
         await ctx.send(f'You now have {roleCount} {str(role)} roles')
+        c.close()
+        db.close()
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -220,6 +238,13 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def myroles(self,ctx):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
         user = str(ctx.message.author)
         embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
         embed.set_thumbnail(url=ctx.message.author.avatar_url)
@@ -235,7 +260,8 @@ class Utilities(commands.Cog):
             embed.add_field(name=roleCount,value = "Role info",inline=False)
 
         await ctx.send(embed=embed)
-
+        c.close()
+        db.close()
 
     @commands.command()
     async def roles(self,ctx):
@@ -254,19 +280,6 @@ class Utilities(commands.Cog):
         embed.add_field(name="Dodo Pink", value="Pink colouring", inline=False)
         embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=False)
         await ctx.send(embed=embed)
-
-    @commands.command()
-    async def testingsqltwo(self,ctx,message):
-        c.execute(f"""SELECT {message}
-                        FROM dodos
-                        WHERE id = {ctx.message.author.id}
-        
-        
-        """)
-        roleCount = ''.join(map(str,c.fetchall()[0]))
-        print(roleCount)
-        await ctx.send(f"{roleCount}")
-
 
 
 #setup
