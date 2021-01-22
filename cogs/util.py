@@ -92,7 +92,7 @@ class Utilities(commands.Cog):
                     
                     
                     """)
-                    roleCount = c.fetchone()[0]
+                    roleCount = ''.join(map(str,c.fetchall()[0]))
                     print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
                     if(int(roleCount) == 0):
@@ -106,7 +106,7 @@ class Utilities(commands.Cog):
                     
                     """)
                     print(f"{member} has {roleCount} {str(role)}")
-                    roleCount = c.fetchone()[0]
+                    roleCount = ''.join(map(str,c.fetchall()[0]))
                     if(int(roleCount) == 0):
                         await member.remove_roles(roleOther)
                     
@@ -156,7 +156,6 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        await ctx.send("Under maintenance")
         roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
@@ -170,24 +169,14 @@ class Utilities(commands.Cog):
         """)
         db.commit()
 
-        c.execute(f"""SELECT {roleAssign[1]} 
-                    FROM dodos 
-                    WHERE id='{ctx.message.author.id}'
-                """)
-        
-        await ctx.send(f'You now have {c.fetchall()[0]} {str(role)} roles')
-        channel = ctx.guild.get_channel(800965152132431892)
-        user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        for role in activateRoles:
-            c.execute(f"""SELECT {role}
-                          FROM dodos
-                          WHERE id = {ctx.message.author.id}
-            """)
-            roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-        await channel.send(embed=embed)    
+        c.execute(f"""SELECT {roleAssign[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+        """)
+        roleCount = ''.join(map(str,c.fetchall()[0]))
+        await ctx.send(f'You now have {roleCount} {str(role)} roles')
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -231,69 +220,21 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def myroles(self,ctx):
-        await ctx.send("Under maintenance")
-        # user = str(ctx.message.author)
-        # embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        # embed.set_thumbnail(url=ctx.message.author.avatar_url)
-        # for role in activateRoles:
-        #     c.execute(f"""SELECT {role}
-        #                   FROM dodos
-        #                   WHERE id = {ctx.message.author.id}
-        #     """)
-        #     roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-        #     embed.add_field(name=roleCount,value = "Role info",inline=False)
-        # await ctx.send(embed=embed)
+        user = str(ctx.message.author)
+        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        for role in activateRoles:
+            c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
         
-    #Statements all work fine
-    # @commands.command()
-    # async def addme(self,ctx):
-    #     c.execute(f"""INSERT INTO dodos(id,Red,Orange,Yellow,Green,Teal,Copyright,Bluev2,Blue,Purple,Purplev2,Pink,Pinkv2,money)
-    #             VALUES ('{ctx.message.author.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+        
+        """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            roleCount = roleCount + " Dodo " + role + " roles"
+            embed.add_field(name=roleCount,value = "Role info",inline=False)
 
-    #     """)
-    #     conn.commit()
-    #     await ctx.send("Added into database")
-    #     c.execute(f"""SELECT *
-    #             FROM dodos
-    #             WHERE id = {ctx.message.author.id}
-    #     """)
-    #     print(c.fetchall())
-
-    # @commands.command()
-    # async def deleteme(self,ctx):
-    #     c.execute(f"""DELETE from dodos 
-    #             WHERE id='{ctx.message.author.id}'
-    #     """)
-    #     conn.commit()
-    #     await ctx.send("Deleted user from database")
-    #     c.execute(f"""SELECT *
-    #             FROM dodos
-
-    #     """)
-    #     print(c.fetchall())
-
-    # @commands.command()
-    # async def updateme(self,ctx):
-    #     c.execute(f"""UPDATE dodos 
-    #                 SET Red = 929131
-    #                 WHERE id='{ctx.message.author.id}'
-    #             """)
-    #     conn.commit()
-    #     await ctx.send("Updated red role from database")
-    #     c.execute(f"""SELECT *
-    #             FROM dodos
-    #     """)
-    #     print(c.fetchall())
-    
-    # @commands.command()
-    # async def lookme(self,ctx):
-    #     c.execute(f"""SELECT *
-    #                 FROM dodos
-    #                 WHERE id='{ctx.message.author.id}'
-    #             """)
-    #     conn.commit()
-    #     await ctx.send("Looked up from database")
-    #     print(c.fetchall())
+        await ctx.send(embed=embed)
 
 
     @commands.command()
