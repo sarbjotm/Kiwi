@@ -15,7 +15,7 @@ db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
     password = os.environ['PASSWORD'],
-    database = "heroku_a92c96d7f576fa5"
+    database = os.environ['DATABASE']
 )
 
 c = db.cursor()
@@ -48,7 +48,7 @@ async def on_ready():
         c.execute(f"""INSERT INTO dodos 
                       VALUES ('{m.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
                       """)
-
+        db.commit()
 
     for m in memberList:
         user = str(m)
@@ -63,6 +63,7 @@ async def on_ready():
                             WHERE id = {m.id}
 
                     """)
+                db.commit()
                 
                 c.execute(f"""SELECT {role[1]}
                             FROM dodos
@@ -80,7 +81,7 @@ async def on_member_join(member):
     c.execute(f"""INSERT INTO dodos 
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
-    
+    db.commit()
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(800965152132431892)
     user = str(member)

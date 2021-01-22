@@ -3,13 +3,9 @@ from datetime import datetime, timedelta
 from discord.ext import commands
 import os
 import random
-import sqlite3
 import asyncio
 import mysql
 from pathlib import Path
-botfile = os.path.dirname(os.getcwd())
-botfile = os.path.join(botfile, 'bot')
-# from botfile import client
 
 
 #TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
@@ -19,7 +15,7 @@ db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
     password = os.environ['PASSWORD'],
-    database = "heroku_a92c96d7f576fa5"
+    database = os.environ['DATABASE']
 )
 
 c = db.cursor()
@@ -64,7 +60,7 @@ class Utilities(commands.Cog):
 
                     
                     """)
-
+                    db.commit()
                     c.execute(f"""
                         UPDATE dodos
                         SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} - 1
@@ -72,7 +68,7 @@ class Utilities(commands.Cog):
 
                     
                     """)
-
+                    db.commit()
                     await member.add_roles(role) #Add role (Make SQL Here)
                     #SQL
                     c.execute(f"""
@@ -81,12 +77,14 @@ class Utilities(commands.Cog):
                         WHERE id = {member.id}
 
                     """)
+                    db.commit()
                     c.execute(f"""
                         UPDATE dodos
                         SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
                         WHERE id = {member.id}
 
                     """)
+                    db.commit()
                     #SQL HERE CHECK IF == 1 THEN REMOVE
                     c.execute(f"""
                         SELECT {str(role).split(" ")[1]}
@@ -170,6 +168,7 @@ class Utilities(commands.Cog):
             SET {roleAssign[1]} = {roleAssign[1]} + 1
             WHERE id = {ctx.message.author.id}
             """)
+            db.commit()
         except:
             print("Error in adding role...")
         try:
