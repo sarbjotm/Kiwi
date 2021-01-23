@@ -7,33 +7,12 @@ import asyncio
 import mysql
 from pathlib import Path
 
-
-# db = mysql.connector.connect(
-#     host= os.environ['HOST'],
-#     user = os.environ['USER'],
-#     password = os.environ['PASSWORD'],
-#     database = os.environ['DATABASE']
-# )
-
-# c = db.cursor()
-
-#TODO: Check if redeploying bot resets the database, if it does reclone heroku and get latest file before each commit
-
-#Utils
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 
 class Utilities(commands.Cog):
     def __init__(self, client):
         self.client = client
-
-    @commands.command()
-    async def ping(self,ctx):
-        await ctx.send(f'Pong!')
-    
-    @commands.command()
-    async def userid(self,ctx,member : discord.Member):
-        await ctx.send(f'{ctx.message.author.id} is who sent the message and {member.id} is the tagged person' )
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
@@ -185,8 +164,8 @@ class Utilities(commands.Cog):
             if hours != 0:
                 await ctx.send(f'Try again in {hours} hours {minutes} minutes and {int(seconds)} seconds')
             else:
-                await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
-            await channel.send(f"{ctx.message.author} experienced a {error}")
+                await ctx.send(f'Try again in {minutes} minutes and {int(seconds)} seconds')
+            await channel.send(f"{ctx.message.author} experienced a cooldown error. {error}")
 
 
     @commands.command()

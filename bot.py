@@ -87,6 +87,10 @@ async def on_command_error(ctx,error):
 async def on_command_completion(ctx):
     await channel.send(f"{ctx.message.author} successfully used a command")
 
+@client.command()
+async def ping(ctx):
+    await ctx.send(f'Pong!')
+
 
 @client.command(pass_context=True)
 async def help(ctx):
