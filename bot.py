@@ -11,18 +11,10 @@ intents.members = True
 client = commands.Bot(command_prefix = ',',intents=intents)
 client.remove_command('help')
 
-db = mysql.connector.connect(
-    host= os.environ['HOST'],
-    user = os.environ['USER'],
-    password = os.environ['PASSWORD'],
-    database = os.environ['DATABASE']
-)
-
-c = db.cursor()
-
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 autoroles = ["Dodo Proper", "--------------- Colours---------------","------------- Holiday Roles -------------","--------------- Misc ---------------"]
+channel = client.get_channel(744817323973804093)
 
 @client.command()
 async def load(ctx,extension):
@@ -39,34 +31,48 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     print("Bot is Ready")
-    channel = client.get_channel(744817323973804093)
 
 
 @client.event
 async def on_member_join(member):
+    db = mysql.connector.connect(
+    host= os.environ['HOST'],
+    user = os.environ['USER'],
+    password = os.environ['PASSWORD'],
+    database = os.environ['DATABASE']
+)
+
+    c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
     db.commit()
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
-    user = str(member)
-    embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-    embed.set_thumbnail(url=member.avatar_url)
-    for role in activateRoles:
-        c.execute(f"""SELECT {role}
-                        FROM dodos
-                        WHERE id = {member.id}
-        """)
-        roleCount = str(c.fetchone()[0]) + " Dodo " + role + " roles"
-        embed.add_field(name=roleCount, value="Information about how many of this role you have", inline=False)
-    await channel.send(embed=embed)
+    c.close()
+    db.close()
+    await channel.send(f"Added {member} to database")
+
+@client.event
+async def on_member_leave(member):
+    db = mysql.connector.connect(
+    host= os.environ['HOST'],
+    user = os.environ['USER'],
+    password = os.environ['PASSWORD'],
+    database = os.environ['DATABASE']
+)
+
+    c = db.cursor()
+    c.execute(f"""DELETE FROM dodos 
+                  WHERE id = {member.id}
+              """)
+    db.commit()
+    c.close()
+    db.close()
+    await channel.send(f"Added {member} to database")
+
 
 
 @client.event
 async def on_command_error(ctx,error):
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} didn't pass all arguments {error}")
@@ -79,8 +85,6 @@ async def on_command_error(ctx,error):
 
 @client.event
 async def on_command_completion(ctx):
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
     await channel.send(f"{ctx.message.author} successfully used a command")
 
 
