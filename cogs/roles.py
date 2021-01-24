@@ -161,10 +161,11 @@ class Utilities(commands.Cog):
             seconds %= 3600
             minutes = int(seconds // 60)
             seconds %= 60
+            seconds = int(seconds)
             if hours != 0:
-                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {int(seconds)} seconds')
+                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {seconds} seconds')
             else:
-                await ctx.send(f'Try again in {minutes} minutes and {int(seconds)} seconds')
+                await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
             await channel.send(f"{ctx.message.author} experienced a cooldown error. {error}")
 
 
@@ -185,6 +186,7 @@ class Utilities(commands.Cog):
             print(role)
             roleAssign = discord.utils.get(ctx.guild.roles, name=role)
             await ctx.message.author.add_roles(roleAssign)
+            await ctx.message.add_reation("👍")
         
         else:
             await ctx.send("You do not have that role.")
