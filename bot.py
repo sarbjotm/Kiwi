@@ -81,11 +81,9 @@ async def on_command_error(ctx,error):
     elif isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
+    else:
+        await channel.send(f"{ctx.essage.author} {error}")
 
-
-@client.event
-async def on_command_completion(ctx):
-    await channel.send(f"{ctx.message.author} successfully used a command")
 
 @client.command()
 async def ping(ctx):
