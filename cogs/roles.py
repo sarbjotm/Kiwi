@@ -186,7 +186,7 @@ class Utilities(commands.Cog):
             print(role)
             roleAssign = discord.utils.get(ctx.guild.roles, name=role)
             await ctx.message.author.add_roles(roleAssign)
-            await ctx.message.add_reation("👍")
+            await ctx.message.add_reaction("👍")
         
         else:
             await ctx.send("You do not have that role.")
