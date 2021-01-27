@@ -93,7 +93,7 @@ class Utilities(commands.Cog):
                     """)
                     roleCount = ''.join(map(str,c.fetchall()[0]))
                     print(roleCount)
-                    print(f"{member} has {roleCount} {str(role)}")
+                    print(f"{member} has {roleCount} {str(roleOther)}")
 
                     if(int(roleCount) == 0):
                         await member.remove_roles(roleOther)
