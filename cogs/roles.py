@@ -79,7 +79,7 @@ class Utilities(commands.Cog):
                     
                     
                     """)
-                    roleCount = c.fetchone()[0]
+                    roleCount = ''.join(map(str,c.fetchall()[0]))
                     print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
                     if(int(roleCount) == 0):
@@ -92,7 +92,7 @@ class Utilities(commands.Cog):
                         WHERE {member.id}
                     
                     """)
-                    roleCount = c.fetchone()[0]
+                    roleCount = ''.join(map(str,c.fetchall()[0]))
                     print(f"{member} has {roleCount} {str(role)}")
 
                     if(int(roleCount) == 0):
