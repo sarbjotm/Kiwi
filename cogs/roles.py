@@ -72,33 +72,32 @@ class Utilities(commands.Cog):
                     """)
                     db.commit()
                     #SQL HERE CHECK IF == 1 THEN REMOVE
-                    c.execute(f"""
-                        SELECT {str(role).split(" ")[1]}
-                        FROM dodos
-                        WHERE {ctx.message.author.id}
-                    """)
-                    roleCount = ''.join(map(str,c.fetchall()[0]))
-                    print(roleCount)
-                    print(f"{ctx.message.author} has {roleCount} {str(role)}") 
+                    # c.execute(f"""
+                    #     SELECT {str(role).split(" ")[1]}
+                    #     FROM dodos
+                    #     WHERE {ctx.message.author.id}
+                    # """)
+                    # roleCount = ''.join(map(str,c.fetchall()[0]))
+                    # print(roleCount)
+                    # print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
-                    if(int(roleCount) == 0):
-                        await ctx.message.author.remove_roles(role)
-                        print(f"Removed role from {ctx.message.author}")
+                    # if(int(roleCount) == 0):
+                    await ctx.message.author.remove_roles(role)
+                    # print(f"Removed role from {ctx.message.author}")
                     
-                    c.execute(f"""
-                        SELECT {str(roleOther).split(" ")[1]}
-                        FROM dodos
-                        WHERE {member.id}
+                    # c.execute(f"""
+                    #     SELECT {str(roleOther).split(" ")[1]}
+                    #     FROM dodos
+                    #     WHERE {member.id}
                     
-                    """)
-                    roleCount = ''.join(map(str,c.fetchall()[0]))
-                    print(roleCount)
-                    print(f"{member} has {roleCount} {str(roleOther)}")
+                    # """)
+                    # roleCount = ''.join(map(str,c.fetchall()[0]))
+                    # print(roleCount)
+                    # print(f"{member} has {roleCount} {str(roleOther)}")
 
-                    if(int(roleCount) == 0):
-                        await member.remove_roles(roleOther)
-                        print(f"Removed role from {member}")
-                    
+                    # if(int(roleCount) == 0):
+                    await member.remove_roles(roleOther)
+                    # print(f"Removed role from {member}")
                     role = str(role)
                     role = role.split(" ")[1]
                     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
@@ -107,6 +106,34 @@ class Utilities(commands.Cog):
                     roleOther = roleOther.split()[1]
                     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
                     await member.remove_roles(roleRemove) 
+
+                    #Add role if needed
+                    for role in activateRoles:
+                        c.execute(f"""SELECT {role.split(" ")[1]}
+                                    FROM dodos
+                                    WHERE id = {ctx.message.author.id}
+
+                    """)
+                        roleCount = c.fetchone()[0]
+                        if (roleCount > 0):
+                            roleAdd = discord.utils.get(ctx.guild.roles, name=role)
+                            print(f"Added {role} to {ctx.message.author}")
+                            await ctx.message.author.add_roles(roleAdd)
+
+                    for role in activateRoles:
+                        c.execute(f"""SELECT {role.split(" ")[1]}
+                                    FROM dodos
+                                    WHERE id = {member.id}
+
+                    """)
+                        roleCount = c.fetchone()[0]
+                        if (roleCount > 0):
+                            roleAdd = discord.utils.get(ctx.guild.roles, name=role)
+                            print(f"Added {role} to {member}")
+                            await member.add_roles(roleAdd)
+
+
+
                     await ctx.send(f'Trade Completed!')
                 elif msg == 'no':
                     await ctx.send(f'Trade Rejected!')
