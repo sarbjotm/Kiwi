@@ -16,16 +16,16 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
-        if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
-            await ctx.send("Trade only collectable roles")
-        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):  
-            db = mysql.connector.connect(
+        db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
             password = os.environ['PASSWORD'],
             database = os.environ['DATABASE']
         )
-            c = db.cursor()  
+        c = db.cursor()  
+        if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
+            await ctx.send("Trade only collectable roles")
+        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):  
             await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleOther}')
             await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
             try:
@@ -84,7 +84,7 @@ class Utilities(commands.Cog):
 
                     if(int(roleCount) == 0):
                         await ctx.message.author.remove_roles(role)
-                        print(f"Removed role")
+                        print(f"Removed role from {ctx.message.author}")
                     
                     c.execute(f"""
                         SELECT {str(roleOther).split(" ")[1]}
@@ -92,26 +92,30 @@ class Utilities(commands.Cog):
                         WHERE {member.id}
                     
                     """)
-                    print(f"{member} has {roleCount} {str(role)}")
                     roleCount = ''.join(map(str,c.fetchall()[0]))
+                    print(f"{member} has {roleCount} {str(role)}")
+
                     if(int(roleCount) == 0):
                         await member.remove_roles(roleOther)
+                        print(f"Removed role from {member}")
                     
                     role = str(role)
                     role = role.split(" ")[1]
+                    print(role)
                     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
                     await ctx.message.author.remove_roles(roleRemove)
                     roleOther = str(roleOther)
                     roleOther = roleOther.split()[1]
+                    print(roleOther)
                     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
                     await member.remove_roles(roleRemove) 
-                    c.close()
-                    db.close()
                     await ctx.send(f'Trade Completed!')
                 elif msg == 'no':
                     await ctx.send(f'Trade Rejected!')
                 else:
                     await ctx.send(f'Invalid input. Trade Rejected')
+                c.close()
+                db.close()
 
             except asyncio.TimeoutError:
                 await ctx.send(f'Cancelling due to time out ') 
