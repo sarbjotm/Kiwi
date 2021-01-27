@@ -143,10 +143,10 @@ class Utilities(commands.Cog):
                 # c.close()
                 # db.close()
 
-            except asyncio.TimeoutError:
-                await ctx.send(f'Cancelling due to time out ') 
-        else:
-            await ctx.send(f'You or the user you want to trade with does not have the role listed in the trade')   
+        #     except asyncio.TimeoutError:
+        #         await ctx.send(f'Cancelling due to time out ') 
+        # else:
+        #     await ctx.send(f'You or the user you want to trade with does not have the role listed in the trade')   
 
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
