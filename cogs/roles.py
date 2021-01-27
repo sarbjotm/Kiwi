@@ -76,10 +76,9 @@ class Utilities(commands.Cog):
                         SELECT {str(role).split(" ")[1]}
                         FROM dodos
                         WHERE {ctx.message.author.id}
-                    
-                    
                     """)
                     roleCount = ''.join(map(str,c.fetchall()[0]))
+                    print(roleCount)
                     print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
                     if(int(roleCount) == 0):
@@ -93,6 +92,7 @@ class Utilities(commands.Cog):
                     
                     """)
                     roleCount = ''.join(map(str,c.fetchall()[0]))
+                    print(roleCount)
                     print(f"{member} has {roleCount} {str(role)}")
 
                     if(int(roleCount) == 0):
@@ -101,12 +101,10 @@ class Utilities(commands.Cog):
                     
                     role = str(role)
                     role = role.split(" ")[1]
-                    print(role)
                     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
                     await ctx.message.author.remove_roles(roleRemove)
                     roleOther = str(roleOther)
                     roleOther = roleOther.split()[1]
-                    print(roleOther)
                     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
                     await member.remove_roles(roleRemove) 
                     await ctx.send(f'Trade Completed!')
@@ -214,8 +212,7 @@ class Utilities(commands.Cog):
             c.execute(f"""SELECT {role}
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
-        
-        
+
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
             roleCount = roleCount + " Dodo " + role + " roles"
