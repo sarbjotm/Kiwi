@@ -14,8 +14,7 @@ client.remove_command('help')
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 autoroles = ['Dodo Proper', '--------------- Colours---------------','------------- Holiday Roles -------------','--------------- Misc ---------------']
-guild = client.get_guild(744817281871249428)
-channel = guild.get_channel(800965152132431892)
+
 
 @client.command()
 async def load(ctx,extension):
@@ -36,6 +35,8 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
     db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
@@ -54,6 +55,8 @@ async def on_member_join(member):
 
 @client.event
 async def on_member_leave(member):
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
     db = mysql.connector.connect(
     host= os.environ['HOST'],
     user = os.environ['USER'],
@@ -74,6 +77,8 @@ async def on_member_leave(member):
 
 @client.event
 async def on_command_error(ctx,error):
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} didn't pass all arguments {error}")
