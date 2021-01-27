@@ -14,7 +14,7 @@ client.remove_command('help')
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
 autoroles = ['Dodo Proper', '--------------- Colours---------------','------------- Holiday Roles -------------','--------------- Misc ---------------']
-guild = client.guild.get(744817281871249428)
+guild = client.get_guild(744817281871249428)
 channel = guild.get_channel(800965152132431892)
 
 @client.command()
@@ -50,7 +50,7 @@ async def on_member_join(member):
     db.commit()
     c.close()
     db.close()
-    await channel.send(f"Added new user to database")
+    await channel.send(f"Added {member} to database")
 
 @client.event
 async def on_member_leave(member):
