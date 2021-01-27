@@ -16,61 +16,62 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def trade(self,ctx,role: discord.Role,member : discord.Member,roleOther: discord.Role):
-        db = mysql.connector.connect(
-            host= os.environ['HOST'],
-            user = os.environ['USER'],
-            password = os.environ['PASSWORD'],
-            database = os.environ['DATABASE']
-        )
-        c = db.cursor()  
-        if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
-            await ctx.send("Trade only collectable roles")
-        elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):  
-            await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleOther}')
-            await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
-            try:
-                msg = await self.client.wait_for(
-                    "message",
-                    timeout = 30,
-                    check=lambda message: message.author == member \
-                        and message.channel == ctx.channel 
-                )
-                msg = msg.content.strip().lower()
-                if msg == 'yes':
-                    await ctx.message.author.add_roles(roleOther) 
-                    #
-                    c.execute(f"""
-                        UPDATE dodos
-                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} + 1
-                        WHERE id = {ctx.message.author.id}
+        await ctx.send(f"Command under maintenace")
+        # db = mysql.connector.connect(
+        #     host= os.environ['HOST'],
+        #     user = os.environ['USER'],
+        #     password = os.environ['PASSWORD'],
+        #     database = os.environ['DATABASE']
+        # )
+        # c = db.cursor()  
+        # if ((str(role) not in rolesList) or (str(roleOther) not in rolesList)):
+        #     await ctx.send("Trade only collectable roles")
+        # elif ((role in ctx.message.author.roles) and (roleOther in member.roles)):  
+        #     await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleOther}')
+        #     await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
+        #     try:
+        #         msg = await self.client.wait_for(
+        #             "message",
+        #             timeout = 30,
+        #             check=lambda message: message.author == member \
+        #                 and message.channel == ctx.channel 
+        #         )
+        #         msg = msg.content.strip().lower()
+        #         if msg == 'yes':
+        #             await ctx.message.author.add_roles(roleOther) 
+        #             #
+        #             c.execute(f"""
+        #                 UPDATE dodos
+        #                 SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} + 1
+        #                 WHERE id = {ctx.message.author.id}
 
                     
-                    """)
-                    db.commit()
-                    c.execute(f"""
-                        UPDATE dodos
-                        SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} - 1
-                        WHERE id = {ctx.message.author.id}
+        #             """)
+        #             db.commit()
+        #             c.execute(f"""
+        #                 UPDATE dodos
+        #                 SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} - 1
+        #                 WHERE id = {ctx.message.author.id}
 
                     
-                    """)
-                    db.commit()
-                    await member.add_roles(role) #Add role (Make SQL Here)
-                    #SQL
-                    c.execute(f"""
-                        UPDATE dodos
-                        SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} + 1
-                        WHERE id = {member.id}
+        #             """)
+        #             db.commit()
+        #             await member.add_roles(role) #Add role (Make SQL Here)
+        #             #SQL
+        #             c.execute(f"""
+        #                 UPDATE dodos
+        #                 SET {str(role).split(" ")[1]} = {str(role).split(" ")[1]} + 1
+        #                 WHERE id = {member.id}
 
-                    """)
-                    db.commit()
-                    c.execute(f"""
-                        UPDATE dodos
-                        SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
-                        WHERE id = {member.id}
+        #             """)
+        #             db.commit()
+        #             c.execute(f"""
+        #                 UPDATE dodos
+        #                 SET {str(roleOther).split(" ")[1]} = {str(roleOther).split(" ")[1]} - 1
+        #                 WHERE id = {member.id}
 
-                    """)
-                    db.commit()
+        #             """)
+        #             db.commit()
                     #SQL HERE CHECK IF == 1 THEN REMOVE
                     # c.execute(f"""
                     #     SELECT {str(role).split(" ")[1]}
@@ -82,65 +83,65 @@ class Utilities(commands.Cog):
                     # print(f"{ctx.message.author} has {roleCount} {str(role)}") 
 
                     # if(int(roleCount) == 0):
-                    await ctx.message.author.remove_roles(role)
-                    # print(f"Removed role from {ctx.message.author}")
+                #     await ctx.message.author.remove_roles(role)
+                #     # print(f"Removed role from {ctx.message.author}")
                     
-                    # c.execute(f"""
-                    #     SELECT {str(roleOther).split(" ")[1]}
-                    #     FROM dodos
-                    #     WHERE {member.id}
+                #     # c.execute(f"""
+                #     #     SELECT {str(roleOther).split(" ")[1]}
+                #     #     FROM dodos
+                #     #     WHERE {member.id}
                     
-                    # """)
-                    # roleCount = ''.join(map(str,c.fetchall()[0]))
-                    # print(roleCount)
-                    # print(f"{member} has {roleCount} {str(roleOther)}")
+                #     # """)
+                #     # roleCount = ''.join(map(str,c.fetchall()[0]))
+                #     # print(roleCount)
+                #     # print(f"{member} has {roleCount} {str(roleOther)}")
 
-                    # if(int(roleCount) == 0):
-                    await member.remove_roles(roleOther)
-                    # print(f"Removed role from {member}")
-                    role = str(role)
-                    role = role.split(" ")[1]
-                    roleRemove = discord.utils.get(ctx.guild.roles, name=role)
-                    await ctx.message.author.remove_roles(roleRemove)
-                    roleOther = str(roleOther)
-                    roleOther = roleOther.split()[1]
-                    roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
-                    await member.remove_roles(roleRemove) 
+                #     # if(int(roleCount) == 0):
+                #     await member.remove_roles(roleOther)
+                #     # print(f"Removed role from {member}")
+                #     role = str(role)
+                #     role = role.split(" ")[1]
+                #     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+                #     await ctx.message.author.remove_roles(roleRemove)
+                #     roleOther = str(roleOther)
+                #     roleOther = roleOther.split()[1]
+                #     roleRemove = discord.utils.get(ctx.guild.roles, name=roleOther)
+                #     await member.remove_roles(roleRemove) 
 
-                    #Add role if needed
-                    for role in activateRoles:
-                        c.execute(f"""SELECT {role.split(" ")[1]}
-                                    FROM dodos
-                                    WHERE id = {ctx.message.author.id}
+                #     #Add role if needed
+                #     for role in activateRoles:
+                #         c.execute(f"""SELECT {role.split(" ")[1]}
+                #                     FROM dodos
+                #                     WHERE id = {ctx.message.author.id}
 
-                    """)
-                        roleCount = c.fetchone()[0]
-                        if (roleCount > 0):
-                            roleAdd = discord.utils.get(ctx.guild.roles, name=role)
-                            print(f"Added {role} to {ctx.message.author}")
-                            await ctx.message.author.add_roles(roleAdd)
+                #     """)
+                #         roleCount = c.fetchone()[0]
+                #         if (roleCount > 0):
+                #             roleAdd = discord.utils.get(ctx.guild.roles, name=role)
+                #             print(f"Added {role} to {ctx.message.author}")
+                #             await ctx.message.author.add_roles(roleAdd)
 
-                    for role in activateRoles:
-                        c.execute(f"""SELECT {role.split(" ")[1]}
-                                    FROM dodos
-                                    WHERE id = {member.id}
+                #     for role in activateRoles:
+                #         c.execute(f"""SELECT {role.split(" ")[1]}
+                #                     FROM dodos
+                #                     WHERE id = {member.id}
 
-                    """)
-                        roleCount = c.fetchone()[0]
-                        if (roleCount > 0):
-                            roleAdd = discord.utils.get(ctx.guild.roles, name=role)
-                            print(f"Added {role} to {member}")
-                            await member.add_roles(roleAdd)
+                #     """)
+                #         roleCount = c.fetchone()[0]
+                #         if (roleCount > 0):
+                #             roleAdd = discord.utils.get(ctx.guild.roles, name=role)
+                #             print(f"Added {role} to {member}")
+                #             await member.add_roles(roleAdd)
 
 
 
-                    await ctx.send(f'Trade Completed!')
-                elif msg == 'no':
-                    await ctx.send(f'Trade Rejected!')
-                else:
-                    await ctx.send(f'Invalid input. Trade Rejected')
-                c.close()
-                db.close()
+                #     await ctx.send(f'Trade Completed!')
+                # elif msg == 'no':
+                #     await ctx.send(f'Trade Rejected!')
+                # else:
+                #     await ctx.send(f'Invalid input. Trade Rejected')
+                # c.close()
+                # db.close()
 
             except asyncio.TimeoutError:
                 await ctx.send(f'Cancelling due to time out ') 
