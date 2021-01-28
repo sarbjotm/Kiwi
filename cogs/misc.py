@@ -43,5 +43,11 @@ class MiscCommands(commands.Cog):
             await ctx.send(f"Heads!")
         else:
             await ctx.send(f"Tails")
+    
+    @commands.command(aliases=["travisclap"])
+    async def kittyclap(self,ctx):
+        await ctx.message.delete(delay = 0)
+        await ctx.send("<a:travisclap:774127234184511498>")
+
 def setup(client):
     client.add_cog(MiscCommands(client))
