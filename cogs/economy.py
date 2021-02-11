@@ -55,7 +55,7 @@ class Economy(commands.Cog):
 
         """)
         moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        await ctx.send(f"You found ${amount}. Your new total is {moneyAmount}")
+        await ctx.send(f"You found ${amount}. Your new total is ${moneyAmount}")
         c.close()
         db.close()
     

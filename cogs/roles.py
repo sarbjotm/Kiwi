@@ -244,7 +244,7 @@ class Utilities(commands.Cog):
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
             roleCount = roleCount + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount,value = "Role info",inline=False)
+            embed.add_field(name=roleCount,value = "Role info",inline=True)
 
         await ctx.send(embed=embed)
         c.close()
