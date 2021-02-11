@@ -43,7 +43,7 @@ class Economy(commands.Cog):
         c = db.cursor() 
         amount = random.randint(1,1000);
         c.execute(f"""UPDATE dodos
-                    SET 'money' = 'money' + {amount}
+                    SET money = money + {amount}
                     WHERE id = {ctx.message.author.id}
         """)
         db.commit()
