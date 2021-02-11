@@ -42,6 +42,7 @@ class Economy(commands.Cog):
         )
         c = db.cursor() 
         amount = random.randint(1,1000);
+        
         c.execute(f"""UPDATE dodos
                     SET money = money + {amount}
                     WHERE id = {ctx.message.author.id}
@@ -54,7 +55,7 @@ class Economy(commands.Cog):
 
         """)
         moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        await ctx.send(f'You now have ${moneyAmount}')
+        await ctx.send(f"You found ${amount}. Your new total is {moneyAmount}")
         c.close()
         db.close()
     
