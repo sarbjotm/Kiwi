@@ -7,8 +7,8 @@ import asyncio
 import mysql
 from pathlib import Path
 
-rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
-activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
+rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Spring','Dodo Matcha' ,'Dodo Mint' , 'Dodo Green','Dodo Ice','Dodo Bbblu','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Lavender','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon','Dodo Special']
+activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon','Spring','Matcha','Mint','Ice','Bbblu','Lavender','Special']
 
 class Utilities(commands.Cog):
     def __init__(self, client):
@@ -158,7 +158,7 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
         c = db.cursor() 
-        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
         await ctx.message.author.add_roles(role)
@@ -253,19 +253,26 @@ class Utilities(commands.Cog):
     @commands.command()
     async def roles(self,ctx):
         embed=discord.Embed(title="Collectable Roles List" , color=0xe392fe)
-        embed.add_field(name="Dodo Red", value="Red colouring", inline=False)
-        embed.add_field(name="Dodo Orange", value="Orange colouring", inline=False)
-        embed.add_field(name="Dodo Yellow", value="Yellow colouring", inline=False)
-        embed.add_field(name="Dodo Green", value="Green colouring", inline=False)
-        embed.add_field(name="Dodo Teal", value="Teal colouring", inline=False)
-        embed.add_field(name="Dodo Copyright", value="Some sort of blue", inline=False)
-        embed.add_field(name="Dodo Cyan", value="Cyan colouring", inline=False)
-        embed.add_field(name="Dodo Blue", value="Blue colouring", inline=False)
-        embed.add_field(name="Dodo Grape", value="Grape colouring", inline=False)
-        embed.add_field(name="Dodo Purple", value="Purple colouring", inline=False)
-        embed.add_field(name="Dodo Rose", value="Rose colouring", inline=False)
-        embed.add_field(name="Dodo Pink", value="Pink colouring", inline=False)
-        embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=False)
+        embed.add_field(name="Dodo Red", value="Red colouring", inline=True)
+        embed.add_field(name="Dodo Orange", value="Orange colouring", inline=True)
+        embed.add_field(name="Dodo Yellow", value="Yellow colouring", inline=True)
+        embed.add_field(name="Dodo Matcha", value="Matcha colouring", inline=True)
+        embed.add_field(name="Dodo Spring", value="Spring colouring", inline=True)
+        embed.add_field(name="Dodo Mint", value="Mint colouring", inline=True)
+        embed.add_field(name="Dodo Green", value="Green colouring", inline=True)
+        embed.add_field(name="Dodo Teal", value="Teal colouring", inline=True)
+        embed.add_field(name="Dodo Copyright", value="Tiffany Blue colouring", inline=True)
+        embed.add_field(name="Dodo Cyan", value="Cyan colouring", inline=True)
+        embed.add_field(name="Dodo Blue", value="Blue colouring", inline=True)
+        embed.add_field(name="Dodo Bbblu", value="Baby Blue colouring", inline=True)
+        embed.add_field(name="Dodo Ice", value="Ice Cold colouring", inline=True)
+        embed.add_field(name="Dodo Grape", value="Grape colouring", inline=True)
+        embed.add_field(name="Dodo Purple", value="Purple colouring", inline=True)
+        embed.add_field(name="Dodo Lavender", value="Lavender colouring", inline=True)
+        embed.add_field(name="Dodo Rose", value="Rose colouring", inline=True)
+        embed.add_field(name="Dodo Pink", value="Pink colouring", inline=True)
+        embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=True)
+        embed.add_field(name="Dodo Special", value="Look at the hex code", inline=True)
         await ctx.send(embed=embed)
 
 

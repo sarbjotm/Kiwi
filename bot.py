@@ -46,7 +46,7 @@ async def on_member_join(member):
 
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
-                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0)
+                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
               """)
     db.commit()
     c.close()
@@ -103,7 +103,8 @@ async def help(ctx):
     embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=False)
     embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin", inline=False)
     embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate \"role\"** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
-    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space our your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
+    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
+    embed.add_field(name="Economy", value="**,daily** - Recieve between 1 and 1000 discord dollars \n**,bal** - View your balance", inline=False)
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=False)
     await ctx.send(embed=embed)
 
