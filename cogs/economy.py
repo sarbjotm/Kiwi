@@ -27,7 +27,8 @@ class Economy(commands.Cog):
 
         """)
         moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        await ctx.send(f'You have ${moneyAmount}')
+        moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        await ctx.send(f'You have {moneyAmount} {moneySymbol} ')
         c.close()
         db.close() 
 
@@ -55,7 +56,8 @@ class Economy(commands.Cog):
 
         """)
         moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        await ctx.send(f"You found ${amount}. Your new total is ${moneyAmount}")
+        moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
         c.close()
         db.close()
     
