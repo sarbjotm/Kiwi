@@ -151,39 +151,36 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        if ctx.messge.author.id == 233048072375107584:
-            await ctx.send("No role for you")
-        else:
-            db = mysql.connector.connect(
-                host= os.environ['HOST'],
-                user = os.environ['USER'],
-                password = os.environ['PASSWORD'],
-                database = os.environ['DATABASE']
-            )
-            c = db.cursor() 
-            roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
-            print(roleAssign)
-            role = discord.utils.get(ctx.guild.roles, name=roleAssign)
-            await ctx.message.author.add_roles(role)
-            await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
-            roleAssign = roleAssign.split(" ")
-            c.execute(f"""UPDATE dodos
-                        SET {roleAssign[1]} = {roleAssign[1]} + 1
-                        WHERE id = {ctx.message.author.id}
-            """)
-            db.commit()
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        print(roleAssign)
+        role = discord.utils.get(ctx.guild.roles, name=roleAssign)
+        await ctx.message.author.add_roles(role)
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate \"{role}\" command. Your next chance to roll is in 12 hours')
+        roleAssign = roleAssign.split(" ")
+        c.execute(f"""UPDATE dodos
+                    SET {roleAssign[1]} = {roleAssign[1]} + 1
+                    WHERE id = {ctx.message.author.id}
+        """)
+        db.commit()
 
-            c.execute(f"""SELECT {roleAssign[1]}
-                        FROM dodos
-                        WHERE id = {ctx.message.author.id}
-        
-        
-            """)
-            roleCount = ''.join(map(str,c.fetchall()[0]))
-            print(roleCount)
-            await ctx.send(f'You now have {roleCount} {str(role)} roles')
-            c.close()
-            db.close()
+        c.execute(f"""SELECT {roleAssign[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+        """)
+        roleCount = ''.join(map(str,c.fetchall()[0]))
+        print(roleCount)
+        await ctx.send(f'You now have {roleCount} {str(role)} roles')
+        c.close()
+        db.close()
 
     @collect.error
     async def collect_error(self,ctx,error):
@@ -204,34 +201,30 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
-        if(ctx.message.author.id == "233048072375107584"):
-            await ctx.send("NO")
+        role = str(role)
+        role = role.split(" ")
+        role = role[0][0].upper() + role[0][1:] + " " + role[1][0].upper()+role[1][1:]
+        role = discord.utils.get(ctx.guild.roles, name=role)
+        if ((str(role) not in rolesList)):
+            await ctx.send("Only can activate collected Colour Roles.")
+            await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
+            await ctx.send("Example usage: ,activate \"Dodo Red\" ")
+        elif (role in ctx.message.author.roles):
+            for r in activateRoles:
+                    roleRemove = discord.utils.get(ctx.guild.roles, name=r)
+                    if(roleRemove in ctx.message.author.roles):
+                        await ctx.message.author.remove_roles(roleRemove)
+                        break
+            role = str(role)
+            role = role.split()[1]
+            roleAssign = discord.utils.get(ctx.guild.roles, name=role)
+            await ctx.message.author.add_roles(roleAssign)
+            await ctx.message.add_reaction("👍")
         
         else:
-            role = str(role)
-            role = role.split(" ")
-            role = role[0][0].upper() + role[0][1:] + " " + role[1][0].upper()+role[1][1:]
-            role = discord.utils.get(ctx.guild.roles, name=role)
-            if ((str(role) not in rolesList)):
-                await ctx.send("Only can activate collected Colour Roles.")
-                await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
-                await ctx.send("Example usage: ,activate \"Dodo Red\" ")
-            elif (role in ctx.message.author.roles):
-                for r in activateRoles:
-                        roleRemove = discord.utils.get(ctx.guild.roles, name=r)
-                        if(roleRemove in ctx.message.author.roles):
-                            await ctx.message.author.remove_roles(roleRemove)
-                            break
-                role = str(role)
-                role = role.split()[1]
-                roleAssign = discord.utils.get(ctx.guild.roles, name=role)
-                await ctx.message.author.add_roles(roleAssign)
-                await ctx.message.add_reaction("👍")
-            
-            else:
-                await ctx.send("You do not have that role.")
-                await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
-                await ctx.send("Example usage: ,activate \"Dodo Red\" ")
+            await ctx.send("You do not have that role.")
+            await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
+            await ctx.send("Example usage: ,activate \"Dodo Red\" ")
         
 
     @commands.command()
