@@ -13,9 +13,10 @@ class MiscCommands(commands.Cog):
         print(len(options))
         print(options[0])
         if(len(options) == 0):
-            embed=discord.Embed(title="Poll" , color=0xe392fe)
+            print("Inside of == 0")
+            embed=discord.Embed(title=question , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
-            embed.add_field(name="Options", value = question, inline=True)
+            embed.add_field(name="Poll", value =question, inline=True)
             sent = await ctx.send(embed=embed)
             await sent.add_reaction("👍")
             await sent.add_reaction("👎")
