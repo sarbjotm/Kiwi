@@ -8,7 +8,7 @@ class MiscCommands(commands.Cog):
         self.client = client
     
     @commands.command()
-    async def poll(self,ctx,question,*options=""):
+    async def poll(self,ctx,question,*options= []):
         if(len(options) == 0):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
