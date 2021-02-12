@@ -8,8 +8,8 @@ class MiscCommands(commands.Cog):
         self.client = client
     
     @commands.command()
-    async def poll(self,ctx,question,*,options=" "):
-        if(len(options.split()) == 0):
+    async def poll(self,ctx,question,*options=""):
+        if(len(options) == 0):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value=question, inline=True)
@@ -17,7 +17,7 @@ class MiscCommands(commands.Cog):
             # await message.add_reaction("👍")
             # await message.add_reaction("👎")
             #Create poll with thumbs up.down with question
-        elif (len(options.split()) <= 10):
+        elif( (len(options) >= 2) and (len(options) <= 10) ):
             options = options.split()
             description = ""
             for i in range(0,len(options)):
