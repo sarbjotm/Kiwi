@@ -201,6 +201,10 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,role: discord.Role):
+        role = str(role)
+        role = role.split(" ")
+        role = role[0][0].upper() + role[0][1:] + " " + role[1][0].upper()+role[1][1:]
+        role = discord.utils.get(ctx.guild.roles, name=role)
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles.")
             await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
@@ -213,7 +217,6 @@ class Utilities(commands.Cog):
                         break
             role = str(role)
             role = role.split()[1]
-            print(role)
             roleAssign = discord.utils.get(ctx.guild.roles, name=role)
             await ctx.message.author.add_roles(roleAssign)
             await ctx.message.add_reaction("👍")
