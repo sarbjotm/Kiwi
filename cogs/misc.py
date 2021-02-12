@@ -9,10 +9,8 @@ class MiscCommands(commands.Cog):
     
     @commands.command()
     async def poll(self,ctx,question,*options):
-        print(options)
-        print(len(options))
-        print(options[0])
-        if(len(options) == 0):
+        size = len(options)
+        if(size == 0):
             print("Inside of == 0")
             embed=discord.Embed(title=question , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
@@ -33,15 +31,13 @@ class MiscCommands(commands.Cog):
             sent = await ctx.send(embed=embed)
             print("Printing After Embeds: " + descriptionEmbed)
 
-
-            
             for i in range(0,len(options)):
                 await sent.add_reaction(pollOptions[i])
 
-        elif(len(options.split()) > 10):
+        elif(len(options) > 10):
             await ctx.send("The maximum number of options is 10")
         else:
-            await ctx.send("The minimum amount of options is 2")
+            await ctx.send("The minimum amount of options is 2, if you are not asking a Yes/No Question")
 
     @commands.command(aliases = ['rand'])
     async def randomnumber(self,ctx, num1, num2):
