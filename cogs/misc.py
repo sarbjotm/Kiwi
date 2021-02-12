@@ -15,7 +15,7 @@ class MiscCommands(commands.Cog):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value = question, inline=True)
-            message = await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
             # await message.add_reaction("👍")
             # await message.add_reaction("👎")
             #Create poll with thumbs up.down with question
