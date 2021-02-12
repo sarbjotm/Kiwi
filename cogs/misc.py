@@ -7,7 +7,7 @@ class MiscCommands(commands.Cog):
     def __init__(self, client):
         self.client = client
     
-    @commands.command(aliases = ['poll'])
+    @commands.command()
     async def poll(self,ctx,question,options):
         if(len(options.split()) == 0):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
