@@ -15,26 +15,26 @@ class MiscCommands(commands.Cog):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value = question, inline=True)
-            await client.send_message(embed=embed)
+            await ctx.send(embed=embed)
             # await message.add_reaction("👍")
             # await message.add_reaction("👎")
             #Create poll with thumbs up.down with question
         elif( (len(options) >= 2) and (len(options) <= 10) ):
             descriptionEmbed = " "
             for i in range(0,len(options)):
-                descriptionEmbed = descriptionEmbed + pollOptions[i] + options[i] + "\n" 
+                descriptionEmbed = descriptionEmbed + pollOptions[i] + " " + options[i] + "\n" 
 
             print("Printing Before Embeds: " + descriptionEmbed)
-            embed=discord.Embed(title="Poll" , color=0xe392fe)
+            embed=discord.Embed(title="question" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value = descriptionEmbed, inline=True)
-            await ctx.send(embed=embed)
+            sent = await ctx.send(embed=embed)
             print("Printing After Embeds: " + descriptionEmbed)
 
 
             
-            # for i in range(0,len(options)):
-            #     await sent.add_reaction(pollOptions[i])
+            for i in range(0,len(options)):
+                await sent.add_reaction(pollOptions[i])
 
         elif(len(options.split()) > 10):
             await ctx.send("The maximum number of options is 10")
