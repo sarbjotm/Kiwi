@@ -24,6 +24,7 @@ class MiscCommands(commands.Cog):
             for i in range(0,len(options)):
                 description = description + pollOptions[i] + options[i] + "\n" 
 
+            print(description)
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value=description, inline=True)
