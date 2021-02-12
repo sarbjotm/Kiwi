@@ -11,25 +11,24 @@ class MiscCommands(commands.Cog):
     async def poll(self,ctx,question,*options):
         size = len(options)
         if(size == 0):
-            print("Inside of == 0")
             embed=discord.Embed(title=question , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Poll", value =question, inline=True)
             sent = await ctx.send(embed=embed)
             await sent.add_reaction("👍")
             await sent.add_reaction("👎")
+            await ctx.message.delete(delay = 0)
             #Create poll with thumbs up.down with question
         elif( (len(options) >= 2) and (len(options) <= 10) ):
             descriptionEmbed = " "
             for i in range(0,len(options)):
                 descriptionEmbed = descriptionEmbed + pollOptions[i] + " " + options[i] + "\n" 
 
-            print("Printing Before Embeds: " + descriptionEmbed)
             embed=discord.Embed(title=question , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value = descriptionEmbed, inline=True)
+            await ctx.message.delete(delay = 0)
             sent = await ctx.send(embed=embed)
-            print("Printing After Embeds: " + descriptionEmbed)
 
             for i in range(0,len(options)):
                 await sent.add_reaction(pollOptions[i])
