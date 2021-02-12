@@ -10,6 +10,7 @@ class MiscCommands(commands.Cog):
     @commands.command()
     async def poll(self,ctx,question,*options):
         print(options)
+        print(len(options))
         print(options[0])
         if(len(options) == 0):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
