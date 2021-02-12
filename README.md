@@ -10,29 +10,47 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 
 # Commands
 **Kiwi** uses the ``,`` as a prefix. 
+
+## Role Commands
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
-| ,help         | None                 | None                                      | Display a list of all of the commands                       | ,help                                    |
-| ,ping         | None                 | None                                      | Returns "pong" if the bot is online                         | ,ping                                    |
-| ,waves        | ,wave                | @user                                     | Say hello to a user by waving                               | ,waves @Amander                          |
-| ,hugs         | ,hug                 | @user                                     | Give a user a hug                                           | ,hugs @Amander                           |
-| ,wavesRole    | ,waveRole            | @role                                     | Say hello to a group of people!                             | ,wavesRole @Red                          |
-| ,hugsRole     | ,hugRole             | @role                                     | Give a group hug!                                           | ,hugsRole @Red                           |
-| ,randomnumber | ,rand                | int a int b                               | Returns a number in the interval [a,b]                      | ,rand 1 100                              |
-| ,_8ball       | ,8ball               | String text                               | Ask Kiwi a Question and get an answer                       | ,8ball Will it snow today                |
-| ,coinflip     | ,cf ,flip ,coin_flip | None                                      | Flip a coin                                                 | ,cf                                      |
-| ,kittyclap    | ,travisclap          | None                                      | Return an emoji of a cat clapping                           | ,kittyclap                               |
-| ,spongebob    | None                 | String text                               | Return the string in "SpOnGeBoB" format                     | ,spongebob Hello World                   |
-| ,fireworks    | ,fw                  | String text                               | Return the string with fireworks inbetween the words        | ,fireworks Github is the best            |
-| ,spaced       | ,sp ,space ,spaces   | String text                               | Return the string with additional spaces                    | ,sp Hello                                |
 | ,collect      | None                 | None                                      | Collect a random colour role, 12 hour cooldown              | ,collect                                 |
 | ,activate     | None                 | String text                               | Activate a collect colour role as your colour               | ,activate "Dodo Red"                     |
 | ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade "Dodo Red" @Amander "Dodo Purple" |
 | ,myroles      | None                 | None                                      | Display a list and quantity of the roles you have collected | ,myroles                                 |
 | ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles                                   
+
+## Economy
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|                                  
 | ,daily        | None                 | None                                      | Recieve your allowance, 24 hour cooldown                    | ,daily                                   
 | ,bal        | ,balance                 | None                                    | View how much money you have                   | ,bal  
-|
+
+## String Manpilation
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,spongebob    | None                 | String text                               | Return the string in "SpOnGeBoB" format                     | ,spongebob Hello World                   |
+| ,fireworks    | ,fw                  | String text                               | Return the string with fireworks inbetween the words        | ,fireworks Github is the best            |
+
+## Decision Making
+
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,help         | None                 | None                                      | Display a list of all of the commands                       | ,help                                    |
+| ,ping         | None                 | None                                      | Returns "pong" if the bot is online                         | ,ping                                    |
+| ,poll        | None                | String text String Option 1-10                                     | Give the users to vote on a question. Users can pick from 1-10 responses                             | ,poll "What Movie Should we Watch" Comedy Action "Rom Com"                                          |
+| ,_8ball       | ,8ball               | String text                               | Ask Kiwi a Question and get an answer                       | ,8ball Will it snow 
+
+
+
+
+
+## Other
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,help         | None                 | None                                      | Display a list of all of the commands                       | ,help                                    |
+| ,ping         | None                 | None                                      | Returns "pong" if the bot is online                         | ,ping                                                                       
+| ,kittyclap    | ,travisclap          | None                                      | Return an emoji of a cat clapping                           | ,kittyclap                               
 
 # Contribute
 We welcome changes that benefit the server as a whole! Please feel free to discuss in
