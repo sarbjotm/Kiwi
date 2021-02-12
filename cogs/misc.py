@@ -9,6 +9,7 @@ class MiscCommands(commands.Cog):
     
     @commands.command()
     async def poll(self,ctx,question:str,*options):
+        print(options)
         if(len(options) == 0):
             embed=discord.Embed(title="Poll" , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
