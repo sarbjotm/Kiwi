@@ -205,8 +205,8 @@ class Utilities(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name = role)
         if ((str(role) not in rolesList)):
             await ctx.send("Only can activate collected Colour Roles.")
-            await ctx.send("Make sure you have provided the correct arguments. Roles are case senestive")
-            await ctx.send("Example usage: ,activate \"Dodo Red\" ")
+            await ctx.send("Make sure you have provided the correct arguments")
+            await ctx.send("Example usage: ,activate Dodo Red")
         elif (role in ctx.message.author.roles):
             for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
