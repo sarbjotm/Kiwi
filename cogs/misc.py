@@ -81,11 +81,11 @@ class MiscCommands(commands.Cog):
         await ctx.message.delete(delay = 0)
         await ctx.send("<a:travisclap:774127234184511498>")
     
-    @commands.command(aliases=["private"])
-    async def anonmsg(self,ctx):
+    @commands.command(aliases=["private","a"])
+    async def anonmsg(self,ctx,*, statement):
         await ctx.message.delete(delay = 0)
         embed=discord.Embed(title="Annoymous Message" , color=0xe392fe)
-        embed.add_field(name="Message", value=ctx.message, inline=True)
+        embed.add_field(name="Message", value=statement, inline=True)
         await ctx.send(embed=embed)
 
 def setup(client):
