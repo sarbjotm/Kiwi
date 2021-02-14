@@ -80,6 +80,13 @@ class MiscCommands(commands.Cog):
     async def kittyclap(self,ctx):
         await ctx.message.delete(delay = 0)
         await ctx.send("<a:travisclap:774127234184511498>")
+    
+    @commands.command(aliases=["private"])
+    async def anonmsg(self,ctx):
+        await ctx.message.delete(delay = 0)
+        embed=discord.Embed(title="Annoymous Message" , color=0xe392fe)
+        embed.add_field(name="Message", value=ctx.message, inline=True)
+        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(MiscCommands(client))
