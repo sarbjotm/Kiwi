@@ -91,13 +91,9 @@ class Economy(commands.Cog):
     @commands.command(aliases = ['shopinfo'])
     async def shop(self,ctx):
         moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-        embed=discord.Embed(title="Kiwi Shop" , color=0xe392fe)
-        embed.set_thumbnail(url= "https://sdl-stickershop.line.naver.jp/products/0/0/1/1233993/android/stickers/9496426.png;compress=true")
         for i in range(0,len(rolesList)):
-            print(rolesList[i])
-            embed.add_field(name=rolesList[i], value="5000 " + moneySymbol, inline=True)
-        await ctx.message.delete(delay = 0)
-        await ctx.send(embed=embed)
+            await ctx.send(f"{rolesList[i]} is 5000 {moneySymbol}")
+
 
 
 
