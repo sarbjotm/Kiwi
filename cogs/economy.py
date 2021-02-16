@@ -94,27 +94,86 @@ class Economy(commands.Cog):
         embed.set_thumbnail(url= "https://i.pinimg.com/originals/6c/ce/3e/6cce3e4715c7886a4d599e3f029ef012.png")
         for i in range(0,len(rolesList)):
             embed.add_field(name=rolesList[i], value="5000 Dodo Dollars", inline=True)
-        # embed.add_field(name="Dodo Red", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Orange", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Yellow", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Matcha", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Spring", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Mint", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Green", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Teal", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Copyright", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Cyan", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Blue", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Bbblu", value="B5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Ice", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Grape", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Purple", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Lavender", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Rose", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Pink", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Salmon", value="5000 Discord Dollars", inline=True)
-        # embed.add_field(name="Dodo Special", value="5000 Discord Dollars", inline=True)
         await ctx.send(embed=embed)
+    
+    @commands.command()
+    async def sell(self,ctx,*role):
+        role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+        role = discord.utils.get(ctx.guild.roles, name = role)
+        if ((str(role) not in rolesList)):
+            await ctx.send("Only can sell collected Colour Roles.")
+        role = str(role)
+        dodoRole = role
+        role = role.split()[1]
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor()
+        c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+
+        """)
+        roleAmount = ''.join(map(str,c.fetchall()[0]))
+        if(roleAmount > 1):
+            c.execute(f"""UPDATE dodos
+            SET {roleAmount[1]} = {roleAmount[1]} - 1
+            WHERE id = {ctx.message.author.id}
+                """)
+            db.commit()
+
+            soldAmount = random.randint(1,750)
+            c.execute(f"""UPDATE dodos
+            SET money = money + {soldAmount}
+            WHERE id = {ctx.message.author.id}
+            """)
+
+            db.commit()
+            c.execute(f"""SELECT money
+                FROM dodos
+                WHERE id = {ctx.message.author.id}
+
+
+            """)
+            moneyAmount = ''.join(map(str,c.fetchall()[0]))
+            moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+            await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
+
+        elif(roleAmount == 1):
+            c.execute(f"""UPDATE dodos
+            SET {roleAmount[1]} = {roleAmount[1]} - 1
+            WHERE id = {ctx.message.author.id}
+                """)
+            db.commit()
+            roleRemove = discord.utils.get(ctx.guild.roles, name=dodoRole)
+            await ctx.message.author.remove_roles(roleRemove)
+            roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+            if(roleRemove in ctx.message.author.roles):
+                await ctx.message.author.remove_roles(roleRemove)
+            
+            soldAmount = random.randint(1,750)
+            c.execute(f"""UPDATE dodos
+            SET money = money + {soldAmount}
+            WHERE id = {ctx.message.author.id}
+            """)
+
+            db.commit()
+            c.execute(f"""SELECT money
+                FROM dodos
+                WHERE id = {ctx.message.author.id}
+
+
+            """)
+            moneyAmount = ''.join(map(str,c.fetchall()[0]))
+            moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+            await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
+
+        else:
+            await ctx.send("You do not have that role")
+
 
 
 
