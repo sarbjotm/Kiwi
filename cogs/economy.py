@@ -39,38 +39,38 @@ class Economy(commands.Cog):
     @commands.cooldown(1,86400, commands.BucketType.user)
     async def daily(self,ctx):   
         await ctx.send("Disabled while new commands are being added. Blame tooo for aboose")     
-        # db = mysql.connector.connect(
-        #     host= os.environ['HOST'],
-        #     user = os.environ['USER'],
-        #     password = os.environ['PASSWORD'],
-        #     database = os.environ['DATABASE']
-        # )
-        # c = db.cursor() 
-        # daily = ["Increase", "Decrease"]
-        # roleAssign = random.choices(daily, weights = [3,1])[0]
-        # amount = random.randint(1,1000);
-        # if (roleAssign == "Decrease"):
-        #     amount = amount * -1
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        daily = ["Increase", "Decrease"]
+        roleAssign = random.choices(daily, weights = [3,1])[0]
+        amount = random.randint(1,1000);
+        if (roleAssign == "Decrease"):
+            amount = amount * -1
         
-        # c.execute(f"""UPDATE dodos
-        #             SET money = money + {amount}
-        #             WHERE id = {ctx.message.author.id}
-        # """)
-        # db.commit()
-        # c.execute(f"""SELECT money
-        #     FROM dodos
-        #     WHERE id = {ctx.message.author.id}
+        c.execute(f"""UPDATE dodos
+                    SET money = money + {amount}
+                    WHERE id = {ctx.message.author.id}
+        """)
+        db.commit()
+        c.execute(f"""SELECT money
+            FROM dodos
+            WHERE id = {ctx.message.author.id}
 
 
-        # """)
-        # moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        # moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-        # if(amount < 0):
-        #     await ctx.send(f"Oh no! Kiwi stole ${amount}. Your new total is {moneyAmount} {moneySymbol}")
-        # else:
-        #     await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
-        # c.close()
-        # db.close()
+        """)
+        moneyAmount = ''.join(map(str,c.fetchall()[0]))
+        moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        if(amount < 0):
+            await ctx.send(f"Oh no! Kiwi stole ${amount}. Your new total is {moneyAmount} {moneySymbol}")
+        else:
+            await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
+        c.close()
+        db.close()
     
     @daily.error
     async def daily_error(self,ctx,error):
