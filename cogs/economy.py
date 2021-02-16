@@ -104,19 +104,17 @@ class Economy(commands.Cog):
             database = os.environ['DATABASE']
         )
         quantity = int(quantity)
+        role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+
         if(quantity < 0):
             await ctx.send("Please enter a quantity greater than 0")
-        elif(len(role) != 2):
+       
+        elif(role not in rolesList):
             await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
         else:
             totalProfit = 0
             soldAmount = 0
             c = db.cursor()
-            role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
-            print("Selling: " + role)
-            role = discord.utils.get(ctx.guild.roles, name = role)
-            if ((str(role) not in rolesList)):
-                await ctx.send("Only can sell collected Colour Roles.")
             role = str(role)
             dodoRole = role
             role = role.split()[1]
