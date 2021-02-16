@@ -124,9 +124,10 @@ class Economy(commands.Cog):
 
             """)
             print(c.fetchall()[0])
-            # roleAmount = ''.join(map(str,c.fetchall()[0]))
+            
+            roleAmount = ''.join(map(str,c.fetchall()[0]))
             # roleAmount = int(roleAmount)
-            # print("Role Amount is: " + roleAmount)
+            print("Role Amount is: " + roleAmount)
             # if(roleAmount > 1):
             #     print("Role Amount is greater than 1")
             #     c.execute(f"""UPDATE dodos
