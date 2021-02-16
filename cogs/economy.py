@@ -86,17 +86,14 @@ class Economy(commands.Cog):
             else:
                 await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
             await channel.send(f"{ctx.message.author} experienced a cooldown error. {error}")
-
+            
     @commands.command(aliases = ['shopinfo'])
     async def shop(self,ctx):
         moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-        descriptionEmbed = " "
-        for i in range(0,len(rolesList)):
-            descriptionEmbed = descriptionEmbed + rolesList[i] + "- Price: 5000 " + moneySymbol + "\n" 
-
         embed=discord.Embed(title="Kiwi Shop" , color=0xe392fe)
         embed.set_thumbnail(url= "https://sdl-stickershop.line.naver.jp/products/0/0/1/1233993/android/stickers/9496426.png;compress=true")
-        embed.add_field(name="Items to Buy", value = descriptionEmbed, inline=True)
+        for i in range(0,len(rolesList)):
+            embed.add_field(name=rolesList[i], value="5000 " + moneySymbol, inline=True)
         await ctx.message.delete(delay = 0)
         sent = await ctx.send(embed=embed)
 
