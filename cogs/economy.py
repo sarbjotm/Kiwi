@@ -109,6 +109,7 @@ class Economy(commands.Cog):
         elif(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
         else:
+            totalProfit = 0
             soldAmount = 0
             c = db.cursor()
             role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
@@ -142,6 +143,7 @@ class Economy(commands.Cog):
 
                 for i in range(quantity):
                     soldAmount = random.randint(1,750)
+                    totalProfit = totalProfit + soldAmount
                     c.execute(f"""UPDATE dodos
                     SET money = money + {soldAmount}
                     WHERE id = {ctx.message.author.id}
@@ -156,10 +158,9 @@ class Economy(commands.Cog):
                 """)
                 moneyAmount = ''.join(map(str,c.fetchall()[0]))
                 moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                await ctx.send(f"You sold your role(s) for ${soldAmount} {moneySymbol}. Your new total is {moneyAmount} {moneySymbol}")
+                await ctx.send(f"You sold your role(s) for ${totalProfit} {moneySymbol}. Your new total is {moneyAmount} {moneySymbol}")
 
             elif(roleAmount-quantity == 0):
-                
                 c.execute(f"""UPDATE dodos
                 SET {role} = {role} - {quantity}
                 WHERE id = {ctx.message.author.id}
@@ -173,6 +174,7 @@ class Economy(commands.Cog):
                 
                 for i in range(quantity):
                     soldAmount = random.randint(1,750)
+                    totalProfit = totalProfit + soldAmount
                     c.execute(f"""UPDATE dodos
                     SET money = money + {soldAmount}
                     WHERE id = {ctx.message.author.id}
@@ -188,7 +190,7 @@ class Economy(commands.Cog):
                 """)
                 moneyAmount = ''.join(map(str,c.fetchall()[0]))
                 moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                await ctx.send(f"You sold your role(s) for ${soldAmount} {moneySymbol}. Your new total is {moneyAmount} {moneySymbol}")
+                await ctx.send(f"You sold your role(s) for ${totalProfit} {moneySymbol}. Your new total is {moneyAmount} {moneySymbol}")
 
             else:
                 print("Role Amount is equal to 0")
