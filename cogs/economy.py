@@ -121,6 +121,7 @@ class Economy(commands.Cog):
 
         """)
         roleAmount = ''.join(map(str,c.fetchall()[0]))
+        roleAmount = int(roleAmount)
         print("Role Amount is: " + roleAmount)
         if(roleAmount > 1):
             c.execute(f"""UPDATE dodos
