@@ -107,7 +107,6 @@ class Economy(commands.Cog):
         if(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
         else:
-
             c = db.cursor()
             role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
             print("Selling: " + role)
@@ -124,67 +123,68 @@ class Economy(commands.Cog):
                             WHERE id = {ctx.message.author.id}
 
             """)
-            roleAmount = ''.join(map(str,c.fetchall()[0]))
-            roleAmount = int(roleAmount)
-            print("Role Amount is: " + roleAmount)
-            if(roleAmount > 1):
-                print("Role Amount is greater than 1")
-                c.execute(f"""UPDATE dodos
-                SET {role} = {role} - 1
-                WHERE id = {ctx.message.author.id}
-                    """)
-                db.commit()
+            print(c.fetchall()[0])
+            # roleAmount = ''.join(map(str,c.fetchall()[0]))
+            # roleAmount = int(roleAmount)
+            # print("Role Amount is: " + roleAmount)
+            # if(roleAmount > 1):
+            #     print("Role Amount is greater than 1")
+            #     c.execute(f"""UPDATE dodos
+            #     SET {role} = {role} - 1
+            #     WHERE id = {ctx.message.author.id}
+            #         """)
+            #     db.commit()
 
-                soldAmount = random.randint(1,750)
-                c.execute(f"""UPDATE dodos
-                SET money = money + {soldAmount}
-                WHERE id = {ctx.message.author.id}
-                """)
+            #     soldAmount = random.randint(1,750)
+            #     c.execute(f"""UPDATE dodos
+            #     SET money = money + {soldAmount}
+            #     WHERE id = {ctx.message.author.id}
+            #     """)
 
-                db.commit()
-                c.execute(f"""SELECT money
-                    FROM dodos
-                    WHERE id = {ctx.message.author.id}
+            #     db.commit()
+            #     c.execute(f"""SELECT money
+            #         FROM dodos
+            #         WHERE id = {ctx.message.author.id}
 
 
-                """)
-                moneyAmount = ''.join(map(str,c.fetchall()[0]))
-                moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
+            #     """)
+            #     moneyAmount = ''.join(map(str,c.fetchall()[0]))
+            #     moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+            #     await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
 
-            elif(roleAmount == 1):
-                print("Role Amount is equal to 1")
-                c.execute(f"""UPDATE dodos
-                SET {role} = {role} - 1
-                WHERE id = {ctx.message.author.id}
-                    """)
-                db.commit()
-                roleRemove = discord.utils.get(ctx.guild.roles, name=dodoRole)
-                await ctx.message.author.remove_roles(roleRemove)
-                roleRemove = discord.utils.get(ctx.guild.roles, name=role)
-                if(roleRemove in ctx.message.author.roles):
-                    await ctx.message.author.remove_roles(roleRemove)
+            # elif(roleAmount == 1):
+            #     print("Role Amount is equal to 1")
+            #     c.execute(f"""UPDATE dodos
+            #     SET {role} = {role} - 1
+            #     WHERE id = {ctx.message.author.id}
+            #         """)
+            #     db.commit()
+            #     roleRemove = discord.utils.get(ctx.guild.roles, name=dodoRole)
+            #     await ctx.message.author.remove_roles(roleRemove)
+            #     roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+            #     if(roleRemove in ctx.message.author.roles):
+            #         await ctx.message.author.remove_roles(roleRemove)
                 
-                soldAmount = random.randint(1,750)
-                c.execute(f"""UPDATE dodos
-                SET money = money + {soldAmount}
-                WHERE id = {ctx.message.author.id}
-                """)
+            #     soldAmount = random.randint(1,750)
+            #     c.execute(f"""UPDATE dodos
+            #     SET money = money + {soldAmount}
+            #     WHERE id = {ctx.message.author.id}
+            #     """)
 
-                db.commit()
-                c.execute(f"""SELECT money
-                    FROM dodos
-                    WHERE id = {ctx.message.author.id}
+            #     db.commit()
+            #     c.execute(f"""SELECT money
+            #         FROM dodos
+            #         WHERE id = {ctx.message.author.id}
 
 
-                """)
-                moneyAmount = ''.join(map(str,c.fetchall()[0]))
-                moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
+            #     """)
+            #     moneyAmount = ''.join(map(str,c.fetchall()[0]))
+            #     moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+            #     await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
 
-            else:
-                print("Role Amount is equal to 0")
-                await ctx.send("You do not have that role")
+            # else:
+            #     print("Role Amount is equal to 0")
+            #     await ctx.send("You do not have that role")
 
         c.close()
         db.close()
