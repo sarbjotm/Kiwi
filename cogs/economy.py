@@ -124,8 +124,9 @@ class Economy(commands.Cog):
         roleAmount = int(roleAmount)
         print("Role Amount is: " + roleAmount)
         if(roleAmount > 1):
+            print("Role Amount is greater than 1")
             c.execute(f"""UPDATE dodos
-            SET {roleAmount[1]} = {roleAmount[1]} - 1
+            SET {role} = {role} - 1
             WHERE id = {ctx.message.author.id}
                 """)
             db.commit()
@@ -148,8 +149,9 @@ class Economy(commands.Cog):
             await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
 
         elif(roleAmount == 1):
+            print("Role Amount is equal to 1")
             c.execute(f"""UPDATE dodos
-            SET {roleAmount[1]} = {roleAmount[1]} - 1
+            SET {role} = {role} - 1
             WHERE id = {ctx.message.author.id}
                 """)
             db.commit()
@@ -177,6 +179,7 @@ class Economy(commands.Cog):
             await ctx.send(f"You sold your role for ${soldAmount}. Your new total is {moneyAmount} {moneySymbol}")
 
         else:
+            print("Role Amount is equal to 0")
             await ctx.send("You do not have that role")
 
 
