@@ -240,7 +240,7 @@ class Utilities(commands.Cog):
 
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            description = roleCount + "Dodo " + role  + "roles"
+            description = roleCount + " Dodo " + role  + " roles"
             embed.add_field(name="Dodo " + role,value = description,inline=True)
 
         await ctx.send(embed=embed)
