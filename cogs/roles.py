@@ -151,7 +151,6 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        await ctx.send("Command disabled for new commands that are being added")
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -241,8 +240,8 @@ class Utilities(commands.Cog):
 
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            roleCount = roleCount + " Dodo " + role + " roles"
-            embed.add_field(name=roleCount,value = "Role info",inline=True)
+            description = "You have " + roleCount
+            embed.add_field(name="Dodo " + role,value = description,inline=True)
 
         await ctx.send(embed=embed)
         c.close()
