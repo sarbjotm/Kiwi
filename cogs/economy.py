@@ -104,7 +104,7 @@ class Economy(commands.Cog):
             database = os.environ['DATABASE']
         )
         quantity = int(quantity)
-        if(quantity > 0):
+        if(quantity < 0):
             await ctx.send("Please enter a quantity greater than 0")
         elif(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
