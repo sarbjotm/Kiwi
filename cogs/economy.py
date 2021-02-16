@@ -92,10 +92,8 @@ class Economy(commands.Cog):
     async def shop(self,ctx):
         embed=discord.Embed(title="Kiwi Shop" , color=0xe392fe)
         embed.set_thumbnail(url= "https://i.pinimg.com/originals/6c/ce/3e/6cce3e4715c7886a4d599e3f029ef012.png")
-        moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-        itemInformation = "5000 " + moneySymbol
         for i in range(0,len(rolesList)):
-            embed.add_field(name=rolesList[i], value=itemInformation, inline=True)
+            embed.add_field(name=rolesList[i], value="5000 Dodo Dollars", inline=True)
         # embed.add_field(name="Dodo Red", value="5000 Discord Dollars", inline=True)
         # embed.add_field(name="Dodo Orange", value="5000 Discord Dollars", inline=True)
         # embed.add_field(name="Dodo Yellow", value="5000 Discord Dollars", inline=True)
