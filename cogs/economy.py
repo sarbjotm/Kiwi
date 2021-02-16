@@ -123,9 +123,8 @@ class Economy(commands.Cog):
                             WHERE id = {ctx.message.author.id}
 
             """)
-            print(c.fetchall()[0])
-            
-            roleAmount = ''.join(map(str,c.fetchall()[0]))
+
+            roleAmount = c.fetchone()[0]
             # roleAmount = int(roleAmount)
             print("Role Amount is: " + roleAmount)
             # if(roleAmount > 1):
