@@ -35,31 +35,32 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1,86400, commands.BucketType.user)
     async def daily(self,ctx):
-        db = mysql.connector.connect(
-            host= os.environ['HOST'],
-            user = os.environ['USER'],
-            password = os.environ['PASSWORD'],
-            database = os.environ['DATABASE']
-        )
-        c = db.cursor() 
-        amount = random.randint(1,1000);
+        await ctx.send("Command disabled for new commands that are being added")
+        # db = mysql.connector.connect(
+        #     host= os.environ['HOST'],
+        #     user = os.environ['USER'],
+        #     password = os.environ['PASSWORD'],
+        #     database = os.environ['DATABASE']
+        # )
+        # c = db.cursor() 
+        # amount = random.randint(1,1000);
         
-        c.execute(f"""UPDATE dodos
-                    SET money = money + {amount}
-                    WHERE id = {ctx.message.author.id}
-        """)
-        db.commit()
-        c.execute(f"""SELECT money
-            FROM dodos
-            WHERE id = {ctx.message.author.id}
+        # c.execute(f"""UPDATE dodos
+        #             SET money = money + {amount}
+        #             WHERE id = {ctx.message.author.id}
+        # """)
+        # db.commit()
+        # c.execute(f"""SELECT money
+        #     FROM dodos
+        #     WHERE id = {ctx.message.author.id}
 
 
-        """)
-        moneyAmount = ''.join(map(str,c.fetchall()[0]))
-        moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-        await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
-        c.close()
-        db.close()
+        # """)
+        # moneyAmount = ''.join(map(str,c.fetchall()[0]))
+        # moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        # await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
+        # c.close()
+        # db.close()
     
     @daily.error
     async def daily_error(self,ctx,error):
