@@ -99,12 +99,15 @@ class Economy(commands.Cog):
     @commands.command()
     async def sell(self,ctx,*role):
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+        print("Selling: " + role)
         role = discord.utils.get(ctx.guild.roles, name = role)
         if ((str(role) not in rolesList)):
             await ctx.send("Only can sell collected Colour Roles.")
         role = str(role)
         dodoRole = role
         role = role.split()[1]
+        print("Saved role is: " + dodoRole)
+        print("Database role role is: " + role)
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -118,6 +121,7 @@ class Economy(commands.Cog):
 
         """)
         roleAmount = ''.join(map(str,c.fetchall()[0]))
+        print("Role Amount is: " + roleAmount)
         if(roleAmount > 1):
             c.execute(f"""UPDATE dodos
             SET {roleAmount[1]} = {roleAmount[1]} - 1
