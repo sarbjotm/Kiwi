@@ -38,7 +38,6 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1,86400, commands.BucketType.user)
     async def daily(self,ctx):   
-        await ctx.send("Disabled while new commands are being added. Blame tooo for aboose")     
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -66,7 +65,7 @@ class Economy(commands.Cog):
         moneyAmount = ''.join(map(str,c.fetchall()[0]))
         moneySymbol = discord.utils.get(ctx.message.guild.emojis, name='money')
         if(amount < 0):
-            await ctx.send(f"Oh no! Kiwi stole ${amount}. Your new total is {moneyAmount} {moneySymbol}")
+            await ctx.send(f"Oh no! Kiwi stole ${amount*-1}. Your new total is {moneyAmount} {moneySymbol}")
         else:
             await ctx.send(f"You found ${amount}. Your new total is {moneyAmount} {moneySymbol}")
         c.close()
