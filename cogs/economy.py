@@ -201,6 +201,26 @@ class Economy(commands.Cog):
         c.close()
         db.close()
 
+    @commands.command()
+    async def leaderboard(self,ctx):
+        db = mysql.connector.connect(
+        host= os.environ['HOST'],
+        user = os.environ['USER'],
+        password = os.environ['PASSWORD'],
+        database = os.environ['DATABASE']
+        )
+        c = db.cursor()  
+        c.execute(f"""SELECT id, money
+                FROM dodos
+                ORDER BY money DESC LIMIT 5""") 
+        print(c.fetchall())
+        print(c.fetchall()[0][0])
+        print(await ctx.guild.fetch_member(264645255427522560))
+        await ctx.send(f"Command under maintenance. See logs for details")
+        c.close()
+        db.close()
+
+
 
 
 def setup(client):
