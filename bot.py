@@ -104,7 +104,7 @@ async def help(ctx):
     embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin \n**,poll \"Question\" option1 option2 ... option10** - Display a poll with n (2 <= n <= 10) options or a yes/no without any options shown" , inline=False)
     embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
     embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
-    embed.add_field(name="Economy", value="**,daily** - Recieve between 1 and 1000 discord dollars \n**,bal** - View your balance", inline=False)
+    embed.add_field(name="Economy", value="**,daily** - Recieve between 1 and 1000 discord dollars \n**,bal** - View your balance \n**,leaderboard** - See top 5 Richest Dodos" , inline=False)
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=False)
     await ctx.send(embed=embed)
 
