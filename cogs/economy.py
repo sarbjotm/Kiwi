@@ -225,7 +225,7 @@ class Economy(commands.Cog):
             
         c.close()
         db.close()
-
+        await ctx.send("TODO: FINISH THIS")
 
 
 
