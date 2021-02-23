@@ -213,9 +213,11 @@ class Economy(commands.Cog):
         c.execute(f"""SELECT id, money
                 FROM dodos
                 ORDER BY money DESC LIMIT 5""") 
-        print(c.fetchall())
-        print(c.fetchall()[0][0])
-        print(await ctx.guild.fetch_member(264645255427522560))
+        leaders = c.fetchall()
+        print(leaders)
+        print(leaders[0][0])
+        print(leaders[0][1])
+        print(await ctx.guild.fetch_member(leaders[0][1]))
         await ctx.send(f"Command under maintenance. See logs for details")
         c.close()
         db.close()
