@@ -223,9 +223,8 @@ class Economy(commands.Cog):
             position = i + 1
             username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
             # print(username)
-            money = leaders[i][1]
-            print(money)
-            descriptionEmbed = descriptionEmbed + position + ". " + username + "-" + money + "\n" 
+            money = str(leaders[i][1])
+            descriptionEmbed = descriptionEmbed + str(position) + ". " + str(username) + "-" + str(money) + "\n" 
             # print(descriptionEmbed)
         print(descriptionEmbed)
         # embed=discord.Embed(title="Richest Dodos" , color=0xe392fe)
