@@ -202,7 +202,6 @@ class Economy(commands.Cog):
         db.close()
 
     @commands.command()
-
     async def leaderboard(self,ctx):
         db = mysql.connector.connect(
         host= os.environ['HOST'],
