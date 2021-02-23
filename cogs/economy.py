@@ -218,13 +218,11 @@ class Economy(commands.Cog):
         print(leaders)
         # print(leaders[0][0])
         # print(leaders[0][1])
-        embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
-        descriptionEmbed = ""
+        # embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
+        descriptionEmbed = " "
         for i in range(0,5):
-            username = await ctx.message.channel.guild.fetch_member(int(leaders[0][0]))
-            position = i + 1
-            descriptionEmbed = descriptionEmbed + position + ". " + username + "-" + leaders[i][1] + "\n"
-        await ctx.send(embed=embed)
+            print(await ctx.message.channel.guild.fetch_member(int(leaders[0][0])))
+            
         c.close()
         db.close()
 
