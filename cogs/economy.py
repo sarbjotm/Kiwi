@@ -221,7 +221,10 @@ class Economy(commands.Cog):
         # embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
         descriptionEmbed = " "
         for i in range(0,5):
-            print(await ctx.message.channel.guild.fetch_member(int(leaders[0][0])))
+            print(await ctx.message.channel.guild.fetch_member(int(leaders[i][0])))
+            username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
+            print(username)
+            print(leaders[i][1])
             
         c.close()
         db.close()
