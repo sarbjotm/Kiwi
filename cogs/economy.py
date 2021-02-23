@@ -217,7 +217,7 @@ class Economy(commands.Cog):
         print(leaders)
         print(leaders[0][0])
         print(leaders[0][1])
-        print(await ctx.message.guild.fetch_member(leaders[0][1]))
+        print(await ctx.message.guild.fetch_member(int(leaders[0][1])))
         await ctx.send(f"Command under maintenance. See logs for details")
         c.close()
         db.close()
