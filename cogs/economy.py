@@ -202,6 +202,7 @@ class Economy(commands.Cog):
         db.close()
 
     @commands.command()
+
     async def leaderboard(self,ctx):
         db = mysql.connector.connect(
         host= os.environ['HOST'],
@@ -217,7 +218,7 @@ class Economy(commands.Cog):
         print(leaders)
         # print(leaders[0][0])
         # print(leaders[0][1])
-        print(await ctx.message.channel.guild.fetch_member(int(leaders[0][1])))
+        print(await ctx.message.channel.guild.fetch_member(int(leaders[0][0])))
         await ctx.send(f"Command under maintenance. See logs for details")
         c.close()
         db.close()
