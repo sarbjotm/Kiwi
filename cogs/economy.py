@@ -220,15 +220,16 @@ class Economy(commands.Cog):
         embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
         descriptionEmbed = " "
         for i in range(0,5):
-            position = i + 1
+        #     position = i + 1
             username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
-            money = leaders[i][1]
-            descriptionEmbed = descriptionEmbed + position + ". " + username + "-" + money + "\n" 
-            print(descriptionEmbed)
-        embed=discord.Embed(title="Richest Dodos" , color=0xe392fe)
-        embed.set_thumbnail(url= "https://i.imgur.com/5wjePlr.png")
-        embed.add_field(name="Top 5", value = descriptionEmbed, inline=True)
-        await ctx.send(embed=embed)
+            print(username)
+        #     money = leaders[i][1]
+        #     descriptionEmbed = descriptionEmbed + position + ". " + username + "-" + money + "\n" 
+        #     print(descriptionEmbed)
+        # embed=discord.Embed(title="Richest Dodos" , color=0xe392fe)
+        # embed.set_thumbnail(url= "https://i.imgur.com/5wjePlr.png")
+        # embed.add_field(name="Top 5", value = descriptionEmbed, inline=True)
+        # await ctx.send(embed=embed)
 
             
         c.close()
