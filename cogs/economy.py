@@ -214,10 +214,10 @@ class Economy(commands.Cog):
                 FROM dodos
                 ORDER BY money DESC LIMIT 5""") 
         leaders = c.fetchall()
-        # print(leaders)
-        # print(leaders[0][0])
-        # print(leaders[0][1])
-        # embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
+        print(leaders)
+        print(leaders[0][0])
+        print(leaders[0][1])
+        embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
         descriptionEmbed = " "
         for i in range(0,5):
             position = i + 1
