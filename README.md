@@ -15,7 +15,7 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
 | ,collect      | None                 | None                                      | Collect a random colour role, 12 hour cooldown              | ,collect                                 |
-| ,activate     | None                 | String text                               | Activate a collect colour role as your colour               | ,activate "Dodo Red"                     |
+| ,activate     | None                 | String text                               | Activate a collect colour role as your colour               | ,activate Dodo Red                     |
 | ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade "Dodo Red" @Amander "Dodo Purple" |
 | ,myroles      | None                 | None                                      | Display a list and quantity of the roles you have collected | ,myroles                                 |
 | ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles                                   
