@@ -126,36 +126,36 @@ class Utilities(commands.Cog):
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
         await ctx.send("Command disabled while other commands are added/edited")
-        # db = mysql.connector.connect(
-        #     host= os.environ['HOST'],
-        #     user = os.environ['USER'],
-        #     password = os.environ['PASSWORD'],
-        #     database = os.environ['DATABASE']
-        # )
-        # c = db.cursor() 
-        # roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
-        # print(roleAssign)
-        # role = discord.utils.get(ctx.guild.roles, name=roleAssign)
-        # await ctx.message.author.add_roles(role)
-        # await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
-        # roleAssign = roleAssign.split(" ")
-        # c.execute(f"""UPDATE dodos
-        #             SET {roleAssign[1]} = {roleAssign[1]} + 1
-        #             WHERE id = {ctx.message.author.id}
-        # """)
-        # db.commit()
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        print(roleAssign)
+        role = discord.utils.get(ctx.guild.roles, name=roleAssign)
+        await ctx.message.author.add_roles(role)
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
+        roleAssign = roleAssign.split(" ")
+        c.execute(f"""UPDATE dodos
+                    SET {roleAssign[1]} = {roleAssign[1]} + 1
+                    WHERE id = {ctx.message.author.id}
+        """)
+        db.commit()
 
-        # c.execute(f"""SELECT {roleAssign[1]}
-        #             FROM dodos
-        #             WHERE id = {ctx.message.author.id}
+        c.execute(f"""SELECT {roleAssign[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
     
     
-        # """)
-        # roleCount = ''.join(map(str,c.fetchall()[0]))
-        # print(roleCount)
-        # await ctx.send(f'You now have {roleCount} {str(role)} roles')
-        # c.close()
-        # db.close()
+        """)
+        roleCount = ''.join(map(str,c.fetchall()[0]))
+        print(roleCount)
+        await ctx.send(f'You now have {roleCount} {str(role)} roles')
+        c.close()
+        db.close()
 
     @collect.error
     async def collect_error(self,ctx,error):
