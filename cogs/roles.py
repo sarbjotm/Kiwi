@@ -30,84 +30,86 @@ class Utilities(commands.Cog):
             userRoleString = arguments[0][0].upper() + arguments[0][1:].lower() + " " + arguments[1][0].upper() + arguments[1][1:].lower()
             otherUserID = arguments[2][3:len(arguments[2])-1]
             otherUserRoleString = arguments[3][0].upper() + arguments[0][1:].lower() + " " + arguments[4][0].upper() + arguments[1][1:].lower()
-            
-            if( (userRoleString in rolesList) and (otherUserRoleString in rolesList)):
-            #Grab user role count
-                c.execute(f"""SELECT {userRoleString[1]}
-                            FROM dodos
-                            WHERE id = {ctx.message.author.id}        
-                """)
-                userRoleCount = ''.join(map(str,c.fetchall()[0]))
+            print(userRoleString)
+            print(otherUserRoleString)
+            await ctx.send("Close close finishing")
+            # if( (userRoleString in rolesList) and (otherUserRoleString in rolesList)):
+            # #Grab user role count
+            #     c.execute(f"""SELECT {userRoleString[1]}
+            #                 FROM dodos
+            #                 WHERE id = {ctx.message.author.id}        
+            #     """)
+            #     userRoleCount = ''.join(map(str,c.fetchall()[0]))
 
-                #Grab other user role count
-                c.execute(f"""SELECT {otherUserRoleString[1]}
-                            FROM dodos
-                            WHERE id = {otherUserRoleString}        
-                """)
-                otherUserRoleCount = ''.join(map(str,c.fetchall()[0]))
-                if( (userRoleCount > 0) and (otherUserRoleCount > 0) ):
-                    #Update USER Info and Remove roles if needed
+            #     #Grab other user role count
+            #     c.execute(f"""SELECT {otherUserRoleString[1]}
+            #                 FROM dodos
+            #                 WHERE id = {otherUserRoleString}        
+            #     """)
+            #     otherUserRoleCount = ''.join(map(str,c.fetchall()[0]))
+            #     if( (userRoleCount > 0) and (otherUserRoleCount > 0) ):
+            #         #Update USER Info and Remove roles if needed
 
-                    c.execute(f"""UPDATE dodos
-                                SET{userRoleString.split(" ")[1]} = {userRoleString.split(" ")[1]} - 1
-                                WHERE id = {ctx.message.author.id}
+            #         c.execute(f"""UPDATE dodos
+            #                     SET{userRoleString.split(" ")[1]} = {userRoleString.split(" ")[1]} - 1
+            #                     WHERE id = {ctx.message.author.id}
                     
-                    """)
-                    db.commit()
-                    c.execute(f"""UPDATE dodos
-                            SET{otherUserRoleString.split(" ")[1]} = {otherUserRoleString.split(" ")[1]} + 1
-                            WHERE id = {ctx.message.author.id}
+            #         """)
+            #         db.commit()
+            #         c.execute(f"""UPDATE dodos
+            #                 SET{otherUserRoleString.split(" ")[1]} = {otherUserRoleString.split(" ")[1]} + 1
+            #                 WHERE id = {ctx.message.author.id}
 
-                    """)
-                    db.commit()
-
-
-                    role = discord.utils.get(ctx.guild.roles, name=otherUserRoleString)
-                    await ctx.message.author.add_roles(role)
+            #         """)
+            #         db.commit()
 
 
-                    if(userRoleCount - 1 == 0):
-                        roleRemove = discord.utils.get(ctx.guild.roles, name=userRoleString.split(" ")[1])
-                        if(roleRemove in ctx.message.author.roles):
-                            await ctx.message.author.remove_roles(roleRemove)
-                        roleRemove = discord.utils.get(ctx.guild.roles, name=userRoleString)
-                        if(roleRemove in ctx.message.author.roles):
-                            await ctx.message.author.remove_roles(roleRemove)
+            #         role = discord.utils.get(ctx.guild.roles, name=otherUserRoleString)
+            #         await ctx.message.author.add_roles(role)
+
+
+            #         if(userRoleCount - 1 == 0):
+            #             roleRemove = discord.utils.get(ctx.guild.roles, name=userRoleString.split(" ")[1])
+            #             if(roleRemove in ctx.message.author.roles):
+            #                 await ctx.message.author.remove_roles(roleRemove)
+            #             roleRemove = discord.utils.get(ctx.guild.roles, name=userRoleString)
+            #             if(roleRemove in ctx.message.author.roles):
+            #                 await ctx.message.author.remove_roles(roleRemove)
                     
 
-                    #Update OTHER user Info
-                    c.execute(f"""UPDATE dodos
-                                SET{otherUserRoleString.split(" ")[1]} = {otherUserRoleString.split(" ")[1]} - 1
-                                WHERE id = {otherUserID}
+            #         #Update OTHER user Info
+            #         c.execute(f"""UPDATE dodos
+            #                     SET{otherUserRoleString.split(" ")[1]} = {otherUserRoleString.split(" ")[1]} - 1
+            #                     WHERE id = {otherUserID}
                     
-                    """)
-                    db.commit()
-                    c.execute(f"""UPDATE dodos
-                            SET{userRoleString.split(" ")[1]} = {userRoleString.split(" ")[1]} + 1
-                            WHERE id = {otherUserID}
+            #         """)
+            #         db.commit()
+            #         c.execute(f"""UPDATE dodos
+            #                 SET{userRoleString.split(" ")[1]} = {userRoleString.split(" ")[1]} + 1
+            #                 WHERE id = {otherUserID}
 
-                    """)
-                    db.commit()
+            #         """)
+            #         db.commit()
 
-                    role = discord.utils.get(ctx.guild.roles, name=userRoleString)
-                    await ctx.guild.get_member(int(otherUserID)).add_roles(role)
+            #         role = discord.utils.get(ctx.guild.roles, name=userRoleString)
+            #         await ctx.guild.get_member(int(otherUserID)).add_roles(role)
 
-                    if(otherUserRoleCount - 1 == 0):
-                        roleRemove = discord.utils.get(ctx.guild.roles, name=otherUserRoleString.split(" ")[1])
-                        if(roleRemove in ctx.guild.get_member(int(otherUserID))):
-                            await ctx.guild.get_member(int(otherUserID)).remove_roles(roleRemove)
-                        roleRemove = discord.utils.get(ctx.guild.roles, name=otherUserRoleString)
-                        if(roleRemove in ctx.guild.get_member(int(otherUserID))):
-                            await ctx.guild.get_member(int(otherUserID)).remove_roles(roleRemove)
+            #         if(otherUserRoleCount - 1 == 0):
+            #             roleRemove = discord.utils.get(ctx.guild.roles, name=otherUserRoleString.split(" ")[1])
+            #             if(roleRemove in ctx.guild.get_member(int(otherUserID))):
+            #                 await ctx.guild.get_member(int(otherUserID)).remove_roles(roleRemove)
+            #             roleRemove = discord.utils.get(ctx.guild.roles, name=otherUserRoleString)
+            #             if(roleRemove in ctx.guild.get_member(int(otherUserID))):
+            #                 await ctx.guild.get_member(int(otherUserID)).remove_roles(roleRemove)
                         
                                 
-                    await ctx.send("Trade Complete!")
+            #         await ctx.send("Trade Complete!")
 
 
-                else:
-                    await ctx.send("Users do not have those roles or they do not exist")
-            else:
-                await ctx.send("You can only trade collectable Dodo Roles")
+            #     else:
+            #         await ctx.send("Users do not have those roles or they do not exist")
+            # else:
+            #     await ctx.send("You can only trade collectable Dodo Roles")
             
         c.close()
         db.close()
