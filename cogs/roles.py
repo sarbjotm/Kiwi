@@ -107,6 +107,10 @@ class Utilities(commands.Cog):
                 await ctx.send("Users do not have those roles or they do not exist")
         else:
             await ctx.send("You can only trade collectable Dodo Roles")
+        
+        c.close()
+        db.close()
+        
     @commands.command()
     async def amandertesting(self,ctx,*arguments):
         await ctx.send(arguments)
