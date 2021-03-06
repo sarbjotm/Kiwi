@@ -33,7 +33,7 @@ class Utilities(commands.Cog):
     async def amandertesting(self,ctx,*arguments):
         await ctx.send(arguments)
         print(arguments[2])
-        print(arguments[2][2:])
+        print(arguments[2][3:len(arguments[2])-1])
 
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
