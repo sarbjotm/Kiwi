@@ -33,7 +33,7 @@ class Utilities(commands.Cog):
     async def amandertesting(self,ctx,*arguments):
         await ctx.send(arguments)
         print(arguments)
-        print(arguments[2][3:len(arguments-2])
+        print(arguments[2][3:len(arguments-2)])
         await ctx.send(len(arguments))
 
     @commands.command()
