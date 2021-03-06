@@ -23,16 +23,18 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
         c = db.cursor()
-        if len(arguments != 5):
-            await ctx.send("Error in arguments. Example usage is as follows ,trade Dodo Red @User Dodo Blue")
-        else:
-
-            userRoleString = arguments[0][0].upper() + arguments[0][1:].lower() + " " + arguments[1][0].upper() + arguments[1][1:].lower()
-            otherUserID = arguments[2][3:len(arguments[2])-1]
-            otherUserRoleString = arguments[3][0].upper() + arguments[0][1:].lower() + " " + arguments[4][0].upper() + arguments[1][1:].lower()
-            print(userRoleString)
-            print(otherUserRoleString)
-            await ctx.send("Close close finishing")
+        await ctx.send("Command under maintenace cause mander added a bug, dumb dodo smh")
+        # if len(arguments != 5):
+        #     await ctx.send("Error in arguments. Example usage is as follows ,trade Dodo Red @User Dodo Blue")
+        # else:
+            
+            
+        #     userRoleString = arguments[0][0].upper() + arguments[0][1:].lower() + " " + arguments[1][0].upper() + arguments[1][1:].lower()
+        #     otherUserID = arguments[2][3:len(arguments[2])-1]
+        #     otherUserRoleString = arguments[3][0].upper() + arguments[0][1:].lower() + " " + arguments[4][0].upper() + arguments[1][1:].lower()
+        #     print(userRoleString)
+        #     print(otherUserRoleString)
+        #     await ctx.send("Close close finishing")
             # if( (userRoleString in rolesList) and (otherUserRoleString in rolesList)):
             # #Grab user role count
             #     c.execute(f"""SELECT {userRoleString[1]}
