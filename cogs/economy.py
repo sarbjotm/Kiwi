@@ -114,7 +114,7 @@ class Economy(commands.Cog):
             if(quantity <= 0):
                 await ctx.send("Please enter a quantity greater than 0")
         
-            if( (role not in rolesList) ):
+            elif( (role not in rolesList) ):
                 await ctx.send("Please enter a Dodo Role. Example Usage ,sell  <amount> Dodo Red")
             else:
                 totalProfit = 0
@@ -221,7 +221,7 @@ class Economy(commands.Cog):
             if(quantity <= 0):
                 await ctx.send("Please enter a quantity greater than 0")
         
-            if( (role not in rolesList) ):
+            elif( (role not in rolesList) ):
                 await ctx.send("Please enter a Dodo Role. Example Usage ,sell <amount> Dodo Red")
             else:
                 boughtAmount = 5000 * quantity
