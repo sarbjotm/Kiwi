@@ -105,7 +105,7 @@ class Economy(commands.Cog):
             database = os.environ['DATABASE']
         )
         if(not quantity.isdigit()):
-            await ctx.send("Please enter a whole number for **quanity**. Example Usage ,sell <Amount> Dodo Red")
+            await ctx.send("Please enter a whole number for **quantity**. Example Usage ,sell <Amount> Dodo Red")
         elif(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,sell <Amount> Dodo Red")
         else:
@@ -214,7 +214,7 @@ class Economy(commands.Cog):
         )
         
         if(not quantity.isdigit()):
-            await ctx.send("Please enter a whole number for **quanity**. Example Usage ,buy <Amount> Dodo Red")
+            await ctx.send("Please enter a whole number for **quantity**. Example Usage ,buy <Amount> Dodo Red")
 
         elif(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,buy <amount> Dodo Red")
