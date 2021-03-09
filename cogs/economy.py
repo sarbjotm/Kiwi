@@ -228,7 +228,7 @@ class Economy(commands.Cog):
                 c = db.cursor()
                 role = str(role)
                 dodoRole = role
-                role = role.split()[1]
+                role = role.split(" ")[1]
                 c.execute(f'''SELECT money 
                             FROM dodos
                             WHERE id = {ctx.message.author.id}
@@ -245,6 +245,7 @@ class Economy(commands.Cog):
                     db.commit()
                     roleBought = discord.utils.get(ctx.guild.roles, name=dodoRole)
                     await ctx.message.author.add_roles(roleBought)
+                    print(role)
                     c.execute(f"""UPDATE dodos
                     SET {role} = {role} + {quantity}
                     WHERE id = {ctx.message.author.id}
