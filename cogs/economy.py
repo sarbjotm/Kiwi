@@ -106,16 +106,16 @@ class Economy(commands.Cog):
         )
         quantity = int(quantity)
         if(len(role) != 2):
-            await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
+            await ctx.send("Please enter a Dodo Role. Example Usage ,sell <Amount> Dodo Red")
         
         else:
             role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
 
-            if(quantity < 0):
+            if(quantity <= 0):
                 await ctx.send("Please enter a quantity greater than 0")
         
-            elif( (role not in rolesList) ):
-                await ctx.send("Please enter a Dodo Role. Example Usage ,sell Dodo Red")
+            if( (role not in rolesList) ):
+                await ctx.send("Please enter a Dodo Role. Example Usage ,sell  <amount> Dodo Red")
             else:
                 totalProfit = 0
                 soldAmount = 0
@@ -198,6 +198,57 @@ class Economy(commands.Cog):
                 else:
                     print("Role Amount is equal to 0")
                     await ctx.send("You do not have that many role(s)")
+
+        c.close()
+        db.close()
+
+    
+    @commands.command()
+    async def buy(self,ctx, quantity, *role):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        quantity = int(quantity)
+        if(len(role) != 2):
+            await ctx.send("Please enter a Dodo Role. Example Usage ,buy <amount> Dodo Red")
+        
+        else:
+            role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+
+            if(quantity <= 0):
+                await ctx.send("Please enter a quantity greater than 0")
+        
+            if( (role not in rolesList) ):
+                await ctx.send("Please enter a Dodo Role. Example Usage ,sell <amount> Dodo Red")
+            else:
+                boughtAmount = 5000 * quantity
+                c = db.cursor()
+                role = str(role)
+                dodoRole = role
+                role = role.split()[1]
+                c.execute(f'''SELECT money 
+                            FROM dodos
+                            WHERE id = {ctx.message.author.id}
+                
+                ''')
+                moneyAmount = ''.join(map(str,c.fetchall()[0]))
+                if(int(moneyAmount) < boughtAmount):
+                    await ctx.send(f"Sorry, but you cannot afford this role")
+                else:
+                    c.execute(f"""UPDATE dodos
+                    SET money = money - {boughtAmount}
+                    WHERE id = {ctx.message.author.id}
+                    """)
+                    db.commit()
+                    roleBought = discord.utils.get(ctx.guild.roles, name=dodoRole)
+                    await ctx.message.author.add_roles(roleBought)
+                    c.execute(f"""UPDATE dodos
+                    SET {role} = {role} + {quantity}
+                    WHERE id = {ctx.message.author.id}
+                    """)
 
         c.close()
         db.close()
