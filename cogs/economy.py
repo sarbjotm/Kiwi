@@ -214,7 +214,7 @@ class Economy(commands.Cog):
         )
         
         if(not quantity.isdigit()):
-            await ctx.send("Please enter a whole number for **quanity**. Example Usage ,sell <Amount> Dodo Red")
+            await ctx.send("Please enter a whole number for **quanity**. Example Usage ,buy <Amount> Dodo Red")
 
         elif(len(role) != 2):
             await ctx.send("Please enter a Dodo Role. Example Usage ,buy <amount> Dodo Red")
@@ -227,7 +227,7 @@ class Economy(commands.Cog):
                 await ctx.send("Please enter a quantity greater than 0")
         
             elif( (role not in rolesList) ):
-                await ctx.send("Please enter a Dodo Role. Example Usage ,sell <amount> Dodo Red")
+                await ctx.send("Please enter a Dodo Role. Example Usage ,buy <amount> Dodo Red")
             else:
                 boughtAmount = 5000 * quantity
                 c = db.cursor()
