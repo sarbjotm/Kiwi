@@ -249,6 +249,7 @@ class Economy(commands.Cog):
                     SET {role} = {role} + {quantity}
                     WHERE id = {ctx.message.author.id}
                     """)
+                    await ctx.message.add_reaction("👍")
 
         c.close()
         db.close()
