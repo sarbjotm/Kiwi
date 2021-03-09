@@ -212,7 +212,7 @@ class Economy(commands.Cog):
             password = os.environ['PASSWORD'],
             database = os.environ['DATABASE']
         )
-        quantity = int(quantity)
+        
         if(not quantity.isdigit()):
             await ctx.send("Please enter a whole number for **quanity**. Example Usage ,sell <Amount> Dodo Red")
 
