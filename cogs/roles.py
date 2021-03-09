@@ -125,7 +125,7 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
-        await ctx.send("Command disabled while other commands are added/edited")
+        # await ctx.send("Command disabled while other commands are added/edited")
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
