@@ -38,7 +38,7 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1,86400, commands.BucketType.user)
     async def daily(self,ctx):
-        await ctx.send("Command Disabled while commands are added/removed")   
+        # await ctx.send("Command Disabled while commands are added/removed")   
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
