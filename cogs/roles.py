@@ -49,7 +49,7 @@ class Utilities(commands.Cog):
             await ctx.send("You or the user you're trading with does not have those roles")
 
         else:
-            await ctx.send(f'{ctx.message.author.mention} wants to trade {role} to {member.mention} for {roleTradingFor}')
+            await ctx.send(f'{ctx.message.author.mention} wants to trade {roleTrading} to {member.mention} for {roleTradingFor}')
             await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
             try:
                 msg = await self.client.wait_for(
@@ -72,7 +72,7 @@ class Utilities(commands.Cog):
                     
                             """)
                     db.commit()
-                    roleAssign = discord.utils.get(ctx.guild.roles, name=roleTradingFor)
+                    roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTradingFor))
                     await ctx.message.author.add_roles(roleAssign)
 
                     if( int(userRoleCount) - 1 == 0):
@@ -80,7 +80,7 @@ class Utilities(commands.Cog):
                         if(roleRemove in ctx.message.author.roles):
                             await ctx.message.author.remove_roles(roleRemove)
 
-                        roleRemove = discord.utils.get(ctx.guild.roles, name= roleTrading)
+                        roleRemove = discord.utils.get(ctx.guild.roles, name= str(roleTrading))
                         if(roleRemove in ctx.message.author.roles):
                             await ctx.message.author.remove_roles(roleRemove)
 
@@ -97,7 +97,7 @@ class Utilities(commands.Cog):
                     
                             """)
                     db.commit()
-                    roleAssign = discord.utils.get(ctx.guild.roles, name=roleTrading)
+                    roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTrading))
                     await ctx.message.author.add_roles(roleAssign)
 
                     if(int(otherUserRoleCount) - 1 == 0):
@@ -105,7 +105,7 @@ class Utilities(commands.Cog):
                         if(roleRemove in ctx.message.author.roles):
                             await ctx.message.author.remove_roles(roleRemove)
 
-                        roleRemove = discord.utils.get(ctx.guild.roles, name= roleTradingFor)
+                        roleRemove = discord.utils.get(ctx.guild.roles, name= str(roleTradingFor))
                         if(roleRemove in ctx.message.author.roles):
                             await ctx.message.author.remove_roles(roleRemove)
                     
