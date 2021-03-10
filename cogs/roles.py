@@ -239,7 +239,7 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def showall(self,ctx):
-        kiwimessage = await ctx.send("Hacking in... please wait, will react when finished")
+        kiwimessage = await ctx.send("Hacking in... please wait, will reply when finished")
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -258,8 +258,7 @@ class Utilities(commands.Cog):
             if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.add_roles(role)
-        await kiwimessage.delete_message()
-        await ctx.message.add_reaction("👍")
+        await kiwimessage.edit("Task Completed")
         c.close()
         db.close()
 
@@ -296,7 +295,7 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def hideall(self,ctx):
-        kiwimessage = await ctx.send("Hacking in... please wait, will react when finished")
+        kiwimessage = await ctx.send("Hacking in... please wait, will reply when finished")
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -309,8 +308,7 @@ class Utilities(commands.Cog):
             if(roleRemove in ctx.message.author.roles):
                 await ctx.message.author.remove_roles(roleRemove)
                      
-        await kiwimessage.delete_message()
-        await ctx.message.add_reaction("👍")
+        await kiwimessage.edit("Task Completed")        
         c.close()
         db.close()
 
