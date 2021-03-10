@@ -117,12 +117,6 @@ class Utilities(commands.Cog):
         db.close()
 
     @commands.command()
-    async def amandertesting(self,ctx,*arguments):
-        await ctx.send(arguments)
-        print(arguments[2])
-        print(arguments[2][3:len(arguments[2])-1])
-
-    @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
         # await ctx.send("Command disabled while other commands are added/edited")
@@ -176,24 +170,153 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def activate(self,ctx,*role):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
-        role = discord.utils.get(ctx.guild.roles, name = role)
-        if ((str(role) not in rolesList)):
+        role = str(role)
+        if(role not in rolesList):
             await ctx.send("Only can activate collected Colour Roles.")
-        elif (role in ctx.message.author.roles):
-            for r in activateRoles:
+        else:
+            c.execute(f"""SELECT {role.split(" ")[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+            """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            if(roleCount > 0):
+                for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
                     if(roleRemove in ctx.message.author.roles):
                         await ctx.message.author.remove_roles(roleRemove)
                         break
-            role = str(role)
-            role = role.split()[1]
-            roleAssign = discord.utils.get(ctx.guild.roles, name=role)
-            await ctx.message.author.add_roles(roleAssign)
-            await ctx.message.add_reaction("👍")
-        
+
+                roleAssign = discord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
+                await ctx.message.author.add_roles(roleAssign)
+                await ctx.message.add_reaction("👍")
+            else:
+                await ctx.send("You do not have that role.")
+        c.close()
+        db.close()
+
+    
+    @commands.command()
+    async def show(self,ctx,*role):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+        role = str(role)
+        if((role not in rolesList)):
+            await ctx.send("Only can show collecatable roles")
         else:
-            await ctx.send("You do not have that role.")
+            c.execute(f"""SELECT {role.split(" ")[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+            """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            if(roleCount > 0):
+                role = discord.utils.get(ctx.guild.roles, name = role)
+                await ctx.message.author.add_roles(role)
+                await ctx.message.add_reaction("👍")
+            else:
+                await ctx.send("You do not have that role")
+        
+        c.close()
+        db.close()
+
+
+    @commands.command()
+    async def showall(self,ctx):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        for role in rolesList:
+            c.execute(f"""SELECT {role.split(" ")[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+            """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            if(roleCount > 0):
+                role = discord.utils.get(ctx.guild.roles, name = role)
+                await ctx.message.author.add_roles(role)
+
+        await ctx.message.add_reaction("👍")
+        c.close()
+        db.close()
+
+    @commands.command()
+    async def hide(self,ctx,*role):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
+        role = str(role)
+        if((role not in rolesList)):
+            await ctx.send("Only can hide collecatable roles")
+        else:
+            c.execute(f"""SELECT {role.split(" ")[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+            """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            if(roleCount > 0):
+                role = discord.utils.get(ctx.guild.roles, name = role)
+                await ctx.message.author.remove_roles(role)
+                await ctx.message.add_reaction("👍")
+            else:
+                await ctx.send("You do not have that role")
+        
+        c.close()
+        db.close()
+
+    @commands.command()
+    async def hideall(self,ctx):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+        c = db.cursor() 
+        for role in rolesList:
+            c.execute(f"""SELECT {role.split(" ")[1]}
+                    FROM dodos
+                    WHERE id = {ctx.message.author.id}
+    
+    
+            """)
+            roleCount = ''.join(map(str,c.fetchall()[0]))
+            if(roleCount > 0):
+                role = discord.utils.get(ctx.guild.roles, name = role)
+                await ctx.message.author.remove_roles(role)
+
+        await ctx.message.add_reaction("👍")
+        c.close()
+        db.close()
+
+
         
 
     @commands.command()
