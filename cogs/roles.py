@@ -182,7 +182,7 @@ class Utilities(commands.Cog):
         if(role not in rolesList):
             await ctx.send("Only can activate collected Colour Roles.")
         else:
-            c.execute(f"""SELECT {role.split(" ")[1]}
+            c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
             """)
@@ -214,10 +214,12 @@ class Utilities(commands.Cog):
         c = db.cursor() 
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
         role = str(role)
+        print(role)
+        print(role.split())
         if((role not in rolesList)):
             await ctx.send("Only can show collecatable roles")
         else:
-            c.execute(f"""SELECT {role.split(" ")[1]}
+            c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
     
@@ -245,7 +247,7 @@ class Utilities(commands.Cog):
         )
         c = db.cursor() 
         for role in rolesList:
-            c.execute(f"""SELECT {role.split(" ")[1]}
+            c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
     
@@ -274,7 +276,7 @@ class Utilities(commands.Cog):
         if((role not in rolesList)):
             await ctx.send("Only can hide collecatable roles")
         else:
-            c.execute(f"""SELECT {role.split(" ")[1]}
+            c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
     
@@ -301,7 +303,7 @@ class Utilities(commands.Cog):
         )
         c = db.cursor() 
         for role in rolesList:
-            c.execute(f"""SELECT {role.split(" ")[1]}
+            c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
     
