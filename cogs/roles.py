@@ -303,17 +303,11 @@ class Utilities(commands.Cog):
         )
         c = db.cursor() 
         for role in rolesList:
-            c.execute(f"""SELECT {role.split()[1]}
-                    FROM dodos
-                    WHERE id = {ctx.message.author.id}
-    
-    
-            """)
-            roleCount = ''.join(map(str,c.fetchall()[0]))
-            if(int(roleCount) > 0):
-                role = discord.utils.get(ctx.guild.roles, name = role)
-                await ctx.message.author.remove_roles(role)
-
+            roleRemove = discord.utils.get(ctx.guild.roles, name=role)
+            if(roleRemove in ctx.message.author.roles):
+                await ctx.message.author.remove_roles(roleRemove)
+                     
+                
         await ctx.message.add_reaction("👍")
         c.close()
         db.close()
