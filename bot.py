@@ -53,38 +53,13 @@ async def on_member_join(member):
     db.close()
     await channel.send(f"Added {member} to database")
 
-@client.event
-async def on_member_leave(member):
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
-    db = mysql.connector.connect(
-    host= os.environ['HOST'],
-    user = os.environ['USER'],
-    password = os.environ['PASSWORD'],
-    database = os.environ['DATABASE']
-)
-
-    c = db.cursor()
-    c.execute(f"""DELETE FROM dodos 
-                  WHERE id = {member.id}
-              """)
-    db.commit()
-    c.close()
-    db.close()
-    await channel.send(f"Added {member} to database")
-
 
 
 @client.event
 async def on_command_error(ctx,error):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(800965152132431892)
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(f"Please pass in all required arguments. Use ,help for a list of commands")
-        await channel.send(f"{ctx.message.author} didn't pass all arguments {error}")
-    elif isinstance(error,commands.CommandOnCooldown):
-        pass
-    elif isinstance(error,commands.CommandNotFound):
+    if isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
 
