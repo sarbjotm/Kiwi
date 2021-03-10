@@ -258,7 +258,7 @@ class Utilities(commands.Cog):
             if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.add_roles(role)
-        await kiwimessage.edit("Task Completed")
+        await kiwimessage.edit(content = 'Task Completed')        
         c.close()
         db.close()
 
@@ -307,8 +307,8 @@ class Utilities(commands.Cog):
             roleRemove = discord.utils.get(ctx.guild.roles, name=role)
             if(roleRemove in ctx.message.author.roles):
                 await ctx.message.author.remove_roles(roleRemove)
-                     
-        await kiwimessage.edit("Task Completed")        
+                    
+        await kiwimessage.edit(content = 'Task Completed')        
         c.close()
         db.close()
 
