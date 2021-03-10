@@ -20,8 +20,14 @@ class Text(commands.Cog):
         for i in new:
             str1 += i 
         await ctx.send(f"{str1}")
+    
+    @spongebob.error
+    async def spongebob_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,spongebob Some Random Text**")
+        await channel.send(f"{ctx.message.author} experienced a error using spongebob")  
 
-    @commands.command(aliases = ["fw"])
+    @commands.command(aliases = ["fw","sparkles"])
     async def fireworks(self,ctx, *, message):
         emoji = "✨"
         messageList = message.split()
@@ -29,6 +35,12 @@ class Text(commands.Cog):
         for i in range(0, len(messageList)):
             fireworkString += (messageList[i] + emoji)
         await ctx.send(f"{fireworkString}")
+    
+    @fireworks.error
+    async def fireworks_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,fireworks Some Random Text**")
+        await channel.send(f"{ctx.message.author} experienced a error using fireworks")  
 
     @commands.command(aliases = ["sp","space","spaces"])
     async def spaced(self,ctx, *, message):
@@ -38,6 +50,12 @@ class Text(commands.Cog):
             spacedString += noSpaceString[i]
             spacedString += " "
         await ctx.send(f"{spacedString}")
+    
+    @spaced.error
+    async def spongebob_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,spaced Some Random Text**")
+        await channel.send(f"{ctx.message.author} experienced a error using spaced")  
 
 def setup(client):
     client.add_cog(Text(client))
