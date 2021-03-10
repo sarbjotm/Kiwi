@@ -209,7 +209,12 @@ class Utilities(commands.Cog):
                 await ctx.send("You do not have that role.")
         c.close()
         db.close()
-
+    
+    @activate.error
+    async def activate_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,activate Dodo Role**")
+        await channel.send(f"{ctx.message.author} experienced a error using activate")    
     
     @commands.command()
     async def show(self,ctx,*role):
@@ -243,6 +248,12 @@ class Utilities(commands.Cog):
         
         c.close()
         db.close()
+
+    @show.error
+    async def show_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,show Dodo Role**")
+        await channel.send(f"{ctx.message.author} experienced a error using show")    
 
 
     @commands.command()
@@ -300,6 +311,12 @@ class Utilities(commands.Cog):
         
         c.close()
         db.close()
+    
+    @hide.error
+    async def hide_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,hide Dodo Role**")
+        await channel.send(f"{ctx.message.author} experienced a error using hide")  
 
     @commands.command()
     async def hideall(self,ctx):
