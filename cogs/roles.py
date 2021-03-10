@@ -226,7 +226,7 @@ class Utilities(commands.Cog):
     
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            if(roleCount > 0):
+            if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.add_roles(role)
                 await ctx.message.add_reaction("👍")
@@ -254,7 +254,7 @@ class Utilities(commands.Cog):
     
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            if(roleCount > 0):
+            if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.add_roles(role)
 
@@ -283,7 +283,7 @@ class Utilities(commands.Cog):
     
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            if(roleCount > 0):
+            if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.remove_roles(role)
                 await ctx.message.add_reaction("👍")
@@ -310,7 +310,7 @@ class Utilities(commands.Cog):
     
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            if(roleCount > 0):
+            if(int(roleCount) > 0):
                 role = discord.utils.get(ctx.guild.roles, name = role)
                 await ctx.message.author.remove_roles(role)
 
