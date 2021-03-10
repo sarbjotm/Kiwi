@@ -24,16 +24,12 @@ class Utilities(commands.Cog):
         )
 
         c = db.cursor()  
+        roleTrading = str(prefix[0].upper()) + str(prefix[1:].lower())  + " " + str(role[0].upper()) + str(role[1:].lower())
+        roleTradingFor = str(otherPrefix[0].upper()) + str(otherPrefix[1:].lower())  + " " + str(otherRole[0].upper()) + str(otherRole[1:].lower())
+        if((str(roleTrading) not in rolesList) or (str(roleTradingFor) not in rolesList)):
+            await ctx.send("You can only trade collectable roles, here is an example: ,trade Dodo Red @User Dodo Blue")
         
-        if((str(role) not in activateRoles) or (str(otherRole) not in activateRoles)):
-            await ctx.send("You can only trade collectable roles, here is an example: ,trade Dodo Red @User Dodo Blue")
-        elif( (str(prefix) != 'Dodo') or (str(otherPrefix) != 'Dodo')):
-            await ctx.send("You can only trade collectable roles, here is an example: ,trade Dodo Red @User Dodo Blue")
-
         else:
-            roleTrading = str(prefix[0].upper()) + str(prefix[1:].lower())  + " " + str(role[0].upper()) + str(role[1:].lower())
-            roleTradingFor = str(otherPrefix[0].upper()) + str(otherPrefix[1:].lower())  + " " + str(otherRole[0].upper()) + str(otherRole[1:].lower())
-
             c.execute(f"""SELECT {role}
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
