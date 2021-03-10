@@ -101,15 +101,15 @@ class Utilities(commands.Cog):
                             """)
                     db.commit()
                     roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTrading))
-                    await ctx.message.author.add_roles(roleAssign)
+                    await member.add_roles(roleAssign)
                     print("Other User Role Count is " + otherUserRoleCount)
                     if(int(otherUserRoleCount) - 1 == 0):
                         roleRemove = discord.utils.get(ctx.guild.roles, name=str(otherRole))
-                        if(roleRemove in ctx.message.author.roles):
+                        if(roleRemove in member.roles):
                             await member.remove_roles(roleRemove)
 
                         roleRemove = discord.utils.get(ctx.guild.roles, name= str(roleTradingFor))
-                        if(roleRemove in ctx.message.author.roles):
+                        if(roleRemove in member.roles):
                             await member.remove_roles(roleRemove)
                     
                     await ctx.send("Trade Complete!")
