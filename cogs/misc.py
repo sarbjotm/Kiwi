@@ -42,7 +42,7 @@ class MiscCommands(commands.Cog):
     @poll.error
     async def poll_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Error Occured. Syntax for this command are as followed \n **,poll \"Question\" Option1 Option2 ... Option10** \n **,poll \"Question\"** \n **,poll \"Question\" \"Option1 Space\" Option2 ...")
+        await ctx.send("Error Occured. Syntax for this command are as followed \n **,poll \"Question\" Option1 Option2 ... Option10** \n **,poll \"Question\"** \n **,poll \"Question\" \"Option1 Space\" Option2 ...**")
         await channel.send(f"{ctx.message.author} experienced a error using poll")  
 
 
