@@ -76,12 +76,15 @@ class Utilities(commands.Cog):
                     await ctx.message.author.add_roles(roleAssign)
                     print("User Role Count is " + userRoleCount)
                     if( int(userRoleCount) - 1 == 0):
+                        print("inside of print statement 1")
                         roleRemove = discord.utils.get(ctx.guild.roles, name=str(role))
                         if(roleRemove in ctx.message.author.roles):
+                            print("inside of print statement 2")
                             await ctx.message.author.remove_roles(roleRemove)
 
                         roleRemove = discord.utils.get(ctx.guild.roles, name= str(roleTrading))
                         if(roleRemove in ctx.message.author.roles):
+                            print("inside of print statement 3")
                             await ctx.message.author.remove_roles(roleRemove)
 
                     #Other User Updating
