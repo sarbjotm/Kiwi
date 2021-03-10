@@ -117,6 +117,10 @@ class Utilities(commands.Cog):
         c.close()
         db.close()
 
+    @trade.error
+    async def trade_error(self,ctx,error):
+        await ctx.send("Error Occured. Syntax for this command is: **,trade Dodo Role @User Dodo Role**")
+
     @commands.command()
     @commands.cooldown(1,43200, commands.BucketType.user)
     async def collect(self,ctx):
