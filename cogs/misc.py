@@ -38,10 +38,32 @@ class MiscCommands(commands.Cog):
         else:
             await ctx.send("The minimum amount of options is 2, if you are not asking a Yes/No Question")
 
+
+    @poll.error
+    async def poll_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command are as followed \n **,poll \"Question\" Option1 Option2 ... Option10** \n **,poll \"Question\"** \n **,poll \"Question\" \"Option1 Space\" Option2 ...")
+        await channel.send(f"{ctx.message.author} experienced a error using poll")  
+
+
     @commands.command(aliases = ['rand'])
     async def randomnumber(self,ctx, num1, num2):
-        num = random.randint(int(num1),int(num2))
-        await ctx.send(f"{num} is your special number")
+        if( (num1.isdigit()) and (num2.isdigit()) ):
+            if(num1 > num2):
+                num = random.randint(int(num2),int(num1))
+            elif(num2 > num1):
+                num = random.randint(int(num1),int(num2))
+            else:
+                num = num1
+            await ctx.send(f"{num} is your special number")
+        else:
+            await ctx.send(f"Error. Use whole numbers only, e.g ,rand 1 10")
+    
+    @randomnumber.error
+    async def randomnumber_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,rand x y** where x and y are integer values")
+        await channel.send(f"{ctx.message.author} experienced a error using rand") 
 
     @commands.command(aliases = ['8ball'])
     async def _8ball(self,ctx, *, question):
@@ -67,6 +89,14 @@ class MiscCommands(commands.Cog):
                     " You may rely on it"
                 ]
         await ctx.send(f"{ctx.message.author.mention}'s Question: {question}\nOutlook: {random.choice(responses)}")
+    
+        
+    @_8ball.error
+    async def _8ball_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,8ball question** make sure you have asked a question")
+        await channel.send(f"{ctx.message.author} experienced a error using 8ball") 
+
 
     @commands.command(aliases = ["flip", "cf", "coin_flip"])
     async def coinflip(self,ctx):
@@ -87,6 +117,14 @@ class MiscCommands(commands.Cog):
         embed=discord.Embed(title="Anonymous Message" , color=0xe392fe)
         embed.add_field(name="Message", value=statement, inline=True)
         await ctx.send(embed=embed)
+    
+        
+    @anonmsg.error
+    async def anonmsg_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,anon message**")
+        await channel.send(f"{ctx.message.author} experienced a error using anon") 
+
 
 def setup(client):
     client.add_cog(MiscCommands(client))
