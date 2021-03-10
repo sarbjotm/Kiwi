@@ -29,6 +29,9 @@ class Utilities(commands.Cog):
         if((str(roleTrading) not in rolesList) or (str(roleTradingFor) not in rolesList)):
             await ctx.send("You can only trade collectable roles, here is an example: ,trade Dodo Red @User Dodo Blue")
         
+        elif(member.id == ctx.message.author.id):
+            await ctx.send("You cannot trade with yourself")
+        
         else:
             c.execute(f"""SELECT {role}
                         FROM dodos
