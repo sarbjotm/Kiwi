@@ -106,11 +106,11 @@ class Utilities(commands.Cog):
                     if(int(otherUserRoleCount) - 1 == 0):
                         roleRemove = discord.utils.get(ctx.guild.roles, name=str(otherRole))
                         if(roleRemove in ctx.message.author.roles):
-                            await ctx.message.author.remove_roles(roleRemove)
+                            await member.remove_roles(roleRemove)
 
                         roleRemove = discord.utils.get(ctx.guild.roles, name= str(roleTradingFor))
                         if(roleRemove in ctx.message.author.roles):
-                            await ctx.message.author.remove_roles(roleRemove)
+                            await member.remove_roles(roleRemove)
                     
                     await ctx.send("Trade Complete!")
                 else:
