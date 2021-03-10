@@ -105,9 +105,9 @@ class Economy(commands.Cog):
             database = os.environ['DATABASE']
         )
         if(not quantity.isdigit()):
-            await ctx.send("Please enter a whole number for **quantity**. Example Usage ,sell <Amount> Dodo Red")
+            await ctx.send("Please enter a whole number for quantity.")
         elif(len(role) != 2):
-            await ctx.send("Please enter a Dodo Role. Example Usage ,sell <Amount> Dodo Red")
+            await ctx.send("Please enter a Dodo Role.")
         else:
             quantity = int(quantity)
             role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
@@ -206,7 +206,7 @@ class Economy(commands.Cog):
     @sell.error
     async def sell_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Error Occured. Syntax for this command is: **,sell Dodo Role**")
+        await ctx.send("Syntax for this command is: **,sell x Dodo Role** Where x is the number of roles you want to sell")
         await channel.send(f"{ctx.message.author} experienced a error using sell")  
 
     
@@ -220,10 +220,10 @@ class Economy(commands.Cog):
         )
         
         if(not quantity.isdigit()):
-            await ctx.send("Please enter a whole number for **quantity**. Example Usage ,buy <quantity> Dodo Red")
+            await ctx.send("Please enter a whole number for **quantity**.")
 
         elif(len(role) != 2):
-            await ctx.send("Please enter a Dodo Role. Example Usage ,buy <quantity> Dodo Red")
+            await ctx.send("Please enter a Dodo Role")
         
         else:
             quantity = int(quantity)
@@ -233,7 +233,7 @@ class Economy(commands.Cog):
                 await ctx.send("Please enter a quantity greater than 0")
         
             elif( (role not in rolesList) ):
-                await ctx.send("Please enter a Dodo Role. Example Usage ,buy <quantity> Dodo Red")
+                await ctx.send("Please enter a Dodo Role")
             else:
                 boughtAmount = 3500 * quantity
                 c = db.cursor()
@@ -270,7 +270,7 @@ class Economy(commands.Cog):
     @buy.error
     async def buy_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Error Occured. Syntax for this command is: **,buy x Dodo Role** Where x is the number of roles you're buying")
+        await ctx.send("Syntax for this command is: **,buy x Dodo Role** Where x is the number of roles you want to buy")
         await channel.send(f"{ctx.message.author} experienced a error using buy")  
 
     @commands.command()
