@@ -74,7 +74,7 @@ class Utilities(commands.Cog):
                     db.commit()
                     roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTradingFor))
                     await ctx.message.author.add_roles(roleAssign)
-                    print(f"User Role Count is {userRoleCount}. User role count now is {userRoleCount - 1}")
+                    print("User Role Count is " + userRoleCount)
                     if( int(userRoleCount) - 1 == 0):
                         roleRemove = discord.utils.get(ctx.guild.roles, name=str(role))
                         if(roleRemove in ctx.message.author.roles):
@@ -99,7 +99,7 @@ class Utilities(commands.Cog):
                     db.commit()
                     roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTrading))
                     await ctx.message.author.add_roles(roleAssign)
-                    print(f"Other User Role Count is {userRoleCount}. Other User role count now is {userRoleCount - 1}")
+                    print("Other User Role Count is " + otherUserRoleCount)
                     if(int(otherUserRoleCount) - 1 == 0):
                         roleRemove = discord.utils.get(ctx.guild.roles, name=str(otherRole))
                         if(roleRemove in ctx.message.author.roles):
