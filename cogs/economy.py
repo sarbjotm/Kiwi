@@ -93,7 +93,7 @@ class Economy(commands.Cog):
         embed=discord.Embed(title="Kiwi Shop" , color=0xe392fe)
         embed.set_thumbnail(url= "https://i.pinimg.com/originals/6c/ce/3e/6cce3e4715c7886a4d599e3f029ef012.png")
         for i in range(0,len(rolesList)):
-            embed.add_field(name=rolesList[i], value="5000 Dodo Dollars", inline=True)
+            embed.add_field(name=rolesList[i], value="3500 Dodo Dollars", inline=True)
         await ctx.send(embed=embed)
     
     @commands.command()
@@ -146,7 +146,7 @@ class Economy(commands.Cog):
                     db.commit()
 
                     for i in range(quantity):
-                        soldAmount = random.randint(1,750)
+                        soldAmount = random.randint(1,1000)
                         totalProfit = totalProfit + soldAmount
                         c.execute(f"""UPDATE dodos
                         SET money = money + {soldAmount}
@@ -202,6 +202,12 @@ class Economy(commands.Cog):
 
         c.close()
         db.close()
+    
+    @sell.error
+    async def sell_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,sell Dodo Role**")
+        await channel.send(f"{ctx.message.author} experienced a error using sell")  
 
     
     @commands.command()
@@ -229,7 +235,7 @@ class Economy(commands.Cog):
             elif( (role not in rolesList) ):
                 await ctx.send("Please enter a Dodo Role. Example Usage ,buy <amount> Dodo Red")
             else:
-                boughtAmount = 5000 * quantity
+                boughtAmount = 3500 * quantity
                 c = db.cursor()
                 role = str(role)
                 dodoRole = role
@@ -260,6 +266,12 @@ class Economy(commands.Cog):
 
         c.close()
         db.close()
+    
+    @buy.error
+    async def buy_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Syntax for this command is: **,buy <quantity> Dodo Role**")
+        await channel.send(f"{ctx.message.author} experienced a error using sell")  
 
     @commands.command()
     async def leaderboard(self,ctx):
@@ -274,10 +286,6 @@ class Economy(commands.Cog):
                 FROM dodos
                 ORDER BY money DESC LIMIT 5""") 
         leaders = c.fetchall()
-        # print(leaders)
-        # print(leaders[0][0])
-        # print(leaders[0][1])
-        # embed=discord.Embed(title="Top 5 Richest Dodos" , color=0xe392fe)
         descriptionEmbed = ""
         for i in range(0,5):
             position = i + 1
