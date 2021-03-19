@@ -3,7 +3,7 @@ from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 
-
+#Each sign is referenced to a number assigned by horoscope.com, this goes to the end of sign = 
 zodiacSigns = {
     "aries":"1",
     "taurus":"2",
@@ -20,13 +20,16 @@ zodiacSigns = {
 }
 
 
-#Text Alterations
+#Horoscope Alterations
 class Horoscope(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    
+    #Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command()
     async def horoscope(self,ctx, zodiac):
+        #Convert inputted zodiac sign to lower, to access dictionary value
         sign = str(zodiac).lower()
         if sign in zodiacSigns:
             number = zodiacSigns.get(sign)
@@ -37,6 +40,7 @@ class Horoscope(commands.Cog):
         else:
             await ctx.send("Not a valid zodiac sign")
     
+    #If user doesn't provide zodiac sign, or enters to many parametres
     @horoscope.error
     async def horoscope_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)

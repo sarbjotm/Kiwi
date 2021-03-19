@@ -32,7 +32,7 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     print("Bot is Ready")
 
-
+#Add user to database when they join, and set all values to 0
 @client.event
 async def on_member_join(member):
     guild = client.get_guild(744817281871249428)

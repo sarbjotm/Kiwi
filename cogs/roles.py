@@ -23,7 +23,8 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
 
-        c = db.cursor()  
+        c = db.cursor()
+        #Convert roles to Dodo Colour format  
         roleTrading = str(prefix[0].upper()) + str(prefix[1:].lower())  + " " + str(role[0].upper()) + str(role[1:].lower())
         roleTradingFor = str(otherPrefix[0].upper()) + str(otherPrefix[1:].lower())  + " " + str(otherRole[0].upper()) + str(otherRole[1:].lower())
         if((str(roleTrading) not in rolesList) or (str(roleTradingFor) not in rolesList)):
@@ -33,6 +34,7 @@ class Utilities(commands.Cog):
             await ctx.send("You cannot trade with yourself")
         
         else:
+            #Check if users have the roles in the database
             c.execute(f"""SELECT {role}
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
@@ -52,6 +54,7 @@ class Utilities(commands.Cog):
                 await ctx.send("You or the user you're trading with does not have those roles")
 
             else:
+                #Confirmation from other user that they accept the trade
                 await ctx.send(f'{ctx.message.author.mention} wants to trade {roleTrading} to {member.mention} for {roleTradingFor}')
                 await ctx.send(f'{member.mention} do you accept? (Yes/No). You have 30 seconds to accept')
                 try:
@@ -61,6 +64,7 @@ class Utilities(commands.Cog):
                         check=lambda message: message.author == member \
                             and message.channel == ctx.channel 
                     )
+                    #Update user who intiated trade
                     msg = msg.content.strip().lower()
                     if ( (msg == 'yes') or (msg == 'y')):
                         c.execute(f"""UPDATE dodos
@@ -77,6 +81,7 @@ class Utilities(commands.Cog):
                         db.commit()
                         roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTradingFor))
                         await ctx.message.author.add_roles(roleAssign)
+                        #Remove activated role and role colour if user does not have these roles anymore
                         if( int(userRoleCount) - 1 == 0):
                             roleRemove = discord.utils.get(ctx.guild.roles, name=str(role))
                             if(roleRemove in ctx.message.author.roles):
@@ -101,6 +106,7 @@ class Utilities(commands.Cog):
                         db.commit()
                         roleAssign = discord.utils.get(ctx.guild.roles, name=str(roleTrading))
                         await member.add_roles(roleAssign)
+                        #Remove activated role and role colour if user does not have these roles anymore
                         if(int(otherUserRoleCount) - 1 == 0):
                             roleRemove = discord.utils.get(ctx.guild.roles, name=str(otherRole))
                             if(roleRemove in member.roles):

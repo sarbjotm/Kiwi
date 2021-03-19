@@ -7,9 +7,11 @@ class MiscCommands(commands.Cog):
     def __init__(self, client):
         self.client = client
     
+    #Poll Command
     @commands.command()
     async def poll(self,ctx,question,*options):
         size = len(options)
+        #Yes or No Question so add thumbs up/down
         if(size == 0):
             embed=discord.Embed(title=question , color=0xe392fe)
             embed.set_thumbnail(url= "https://i.imgur.com/Yx2cH7O.png")
@@ -18,7 +20,7 @@ class MiscCommands(commands.Cog):
             await sent.add_reaction("👍")
             await sent.add_reaction("👎")
             await ctx.message.delete(delay = 0)
-            #Create poll with thumbs up.down with question
+        #Poll with options     
         elif( (len(options) >= 2) and (len(options) <= 10) ):
             descriptionEmbed = " "
             for i in range(0,len(options)):
@@ -29,7 +31,7 @@ class MiscCommands(commands.Cog):
             embed.add_field(name="Options", value = descriptionEmbed, inline=True)
             await ctx.message.delete(delay = 0)
             sent = await ctx.send(embed=embed)
-
+            #Add 1 2 3 4 ... options as reacts
             for i in range(0,len(options)):
                 await sent.add_reaction(pollOptions[i])
 
