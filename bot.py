@@ -74,13 +74,15 @@ async def ping(ctx):
 async def help(ctx):
     embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x59cbf0)
     embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
-    embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up", inline=False)
-    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=False)
-    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin \n**,poll \"Question\" option1 option2 ... option10** - Display a poll with n (2 <= n <= 10) options or a yes/no without any options shown" , inline=False)
-    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade \"your role\" @user \"their role\"**\n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=False)
-    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=False)
-    embed.add_field(name="Economy", value="**,daily** - Recieve between 1 and 1000 discord dollars \n**,bal** - View your balance \n**,leaderboard** - See top 5 Richest Dodos" , inline=False)
-    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=False)
+    embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up", inline=True)
+    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=True)
+    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin \n**,poll \"Question\" option1 option2 ... option10** - Display a poll with n (2 <= n <= 10) options or a yes/no without any options shown" , inline=True)
+    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade your role @user their role** - trade roles \n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=True)
+    embed.add_field(name="Role Based Commands 2", value="**,hide role** - hide a role from your profile \n **,show role** - make a role appear on profile \n **,hideall** - hide all roles \n **,showall** - show all roles", inline=True)
+    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=True)
+    embed.add_field(name="Economy", value="**,daily** - Recieve between 1-1000 discord dollars \n**,bal** - View your balance \n**,leaderboard** - See top 5 Richest Dodos \n **,sell quantity role** - sell your roles for money \n **,buy quantity role** Buy a role \n **,shop** - see prices 4 roles" , inline=True)
+    embed.add_field(name="Astrology", value="**,horoscope zodiac** - Get your daily horoscope reading" , inline=True)
+    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=True)
     await ctx.send(embed=embed)
 
 
