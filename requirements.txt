@@ -1,2 +1,5 @@
 discord.py[voice]
 mysql-connector-python
+bs4
+requests
+lxml
