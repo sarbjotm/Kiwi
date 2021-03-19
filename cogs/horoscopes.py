@@ -20,9 +20,10 @@ zodiacSigns = {
 
 
 #Text Alterations
-class Horoscope(commands.Cog):
+class Horoscopes(commands.Cog):
     def __init__(self, client):
         self.client = client
+
 
     @commands.command()
     async def horoscope(self,ctx, zodiac):
@@ -45,4 +46,4 @@ class Horoscope(commands.Cog):
       
 
 def setup(client):
-    client.add_cog(Horoscope(client))
+    client.add_cog(Horoscopes(client))
