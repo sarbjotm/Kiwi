@@ -39,7 +39,7 @@ class Horoscope(commands.Cog):
             await ctx.send("Not a valid zodiac sign")
     
     @horoscope.error
-    async def horoscope(self,ctx,error):
+    async def horoscope_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
         await ctx.send("Error Occured. Syntax for this command is: **,hide zodiac_sign**")
         await channel.send(f"{ctx.message.author} experienced a error using horoscope")  
