@@ -72,7 +72,7 @@ async def ping(ctx):
 
 @client.command(pass_context=True)
 async def help(ctx):
-    embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x59cbf0)
+    embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x66abf9)
     embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
     embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade your role @user their role** - trade roles \n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=True)
     embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=True)
