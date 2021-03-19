@@ -32,8 +32,9 @@ class Horoscopes(commands.Cog):
             source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}').text
             soup = BeautifulSoup(source,'lxml')
             todayHoroscope = soup.p.text
-            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()}'s Horoscope For Today" , color=0x66abf9)
-            embed.add_field(name=f"{ctx.message.author}", value=f"{todayHoroscope}", inline=True)
+            await ctx.send(f"{todayHoroscope}")
+            # embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()}'s Horoscope For Today" , color=0x66abf9)
+            # embed.add_field(name=f"{ctx.message.author}", value=f"{todayHoroscope}", inline=True)
         else:
             await ctx.send("Not a valid zodiac sign")
     
