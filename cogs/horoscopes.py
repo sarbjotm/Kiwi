@@ -10,7 +10,7 @@ zodiacSigns = {
     "gemini":"3",
     "cancer":"4",
     "leo":"5",
-    "leo":"6",
+    "virgo":"6",
     "libra":"7",
     "scorpio":"8",
     "sagittarius":"9",
