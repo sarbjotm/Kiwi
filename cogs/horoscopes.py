@@ -24,6 +24,10 @@ class Horoscopes(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.command()
+    async def amandertest(self,ctx):
+        await ctx.send("Testing complete")
+
 
     @commands.command()
     async def horoscope(self,ctx, zodiac):
