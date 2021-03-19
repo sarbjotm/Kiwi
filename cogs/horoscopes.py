@@ -46,6 +46,14 @@ class Horoscope(commands.Cog):
         channel = ctx.guild.get_channel(800965152132431892)
         await ctx.send("Error Occured. Syntax for this command is: **,hide zodiac_sign**")
         await channel.send(f"{ctx.message.author} experienced a error using horoscope")  
+    
+    @commands.command()
+    async def amandertestingembeds(self,ctx):
+        embed=discord.Embed(title="Daily Horoscope", color=0x968cec)
+        embed.set_footer(text="Anticipation is often as good as, if not better than, the actual event, Virgo. This is what you experience today as you and your partner plan an exciting getaway. It's a busy day, booking hotels and airline tickets, but it's fun, too. You and your mate are giddy with the excitement of it all. This is just what your relationship needs.")
+        await ctx.send(embed=embed)
+
+
       
 
 def setup(client):
