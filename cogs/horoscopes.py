@@ -29,7 +29,7 @@ class Horoscope(commands.Cog):
     
     #Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command()
-    async def horoscope(self,ctx, zodiac):
+    async def horoscope(self,ctx,zodiac):
         #Convert inputted zodiac sign to lower, to access dictionary value
         sign = str(zodiac).lower()
         if sign in zodiacSigns:
@@ -48,7 +48,7 @@ class Horoscope(commands.Cog):
     @horoscope.error
     async def horoscope_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Error Occured. Syntax for this command is: **,hide zodiac_sign**")
+        await ctx.send("Error Occured. Syntax for this command is: **,horoscope zodiac_sign**")
         await channel.send(f"{ctx.message.author} experienced a error using horoscope")  
           
 
