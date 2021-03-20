@@ -30,7 +30,7 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Watching("SFU Dodo Club | Prefix ,"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | Prefix ,"))
     print("Bot is Ready")
 
 #Add user to database when they join, and set all values to 0
