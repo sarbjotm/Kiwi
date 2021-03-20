@@ -35,32 +35,31 @@ class Horoscope(commands.Cog):
         sign = str(zodiac).lower()
         if sign in zodiacSigns:
             number = zodiacSigns.get(sign)
-            # try:
-            source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}',timeout=5).text
-            # except Timeout:
-            #     await ctx.send("Could not establish a connection to server. Try again later")
+            try:
+                source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}',timeout=5).text
+            except Timeout:
+                await ctx.send("Could not establish a connection to server. Try again later")
             
-            # else:
-            soup = BeautifulSoup(source,'lxml')
-            todayHoroscope = soup.p.text
+            else:
+                soup = BeautifulSoup(source,'lxml')
+                todayHoroscope = soup.p.text
 
-            todayLove = soup.find("a",{"id": "src-horo-matchlove"}).text
-            todayLove = todayLove.replace("\n", " ")
+                todayLove = soup.find("a",{"id": "src-horo-matchlove"}).text
+                todayLove = todayLove.replace("\n", " ")
 
-            todayFriend = soup.find("a",{"id": "src-horo-matchfriend"}).text
-            todayFriend = todayFriend.replace("\n", " ")
+                todayFriend = soup.find("a",{"id": "src-horo-matchfriend"}).text
+                todayFriend = todayFriend.replace("\n", " ")
 
-            todayCareer = soup.find("a",{"id": "src-horo-matchcareer"}).text
-            todayCareer = todayCareer.replace("\n", " ")
+                todayCareer = soup.find("a",{"id": "src-horo-matchcareer"}).text
+                todayCareer = todayCareer.replace("\n", " ")
 
-            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n \n {todayHoroscope} \n \n **Today's Compatibility** \n \n", color=0x968cec)
-            embed.set_thumbnail(url= zodiacAvatars[int(number)])
-            embed.add_field(name=f"**{todayLove[0:5].strip()}**", value=f"{todayLove[7:].strip()}", inline=True)
-            embed.add_field(name=f"**{todayFriend[0:11].strip()}**", value=f"{todayFriend[13:].strip()}", inline=True)
-            embed.add_field(name=f"**{todayCareer[0:7].strip()}**", value=f"{todayCareer[9:].strip()}", inline=True)
-            embed.set_footer(text="https://www.horoscope.com/us/index.aspx")
-            await ctx.send(embed=embed)
-            source.close()
+                embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n \n {todayHoroscope} \n \n **Today's Compatibility** \n \n", color=0x968cec)
+                embed.set_thumbnail(url= zodiacAvatars[int(number)])
+                embed.add_field(name=f"**{todayLove[0:5].strip()}** ❤", value=f"{todayLove[7:].strip()}", inline=True)
+                embed.add_field(name=f"**{todayFriend[0:11].strip()}** 🌻", value=f"{todayFriend[13:].strip()}", inline=True)
+                embed.add_field(name=f"**{todayCareer[0:7].strip()}** 💰", value=f"{todayCareer[9:].strip()}", inline=True)
+                embed.set_footer(text="https://www.horoscope.com/us/index.aspx")
+                await ctx.send(embed=embed)
         else:
             await ctx.send("Not a valid zodiac sign")
     
