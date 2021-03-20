@@ -19,6 +19,7 @@ zodiacSigns = {
     "pisces":"12"
 }
 
+zodiacAvatars = ["","https://www.horoscope.com/images-US/signs/profile-aries.png","https://www.horoscope.com/images-US/signs/profile-taurus.png","https://www.horoscope.com/images-US/signs/profile-gemini.png","https://www.horoscope.com/images-US/signs/profile-cancer.png","https://www.horoscope.com/images-US/signs/profile-leo.png","https://www.horoscope.com/images-US/signs/profile-virgo.png","https://www.horoscope.com/images-US/signs/profile-libra.png","https://www.horoscope.com/images-US/signs/profile-scorpio.png","https://www.horoscope.com/images-US/signs/profile-sagittarius.png","https://www.horoscope.com/images-US/signs/profile-capricorn.png","https://www.horoscope.com/images-US/signs/profile-aquarius.png","https://www.horoscope.com/images-US/signs/profile-pisces.png"]
 
 #Horoscope Alterations
 class Horoscope(commands.Cog):
@@ -36,7 +37,9 @@ class Horoscope(commands.Cog):
             source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}').text
             soup = BeautifulSoup(source,'lxml')
             todayHoroscope = soup.p.text
-            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Daily Horoscope", description = todayHoroscope, color=0x968cec)
+            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n {todayHoroscope}", color=0x968cec)
+            embed.set_thumbnail(url=zodiacAvatars[number])
+            #Add other stuff if possible like time/time/compatibility
             await ctx.send(embed=embed)
         else:
             await ctx.send("Not a valid zodiac sign")
