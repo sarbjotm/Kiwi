@@ -38,7 +38,7 @@ class Horoscope(commands.Cog):
             soup = BeautifulSoup(source,'lxml')
             todayHoroscope = soup.p.text
             embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n {todayHoroscope}", color=0x968cec)
-            embed.set_thumbnail(url= "https://www.horoscope.com/images-US/signs/profile-aries.png")
+            embed.set_thumbnail(url= zodiacAvatars[int(number)])
             #Add other stuff if possible like time/time/compatibility
             await ctx.send(embed=embed)
         else:
