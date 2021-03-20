@@ -36,8 +36,7 @@ class Horoscope(commands.Cog):
             source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}').text
             soup = BeautifulSoup(source,'lxml')
             todayHoroscope = soup.p.text
-            embed=discord.Embed(title="Daily Horoscope", color=0x968cec)
-            embed.set_footer(text=f'{todayHoroscope}')
+            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Daily Horoscope", description = todayHoroscope, color=0x968cec)
             await ctx.send(embed=embed)
         else:
             await ctx.send("Not a valid zodiac sign")
