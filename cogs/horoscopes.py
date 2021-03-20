@@ -37,9 +37,22 @@ class Horoscope(commands.Cog):
             source = requests.get(f'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-today.aspx?sign={number}').text
             soup = BeautifulSoup(source,'lxml')
             todayHoroscope = soup.p.text
-            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n {todayHoroscope}", color=0x968cec)
+
+            todayLove = soup.find("a",{"id": "src-horo-matchlove"}).text
+            todayLove = todayLove.replace("\n", " ")
+
+            todayFriend = soup.find("a",{"id": "src-horo-matchfriend"}).text
+            todayFriend = todayFriend.replace("\n", " ")
+
+            todayCareer = soup.find("a",{"id": "src-horo-matchcareer"}).text
+            todayCareer = todayCareer.replace("\n", " ")
+
+            embed=discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope", description = f" **Daily Horoscope** \n \n {todayHoroscope} \n \n **Today's Compatibility** \n \n", color=0x968cec)
             embed.set_thumbnail(url= zodiacAvatars[int(number)])
-            #Add other stuff if possible like time/time/compatibility
+            embed.add_field(name=f"**{todayLove[0:5]}**", value=f"{todayLove[7:]}", inline=True)
+            embed.add_field(name=f"**{todayFriend[0:11]}**", value=f"{todayFriend[13:]}", inline=True)
+            embed.add_field(name=f"**{todayCareer[0:7]}**", value=f"{todayCareer[9:]}", inline=True)
+            embed.set_footer(text="Horoscope information scraped from https://www.horoscope.com/us/index.aspx")
             await ctx.send(embed=embed)
         else:
             await ctx.send("Not a valid zodiac sign")
