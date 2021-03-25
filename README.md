@@ -16,9 +16,14 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
 | ,collect      | None                 | None                                      | Collect a random colour role, 12 hour cooldown              | ,collect                                 |
 | ,activate     | None                 | String text                               | Activate a collect colour role as your colour               | ,activate Dodo Red                     |
-| ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade "Dodo Red" @Amander "Dodo Purple" |
+| ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade Dodo Red @Amander Dodo Purple |
 | ,myroles      | None                 | None                                      | Display a list and quantity of the roles you have collected | ,myroles                                 |
-| ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles                                   
+| ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles  
+| ,show        | None                 | String rle                                      | Display a role in your profile tab                     | ,show Dodo red  
+| ,showall        | None                 | None                                      | Display all collectable roles in your profile                     | ,showall  
+| ,hide        | None                 | string role                                      |Hide role from your profile tab                     | ,hide Dodo Red  
+| ,hideall        | None                 | None                                      | Hide all collectable roles in your profile                      | ,hideall  
+
 
 ## Economy
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
@@ -42,7 +47,10 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 | ,_8ball       | ,8ball               | String text                               | Ask Kiwi a Question and get an answer                       | ,8ball Will it snow 
 
 
-
+## Astrology
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,horoscope         | None                 | zodiac                                      | Display daily horoscope and compatible matches                     | ,horoscope libra                                     
 
 
 ## Other
