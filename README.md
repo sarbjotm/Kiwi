@@ -30,6 +30,10 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|                                  
 | ,daily        | None                 | None                                      | Recieve your allowance, 24 hour cooldown                    | ,daily                                   
 | ,bal        | ,balance                 | None                                    | View how much money you have                   | ,bal  
+| ,shop        | None                 | None                                      | View shop, and prices for items                    | ,shop                                   
+| ,buy        | None                 | quantity role                                    | Buy x of role                   | ,buy 1 Dodo Red  
+| ,sell        | None                 | quantity role                                    | Sell x of role                   | ,sell 1 Dodo Red 
+
 
 ## String Manpilation
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
