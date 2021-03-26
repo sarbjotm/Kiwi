@@ -3,6 +3,7 @@ import asyncio
 import os
 import random
 import mysql.connector
+import datetime 
 from discord.ext import commands, tasks
 
 #TODO: Have bot add members to database with according values when it is run
@@ -32,6 +33,26 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
     print("Bot is Ready")
+    wishbirthday.start()
+
+@tasks.loop(minutes=1440)
+async def wishbirthday():
+    currentdate = str(datetime.datetime.now())
+    currentdate = currentdate[5:7]+currentdate[8:10]
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(801326450396758076)
+    db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+    c = db.cursor()
+    c.execute(f"""SELECT id
+                FROM dodos
+                WHERE birthday = {currentdate}""") 
+    birthdayDodos = c.fetchall()
+    print(birthdayDodos)
 
 #Add user to database when they join, and set all values to 0
 @client.event
