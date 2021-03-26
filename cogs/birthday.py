@@ -32,8 +32,15 @@ class Birthday(commands.Cog):
             await ctx.send("Not a valid date. Enter your birthdate in the following way: mmdd")
         elif ((int(date[0:2]) == 2) and (int(date[2:4]) > 29) ):
             await ctx.send("Feb does not have 30 or 31 days")
-        elif( ( (int(date[0:2] == 4)) or (int(date[0:2] == 6)) or (int(date[0:2] == 9)) or (int(date[0:2] == 11)) ) and (int(date[2:4] == 31)) ):
-            await ctx.send("That month has 30 days only, not 31 days. enter your birthdate in the following way: mmdd")
+        elif ((int(date[0:2]) == 4) and (int(date[2:4]) > 30) ):
+            await ctx.send("April does not have 31 days")
+        elif ((int(date[0:2]) == 6) and (int(date[2:4]) > 30) ):
+            await ctx.send("June does not have 31 days")
+        elif ((int(date[0:2]) == 9) and (int(date[2:4]) > 30) ):
+            await ctx.send("Sept does not have 31 days")
+        elif ((int(date[0:2]) == 11) and (int(date[2:4]) > 30) ):
+            await ctx.send("Nov does not have 31 days")
+       
         else:
             c.execute(f"""UPDATE dodos
             SET birthday = {date}
