@@ -52,9 +52,8 @@ async def wishbirthday():
                 FROM dodos
                 WHERE birthday = {currentdate}""") 
     birthdayDodos = c.fetchall()
-    for i in range(0,birthdayDodos):
-        id = birthdayDodos[i][0]
-        username = guild.fetch_member(int(id))
+    for i in range(0,len(birthdayDodos)):
+        username = guild.fetch_member(int(birthdayDodos[i][0]))
         await channel.send(f"Happy Birthday {username.mention}!! **THIS IS JUST A TEST**")
     c.close()
     db.close()
