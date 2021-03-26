@@ -355,9 +355,9 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
         c = db.cursor() 
+        embedDescription = ""
         user = str(ctx.message.author)
-        embed=discord.Embed(title= user + "'s Roles" , color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        
         for role in activateRoles:
             c.execute(f"""SELECT {role}
                         FROM dodos
@@ -365,8 +365,10 @@ class Utilities(commands.Cog):
 
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            description = roleCount + " Dodo " + role  + " roles"
-            embed.add_field(name="Dodo " + role,value = description,inline=True)
+            embedDescription = embedDescription + roleCount + " Dodo " + role  + " roles" + "\n"
+
+        embed=discord.Embed(title= user + "'s Roles", description = embedDescription, color=0xe392fe)
+        embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
         await ctx.send(embed=embed)
         c.close()
@@ -374,27 +376,10 @@ class Utilities(commands.Cog):
 
     @commands.command()
     async def roles(self,ctx):
-        embed=discord.Embed(title="Collectable Roles List" , color=0xe392fe)
-        embed.add_field(name="Dodo Red", value="Red colouring", inline=True)
-        embed.add_field(name="Dodo Orange", value="Orange colouring", inline=True)
-        embed.add_field(name="Dodo Yellow", value="Yellow colouring", inline=True)
-        embed.add_field(name="Dodo Matcha", value="Matcha colouring", inline=True)
-        embed.add_field(name="Dodo Spring", value="Spring colouring", inline=True)
-        embed.add_field(name="Dodo Mint", value="Mint colouring", inline=True)
-        embed.add_field(name="Dodo Green", value="Green colouring", inline=True)
-        embed.add_field(name="Dodo Teal", value="Teal colouring", inline=True)
-        embed.add_field(name="Dodo Copyright", value="Tiffany Blue colouring", inline=True)
-        embed.add_field(name="Dodo Cyan", value="Cyan colouring", inline=True)
-        embed.add_field(name="Dodo Blue", value="Blue colouring", inline=True)
-        embed.add_field(name="Dodo Bbblu", value="Baby Blue colouring", inline=True)
-        embed.add_field(name="Dodo Ice", value="Ice Cold colouring", inline=True)
-        embed.add_field(name="Dodo Grape", value="Grape colouring", inline=True)
-        embed.add_field(name="Dodo Purple", value="Purple colouring", inline=True)
-        embed.add_field(name="Dodo Lavender", value="Lavender colouring", inline=True)
-        embed.add_field(name="Dodo Rose", value="Rose colouring", inline=True)
-        embed.add_field(name="Dodo Pink", value="Pink colouring", inline=True)
-        embed.add_field(name="Dodo Salmon", value="Salmon colouring", inline=True)
-        embed.add_field(name="Dodo Special", value="Look at the hex code", inline=True)
+        embedDescription = ""
+        for role in rolesList:
+            embedDescription = embedDescription + role + "\n"
+        embed=discord.Embed(title="Collectable Roles List", description = embedDescription, color=0xe392fe)
         await ctx.send(embed=embed)
 
 
