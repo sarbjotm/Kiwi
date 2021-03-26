@@ -40,7 +40,7 @@ async def wishbirthday():
     currentdate = str(datetime.datetime.now())
     currentdate = currentdate[5:7]+currentdate[8:10]
     guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(801326450396758076)
+    channel = guild.get_channel(755511228654420121)
     db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -52,8 +52,11 @@ async def wishbirthday():
                 FROM dodos
                 WHERE birthday = {currentdate}""") 
     birthdayDodos = c.fetchall()
-    print(birthdayDodos)
-    print(birthdayDodos[0])
+    for i in range(0,birthdayDodos):
+        username = guild.fetch_member(int(birthdayDodos[i][0]))
+        await channel.send(f"Happy Birthday {username.mention}!! **THIS IS JUST A TEST**")
+    c.close()
+    db.close()
 
 #Add user to database when they join, and set all values to 0
 @client.event
