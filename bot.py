@@ -53,8 +53,9 @@ async def wishbirthday():
                 WHERE birthday = {currentdate}""") 
     birthdayDodos = c.fetchall()
     for i in range(0,len(birthdayDodos)):
-        username = await guild.fetch_member(int(birthdayDodos[i][0]))
-        await channel.send(f"Happy Birthday @{username}!! **THIS IS JUST A TEST**")
+        username = int(birthdayDodos[i][0])
+        # username = await guild.fetch_member(int(birthdayDodos[i][0]))
+        await channel.send(f"Happy Birthday <@{username}>!! **THIS IS JUST A TEST**")
     c.close()
     db.close()
 
@@ -72,7 +73,7 @@ async def on_member_join(member):
 
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
-                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0000)
               """)
     db.commit()
     c.close()
