@@ -53,6 +53,7 @@ async def wishbirthday():
                 WHERE birthday = {currentdate}""") 
     birthdayDodos = c.fetchall()
     print(birthdayDodos)
+    print(birthdayDodos[0])
 
 #Add user to database when they join, and set all values to 0
 @client.event
