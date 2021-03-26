@@ -54,7 +54,7 @@ async def wishbirthday():
     birthdayDodos = c.fetchall()
     for i in range(0,len(birthdayDodos)):
         username = guild.fetch_member(int(birthdayDodos[i][0]))
-        await channel.send(f"Happy Birthday <@{username}>!! **THIS IS JUST A TEST**")
+        await channel.send(f"Happy Birthday @{username}!! **THIS IS JUST A TEST**")
     c.close()
     db.close()
 
