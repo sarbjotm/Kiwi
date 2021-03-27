@@ -19,9 +19,9 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 | ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade Dodo Red @Amander Dodo Purple |
 | ,myroles      | None                 | None                                      | Display a list and quantity of the roles you have collected | ,myroles                                 |
 | ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles  
-| ,show        | None                 | String rle                                      | Display a role in your profile tab                     | ,show Dodo red  
+| ,show        | None                 | String role                                      | Display a role in your profile tab                     | ,show Dodo red  
 | ,showall        | None                 | None                                      | Display all collectable roles in your profile                     | ,showall  
-| ,hide        | None                 | string role                                      |Hide role from your profile tab                     | ,hide Dodo Red  
+| ,hide        | None                 | String role                                      |Hide role from your profile tab                     | ,hide Dodo Red  
 | ,hideall        | None                 | None                                      | Hide all collectable roles in your profile                      | ,hideall  
 
 
@@ -31,8 +31,8 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 | ,daily        | None                 | None                                      | Recieve your allowance, 24 hour cooldown                    | ,daily                                   
 | ,bal        | ,balance                 | None                                    | View how much money you have                   | ,bal  
 | ,shop        | None                 | None                                      | View shop, and prices for items                    | ,shop                                   
-| ,buy        | None                 | quantity role                                    | Buy x of role                   | ,buy 1 Dodo Red  
-| ,sell        | None                 | quantity role                                    | Sell x of role                   | ,sell 1 Dodo Red 
+| ,buy        | None                 | int quantity, String role                                    | Buy x of role                   | ,buy 1 Dodo Red  
+| ,sell        | None                 | int quantity, String role                                    | Sell x of role                   | ,sell 1 Dodo Red 
 
 
 ## String Manpilation
@@ -54,7 +54,12 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 ## Astrology
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
-| ,horoscope         | None                 | zodiac                                      | Display daily horoscope and compatible matches                     | ,horoscope libra                                     
+| ,horoscope         | ,zodiac                 | String zodiac                                      | Display daily horoscope and compatible matches                     | ,horoscope libra    
+
+## Birthday
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,setbirthday         | ,birthday                 | String mmdd                                      | Aadd your birthday in the database so kiwi wishes you a happy birthday                   | ,birthday 0114    
 
 
 ## Other
