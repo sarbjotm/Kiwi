@@ -6,7 +6,7 @@
 
 **Kiwi** is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on Heroku and has an MySQL Database connected to it. 
 
-Some of the bot's ability is maniuplate a user's input in different ways, give responses based on a question, flip a coin, allow users to collect and trade roles. 
+Since Kiwi is changing constantly, it's commands and command parametres are below: 
 
 # Commands
 **Kiwi** uses the ``,`` as a prefix. 
