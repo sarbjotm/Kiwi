@@ -6,7 +6,7 @@
 
 **Kiwi** is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on Heroku and has an MySQL Database connected to it. 
 
-Some of the bot's ability is maniuplate a user's input in different ways, give responses based on a question, flip a coin, allow users to collect and trade roles. 
+Since Kiwi is changing constantly, it's commands and command parametres are below: 
 
 # Commands
 **Kiwi** uses the ``,`` as a prefix. 
@@ -14,25 +14,26 @@ Some of the bot's ability is maniuplate a user's input in different ways, give r
 ## Role Commands
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
-| ,collect      | None                 | None                                      | Collect a random colour role, 12 hour cooldown              | ,collect                                 |
-| ,activate     | None                 | String text                               | Activate a collect colour role as your colour               | ,activate Dodo Red                     |
-| ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user                           | ,trade Dodo Red @Amander Dodo Purple |
-| ,myroles      | None                 | None                                      | Display a list and quantity of the roles you have collected | ,myroles                                 |
-| ,roles        | None                 | None                                      | Display a list of all collectable roles                     | ,roles  
-| ,show        | None                 | String role                                      | Display a role in your profile tab                     | ,show Dodo red  
+| ,collect      | None                 | None                                      | Collect a random role. Command is on a 12 hour cooldown              | ,collect                                 |
+| ,activate     | None                 | String text                               | Activate a role that was gained through ``,collect`` as your colour               | ,activate Dodo Red                     |
+| ,trade        | None                 | String your_role, @user, String user_role | Trade your role with another user for their role. Other user must accept the trade                           | ,trade Dodo Red @Amander Dodo Purple |
+| ,myroles      | None                 | None                                      | Show all of the roles you have collected | ,myroles                                 |
+| ,roles        | None                 | None                                      | Show a list of all collectable roles                     | ,roles  
+| ,show        | None                 | String role                                      | Display a specific role in your profile tab                     | ,show Dodo red  
 | ,showall        | None                 | None                                      | Display all collectable roles in your profile                     | ,showall  
-| ,hide        | None                 | String role                                      |Hide role from your profile tab                     | ,hide Dodo Red  
+| ,hide        | None                 | String role                                      |Hide a specific role from your profile tab                     | ,hide Dodo Red  
 | ,hideall        | None                 | None                                      | Hide all collectable roles in your profile                      | ,hideall  
 
 
 ## Economy
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|                                  
-| ,daily        | None                 | None                                      | Recieve your allowance, 24 hour cooldown                    | ,daily                                   
+| ,daily        | None                 | None                                      | Recieve your allowance, 24 hour cooldown. Amount recieved is between 1-1000                   | ,daily                                   
 | ,bal        | ,balance                 | None                                    | View how much money you have                   | ,bal  
 | ,shop        | None                 | None                                      | View shop, and prices for items                    | ,shop                                   
 | ,buy        | None                 | int quantity, String role                                    | Buy x of role                   | ,buy 1 Dodo Red  
-| ,sell        | None                 | int quantity, String role                                    | Sell x of role                   | ,sell 1 Dodo Red 
+| ,sell        | None                 | int quantity, String role                                    | Sell x of role, each role can sell between 1-1000                   | ,sell 1 Dodo Red 
+| ,leaderboard        | None                 | None                                   | Show top 5 richest users on the server                  | ,leaderboard
 
 
 ## String Manpilation
