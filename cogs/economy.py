@@ -48,7 +48,8 @@ class Economy(commands.Cog):
         c = db.cursor() 
         daily = ["Increase", "Decrease"]
         roleAssign = random.choices(daily, weights = [9.5,0.5])[0] #9.5 + 0.5 = 10; 0.5 / 10 -> 5% of stealing
-        amount = random.randint(1,1000);
+        #amount = random.randint(1,1000);
+        amount = 1
         if (roleAssign == "Decrease"):
             amount = amount * -1
         

@@ -141,7 +141,8 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
         c = db.cursor() 
-        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        #roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
+        roleAssign = rolesList[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
         await ctx.message.author.add_roles(role)
@@ -196,6 +197,7 @@ class Utilities(commands.Cog):
         if(role not in rolesList):
             await ctx.send("Only can activate collected Colour Roles.")
         else:
+            role = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0] #Remove after April 1
             c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
@@ -207,7 +209,7 @@ class Utilities(commands.Cog):
                     if(roleRemove in ctx.message.author.roles):
                         await ctx.message.author.remove_roles(roleRemove)
                         break
-
+                
                 roleAssign = discord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
                 await ctx.message.author.add_roles(roleAssign)
                 await ctx.message.add_reaction("👍")
