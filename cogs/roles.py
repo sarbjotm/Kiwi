@@ -194,6 +194,7 @@ class Utilities(commands.Cog):
         c = db.cursor() 
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
         role = str(role)
+        getMeOutOfHere = 0;
         if(role not in rolesList):
             await ctx.send("Only can activate collected Colour Roles.")
         else:
@@ -210,6 +211,12 @@ class Utilities(commands.Cog):
                         WHERE id = {ctx.message.author.id}
                 """)
                 roleCount = ''.join(map(str,c.fetchall()[0]))
+                print(role)
+                getMeOutOfHere = getMeOutOfHere + 1
+                print(getMeOutOfHere)
+                if(getMeOutOfHere == 20):
+                    break
+
             if(int(roleCount) > 0):
                 for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
