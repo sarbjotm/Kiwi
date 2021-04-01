@@ -203,6 +203,13 @@ class Utilities(commands.Cog):
                     WHERE id = {ctx.message.author.id}
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
+            while(int(roleCount) == 0):
+                role = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0] #Remove after April 1
+                c.execute(f"""SELECT {role.split()[1]}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+                """)
+                roleCount = ''.join(map(str,c.fetchall()[0]))
             if(int(roleCount) > 0):
                 for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
