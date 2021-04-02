@@ -201,13 +201,14 @@ class Utilities(commands.Cog):
                     WHERE id = {ctx.message.author.id}
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
+
             if(int(roleCount) > 0):
                 for r in activateRoles:
                     roleRemove = discord.utils.get(ctx.guild.roles, name=r)
                     if(roleRemove in ctx.message.author.roles):
                         await ctx.message.author.remove_roles(roleRemove)
                         break
-
+                
                 roleAssign = discord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
                 await ctx.message.author.add_roles(roleAssign)
                 await ctx.message.add_reaction("👍")
@@ -368,7 +369,8 @@ class Utilities(commands.Cog):
             embedDescription = embedDescription + roleCount + " Dodo " + role  + " roles" + "\n"
 
         embed=discord.Embed(title= user + "'s Roles", description = embedDescription, color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        embed.set_author(name= ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        #embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
         await ctx.send(embed=embed)
         c.close()
