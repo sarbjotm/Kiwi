@@ -369,7 +369,8 @@ class Utilities(commands.Cog):
             embedDescription = embedDescription + roleCount + " Dodo " + role  + " roles" + "\n"
 
         embed=discord.Embed(title= user + "'s Roles", description = embedDescription, color=0xe392fe)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        embed.set_author(name= ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        #embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
         await ctx.send(embed=embed)
         c.close()
