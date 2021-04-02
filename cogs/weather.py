@@ -24,10 +24,9 @@ class Weather(commands.Cog):
         if x["cod"] != "404":
 
             y = x["main"]
-            city = city[0].upper() + city[1:].lower()
             temperature = y["temp"]
-            temperatureC = int(temperature - 273.15)
-            temperatureF = int(temperatureC * 9/5 + 32)
+            temperatureC = temperature - 273.15
+            temperatureF = temperatureC * 9/5 + 32
 
             # store the value corresponding
             # to the "humidity" key of y
