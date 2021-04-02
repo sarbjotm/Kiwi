@@ -55,7 +55,12 @@ Since Kiwi is changing constantly, it's commands and command parametres are belo
 ## Astrology
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
 |---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
-| ,horoscope         | ,zodiac                 | String zodiac                                      | Display daily horoscope and compatible matches                     | ,horoscope libra    
+| ,horoscope         | ,zodiac                 | String zodiac                                      | Display daily horoscope and compatible matches                     | ,horoscope libra  
+
+## Weather
+| Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
+|---------------|----------------------|-------------------------------------------|-------------------------------------------------------------|------------------------------------------|
+| ,weather         | None                 | String city                                      | Display weather information from requested city                     | ,weather Vancouver  
 
 ## Birthday
 | Command       | Alias                | Parameters                                | Description                                                 | Example                                  |
