@@ -12,23 +12,22 @@ class Weather(commands.Cog):
         self.client = client
 
     
-    #Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
+    #Weather function - get weather information
     @commands.command()
     async def weather(self,ctx,city):
         city = str(city)
         baseURL = str(os.environ['BASE_URL'])
         apiKey = str(os.environ['API_KEY'])
         completeUrl = baseURL + city + apiKey
-        await ctx.send("PLACEHOLDER")
         response = requests.get(completeUrl)
         x = response.json()
         if x["cod"] != "404":
 
             y = x["main"]
-
+            city = city[0].upper() + city[1:].lower()
             temperature = y["temp"]
-            temperatureC = temperature - 273.15
-            temperatureF = temperatureC * 9/5 + 32
+            temperatureC = int(temperature - 273.15)
+            temperatureF = int(temperatureC * 9/5 + 32)
 
             # store the value corresponding
             # to the "humidity" key of y
@@ -53,7 +52,7 @@ class Weather(commands.Cog):
             else:
                 logo = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/63069/weather-icon-clipart-md.png"
             
-            embed=discord.Embed(title="Kiwi Shop", color=0xe392fe)
+            embed=discord.Embed(title=f"Weather in {city}", color=0xef6b02c)
             embed.set_thumbnail(url= logo)
             embed.add_field(name="Temperature in C", value=temperatureC, inline=True)
             embed.add_field(name="Temperature in F", value=temperatureF, inline=True)
