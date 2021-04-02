@@ -42,7 +42,7 @@ class Weather(commands.Cog):
             weatherDescription = z[0]["description"]
             if("clouds" in weatherDescription):
                 logo = "http://getdrawings.com/free-icon/cloudy-icon-62.png"
-            elif("sun" in weatherDescription or "sunny" in weatherDescription):
+            elif("clear" in weatherDescription or "sun" in weatherDescription or "sunny" in weatherDescription):
                 logo = "https://cdn3.iconfinder.com/data/icons/summertime-1/44/summertime-03-512.png"
             elif("snow" in weatherDescription):
                 logo="https://www.freeiconspng.com/thumbs/snow-icon/blue-snow-icon-8.png"
