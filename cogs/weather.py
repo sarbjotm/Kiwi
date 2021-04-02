@@ -58,7 +58,7 @@ class Weather(commands.Cog):
             embed.set_thumbnail(url= logo)
             embed.add_field(name="Temperature in C", value=temperatureC, inline=True)
             embed.add_field(name="Temperature in F", value=temperatureF, inline=True)
-            embed.add_field(name="Humidity", value=humidity, inline=True)
+            embed.add_field(name="Humidity in %", value=humidity, inline=True)
             embed.add_field(name="Description", value=weatherDescription, inline=True)
             await ctx.send(embed=embed)
 
