@@ -141,8 +141,7 @@ class Utilities(commands.Cog):
             database = os.environ['DATABASE']
         )
         c = db.cursor() 
-        #roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
-        roleAssign = rolesList[0]
+        roleAssign = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0]
         print(roleAssign)
         role = discord.utils.get(ctx.guild.roles, name=roleAssign)
         await ctx.message.author.add_roles(role)
@@ -194,28 +193,14 @@ class Utilities(commands.Cog):
         c = db.cursor() 
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
         role = str(role)
-        getMeOutOfHere = 0;
         if(role not in rolesList):
             await ctx.send("Only can activate collected Colour Roles.")
         else:
-            role = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0] #Remove after April 1
             c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
             """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
-            while(int(roleCount) == 0):
-                role = random.choices(rolesList, weights = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])[0] #Remove after April 1
-                c.execute(f"""SELECT {role.split()[1]}
-                        FROM dodos
-                        WHERE id = {ctx.message.author.id}
-                """)
-                roleCount = ''.join(map(str,c.fetchall()[0]))
-                print(role)
-                getMeOutOfHere = getMeOutOfHere + 1
-                print(getMeOutOfHere)
-                if(getMeOutOfHere == 20):
-                    break
 
             if(int(roleCount) > 0):
                 for r in activateRoles:
