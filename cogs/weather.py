@@ -27,7 +27,7 @@ class Weather(commands.Cog):
             temperature = y["temp"]
             temperatureC = temperature - 273.15
             temperatureF = temperatureC * 9/5 + 32
-
+            city = city[0].upper() + city[1:].lower()
             # store the value corresponding
             # to the "humidity" key of y
             humidity = y["humidity"]
@@ -51,7 +51,7 @@ class Weather(commands.Cog):
             else:
                 logo = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/63069/weather-icon-clipart-md.png"
             
-            embed=discord.Embed(title=f"Weather in {city}", color=0xef6b02c)
+            embed=discord.Embed(title=f"Weather in {city}", color=0xf6b02c)
             embed.set_thumbnail(url= logo)
             embed.add_field(name="Temperature in C", value=temperatureC, inline=True)
             embed.add_field(name="Temperature in F", value=temperatureF, inline=True)
