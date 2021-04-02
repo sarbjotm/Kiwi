@@ -107,6 +107,7 @@ async def help(ctx):
     embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=True)
     embed.add_field(name="Economy", value="**,daily** - Recieve between 1-1000 discord dollars \n**,bal** - View your balance \n**,leaderboard** - See top 5 Richest Dodos \n **,sell quantity role** - sell your roles for money \n **,buy quantity role** Buy a role \n **,shop** - see prices 4 roles" , inline=True)
     embed.add_field(name="Astrology", value="**,horoscope zodiac** - Get your daily horoscope reading" , inline=True)
+    embed.add_field(name="Weather", value="**,weather city** - Get your daily weather forecast" , inline=True)
     embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=True)
     embed.add_field(name="Help Commands", value="**,help** - shows this message \n**,ping** - check if kiwi is still up", inline=True)
     await ctx.send(embed=embed)
