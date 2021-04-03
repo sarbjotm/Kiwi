@@ -65,11 +65,11 @@ class Games(commands.Cog):
                 for cards in userCards:
                     userDescription = userDescription + cards + " "
                 
-                for cards in dealerCard:
-                    dealerDescription = dealerDescription + cards 
+                for cards in dealerCards:
+                    dealerDescription = dealerDescription + cards + " "
 
-                userDescription = f"{userDescription} \n \n Score: {userInt}"
-                dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
+                userDescription = f"{userDescription} \n \nScore: {userInt}"
+                dealerDescription = f"{dealerDescription} \n \nScore: {dealerInt}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
