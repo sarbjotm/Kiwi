@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 numbers = ["1","2","3","4","5","6","7","8","9","10","11"]
-suits = ["🔸","🔹","💠","♦"]
+#suits = ["🔸","🔹","💠","♦"]
 
 #Mentions
 class Games(commands.Cog):
@@ -41,38 +41,42 @@ class Games(commands.Cog):
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 userCards = []
                 userInt = 0
-                userSuit = ''
+                #userSuit = ''
                 userCard = ''
                 userDescription = ''
 
                 dealerCards = []
                 dealerInt = 0
-                dealerSuit = ''
+                #dealerSuit = ''
                 dealerCard = ''
                 dealerDescription = ''
 
                 for i in range(0,2):
                     userCard = random.choice(numbers)
-                    userSuit = random.choice(suits)
-                    userCards.append(userCard+userSuit)
+                   #userSuit = random.choice(suits)
+                    userCards.append(userCard)
                     userInt = userInt + int(userCard)
                 
                 dealerCard = random.choice(numbers)
-                dealerSuit = random.choice(suits)
-                dealerCards.append(dealerCard+dealerSuit)
+                #dealerSuit = random.choice(suits)
+                dealerCards.append(dealerCard)
                 dealerInt = dealerInt + int(dealerCard)
 
                 for cards in userCards:
-                    userDescription = userDescription + cards + ","
+                    userDescription = userDescription + cards + " "
                 
                 for cards in dealerCard:
-                    dealerDescription = dealerDescription + cards
+                    dealerDescription = dealerDescription + cards + "[]"
 
+                userDescription = f"{userDescription} \nScore: {userInt}"
                 embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
                 while(userInt < 22):
+                    if(userInt == 21):
+                        break
+                        
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                     await ctx.send(f'Do you want to hit or stand? You have 10 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
                     try:
@@ -87,12 +91,12 @@ class Games(commands.Cog):
                         if(msg == "hit"):
                             userDescription = ''
                             userCard = random.choice(numbers)
-                            userSuit = random.choice(suits)
-                            userCards.append(userCard+userSuit)
+                            #userSuit = random.choice(suits)
+                            userCards.append(userCard)
                             userInt = userInt + int(userCard)
                             for cards in userCards:
-                                userDescription = userDescription + cards + ","
-
+                                userDescription = userDescription + cards + " "
+                            userDescription = f"{userDescription} \nScore: {userInt}"
                             embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await ctx.send(embed=embed)
@@ -117,9 +121,12 @@ class Games(commands.Cog):
                     while((dealerInt < userInt)):
                         dealerDescription = ''
                         dealerCard = random.choice(numbers)
-                        dealerSuit = random.choice(suits)
-                        dealerCards.append(dealerCard+dealerSuit)
+                        #dealerSuit = random.choice(suits)
+                        dealerCards.append(dealerCard)
                         dealerInt = userInt + int(dealerCard)
+                        for cards in userCards:
+                            dealerDescription = dealerDescription + cards + " "
+
                     
                     if(dealerInt > userInt and dealerInt < 22):
                         embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
