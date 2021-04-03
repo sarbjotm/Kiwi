@@ -255,10 +255,8 @@ class Games(commands.Cog):
                         for i in range(1,4):
                             if(i == gem):
                                 endingDescription = endingDescription + "🏆" + " "
-                            elif(i == msg):
-                                    endingDescription = endingDescription + " "
-                            else:
-                                endingDescription = endingDescription + "🥝" + " "
+                            elif(i != msg):
+                                endingDescription = endingDescription + "🥝" + " "   
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
@@ -275,7 +273,7 @@ class Games(commands.Cog):
                     if(userGuess == gem):
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "✔️" + " "
+                                endingDescription = endingDescription + "🏆" + " "
                             else:
                                 endingDescription = endingDescription + "🥝" + " "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
@@ -290,10 +288,8 @@ class Games(commands.Cog):
                         for i in range(1,4):
                             if(i == gem):
                                 endingDescription = endingDescription + "🏆" + " "
-                            elif(i == msg):
-                                    endingDescription = endingDescription + " "
-                            else:
-                                endingDescription = endingDescription + "🥝" + " "
+                            elif(i != userGuess):
+                                    endingDescription = endingDescription + "🥝" + " "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
