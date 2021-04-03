@@ -156,7 +156,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     
-                    if(dealerInt > userInt and dealerInt < 22):
+                    elif(dealerInt > userInt and dealerInt < 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
