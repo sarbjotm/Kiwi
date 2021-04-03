@@ -73,6 +73,7 @@ class Games(commands.Cog):
                 await ctx.send(embed=embed)
                 
                 while(userInt < 22):
+                    embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                     await ctx.send(f'Do you want to hit or stand? You have 10 seconds to decide, if you do not reply i will steal your bet. If you enter anything else you will stand')
                     try:
                         msg = await self.client.wait_for(
@@ -84,7 +85,6 @@ class Games(commands.Cog):
                         #Update user who intiated trade
                         msg = msg.content.strip().lower()
                         if(msg == "hit"):
-                            embed.fields = []
                             userDescription = ''
                             userCard = random.choice(numbers)
                             userSuit = random.choice(suits)
@@ -106,8 +106,9 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
                         """)
                         db.commit() 
+                        break
 
-                embed.fields = []
+                embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22):
                         embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
