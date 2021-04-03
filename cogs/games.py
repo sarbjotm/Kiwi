@@ -147,7 +147,7 @@ class Games(commands.Cog):
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**Blackjack! You have won {str(bet)}!**", inline=False)
+                        embed.add_field(name = f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**", inline=False)
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
@@ -159,7 +159,7 @@ class Games(commands.Cog):
                     if(dealerInt > userInt and dealerInt < 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}! Kiwi wins!**",inline=False)
+                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
