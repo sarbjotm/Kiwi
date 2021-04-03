@@ -93,11 +93,11 @@ class Games(commands.Cog):
                         break
                         
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                    await ctx.send(f'Do you want to hit or stand? You have 10 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
+                    await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
                     try:
                         msg = await self.client.wait_for(
                             "message",
-                            timeout = 10,
+                            timeout = 20,
                             check=lambda message: message.author == ctx.message.author \
                                 and message.channel == ctx.channel 
                         )
@@ -219,13 +219,94 @@ class Games(commands.Cog):
             if(bet > int(balance)):
                 await ctx.send("You do not have that much money!")
             else:
-                await ctx.send("Still implementing...")
+                gem = random.randint(1,4)
+                embedDescription = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
+                endingDescription = ""
+                embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle", description = embedDescription, color=0x99c0dd)
+                await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds I will randomly pick for you')
+
+                try:
+                    msg = await self.client.wait_for(
+                        "message",
+                        timeout = 20,
+                        check=lambda message: message.author == ctx.message.author \
+                            and message.channel == ctx.channel 
+                    )
+                    #Update user who intiated trade
+                    msg = msg.content.strip().lower()
+                    msg = int(msg)
+                    if(msg == gem):
+                        
+                        for i in range(1,4):
+                            if(i == gem):
+                                endingDescription = endingDescription + "✔️" + " "
+                            else:
+                                endingDescription = endingDescription + "🥝" + " "
+                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
+                        embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                        await ctx.send(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money + {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
+                    else:
+                        for i in range(1,4):
+                            if(i == gem):
+                                endingDescription = endingDescription + "❌" + " "
+                            else:
+                                endingDescription = endingDescription + "🥝" + " "
+                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
+                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        await ctx.send(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money - {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
+                            
+
+                except asyncio.TimeoutError:
+                    userGuess = random.randint(1,4)
+                    await ctx.send(f"Assuming you meant to guess kiwi number: {userGuess}")
+                    if(userGuess == gem):
+                        for i in range(1,4):
+                            if(i == gem):
+                                endingDescription = endingDescription + "✔️" + " "
+                            else:
+                                endingDescription = endingDescription + "🥝" + " "
+                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
+                        embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                        await ctx.send(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money + {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
+                    else:
+                        for i in range(1,4):
+                            if(i == gem):
+                                endingDescription = endingDescription + "❌" + " "
+                            else:
+                                endingDescription = endingDescription + "🥝" + " "
+                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
+                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        await ctx.send(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money - {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
                 
-        c.close()
-        db.close()
+            c.close()
+            db.close()
     
 
-
+    @cupshuffle.error
+    async def cupshuffle_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Syntax for this command is: **,cupshuffle bet**")
+        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle") 
 
         
 def setup(client):
