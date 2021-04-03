@@ -70,7 +70,7 @@ class Games(commands.Cog):
 
                 userDescription = f"{userDescription} \n \n Score: {userInt}"
                 dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
-                embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
@@ -98,7 +98,7 @@ class Games(commands.Cog):
                             for cards in userCards:
                                 userDescription = userDescription + cards + " "
                             userDescription = f"{userDescription} \n \n Score: {userInt}"
-                            embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                            embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await ctx.send(embed=embed)
                         else:
@@ -109,7 +109,7 @@ class Games(commands.Cog):
 
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}")
                         await ctx.send(embed=embed)
@@ -130,7 +130,7 @@ class Games(commands.Cog):
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
                     
                     if(dealerInt > userInt and dealerInt < 22):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}! Kiwi wins!**",inline=False)
                         await ctx.send(embed=embed)
@@ -141,13 +141,13 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif(dealerInt == userInt):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have tied {str(bet)}! No one wins**", inline=False)
                         await ctx.send(embed=embed)
 
                     else:
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
