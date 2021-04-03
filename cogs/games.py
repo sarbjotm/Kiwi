@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 numbers = ["1","2","3","4","5","6","7","8","9","10","11"]
-suits = ["","","",""]
+suits = ["🔸","🔹","💠","♦"]
 
 #Mentions
 class Games(commands.Cog):
@@ -123,7 +123,7 @@ class Games(commands.Cog):
                     dealerCards.append(dealerCard+dealerSuit)
                     dealerInt = userInt + int(dealerCard)
                 
-                if(dealerInt > userInt):
+                if(dealerInt > userInt and dealerInt < 22):
                     embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                     embed.add_field(name = f"Outcome", value=f"You have lost {str(bet)}! Kiwi wins!")
