@@ -170,7 +170,7 @@ class Games(commands.Cog):
                     elif(dealerInt == userInt):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have tied {str(bet)}! No one wins**", inline=False)
+                        embed.add_field(name = f"Outcome", value=f"**You have tied! No one wins**", inline=False)
                         await ctx.send(embed=embed)
 
                     else:
@@ -219,7 +219,7 @@ class Games(commands.Cog):
             if(bet > int(balance)):
                 await ctx.send("You do not have that much money!")
             else:
-                pass
+                await ctx.send("Still implementing...")
                 
         c.close()
         db.close()
