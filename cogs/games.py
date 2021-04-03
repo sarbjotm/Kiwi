@@ -81,6 +81,7 @@ class Games(commands.Cog):
                     #Update user who intiated trade
                     msg = msg.content.strip().lower()
                     if(msg == "hit"):
+                        embed.fields = []
                         userDescription = ''
                         userCard = random.choice(numbers)
                         userSuit = random.choice(suits)
@@ -90,17 +91,23 @@ class Games(commands.Cog):
                             userDescription = userDescription + cards + ","
 
                         embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         await ctx.send(embed=embed)
                     elif(msg == "stand"):
                         break
 
                 except asyncio.TimeoutError:
-                    await ctx.send(f'Cancelling due to time out. Game cancelled ') 
+                    await ctx.send(f'Stealing your money since you did not reply')
+                    c.execute(f"""UPDATE dodos
+                    SET money = money - {bet}
+                    WHERE id = {ctx.message.author.id}
+                    """)
+                    db.commit() 
 
+            embed.fields = []
             if(userInt >= 22):
                     embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
-                    embed.add_field(name=f"Kiwi's Hand", value=f"{userDescription}" , inline=True)
+                    embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                     embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}")
                     await ctx.send(embed=embed)
                     c.execute(f"""UPDATE dodos
@@ -118,7 +125,7 @@ class Games(commands.Cog):
                 
                 if(dealerInt > userInt):
                     embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
-                    embed.add_field(name=f"Kiwi's Hand", value=f"{userDescription}" , inline=True)
+                    embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                     embed.add_field(name = f"Outcome", value=f"You have lost {str(bet)}! Kiwi wins!")
                     await ctx.send(embed=embed)
                     c.execute(f"""UPDATE dodos
@@ -129,13 +136,13 @@ class Games(commands.Cog):
 
                 elif(dealerInt == userInt):
                     embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
-                    embed.add_field(name=f"Kiwi's Hand", value=f"{userDescription}" , inline=True)
+                    embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                     embed.add_field(name = f"Outcome", value=f"You have tied {str(bet)}! No one wins")
                     await ctx.send(embed=embed)
 
                 else:
                     embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
-                    embed.add_field(name=f"Kiwi's Hand", value=f"{userDescription}" , inline=True)
+                    embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                     embed.add_field(name = f"Outcome", value=f"You have won {str(bet)}!")
                     await ctx.send(embed=embed)
                     c.execute(f"""UPDATE dodos
@@ -143,7 +150,7 @@ class Games(commands.Cog):
                     WHERE id = {ctx.message.author.id}
                     """)
                     db.commit()
-                    
+
                 del(userCards)
                 del(dealerCards)
          
