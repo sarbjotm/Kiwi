@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 numbers = ["1","2","3","4","5","6","7","8","9","10","11"]
-suits = ["🔸","🔹","💠","♦"]
+suits = ["🔸","🔹"]
 
 #Mentions
 class Games(commands.Cog):
@@ -66,7 +66,7 @@ class Games(commands.Cog):
                     userDescription = userDescription + cards + " "
                 
                 for cards in dealerCard:
-                    dealerDescription = dealerDescription + cards + " []"
+                    dealerDescription = dealerDescription + cards 
 
                 userDescription = f"{userDescription} \n \n Score: {userInt}"
                 dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
@@ -111,7 +111,7 @@ class Games(commands.Cog):
                 if(userInt >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}")
+                        embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
@@ -162,6 +162,12 @@ class Games(commands.Cog):
          
         c.close()
         db.close()
+
+    @blackjack.error
+    async def blackjack_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Syntax for this command is: **,blackjack bet**")
+        await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
         
 def setup(client):
     client.add_cog(Games(client))
