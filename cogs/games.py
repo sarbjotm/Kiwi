@@ -240,7 +240,7 @@ class Games(commands.Cog):
                         
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "✴" + " "
+                                endingDescription = endingDescription + "🏆" + " "
                             else:
                                 endingDescription = endingDescription + "🥝" + " "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
@@ -254,7 +254,9 @@ class Games(commands.Cog):
                     else:
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "❌" + " "
+                                endingDescription = endingDescription + "🏆" + " "
+                            elif(i == msg):
+                                    endingDescription = endingDescription + " "
                             else:
                                 endingDescription = endingDescription + "🥝" + " "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
@@ -287,7 +289,9 @@ class Games(commands.Cog):
                     else:
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "❌" + " "
+                                endingDescription = endingDescription + "🏆" + " "
+                            elif(i == msg):
+                                    endingDescription = endingDescription + " "
                             else:
                                 endingDescription = endingDescription + "🥝" + " "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
