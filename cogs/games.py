@@ -93,7 +93,7 @@ class Games(commands.Cog):
                             for cards in userCards:
                                 userDescription = userDescription + cards + ","
 
-                            embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                            embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await ctx.send(embed=embed)
                         else:
@@ -109,7 +109,7 @@ class Games(commands.Cog):
 
                 embed.fields = []
                 if(userInt >= 22):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}")
                         await ctx.send(embed=embed)
@@ -127,7 +127,7 @@ class Games(commands.Cog):
                         dealerInt = userInt + int(dealerCard)
                     
                     if(dealerInt > userInt and dealerInt < 22):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"You have lost {str(bet)}! Kiwi wins!")
                         await ctx.send(embed=embed)
@@ -138,13 +138,13 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif(dealerInt == userInt):
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"You have tied {str(bet)}! No one wins")
                         await ctx.send(embed=embed)
 
                     else:
-                        embed.add_field(name=f"{ctx.message.author[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"{ctx.message.author}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"You have won {str(bet)}!")
                         await ctx.send(embed=embed)
