@@ -93,11 +93,11 @@ class Games(commands.Cog):
                         break
                         
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                    await ctx.send(f'Do you want to hit or stand? You have 10 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
+                    await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
                     try:
                         msg = await self.client.wait_for(
                             "message",
-                            timeout = 10,
+                            timeout = 20,
                             check=lambda message: message.author == ctx.message.author \
                                 and message.channel == ctx.channel 
                         )
