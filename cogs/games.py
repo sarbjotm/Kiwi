@@ -187,8 +187,8 @@ class Games(commands.Cog):
                     del(userCards)
                     del(dealerCards)
          
-        c.close()
-        db.close()
+            c.close()
+            db.close()
 
     @blackjack.error
     async def blackjack_error(self,ctx,error):
