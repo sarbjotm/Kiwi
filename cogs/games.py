@@ -234,11 +234,11 @@ class Games(commands.Cog):
                             and message.channel == ctx.channel 
                     )
                     msg = msg.content.strip().lower()
-                    if(msg != 1 or msg != 2 or msg != 3):
+                    try:
+                        msg = int(msg)
+                    except:
                         await ctx.send("Gonna give you a random variable for not following rules.")
                         msg = random.randint(1,4)
-
-                    msg = int(msg)
                     if(msg == gem):
                         for i in range(1,4):
                             if(i == gem):
