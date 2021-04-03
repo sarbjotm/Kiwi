@@ -124,7 +124,7 @@ class Games(commands.Cog):
                         dealerCard = random.choice(numbers)
                         dealerSuit = random.choice(suits)
                         dealerCards.append(dealerCard+dealerSuit)
-                        dealerInt = userInt + int(dealerCard)
+                        dealerInt = dealerInt + int(dealerCard)
                         for cards in dealerCards:
                             dealerDescription = dealerDescription + cards + " "
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
