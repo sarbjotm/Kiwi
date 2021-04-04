@@ -88,7 +88,10 @@ class Games(commands.Cog):
                         userInt2 = userInt2 + 10
                     elif(userCard == "A"):
                         userInt = userInt + 1
-                        userInt2 = userInt2 + 11
+                        if(userInt2 + 11 <= 21):
+                            userInt2 = userInt2 + 11
+                        else:
+                            userInt2 = userInt2 + 1
                     else:
                         userInt = userInt + userCard
                         userInt2 = userInt2 + userCard
@@ -112,6 +115,7 @@ class Games(commands.Cog):
                         dealerInt = dealerInt + 10
                         dealerInt2 = dealerInt2 + 10
                     elif(dealerCard == "A"):
+                        dealerInt = dealerInt + 1
                         if(dealerInt2 + 11 <= 21):
                             dealerInt2 = dealerInt2 + 11
                         else:
@@ -121,7 +125,7 @@ class Games(commands.Cog):
                         dealerInt2 = dealerInt2 + dealerCard
 
                     if(i == 0):
-                        mysteryScore = dealerInt
+                        mysteryScore = mysteryScore + dealerInt
                 
                 #Check for instant blackjack
                 if(dealerInt == 21 or dealerInt2 == 21):
