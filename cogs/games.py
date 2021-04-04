@@ -219,7 +219,7 @@ class Games(commands.Cog):
             if(bet > int(balance)):
                 await ctx.send("You do not have that much money!")
             else:
-                gem = random.randint(1,4)
+                gem = random.randint(1,3)
                 embedDescription = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
                 endingDescription = ""
                 embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle", description = embedDescription, color=0x99c0dd)
