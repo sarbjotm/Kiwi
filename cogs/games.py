@@ -263,6 +263,7 @@ class Games(commands.Cog):
                                 endingDescription = endingDescription + "🥝 " 
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
@@ -298,6 +299,7 @@ class Games(commands.Cog):
                                 endingDescription = endingDescription + "🥝 "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
