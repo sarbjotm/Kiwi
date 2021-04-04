@@ -139,7 +139,7 @@ class Games(commands.Cog):
                             check=lambda message: message.author == ctx.message.author \
                                 and message.channel == ctx.channel 
                         )
-                        #Update user who intiated trade
+                        
                         msg = msg.content.strip().lower()
                         if(msg == "hit"):
                             userDescription = ''
@@ -149,7 +149,7 @@ class Games(commands.Cog):
                             
                             cardsDictionary[userCard] = cardsDictionary[userCard] - 1
                             userSuit = random.choice(suits)
-                            userCards.append(userCard+userSuit)
+                            userCards.append(str(userCard)+userSuit)
                             if(userCard == "J" or userCard == "K" or userCard == "Q"):
                                 userCard = 10
                                 userInt = userInt + 10
@@ -164,14 +164,11 @@ class Games(commands.Cog):
                                 userInt = userInt + userCard
                                 userInt2 = userInt2 + userCard
 
-                            userSuit = random.choice(suits)
-                            userCards.append(str(userCard)+userSuit)
-
                             for cards in userCards:
                                 userDescription = userDescription + cards + " "
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
+                            embed.add_field(name=f"Kiwi's Hand", value=f"{Description}" , inline=True)
                             await ctx.send(embed=embed)
                         else:
                             break
@@ -193,51 +190,64 @@ class Games(commands.Cog):
 
                 else:
                     if (userInt >= 22 and userInt2 <= 21):
+                        temp = userInt
                         userInt = userInt2
+                        userInt2 = temp
                 
                     elif(userInt2 >= 22 and userInt <= 21):
                         userInt = userInt
                     
                     elif(userInt2 > userInt):
+                        temp = userInt
                         userInt = userInt2
+                        userInt2 = temp
                     else:
                         userInt = userInt
 
-                    while( ( (dealerInt < userInt) or (dealerInt2 < userInt) ) and userBlackjack == False):
-                        dealerDescription = ''
-                        dealerCard = random.choice(numbers)
-                        while(cardsDictionary[dealerCard] == 0):
-                            dealerCard = random.choice(numbers)
-
-                        cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
-                        dealerSuit = random.choice(suits)
-                        dealerCards.append(str(dealerCard)+dealerSuit)
-                        if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
-                            dealerCard = 10
-                            dealerInt = dealerInt + 10
-                            dealerInt2 = dealerInt2 + 10
-                        elif(dealerCard == "A"):
-                            dealerInt = dealerInt + 1
-                            if(userInt2 + 11 <= 21):
-                                dealerInt2 = dealerInt2 + 11
-                            else:
-                                dealerInt2 = dealerInt2 + 1  
+                    while(userBlackjack == False):
+                        if( (dealerInt >= 22) and (dealerInt2 >= 22)):
+                            break
+                        elif( (dealerInt >= userInt) or (dealerInt2 >= userInt) ):
+                            break
                         else:
-                            dealerInt = dealerInt + dealerCard
-                            dealerInt2 = dealerInt2 + dealerCard
-                        
-                        for cards in dealerCards:
-                            dealerDescription = dealerDescription + cards + " "
-                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
+                            dealerDescription = ''
+                            dealerCard = random.choice(numbers)
+                            while(cardsDictionary[dealerCard] == 0):
+                                dealerCard = random.choice(numbers)
+
+                            cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
+                            dealerSuit = random.choice(suits)
+                            dealerCards.append(str(dealerCard)+dealerSuit)
+                            if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
+                                dealerCard = 10
+                                dealerInt = dealerInt + 10
+                                dealerInt2 = dealerInt2 + 10
+                            elif(dealerCard == "A"):
+                                dealerInt = dealerInt + 1
+                                if(userInt2 + 11 <= 21):
+                                    dealerInt2 = dealerInt2 + 11
+                                else:
+                                    dealerInt2 = dealerInt2 + 1  
+                            else:
+                                dealerInt = dealerInt + dealerCard
+                                dealerInt2 = dealerInt2 + dealerCard
+                            
+                            for cards in dealerCards:
+                                dealerDescription = dealerDescription + cards + " "
+                            dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                     
                     if (dealerInt >= 22 and dealerInt2 <= 21):
+                        temp = dealerInt
                         dealerInt = dealerInt2
+                        dealerInt2 = temp
                 
                     elif(dealerInt2 >= 22 and dealerInt <= 21):
                         userInt = userInt
                     
                     elif(dealerInt2 > dealerInt):
+                        temp = dealerInt
                         dealerInt = dealerInt2
+                        dealerInt2 = temp
                     else:
                         dealerInt = dealerInt
 
