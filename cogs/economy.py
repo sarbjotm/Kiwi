@@ -325,13 +325,13 @@ class Economy(commands.Cog):
             await ctx.send("You do not have that much money to give out")
         else:
             c.execute(f"""UPDATE dodos
-                    SET money = money - {moneyAmount}
+                    SET money = money - {money}
                     WHERE id = {ctx.message.author.id}
                     """)
             db.commit()
 
             c.execute(f"""UPDATE dodos
-                    SET money = money + {moneyAmount}
+                    SET money = money + {money}
                     WHERE id = {member.id}
                     """)
             db.commit()
