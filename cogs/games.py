@@ -203,7 +203,7 @@ class Games(commands.Cog):
                     else:
                         userInt = userInt
 
-                    while( ( (dealerInt < userInt) or (dealerInt2 < userInt) or (dealerInt < userInt2) or (dealerInt2 < userInt2) ) and userBlackjack == False):
+                    while( ( (dealerInt < userInt) or (dealerInt2 < userInt) ) and userBlackjack == False):
                         dealerDescription = ''
                         dealerCard = random.choice(numbers)
                         while(cardsDictionary[dealerCard] == 0):
