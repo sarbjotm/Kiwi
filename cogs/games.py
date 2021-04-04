@@ -272,9 +272,8 @@ class Games(commands.Cog):
                     dealerDescription = ' '
                     for cards in dealerCards:
                         dealerDescription = dealerDescription + cards + " "
-                        
+                    dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                     if(dealerBlackjack == True and userBlackjack == True):
-                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**Well this is awkward... both of us got blackjack. No one wins**", inline=False)
@@ -293,7 +292,6 @@ class Games(commands.Cog):
                         db.commit()
                     
                     elif(dealerBlackjack == True):
-                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
@@ -316,10 +314,6 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif(dealerInt == userInt):
-                        dealerDescription = ''
-                        for cards in dealerCards:
-                            dealerDescription = dealerDescription + cards + " "
-                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have tied! No one wins**", inline=False)
