@@ -230,14 +230,13 @@ class Games(commands.Cog):
                         while(1):
                             if( (dealerInt >= 22) and (dealerInt2 >= 22) ):
                                 break
-                            elif( (dealerInt >= userInt and dealerInt <= 21) or (dealerInt2 >= userInt and dealerInt2 <= 21) ):
+                            elif(dealerInt >= 17 or dealerInt2 >= 17):
                                 break
                             else:
                                 dealerDescription = ''
                                 dealerCard = random.choice(numbers)
                                 while(cardsDictionary[dealerCard] == 0):
                                     dealerCard = random.choice(numbers)
-
                                 cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
                                 dealerSuit = random.choice(suits)
                                 dealerCards.append(str(dealerCard)+dealerSuit)
@@ -247,7 +246,7 @@ class Games(commands.Cog):
                                     dealerInt2 = dealerInt2 + 10
                                 elif(dealerCard == "A"):
                                     dealerInt = dealerInt + 1
-                                    if(userInt2 + 11 <= 21):
+                                    if(dealerInt2 + 11 <= 21):
                                         dealerInt2 = dealerInt2 + 11
                                     else:
                                         dealerInt2 = dealerInt2 + 1  
