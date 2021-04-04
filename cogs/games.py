@@ -226,38 +226,39 @@ class Games(commands.Cog):
                     else:
                         userInt = userInt
 
-                    while(userBlackjack == False and dealerBlackjack == False):
-                        if( (dealerInt >= 22) and (dealerInt2 >= 22)):
-                            break
-                        elif( (dealerInt >= userInt) or (dealerInt2 >= userInt) ):
-                            break
-                        else:
-                            dealerDescription = ''
-                            dealerCard = random.choice(numbers)
-                            while(cardsDictionary[dealerCard] == 0):
-                                dealerCard = random.choice(numbers)
-
-                            cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
-                            dealerSuit = random.choice(suits)
-                            dealerCards.append(str(dealerCard)+dealerSuit)
-                            if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
-                                dealerCard = 10
-                                dealerInt = dealerInt + 10
-                                dealerInt2 = dealerInt2 + 10
-                            elif(dealerCard == "A"):
-                                dealerInt = dealerInt + 1
-                                if(userInt2 + 11 <= 21):
-                                    dealerInt2 = dealerInt2 + 11
-                                else:
-                                    dealerInt2 = dealerInt2 + 1  
+                    if(userBlackjack == False and dealerBlackjack == False):
+                        while(1):
+                            if( (dealerInt >= 22) and (dealerInt2 >= 22) ):
+                                break
+                            elif( (dealerInt >= userInt and dealerInt <= 21) or (dealerInt2 >= userInt and dealerInt2 <= 21) ):
+                                break
                             else:
-                                dealerInt = dealerInt + dealerCard
-                                dealerInt2 = dealerInt2 + dealerCard
-                            
-                            for cards in dealerCards:
-                                dealerDescription = dealerDescription + cards + " "
-                            dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
-                    
+                                dealerDescription = ''
+                                dealerCard = random.choice(numbers)
+                                while(cardsDictionary[dealerCard] == 0):
+                                    dealerCard = random.choice(numbers)
+
+                                cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
+                                dealerSuit = random.choice(suits)
+                                dealerCards.append(str(dealerCard)+dealerSuit)
+                                if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
+                                    dealerCard = 10
+                                    dealerInt = dealerInt + 10
+                                    dealerInt2 = dealerInt2 + 10
+                                elif(dealerCard == "A"):
+                                    dealerInt = dealerInt + 1
+                                    if(userInt2 + 11 <= 21):
+                                        dealerInt2 = dealerInt2 + 11
+                                    else:
+                                        dealerInt2 = dealerInt2 + 1  
+                                else:
+                                    dealerInt = dealerInt + dealerCard
+                                    dealerInt2 = dealerInt2 + dealerCard
+                                
+                                for cards in dealerCards:
+                                    dealerDescription = dealerDescription + cards + " "
+                                dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
+                        
                     if (dealerInt >= 22 and dealerInt2 <= 21):
                         temp = dealerInt
                         dealerInt = dealerInt2
