@@ -259,7 +259,7 @@ class Games(commands.Cog):
                                 endingDescription = endingDescription + "🏆 "
                             elif(i == msg):
                                 endingDescription = endingDescription + "❌ "
-                            elif(i != msg):
+                            else:
                                 endingDescription = endingDescription + "🥝 " 
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
@@ -294,8 +294,8 @@ class Games(commands.Cog):
                                 endingDescription = endingDescription + "🏆 "
                             elif(i == userGuess):
                                 endingDescription = endingDescription + "❌ "
-                            elif(i != userGuess):
-                                    endingDescription = endingDescription + "🥝 "
+                            else:
+                                endingDescription = endingDescription + "🥝 "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
