@@ -65,6 +65,7 @@ class Games(commands.Cog):
                 userCard = ''
                 userDescription = ''
 
+                dealerBlackjack = False
                 mysteryScore = 0
                 dealerCards = []
                 dealerInt = 0
@@ -121,6 +122,10 @@ class Games(commands.Cog):
 
                     if(i == 0):
                         mysteryScore = dealerInt
+                
+                #Check for instant blackjack
+                if(dealerInt == 21 or dealerInt2 == 21):
+                    dealerBlackjack = True
     
 
                 for cards in userCards:
@@ -259,8 +264,14 @@ class Games(commands.Cog):
                     else:
                         dealerInt = dealerInt
 
-                    
-                    if(userBlackjack == True):
+                    if(dealerBlackjack == True and userBlackjack == True):
+                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
+                        embed.add_field(name = f"Outcome", value=f"**Well this is awkward... both of us got blackjack. No one wins**", inline=False)
+                        await ctx.send(embed=embed)
+
+                    elif(userBlackjack == True):
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
