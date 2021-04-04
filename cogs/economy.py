@@ -321,7 +321,7 @@ class Economy(commands.Cog):
         if(member.id == ctx.message.author.id):
             await ctx.send("You can't give money to yourself")
         
-        elif(moneyAmount > int(money)):
+        elif(moneyAmount < int(money)):
             await ctx.send("You do not have that much money to give out")
         else:
             c.execute(f"""UPDATE dodos
