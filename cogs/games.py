@@ -140,7 +140,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
-                while(userInt < 22 and userInt2 < 22 and userBlackjack == False):
+                while(userInt < 22 and userInt2 < 22 and userBlackjack == False and dealerBlackjack == False):
                     if(userInt == 21 or userInt2 == 21):
                         break
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
@@ -217,7 +217,7 @@ class Games(commands.Cog):
                     else:
                         userInt = userInt
 
-                    while(userBlackjack == False):
+                    while(userBlackjack == False and dealerBlackjack == False):
                         if( (dealerInt >= 22) and (dealerInt2 >= 22)):
                             break
                         elif( (dealerInt >= userInt) or (dealerInt2 >= userInt) ):
@@ -282,7 +282,18 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
                         """)
                         db.commit()
-
+                    
+                    elif(dealerBlackjack == True):
+                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
+                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
+                        await ctx.send(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money - {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
                     
                     elif(dealerInt > userInt and dealerInt < 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
