@@ -424,7 +424,7 @@ class Games(commands.Cog):
                             
 
                 except asyncio.TimeoutError:
-                    userGuess = random.randint(1,4)
+                    userGuess = random.randint(1,3)
                     await ctx.send(f"Assuming you meant to guess kiwi number: {userGuess}")
                     if(userGuess == gem):
                         for i in range(1,4):
