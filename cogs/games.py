@@ -148,7 +148,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
-                while(userInt < 22 and userInt2 < 22 and userBlackjack == False and dealerBlackjack == False):
+                while(userInt < 22 and userInt2 < 22 and userBlackjack == False):
                     if(userInt == 21 or userInt2 == 21):
                         break
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
