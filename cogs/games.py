@@ -269,11 +269,11 @@ class Games(commands.Cog):
                         dealerInt = dealerInt
 
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
+                    dealerDescription = ' '
+                    for cards in dealerCards:
+                        dealerDescription = dealerDescription + cards + " "
+                        
                     if(dealerBlackjack == True and userBlackjack == True):
-                        dealerDescription = ' '
-                        for cards in dealerCards:
-                            dealerDescription = dealerDescription + cards + " "
-
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
@@ -293,9 +293,6 @@ class Games(commands.Cog):
                         db.commit()
                     
                     elif(dealerBlackjack == True):
-                        dealerDescription = ' '
-                        for cards in dealerCards:
-                            dealerDescription = dealerDescription + cards + " "
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
