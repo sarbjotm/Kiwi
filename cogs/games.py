@@ -94,31 +94,33 @@ class Games(commands.Cog):
                 #Check for instant blackjack
                 if(userInt == 21 or userInt2 == 21):
                     userBlackjack = True
-                    
-                dealerCard = random.choice(numbers)
-                while(cardsDictionary[dealerCard] == 0):
+                
+                for i in range(0,2):
                     dealerCard = random.choice(numbers)
+                    while(cardsDictionary[dealerCard] == 0):
+                        dealerCard = random.choice(numbers)
 
-                cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
-                dealerSuit = random.choice(suits)
-                dealerCards.append(str(dealerCard)+dealerSuit)
-                if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
-                    dealerCard = 10
-                    dealerInt = dealerInt + 10
-                    dealerInt2 = dealerInt2 + 10
-                elif(dealerCard == "A"):
-                    dealerInt = dealerInt + 1
-                    dealerInt2 = dealerInt2 + 11
-                else:
-                    dealerInt = dealerInt + dealerCard
-                    dealerInt2 = dealerInt2 + dealerCard
+                    cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
+                    dealerSuit = random.choice(suits)
+                    dealerCards.append(str(dealerCard)+dealerSuit)
+                    if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
+                        dealerCard = 10
+                        dealerInt = dealerInt + 10
+                        dealerInt2 = dealerInt2 + 10
+                    elif(dealerCard == "A"):
+                        if(dealerInt2 + 11 <= 21):
+                            dealerInt2 = dealerInt2 + 11
+                        else:
+                            dealerInt2 = dealerInt2 + 1
+                    else:
+                        dealerInt = dealerInt + dealerCard
+                        dealerInt2 = dealerInt2 + dealerCard
     
 
                 for cards in userCards:
                     userDescription = userDescription + cards + " "
                 
-                for cards in dealerCards:
-                    dealerDescription = dealerDescription + cards + " "
+                dealerDescription = dealerDescription + dealerCards[0] + "[ ]"
                 
 
                 userDescription = f"{userDescription} \n \nScore: {userInt} \n \n Score 2: {userInt2}"
