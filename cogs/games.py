@@ -135,7 +135,7 @@ class Games(commands.Cog):
                 for cards in userCards:
                     userDescription = userDescription + cards + " "
                 
-                dealerDescription = dealerDescription + dealerCards[0] + "[ ]"
+                dealerDescription = dealerDescription + dealerCards[0] + " [ ]"
                 
 
                 userDescription = f"{userDescription} \n \nScore: {userInt} \n \n Score 2: {userInt2}"
@@ -319,6 +319,10 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif(dealerInt == userInt):
+                        dealerDescription = ''
+                        for cards in dealerCards:
+                            dealerDescription = dealerDescription + cards + " "
+                        dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have tied! No one wins**", inline=False)
