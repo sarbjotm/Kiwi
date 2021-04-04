@@ -283,6 +283,7 @@ class Games(commands.Cog):
                         """)
                         db.commit()
 
+                    print(cardsDictionary)
                     del(userCards)
                     del(dealerCards)
          
