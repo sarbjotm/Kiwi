@@ -8,7 +8,7 @@ import mysql
 from pathlib import Path
 
 
-numbers = ["1","2","3","4","5","6","7","8","9","10","11"]
+numbers = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"]
 suits = ["🔸","🔹"]
 
 #Mentions
@@ -18,6 +18,23 @@ class Games(commands.Cog):
 
     @commands.command(aliases = ['21'])
     async def blackjack(self,ctx,bet):
+        cardsDictionary = {
+            "A": 4,
+            2: 4,
+            3: 4,
+            4: 4,
+            5: 4,
+            6: 4,
+            7: 4,
+            8: 4,
+            9: 4,
+            10: 4,
+            "J": 4,
+            "Q": 4,
+            "K": 4
+            }
+        
+
         bet = int(bet)
         if(bet < 1):
             await ctx.send("You must bet at least 1 Dodo Dollar")
@@ -42,38 +59,59 @@ class Games(commands.Cog):
                 userBlackjack = False
                 userCards = []
                 userInt = 0
+                userInt2 = 0
                 userSuit = ''
                 userCard = ''
                 userDescription = ''
 
                 dealerCards = []
                 dealerInt = 0
+                dealerInt2 = 0
                 dealerSuit = ''
                 dealerCard = ''
                 dealerDescription = ''
 
                 for i in range(0,2):
                     userCard = random.choice(numbers)
+                    while(cardsDictionary[userCard] == 0):
+                        userCard = random.choice(numbers)
+
+                    cardsDictionary[userCard] = cardsDictionary[userCard] - 1
                     userSuit = random.choice(suits)
-                    userCards.append(userCard+userSuit)
-                    userInt = userInt + int(userCard)
+                    userCards.append(str(userCard)+userSuit)
+                    if(userCard == "J" or userCard == "K" or userCard == "Q"):
+                        userCard = 10
+                        userInt = userInt + 10
+                        userInt2 = userInt2 + 10
+                    elif(userCard == "A"):
+                        userInt = userInt + 1
+                        userInt2 = userInt2 + 11
+                    else:
+                        userInt = userInt + userCard
+                        userInt2 = userInt2 + userCard
                     
-                #Check for Auto Bust
-                while (userInt == 22):
-                    userCard = random.choice(numbers)
-                    userSuit = random.choice(suits)
-                    userInt = userInt - 11
-                    userCards[2] = userCard+userSuit
-                    userInt = userInt + int(userCard)
-                
                 #Check for instant blackjack
-                if(userInt == 21):
+                if(userInt == 21 or userInt2 == 21):
                     userBlackjack = True
                     
                 dealerCard = random.choice(numbers)
+                while(cardsDictionary[dealerCard] == 0):
+                    dealerCard = random.choice(numbers)
+
+                cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
                 dealerSuit = random.choice(suits)
-                dealerCards.append(dealerCard+dealerSuit)
-                dealerInt = dealerInt + int(dealerCard)
+                dealerCards.append(str(dealerCard)+dealerSuit)
+                if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
+                    dealerCard = 10
+                    dealerInt = dealerInt + 10
+                    dealerInt2 = dealerInt2 + 10
+                elif(dealerCard == "A"):
+                    dealerInt = dealerInt + 1
+                    dealerInt2 = dealerInt2 + 11
+                else:
+                    dealerInt = dealerInt + dealerCard
+                    dealerInt2 = dealerInt2 + dealerCard
+    
 
                 for cards in userCards:
                     userDescription = userDescription + cards + " "
@@ -82,16 +120,15 @@ class Games(commands.Cog):
                     dealerDescription = dealerDescription + cards + " "
                 
 
-                userDescription = f"{userDescription} \n \nScore: {userInt}"
-                dealerDescription = f"{dealerDescription} \n \nScore: {dealerInt}"
+                userDescription = f"{userDescription} \n \nScore: {userInt} \n \n Score 2: {userInt2}"
+                dealerDescription = f"{dealerDescription} \n \nScore: {dealerInt} \n \n Score 2: {dealerInt2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
-                while(userInt < 22 and userBlackjack == False):
-                    if(userInt == 21):
+                while(userInt < 22 and userInt2 < 22 and userBlackjack == False):
+                    if(userInt == 21 or userInt2 == 21):
                         break
-                        
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                     await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
                     try:
@@ -106,12 +143,29 @@ class Games(commands.Cog):
                         if(msg == "hit"):
                             userDescription = ''
                             userCard = random.choice(numbers)
+                            while(cardsDictionary[userCard] == 0):
+                                userCard = random.choice(numbers)
+                            
+                            cardsDictionary[userCard] = cardsDictionary[userCard] - 1
                             userSuit = random.choice(suits)
                             userCards.append(userCard+userSuit)
-                            userInt = userInt + int(userCard)
+                            if(userCard == "J" or userCard == "K" or userCard == "Q"):
+                                userCard = 10
+                                userInt = userInt + 10
+                                userInt2 = userInt2 + 10
+                            elif(userCard == "A"):
+                                userInt = userInt + 1
+                                userInt2 = userInt2 + 11
+                            else:
+                                userInt = userInt + userCard
+                                userInt2 = userInt2 + userCard
+
+                            userSuit = random.choice(suits)
+                            userCards.append(userCard+userSuit)
+
                             for cards in userCards:
                                 userDescription = userDescription + cards + " "
-                            userDescription = f"{userDescription} \n \n Score: {userInt}"
+                            userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await ctx.send(embed=embed)
@@ -122,7 +176,7 @@ class Games(commands.Cog):
                         break
 
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                if(userInt >= 22):
+                if(userInt >= 22 and userInt2 >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
@@ -131,14 +185,40 @@ class Games(commands.Cog):
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
                         """)
-                        db.commit()
+                        db.commit()                
+
                 else:
-                    while((dealerInt < userInt) and userBlackjack == False):
+                    if (userInt >= 22 and userInt2 <= 21):
+                        userInt = userInt2
+                
+                    elif(userInt2 >= 22 and userInt <= 21):
+                        userInt = userInt
+                    
+                    elif(userInt2 > userInt):
+                        userInt = userInt2
+                    else:
+                        userInt = userInt
+
+                    while( ( (dealerInt < userInt) or (dealerInt2 < userInt) or (dealerInt < userInt2) or (dealerInt2 < userInt2) ) and userBlackjack == False):
                         dealerDescription = ''
                         dealerCard = random.choice(numbers)
+                        while(cardsDictionary[dealerCard] == 0):
+                            dealerCard = random.choice(numbers)
+
+                        cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
                         dealerSuit = random.choice(suits)
-                        dealerCards.append(dealerCard+dealerSuit)
-                        dealerInt = dealerInt + int(dealerCard)
+                        dealerCards.append(str(dealerCard)+dealerSuit)
+                        if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
+                            dealerCard = 10
+                            dealerInt = dealerInt + 10
+                            dealerInt2 = dealerInt2 + 10
+                        elif(dealerCard == "A"):
+                            dealerInt = dealerInt + 1
+                            dealerInt2 = dealerInt2 + 11
+                        else:
+                            dealerInt = dealerInt + dealerCard
+                            dealerInt2 = dealerInt2 + dealerCard
+                        
                         for cards in dealerCards:
                             dealerDescription = dealerDescription + cards + " "
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
