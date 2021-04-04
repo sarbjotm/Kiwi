@@ -223,6 +223,18 @@ class Games(commands.Cog):
                             dealerDescription = dealerDescription + cards + " "
                         dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt}"
                     
+                    if (dealerInt >= 22 and dealerInt2 <= 21):
+                        dealerInt = dealerInt2
+                
+                    elif(dealerInt2 >= 22 and dealerInt <= 21):
+                        userInt = userInt
+                    
+                    elif(dealerInt2 > dealerInt):
+                        dealerInt = dealerInt2
+                    else:
+                        dealerInt = dealerInt
+
+                    
                     if(userBlackjack == True):
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
