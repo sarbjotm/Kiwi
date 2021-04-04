@@ -298,6 +298,49 @@ class Economy(commands.Cog):
         await ctx.send(embed=embed) 
         c.close()
         db.close()
+    
+    @commands.command()
+    async def give(self,ctx, money, member : discord.Member):
+        db = mysql.connector.connect(
+            host= os.environ['HOST'],
+            user = os.environ['USER'],
+            password = os.environ['PASSWORD'],
+            database = os.environ['DATABASE']
+        )
+
+        c = db.cursor()
+        c.execute(f"""SELECT money
+            FROM dodos
+            WHERE id = {ctx.message.author.id}
+
+
+        """)
+        moneyAmount = ''.join(map(str,c.fetchall()[0]))
+        moneyAmount = int(moneyAmount)
+
+        if(member.id == ctx.message.author.id):
+            await ctx.send("You can't give money to yourself")
+        
+        elif(moneyAmount > int(money)):
+            await ctx.send("You do not have that much money to give out")
+        else:
+            c.execute(f"""UPDATE dodos
+                    SET money = money - {moneyAmount}
+                    WHERE id = {ctx.message.author.id}
+                    """)
+            db.commit()
+
+            c.execute(f"""UPDATE dodos
+                    SET money = money + {moneyAmount}
+                    WHERE id = {member.id}
+                    """)
+            db.commit()
+
+            await ctx.send("Transaction complete")
+        
+        c.close()
+        db.close()
+
 
 
 
