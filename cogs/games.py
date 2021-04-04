@@ -165,7 +165,7 @@ class Games(commands.Cog):
                                 userInt2 = userInt2 + userCard
 
                             userSuit = random.choice(suits)
-                            userCards.append(userCard+userSuit)
+                            userCards.append(str(userCard)+userSuit)
 
                             for cards in userCards:
                                 userDescription = userDescription + cards + " "
