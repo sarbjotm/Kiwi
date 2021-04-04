@@ -230,7 +230,7 @@ class Games(commands.Cog):
                         while(1):
                             if( (dealerInt >= 22) and (dealerInt2 >= 22) ):
                                 break
-                            elif(dealerInt >= 17 or dealerInt2 >= 17):
+                            elif(dealerInt >= 17 and dealerInt2 >= 17):
                                 break
                             else:
                                 dealerDescription = ''
