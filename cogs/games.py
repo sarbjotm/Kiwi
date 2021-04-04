@@ -17,6 +17,7 @@ class Games(commands.Cog):
         self.client = client
 
     @commands.command(aliases = ['21'])
+    @commands.has_permissions(administrator=True)
     async def blackjack(self,ctx,bet):
         cardsDictionary = {
             "A": 4,
@@ -291,7 +292,7 @@ class Games(commands.Cog):
     @blackjack.error
     async def blackjack_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Syntax for this command is: **,blackjack bet**")
+        await ctx.send("Syntax for this command is: **,blackjack bet**. Currently command is mod only while adding card count")
         await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
     
 
