@@ -300,7 +300,7 @@ class Economy(commands.Cog):
         db.close()
     
     @commands.command()
-    async def give(self,ctx, money, member : discord.Member):
+    async def give(self,ctx,member : discord.Member, money):
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
@@ -344,7 +344,7 @@ class Economy(commands.Cog):
     @give.error
     async def give_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Syntax for this command is: **,give x @User** Where x is the dollar amount you would like to give to the user")
+        await ctx.send("Syntax for this command is: **,give @User x** Where x is the dollar amount you would like to give to the user")
         await channel.send(f"{ctx.message.author} experienced a error using give")  
 
 
