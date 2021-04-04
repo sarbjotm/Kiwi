@@ -341,7 +341,11 @@ class Economy(commands.Cog):
         c.close()
         db.close()
 
-
+    @give.error
+    async def give_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Syntax for this command is: **,give x @User** Where x is the dollar amount you would like to give to the user")
+        await channel.send(f"{ctx.message.author} experienced a error using give")  
 
 
 def setup(client):
