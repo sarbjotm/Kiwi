@@ -168,7 +168,7 @@ class Games(commands.Cog):
                                 userDescription = userDescription + cards + " "
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                            embed.add_field(name=f"Kiwi's Hand", value=f"{Description}" , inline=True)
+                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await ctx.send(embed=embed)
                         else:
                             break
