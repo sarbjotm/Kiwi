@@ -156,7 +156,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     
-                    if(dealerInt > userInt and dealerInt < 22):
+                    elif(dealerInt > userInt and dealerInt < 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
@@ -219,10 +219,11 @@ class Games(commands.Cog):
             if(bet > int(balance)):
                 await ctx.send("You do not have that much money!")
             else:
-                gem = random.randint(1,4)
+                gem = random.randint(1,3)
                 embedDescription = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
                 endingDescription = ""
                 embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle", description = embedDescription, color=0x99c0dd)
+                await ctx.send(embed=embed)
                 await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds I will randomly pick for you')
 
                 try:
@@ -232,16 +233,18 @@ class Games(commands.Cog):
                         check=lambda message: message.author == ctx.message.author \
                             and message.channel == ctx.channel 
                     )
-                    #Update user who intiated trade
                     msg = msg.content.strip().lower()
-                    msg = int(msg)
+                    try:
+                        msg = int(msg)
+                    except:
+                        await ctx.send("Gonna give you a random variable for not following rules.")
+                        msg = random.randint(1,4)
                     if(msg == gem):
-                        
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "✔️" + " "
+                                endingDescription = endingDescription + "🏆 "
                             else:
-                                endingDescription = endingDescription + "🥝" + " "
+                                endingDescription = endingDescription + "🥝 " 
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
@@ -253,11 +256,14 @@ class Games(commands.Cog):
                     else:
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "❌" + " "
+                                endingDescription = endingDescription + "🏆 "
+                            elif(i == msg):
+                                endingDescription = endingDescription + "❌ "
                             else:
-                                endingDescription = endingDescription + "🥝" + " "
+                                endingDescription = endingDescription + "🥝 " 
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
@@ -272,9 +278,9 @@ class Games(commands.Cog):
                     if(userGuess == gem):
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "✔️" + " "
+                                endingDescription = endingDescription + "🏆 "
                             else:
-                                endingDescription = endingDescription + "🥝" + " "
+                                endingDescription = endingDescription + "🥝 "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
@@ -286,11 +292,14 @@ class Games(commands.Cog):
                     else:
                         for i in range(1,4):
                             if(i == gem):
-                                endingDescription = endingDescription + "❌" + " "
+                                endingDescription = endingDescription + "🏆 "
+                            elif(i == userGuess):
+                                endingDescription = endingDescription + "❌ "
                             else:
-                                endingDescription = endingDescription + "🥝" + " "
+                                endingDescription = endingDescription + "🥝 "
                         embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
