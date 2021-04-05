@@ -156,7 +156,7 @@ class Games(commands.Cog):
                 while(1):
                     if(userInt >= 22 and userInt2 >= 22):
                         break
-                    
+                        
                     elif(userInt == 21 or userInt2 == 21):
                         break
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
