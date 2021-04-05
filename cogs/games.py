@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 numbers = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"]
-suits = ["🔸","🔹"]
+suits = ["🍇","🍉","🍒","🍍"]
 
 #Mentions
 class Games(commands.Cog):
@@ -81,6 +81,9 @@ class Games(commands.Cog):
 
                     cardsDictionary[userCard] = cardsDictionary[userCard] - 1
                     userSuit = random.choice(suits)
+                    while(str(userCard)+userSuit in userCards or str(userCard)+userSuit in dealerCards):
+                        userSuit = random.choice(suits)
+
                     userCards.append(str(userCard)+userSuit)
                     if(userCard == "J" or userCard == "K" or userCard == "Q"):
                         userCard = 10
@@ -109,6 +112,8 @@ class Games(commands.Cog):
 
                     cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
                     dealerSuit = random.choice(suits)
+                    while(str(dealerCard)+dealerSuit in userCards or str(dealerCard)+dealerSuit in dealerCards):
+                        dealerSuit = random.choice(suits)
                     dealerCards.append(str(dealerCard)+dealerSuit)
                     if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
                         dealerCard = 10
@@ -173,6 +178,8 @@ class Games(commands.Cog):
                             
                             cardsDictionary[userCard] = cardsDictionary[userCard] - 1
                             userSuit = random.choice(suits)
+                            while(str(userCard)+userSuit in userCards or str(userCard)+userSuit in dealerCards):
+                                userSuit = random.choice(suits)
                             userCards.append(str(userCard)+userSuit)
                             if(userCard == "J" or userCard == "K" or userCard == "Q"):
                                 userCard = 10
@@ -241,6 +248,8 @@ class Games(commands.Cog):
                                     dealerCard = random.choice(numbers)
                                 cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
                                 dealerSuit = random.choice(suits)
+                                while(str(dealerCard)+dealerSuit in userCards or str(dealerCard)+dealerSuit in dealerCards):
+                                    dealerSuit = random.choice(suits)
                                 dealerCards.append(str(dealerCard)+dealerSuit)
                                 if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
                                     dealerCard = 10
