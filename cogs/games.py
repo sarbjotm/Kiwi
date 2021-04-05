@@ -148,8 +148,11 @@ class Games(commands.Cog):
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                 await ctx.send(embed=embed)
                 
-                while(userInt < 22 and userInt2 < 22 and userBlackjack == False and dealerBlackjack == False):
-                    if(userInt == 21 or userInt2 == 21):
+                while(1):
+                    if(userInt >= 22 and userInt2 >= 22):
+                        break
+                    
+                    elif(userInt == 21 or userInt2 == 21):
                         break
                     embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                     await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
