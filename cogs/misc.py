@@ -116,8 +116,7 @@ class MiscCommands(commands.Cog):
     @commands.command(aliases=["private","a","anon"])
     async def anonmsg(self,ctx,*, statement):
         await ctx.message.delete(delay = 0)
-        embed=discord.Embed(title="Anonymous Message" , color=0xe392fe)
-        embed.add_field(name="Message", value=statement, inline=True)
+        embed=discord.Embed(title="Anonymous Message", description = statement, color=0xe392fe)
         await ctx.send(embed=embed)
     
         
