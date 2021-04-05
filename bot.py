@@ -151,14 +151,12 @@ async def help(ctx, category = ''):
 
 @client.command(pass_context=True)
 async def about(ctx):
-    paypal = {os.environ['PAYPAL']}
-    paypal = str(paypal)[:-6]
     embed = discord.Embed(title="About", description = "Kiwi is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on Heroku under a Hobby Plan and has an MySQL Database connected to it.",color=0x66abf9)    
     embed.set_author(name="Amander", icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
     embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)', inline=False)
-    embed.add_field(name="Donations", value=f"I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[{paypal}]({paypal})", inline=False)
+    embed.add_field(name="Donations", value=f"I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)", inline=False)
     await ctx.send(embed=embed)
 
 
