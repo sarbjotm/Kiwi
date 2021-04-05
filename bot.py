@@ -110,7 +110,7 @@ async def help(ctx, category = ''):
         embed = discord.Embed(title="Economy", description = "**,bal** - View your balance \n\n**,buy quantity role** Buy a role \n\n **,daily** - Recieve between 1-1000 discord dollars \n\n**,give @User x** - Give @User x dodo dollars \n\n**,leaderboard** - See top 5 Richest Dodos \n\n **,sell quantity role** - sell your roles for money \n\n**,shop** - see prices for roles",color=0x66abf9) 
 
     elif(category == 'help'):
-        embed = discord.Embed(title="Help", description = "**,help** - To view all categories otherwise do **,help category** for info regarding the specified category ",color=0x66abf9) 
+        embed = discord.Embed(title="Help", description = "**,help** - To view all categories otherwise do **,help category** for info regarding the specified category \n\n **,ping** - See if bot is offline \n\n",color=0x66abf9) 
 
     elif(category == 'mention'):
         embed = discord.Embed(title="Mention", description = "**,hugs @user** - Gives the selected user a hug \n\n**,hugsRole @role** - group hug \n\n **,waves @user** - waves at a user \n\n**,wavesRole @role** - waves at a group \n\n",color=0x66abf9)
