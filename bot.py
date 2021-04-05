@@ -1,3 +1,4 @@
+from typing_extensions import Concatenate
 import discord
 import asyncio
 import os
@@ -97,30 +98,68 @@ async def ping(ctx):
 
 
 @client.command(pass_context=True)
-async def help(ctx):
-    embed = discord.Embed(title="All Commands For Kiwi Bot",color=0x66abf9)
-    embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
-    embed.add_field(name="Role Based Commands", value="**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade your role @user their role** - trade roles \n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles", inline=True)
-    embed.add_field(name="Mention A User Commands", value="**,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n**,hugs @user** - gives the selected user a hug \n**,hugsRole @role** - group hug", inline=True)
-    embed.add_field(name="Determine An Outcome Commands", value="**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin \n**,poll \"Question\" option1 option2 ... option10** - Display a poll with n (2 <= n <= 10) options or a yes/no without any options shown" , inline=True)
-    embed.add_field(name="Role Based Commands 2", value="**,hide role** - hide a role from your profile \n **,show role** - make a role appear on profile \n **,hideall** - hide all roles \n **,showall** - show all roles", inline=True)
-    embed.add_field(name="String Manipulation", value="**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe", inline=True)
-    embed.add_field(name="Economy", value="**,daily** - Recieve between 1-1000 discord dollars \n**,bal** - View your balance \n**,leaderboard** - See top 5 Richest Dodos \n **,sell quantity role** - sell your roles for money \n **,buy quantity role** Buy a role \n **,shop** - see prices 4 roles" , inline=True)
-    embed.add_field(name="Astrology", value="**,horoscope zodiac** - Get your daily horoscope reading" , inline=True)
-    embed.add_field(name="Weather", value="**,weather city** - Get your daily weather forecast" , inline=True)
-    embed.add_field(name="Other", value="**,randomnumber a b ** - display rng [a,b] \n **,kittyclap** - send a kittyclap", inline=True)
-    embed.add_field(name="Help Commands", value="**,about** - display information about kiwi \n **,help** - shows this message \n**,ping** - check if kiwi is still up", inline=True)
+async def help(ctx, category = ''):
+
+    category = str(category).lower()
+    if(category == 'astrology'):
+        embed = discord.Embed(title="Astrology and Birthday", description = "**,horoscope zodiac** - This will return your Daily Horoscope based off of your zodiac sign \n\
+            **,birthday mmdd** - This will set your birthday! Kiwi will wish you a happy birthday on your special day",color=0x66abf9) 
+    
+    elif(category == 'decision'):
+        embed = discord.Embed(title="Decision Making", description = "**,8ball question** - ask Kiwi a question \n**,coinflip** - flip a coin \n**,poll \"Question\" option1 option2 ... option10** - Display a poll with n (2 <= n <= 10) options or a yes/no without any options shown",color=0x66abf9) 
+
+    elif(category == 'economy'):
+        embed = discord.Embed(title="Economy", description = "**,bal** - View your balance \n**,buy quantity role** Buy a role \n **,daily** - Recieve between 1-1000 discord dollars \n**,give @User x** - Give @User x dodo dollars \n**,leaderboard** - See top 5 Richest Dodos \n **,sell quantity role** - sell your roles for money \n**,shop** - see prices for roles",color=0x66abf9) 
+
+    elif(category == 'help'):
+        embed = discord.Embed(title="Help", description = "**,help** - To view all categories otherwise do **,help category** for info regarding the specified category ",color=0x66abf9) 
+
+    elif(category == 'mention'):
+        embed = discord.Embed(title="Mention", description = "**,hugs @user** - Gives the selected user a hug \n**,hugsRole @role** - group hug \n **,waves @user** - waves at a user \n**,wavesRole @role** - waves at a group \n",color=0x66abf9)
+    
+    elif(category == 'minigames'):
+        embed = discord.Embed(title="Minigames", description = "**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount \n**,cup bet** - Play the classic 'guess where the gem' is game, pick the right cup and win!",color=0x66abf9) 
+
+    elif(category == 'misc'):
+        embed = discord.Embed(title = "Misc", description = "**,randomnumber a b ** - display rng [a,b] \n**,kittyclap** - send a kittyclap",color=0x66abf9)
+    
+    elif(category == 'role'):
+        embed = discord.Embed(title="Role Based", description = "**,collect** - obtain a role! 12 hour cooldown \n**,activate role** - activate a ,collect role\n**,trade your role @user their role** - trade roles \n**,myroles** - display a list of your roles \n**,roles** - display a list of collectable roles \n **,hide role** - hide a role from your profile \n**,show role** - make a role appear on profile \n **,hideall** - hide all roles \n**,showall** - show all roles",color=0x66abf9) 
+
+    elif(category == 'string'):
+        embed = discord.Embed(title="String", description = "**,fw message** - add sparkles between words \n**,spaced message** - space out your message \n**,spongebob message** - SpOnGeBoB MeMe",color=0x66abf9)
+    
+    elif(category == "weather"):
+        embed = discord.Embed(title = "Misc", description = "**,weather city** - Find out the weather in your city! Sometimes you might have to add the country code, eg: London,CA",color=0x66abf9)
+
+    else:
+        embed = discord.Embed(title="Kiwi Bot | Information", description = "Hello there! My name is Kiwi, thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n \
+            **,help Astrology** - To view commands based on Astrology such as zodiac and birthday \n\
+            **,help Decision** - To view commands to help your decision making such as coinflip and 8ball \n\
+            **,help Economy** - To view commands based on Economy such as daily and selling/buying roles \n\
+            **,help Help** - To view help based commands such as help and ping \n\
+            **,help Mention** - To view commands that allow you to interact with other members such as hug and wave \n\
+            **,help Minigames** - To view commands that allow you to play games such as blackjack and cup shuffle \n\
+            **,help Misc** - To view random commands such as kittyclap and random number picking \n\
+            **,help Role** - To view commands based on Roles such as collecting and trading \n\
+            **,help String** - To view commands that alter your messages such as sparkes and spaced \n\
+            **,help Weather** - To view commands based on the Weather such as weather \n \nTo learn more about me use the command **,about**", color=0x66abf9)
+
+
+
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)
 
 
 @client.command(pass_context=True)
 async def about(ctx):
+    paypal = {os.environ['PAYPAL']}
     embed = discord.Embed(title="About", description = "Kiwi is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi is constantly being updated and is maintend by myself. Kiwi is currently being hosted on Heroku under a Hobby Plan and has an MySQL Database connected to it.",color=0x66abf9)    
     embed.set_author(name="Amander", icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
     embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)', inline=False)
-    embed.add_field(name="Donations", value='I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n \n **E-Transfer**: Email above', inline=False)
+    embed.add_field(name="Donations", value=f'I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n \n **E-Transfer**: Email above \nPaypal:[{paypal}]({paypal})', inline=False)
     await ctx.send(embed=embed)
 
 
