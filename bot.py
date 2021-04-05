@@ -157,7 +157,7 @@ async def about(ctx):
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
     embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)', inline=False)
-    embed.add_field(name="Donations", value=f'I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[{paypal}]({paypal})', inline=False)
+    embed.add_field(name="Donations", value=f"I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[{paypal}]({paypal})", inline=False)
     await ctx.send(embed=embed)
 
 
