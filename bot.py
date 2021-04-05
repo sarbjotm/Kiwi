@@ -1,4 +1,3 @@
-from typing_extensions import Concatenate
 import discord
 import asyncio
 import os
@@ -99,7 +98,6 @@ async def ping(ctx):
 
 @client.command(pass_context=True)
 async def help(ctx, category = ''):
-
     category = str(category).lower()
     if(category == 'astrology'):
         embed = discord.Embed(title="Astrology and Birthday", description = "**,horoscope zodiac** - This will return your Daily Horoscope based off of your zodiac sign \n\
