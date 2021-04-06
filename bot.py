@@ -104,34 +104,34 @@ async def on_reaction_add(reaction,member):
         role = discord.utils.get(guild.roles, name = "Taurus")
         await member.add_roles(role)
     elif reaction.emoji == "♊":
-        role = reaction.utils.get(guild.roles, name = "Gemini")
+        role = discord.utils.get(guild.roles, name = "Gemini")
         await member.add_roles(role)
     elif reaction.emoji == "♋":
-        role = reaction.utils.get(guild.roles, name = "Cancer")
+        role = discord.utils.get(guild.roles, name = "Cancer")
         await member.add_roles(role)
     elif reaction.emoji == "♌":
-        role = reaction.utils.get(guild.roles, name = "Leo")
+        role = discord.utils.get(guild.roles, name = "Leo")
         await member.add_roles(role)
     elif reaction.emoji == "♍":
-        role = reaction.utils.get(guild.roles, name = "Virgo")
+        role = discord.utils.get(guild.roles, name = "Virgo")
         await member.add_roles(role)
     elif reaction.emoji == "♎":
-        role = reaction.utils.get(guild.roles, name = "Libra")
+        role = discord.utils.get(guild.roles, name = "Libra")
         await member.add_roles(role)
     elif reaction.emoji == "♏":
-        role = reaction.utils.get(guild.roles, name = "Scorpio")
+        role = discord.utils.get(guild.roles, name = "Scorpio")
         await member.add_roles(role)
     elif reaction.emoji == "♐":
-        role = reaction.util.get(guild.roles, name = "Sagittarius")
+        role = discord.util.get(guild.roles, name = "Sagittarius")
     
     elif reaction.emoji == "♑":
-        role = reaction.util.get(guild.roles, name = "Capricorn")
+        role = discord.util.get(guild.roles, name = "Capricorn")
         await member.add_roles(role)
     elif reaction.emoji == "♒":
-        role = reaction.util.get(guild.roles, name = "Aquarius")
+        role = discord.util.get(guild.roles, name = "Aquarius")
         await member.add_roles(role)
     elif reaction.emoji == "♓":
-        role = reaction.util.get(guild.roles, name = "Pisces")
+        role = discord.util.get(guild.roles, name = "Pisces")
         await member.add_roles(role)
 
 #Add user to database when they join, and set all values to 0
