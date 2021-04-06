@@ -74,8 +74,7 @@ async def on_reaction_add(reaction,user):
     channel = guild.get_channel(744818329427902504)
     print("REACTION CHANNEL")
     print(reaction.message.channel.id)
-    if reaction.message.channel.id != '800965152132431892':
-        print("REACTION CHANNEL FAILED")
+    if reaction.message.channel.id != '744818329427902504':
         return
     elif reaction.emoji == "🔔":
         print("DODO PROPER")
