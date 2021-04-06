@@ -79,7 +79,7 @@ async def on_reaction_add(reaction,member):
     print(member)
     print(member.id)
 
-    member = client.get_member(member.id)
+    member = guild.get_member(int(member.id))
     print(member)
 
     # if str(reaction.emoji) == "🔔":
