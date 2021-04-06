@@ -69,32 +69,32 @@ async def wishbirthday():
 
 
 @client.event
-async def on_reaction_add(reaction,user):
+async def on_reaction_add(reaction,member):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
 
     # if reaction.message.channel.id != '744818329427902504':
     #     return
     
-    print(user)
+    print(member)
     if str(reaction.emoji) == "🔔":
         print("DODO PROPER")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
-        await user.add_roles(role)
+        await member.add_roles(role)
 
     elif str(reaction.emoji) == "🎵":
         role = discord.utils.get(guild.roles, name="DJ")
         print("DJ")
-        await user.add_roles(role)
+        await member.add_roles(role)
 
     elif str(reaction) == "🖌":
         print("COLOURS(")
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
-        await user.add_roles(role)
+        await member.add_roles(role)
 
     elif reaction.emoji == "🔣":
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
-        await user.add_roles(role)
+        await member.add_roles(role)
     else:
         await channel.send("HELP")
 
