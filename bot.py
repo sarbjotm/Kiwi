@@ -91,48 +91,71 @@ async def on_raw_reaction_add(payload):
         await member.add_roles(role)
 
     elif str(reaction) == "🖌":
-        print("COLOURS(")
+        print("COLOURS")
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
         await member.add_roles(role)
 
     elif reaction == "🔣":
+        print("MISC")
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
         await member.add_roles(role)
 
     elif reaction == "♈":
+        print("ARIES")
         role = discord.utils.get(guild.roles, name = "Aries")
         await member.add_roles(role)
     
     elif reaction == "♉":
+        print("T")
         role = discord.utils.get(guild.roles, name = "Taurus")
         await member.add_roles(role)
+
     elif reaction == "♊":
+        print("G")
         role = discord.utils.get(guild.roles, name = "Gemini")
         await member.add_roles(role)
+
     elif reaction == "♋":
+        print("C")
         role = discord.utils.get(guild.roles, name = "Cancer")
         await member.add_roles(role)
+
     elif reaction == "♌":
+        print("L")
         role = discord.utils.get(guild.roles, name = "Leo")
         await member.add_roles(role)
+
     elif reaction == "♍":
+        print("V")
         role = discord.utils.get(guild.roles, name = "Virgo")
         await member.add_roles(role)
+
     elif reaction == "♎":
+        print("LI")
         role = discord.utils.get(guild.roles, name = "Libra")
         await member.add_roles(role)
+
     elif reaction == "♏":
+        print("SC")
         role = discord.utils.get(guild.roles, name = "Scorpio")
         await member.add_roles(role)
+
     elif reaction == "♐":
+        print("SA")
         role = discord.utils.get(guild.roles, name = "Sagittarius")
+
     elif reaction == "♑":
+        print("CA")
         role = discord.utils.get(guild.roles, name = "Capricorn")
         await member.add_roles(role)
+
     elif reaction == "♒":
+        print("AQ")
         role = discord.utils.get(guild.roles, name = "Aquarius")
         await member.add_roles(role)
+        
     elif reaction == "♓":
+        print("PI")
         role = discord.utils.get(guild.roles, name = "Pisces")
         await member.add_roles(role)
 
