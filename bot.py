@@ -75,6 +75,7 @@ async def on_reaction_add(reaction,user):
     if reaction.message.channel.id != channel:
         return
     elif reaction.emoji == "🔔":
+        await client.send("WE IN HERE")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
         await client.add_rules(user,role)
     elif reaction.emoji == "🎵":
@@ -86,6 +87,8 @@ async def on_reaction_add(reaction,user):
     elif reaction.emoji == "🔣":
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
         await client.add_rules(user,role)
+    else:
+        await client.send("HELP")
 
 
 
