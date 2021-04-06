@@ -72,6 +72,7 @@ async def on_raw_reaction_add(payload):
     guild = client.get_guild(744817281871249428)
 
     reaction = payload.emoji
+    reaction = str(reaction)
     member = payload.user_id
     
     member = guild.get_member(member)
@@ -80,12 +81,12 @@ async def on_raw_reaction_add(payload):
         print("Wrong channel mate")
         return
     
-    elif str(reaction) == "🔔":
+    elif reaction == "🔔":
         print("DODO PROPER")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
         await member.add_roles(role)
 
-    elif str(reaction) == "🎵":
+    elif reaction == "🎵":
         role = discord.utils.get(guild.roles, name="DJ")
         print("DJ")
         await member.add_roles(role)
@@ -95,7 +96,7 @@ async def on_raw_reaction_add(payload):
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
         await member.add_roles(role)
 
-    elif str(reaction) == "🖌":
+    elif reaction == "🖌":
         print("COLOURS")
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
         await member.add_roles(role)
