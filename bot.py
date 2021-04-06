@@ -72,10 +72,12 @@ async def wishbirthday():
 async def on_reaction_add(reaction,user):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
+    print("REACTION CHANNEL")
     if reaction.message.channel.id != '800965152132431892':
+        print("REACTION CHANNEL FAILED")
         return
     elif reaction.emoji == "🔔":
-        await client.send("WE IN HERE")
+        print("DODO PROPER")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
         await client.add_rules(user,role)
     elif reaction.emoji == "🎵":
