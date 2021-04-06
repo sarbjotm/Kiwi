@@ -82,8 +82,6 @@ async def on_reaction_add(reaction,user):
 
     if str(reaction.emoji) == "🔔":
         print("DODO PROPER")
-        role = discord.utils.get(guild.roles, name="Dodo Proper")
-        await client.add_roles(user,role)
 
     # elif reaction == "🎵":
     #     role = discord.utils.get(guild.roles, name="DJ")
