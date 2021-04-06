@@ -30,15 +30,15 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    emojisToAdd = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(744818329427902504)
-    emojiDescription = "♈ - Aries \n \n♉ - Taurus \n \n♊ - Gemini\n\n♋ - Cancer\n\n♌ - Leo\n\n♍ - Virgo\n\n♎ - Libra\n\n♏ - Scorpio\n\n♐ - Sagittarius\n\n♑ - Capricorn \n\n♒ - Aquarius\n\n♓ - Pisces"
-    embed=discord.Embed(title="Get your Zodiac Roles", description = emojiDescription, color=0xe392fe)
-    roleMessage = await channel.send(embed=embed)
-    for i in emojisToAdd:
-        await roleMessage.add_reaction(i)
+    # emojisToAdd = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
+    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
+    # guild = client.get_guild(744817281871249428)
+    # channel = guild.get_channel(744818329427902504)
+    # emojiDescription = "♈ - Aries \n \n♉ - Taurus \n \n♊ - Gemini\n\n♋ - Cancer\n\n♌ - Leo\n\n♍ - Virgo\n\n♎ - Libra\n\n♏ - Scorpio\n\n♐ - Sagittarius\n\n♑ - Capricorn \n\n♒ - Aquarius\n\n♓ - Pisces"
+    # embed=discord.Embed(title="Get your Zodiac Roles", description = emojiDescription, color=0xe392fe)
+    # roleMessage = await channel.send(embed=embed)
+    # for i in emojisToAdd:
+    #     await roleMessage.add_reaction(i)
     print("Bot is Ready")
     wishbirthday.start()
 
@@ -68,12 +68,15 @@ async def wishbirthday():
 
 
 @client.event
-async def on_reaction_add(reaction,member):
+async def on_raw_reaction_add(payload):
     guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(744818329427902504)
+
+    reaction = payload.emoji
+    member = payload.user_id
+    
     member = guild.get_member(int(member.id))
 
-    if str(reaction.message.channel.id) != '744818329427902504':
+    if str(payload.channel_id) != '744818329427902504':
         print("Wrong channel mate")
         return
     
