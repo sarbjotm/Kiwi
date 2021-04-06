@@ -72,7 +72,7 @@ async def wishbirthday():
 async def on_reaction_add(reaction,user):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
-    if reaction.message.channel.id != channel:
+    if reaction.message.channel.id != '800965152132431892':
         return
     elif reaction.emoji == "🔔":
         await client.send("WE IN HERE")
