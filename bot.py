@@ -80,12 +80,12 @@ async def on_raw_reaction_add(payload):
         print("Wrong channel mate")
         return
     
-    elif str(reaction.emoji) == "🔔":
+    elif str(reaction) == "🔔":
         print("DODO PROPER")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
         await member.add_roles(role)
 
-    elif str(reaction.emoji) == "🎵":
+    elif str(reaction) == "🎵":
         role = discord.utils.get(guild.roles, name="DJ")
         print("DJ")
         await member.add_roles(role)
@@ -95,44 +95,44 @@ async def on_raw_reaction_add(payload):
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
         await member.add_roles(role)
 
-    elif reaction.emoji == "🔣":
+    elif reaction == "🔣":
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
         await member.add_roles(role)
 
-    elif reaction.emoji == "♈":
+    elif reaction == "♈":
         role = discord.utils.get(guild.roles, name = "Aries")
         await member.add_roles(role)
     
-    elif reaction.emoji == "♉":
+    elif reaction == "♉":
         role = discord.utils.get(guild.roles, name = "Taurus")
         await member.add_roles(role)
-    elif reaction.emoji == "♊":
+    elif reaction == "♊":
         role = discord.utils.get(guild.roles, name = "Gemini")
         await member.add_roles(role)
-    elif reaction.emoji == "♋":
+    elif reaction == "♋":
         role = discord.utils.get(guild.roles, name = "Cancer")
         await member.add_roles(role)
-    elif reaction.emoji == "♌":
+    elif reaction == "♌":
         role = discord.utils.get(guild.roles, name = "Leo")
         await member.add_roles(role)
-    elif reaction.emoji == "♍":
+    elif reaction == "♍":
         role = discord.utils.get(guild.roles, name = "Virgo")
         await member.add_roles(role)
-    elif reaction.emoji == "♎":
+    elif reaction == "♎":
         role = discord.utils.get(guild.roles, name = "Libra")
         await member.add_roles(role)
-    elif reaction.emoji == "♏":
+    elif reaction == "♏":
         role = discord.utils.get(guild.roles, name = "Scorpio")
         await member.add_roles(role)
-    elif reaction.emoji == "♐":
+    elif reaction == "♐":
         role = discord.utils.get(guild.roles, name = "Sagittarius")
-    elif reaction.emoji == "♑":
+    elif reaction == "♑":
         role = discord.utils.get(guild.roles, name = "Capricorn")
         await member.add_roles(role)
-    elif reaction.emoji == "♒":
+    elif reaction == "♒":
         role = discord.utils.get(guild.roles, name = "Aquarius")
         await member.add_roles(role)
-    elif reaction.emoji == "♓":
+    elif reaction == "♓":
         role = discord.utils.get(guild.roles, name = "Pisces")
         await member.add_roles(role)
 
