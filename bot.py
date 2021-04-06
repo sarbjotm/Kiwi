@@ -69,7 +69,7 @@ async def wishbirthday():
 
 
 @client.event
-async def on_reaction_add(reaction,member):
+async def on_reaction_add(reaction,member : discord.Member):
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
 
