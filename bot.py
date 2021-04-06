@@ -89,16 +89,17 @@ async def on_raw_reaction_add(payload):
         role = discord.utils.get(guild.roles, name="DJ")
         print("DJ")
         await member.add_roles(role)
+    
+    elif reaction == "🔣":
+        print("MISC")
+        role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
+        await member.add_roles(role)
 
     elif str(reaction) == "🖌":
         print("COLOURS")
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
         await member.add_roles(role)
 
-    elif reaction == "🔣":
-        print("MISC")
-        role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
-        await member.add_roles(role)
 
     elif reaction == "♈":
         print("ARIES")
@@ -158,6 +159,8 @@ async def on_raw_reaction_add(payload):
         print("PI")
         role = discord.utils.get(guild.roles, name = "Pisces")
         await member.add_roles(role)
+    else:
+        print("UHHHHHH")
 
 #Add user to database when they join, and set all values to 0
 @client.event
