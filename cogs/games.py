@@ -101,12 +101,6 @@ class Games(commands.Cog):
                         userInt2 = userInt2 + userCard
                     
 
-                    
-                #Check for instant blackjack
-                if(userInt == 21 or userInt2 == 21):
-                    userBlackjack = True
-                
-                for i in range(0,2):
                     dealerCard = random.choice(numbers)
                     while(cardsDictionary[dealerCard] == 0):
                         dealerCard = random.choice(numbers)
@@ -136,12 +130,15 @@ class Games(commands.Cog):
                             mysteryScore2 = mysteryScore2 + dealerInt2
                         else:
                             mysteryScore2 = mysteryScore2 + dealerInt
+                    
+                #Check for instant blackjack
+                if(userInt == 21 or userInt2 == 21):
+                    userBlackjack = True            
                 
                 #Check for instant blackjack
                 if(dealerInt == 21 or dealerInt2 == 21):
                     dealerBlackjack = True
     
-
                 for cards in userCards:
                     userDescription = userDescription + cards + " "
                 
