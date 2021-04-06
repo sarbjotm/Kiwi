@@ -65,6 +65,7 @@ class Games(commands.Cog):
                 userDescription = ''
 
                 dealerBlackjack = False
+                dealerCardCount = 2
                 mysteryScore = 0
                 mysteryScore2 = 0
                 dealerCards = []
@@ -240,6 +241,8 @@ class Games(commands.Cog):
                             if( (dealerInt >= 22) and (dealerInt2 >= 22) ):
                                 break
                             elif(dealerInt >= 17 or dealerInt2 >= 17):
+                                break
+                            elif(dealerInt >= userInt):
                                 break
                             else:
                                 dealerDescription = ''
