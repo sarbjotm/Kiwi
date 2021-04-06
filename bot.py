@@ -31,7 +31,15 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
+    emojisToAdd = ["🎵","🔔","🖌","🔣"]
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(744818329427902504)
+    emojiDescription = "🎵 - DJ Role \n \n🔔 - Dodo Proper Role \n \n🖌 - Colour Category Role \n \n 🔣- Misc Category Role"
+    embed=discord.Embed(title="Get your Server Roles", description = emojiDescription, color=0xe392fe)
+    roleMessage = await channel.send(embed=embed)
+    for i in emojisToAdd:
+        await roleMessage.add_reaction(i)
     print("Bot is Ready")
     wishbirthday.start()
 
@@ -57,6 +65,29 @@ async def wishbirthday():
         await channel.send(f"Happy Birthday <@{username}>!!")
     c.close()
     db.close()
+
+
+
+@client.event
+async def on_reaction_add(reaction,user):
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(744818329427902504)
+    if reaction.message.channel.id != channel:
+        return
+    elif reaction.emoji == "🔔":
+        role = discord.utils.get(user.server.roles, name="Dodo Proper")
+        await client.add_rules(user,role)
+    elif reaction.emoji == "🎵":
+        role = discord.utils.get(user.server.roles, name="DJ")
+        await client.add_rules(user,role)
+    elif reaction.emoji == "🖌":
+        role = discord.utils.get(user.server.roles, name="--------------- Colours---------------")
+        await client.add_rules(user,role)
+    elif reaction.emoji == "🔣":
+        role = discord.utils.get(user.server.roles, name="--------------- Misc ---------------")
+        await client.add_rules(user,role)
+
+
 
 #Add user to database when they join, and set all values to 0
 @client.event
