@@ -122,16 +122,15 @@ async def on_reaction_add(reaction,member):
         role = discord.utils.get(guild.roles, name = "Scorpio")
         await member.add_roles(role)
     elif reaction.emoji == "♐":
-        role = discord.util.get(guild.roles, name = "Sagittarius")
-    
+        role = discord.utils.get(guild.roles, name = "Sagittarius")
     elif reaction.emoji == "♑":
-        role = discord.util.get(guild.roles, name = "Capricorn")
+        role = discord.utils.get(guild.roles, name = "Capricorn")
         await member.add_roles(role)
     elif reaction.emoji == "♒":
-        role = discord.util.get(guild.roles, name = "Aquarius")
+        role = discord.utils.get(guild.roles, name = "Aquarius")
         await member.add_roles(role)
     elif reaction.emoji == "♓":
-        role = discord.util.get(guild.roles, name = "Pisces")
+        role = discord.utils.get(guild.roles, name = "Pisces")
         await member.add_roles(role)
 
 #Add user to database when they join, and set all values to 0
