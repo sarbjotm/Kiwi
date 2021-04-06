@@ -79,6 +79,9 @@ async def on_reaction_add(reaction,member):
     print(member)
     print(member.id)
 
+    member = client.get_member(member.id)
+    print(member)
+
     # if str(reaction.emoji) == "🔔":
     #     print("DODO PROPER")
     #     role = discord.utils.get(guild.roles, name="Dodo Proper")
