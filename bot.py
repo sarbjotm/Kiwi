@@ -76,14 +76,16 @@ async def on_reaction_add(reaction,user):
     print(reaction.emoji)
     if reaction.message.channel.id != '744818329427902504':
         return
-    if reaction.emoji == "🔔":
+    if str(reaction.emoji) == "🔔":
         print("DODO PROPER")
         role = discord.utils.get(guild.roles, name="Dodo Proper")
         await client.add_roles(user,role)
-    elif reaction.emoji == "🎵":
+    elif reaction == "🎵":
         role = discord.utils.get(guild.roles, name="DJ")
+        print("DJ")
         await client.add_roles(user,role)
-    elif reaction.emoji == "🖌":
+    elif str(reaction) == "🖌":
+        print("COLOURS")
         role = discord.utils.get(guild.roles, name="--------------- Colours---------------")
         await client.add_roles(user,role)
     elif reaction.emoji == "🔣":
