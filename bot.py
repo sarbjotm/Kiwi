@@ -14,7 +14,6 @@ client.remove_command('help')
 
 rolesList = ['Dodo Red','Dodo Orange','Dodo Yellow','Dodo Green','Dodo Teal','Dodo Copyright','Dodo Cyan','Dodo Blue','Dodo Grape','Dodo Purple','Dodo Rose','Dodo Pink','Dodo Salmon']
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon']
-autoroles = ['Dodo Proper', '--------------- Colours---------------','------------- Holiday Roles -------------','--------------- Misc ---------------']
 
 
 @client.command()
@@ -31,12 +30,12 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    emojisToAdd = ["🎵","🔔","🖌","🔣"]
+    emojisToAdd = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
-    emojiDescription = "🎵 - DJ Role \n \n🔔 - Dodo Proper Role \n \n🖌 - Colour Category Role \n \n 🔣- Misc Category Role"
-    embed=discord.Embed(title="Get your Server Roles", description = emojiDescription, color=0xe392fe)
+    emojiDescription = "♈ - Aries \n \n♉ - Taurus \n \n♊ - Gemini\n\n♋ - Cancer\n\n♌ - Leo\n\n♍ - Virgo\n\n♎ - Libra\n\n♏ - Scorpio\n\n♐ - Sagittarius\n\n♑ - Capricorn \n\n♒ - Aquarius\n\n♓ - Pisces"
+    embed=discord.Embed(title="Get your Zodiac Roles", description = emojiDescription, color=0xe392fe)
     roleMessage = await channel.send(embed=embed)
     for i in emojisToAdd:
         await roleMessage.add_reaction(i)
@@ -96,10 +95,44 @@ async def on_reaction_add(reaction,member):
     elif reaction.emoji == "🔣":
         role = discord.utils.get(guild.roles, name="--------------- Misc ---------------")
         await member.add_roles(role)
-    else:
-        await channel.send("HELP")
 
-
+    elif reaction.emoji == "♈":
+        role = discord.utils.get(guild.roles, name = "Aries")
+        await member.add_roles(role)
+    
+    elif reaction.emoji == "♉":
+        role = discord.utils.get(guild.roles, name = "Taurus")
+        await member.add_roles(role)
+    elif reaction.emoji == "♊":
+        role = reaction.utils.get(guild.roles, name = "Gemini")
+        await member.add_roles(role)
+    elif reaction.emoji == "♋":
+        role = reaction.utils.get(guild.roles, name = "Cancer")
+        await member.add_roles(role)
+    elif reaction.emoji == "♌":
+        role = reaction.utils.get(guild.roles, name = "Leo")
+        await member.add_roles(role)
+    elif reaction.emoji == "♍":
+        role = reaction.utils.get(guild.roles, name = "Virgo")
+        await member.add_roles(role)
+    elif reaction.emoji == "♎":
+        role = reaction.utils.get(guild.roles, name = "Libra")
+        await member.add_roles(role)
+    elif reaction.emoji == "♏":
+        role = reaction.utils.get(guild.roles, name = "Scorpio")
+        await member.add_roles(role)
+    elif reaction.emoji == "♐":
+        role = reaction.util.get(guild.roles, name = "Sagittarius")
+    
+    elif reaction.emoji == "♑":
+        role = reaction.util.get(guild.roles, name = "Capricorn")
+        await member.add_roles(role)
+    elif reaction.emoji == "♒":
+        role = reaction.util.get(guild.roles, name = "Aquarius")
+        await member.add_roles(role)
+    elif reaction.emoji == "♓":
+        role = reaction.util.get(guild.roles, name = "Pisces")
+        await member.add_roles(role)
 
 #Add user to database when they join, and set all values to 0
 @client.event
