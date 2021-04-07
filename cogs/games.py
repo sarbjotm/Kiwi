@@ -17,7 +17,6 @@ class Games(commands.Cog):
         self.client = client
 
     @commands.command(aliases = ['21'])
-    @commands.has_permissions(administrator=True)
     async def blackjack(self,ctx,bet):
         cardsDictionary = {
             "A": 4,
