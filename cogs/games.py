@@ -149,7 +149,7 @@ class Games(commands.Cog):
                 dealerDescription = f"{dealerDescription} \n \nScore: {mysteryScore} \n \n Score 2: {mysteryScore2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", dealerDescription = "Hit or Stand", inline = False)
+                embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", description = "Hit or Stand", inline = False)
                 bjmessage = await ctx.send(embed=embed)
                 
                 while(1):
