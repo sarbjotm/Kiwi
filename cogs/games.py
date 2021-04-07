@@ -149,6 +149,7 @@ class Games(commands.Cog):
                 dealerDescription = f"{dealerDescription} \n \nScore: {mysteryScore} \n \n Score 2: {mysteryScore2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
+                embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", dealerDescription = "Hit or Stand", inline = False)
                 bjmessage = await ctx.send(embed=embed)
                 
                 while(1):
@@ -157,8 +158,8 @@ class Games(commands.Cog):
                         
                     elif(userInt == 21 or userInt2 == 21):
                         break
-                    
-                    continueGame = await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
+                        
+
                     try:
                         msg = await self.client.wait_for(
                             "message",
@@ -199,16 +200,14 @@ class Games(commands.Cog):
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                            await continueGame.delete()
+                            embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", dealerDescription = "Hit or Stand", inline = False)
                             await msg.delete(delay = 0)
                             await bjmessage.edit(embed=embed) 
                         else:
-                            await continueGame.delete(delay = 0)
                             await msg.delete(delay = 0)
                             break
 
                     except asyncio.TimeoutError:
-                        await continueGame.delete(delay = 0)
                         break
                 
              
