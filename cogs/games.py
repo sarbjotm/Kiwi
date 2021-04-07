@@ -207,7 +207,8 @@ class Games(commands.Cog):
 
                     except asyncio.TimeoutError:
                         break
-
+                
+                await continueGame.delete()
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22 and userInt2 >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
@@ -358,6 +359,7 @@ class Games(commands.Cog):
 
     @blackjack.error
     async def blackjack_error(self,ctx,error):
+        print(error)
         channel = ctx.guild.get_channel(800965152132431892)
         await ctx.send("Currently command is mod only while formatting is changed")
         await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
