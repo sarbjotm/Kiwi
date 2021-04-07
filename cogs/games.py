@@ -221,7 +221,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -304,14 +304,14 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**Well this is awkward... both of us got blackjack. No one wins**", inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
 
                     elif(userBlackjack == True):
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**", inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -322,7 +322,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -333,7 +333,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -344,13 +344,13 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have tied! No one wins**", inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
 
                     else:
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                         embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        bjmessage = await bjmessage.edit(embed=embed)
+                        await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
