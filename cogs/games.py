@@ -201,16 +201,19 @@ class Games(commands.Cog):
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await continueGame.delete()
-                            await msg.delete(delay = 0) 
+                            await msg.delete(delay = 0)
                             await bjmessage.edit(embed=embed) 
                         else:
+                            await continueGame.delete()
+                            await msg.delete(delay = 0)
                             break
 
                     except asyncio.TimeoutError:
+                        await continueGame.delete()
                         break
                 
-                await msg.delete(delay = 0)
-                    
+             
+                
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22 and userInt2 >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
@@ -224,7 +227,6 @@ class Games(commands.Cog):
                         db.commit()                
 
                 else:
-                    await continueGame.delete()
                     if (userInt >= 22 and userInt2 <= 21):
                         temp = userInt
                         userInt = userInt2
