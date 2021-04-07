@@ -168,8 +168,8 @@ class Games(commands.Cog):
                                 and message.channel == ctx.channel 
                         )
                         
-                        msg = msg.content.strip().lower()
-                        if(msg == "hit"):
+                        msg_str = msg.content.strip().lower()
+                        if(msg_str == "hit"):
                             embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                             userDescription = ''
                             userCard = random.choice(numbers)
