@@ -209,7 +209,12 @@ class Games(commands.Cog):
                     except asyncio.TimeoutError:
                         break
                 
-                await continueGame.delete()
+                try:
+                    await continueGame.delete()
+                
+                except Exception:
+                    print("BLACJACK!")
+                
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22 and userInt2 >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
