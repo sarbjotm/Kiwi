@@ -201,15 +201,15 @@ class Games(commands.Cog):
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await continueGame.delete()
-                            await msg.delete(delay = 0)
+                            await msg.delete(delay = 2)
                             await bjmessage.edit(embed=embed) 
                         else:
-                            await continueGame.delete()
-                            await msg.delete(delay = 0)
+                            await continueGame.delete(delay = 2)
+                            await msg.delete(delay = 2)
                             break
 
                     except asyncio.TimeoutError:
-                        await continueGame.delete()
+                        await continueGame.delete(delay = 2)
                         break
                 
              
@@ -370,7 +370,7 @@ class Games(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
     
 
-    @commands.command(aliases = ['cup'])
+    @commands.command(aliases = ['cup','cups'])
     async def cupshuffle(self,ctx,bet):
         bet = int(bet)
         if(bet < 1):
