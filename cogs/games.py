@@ -199,7 +199,7 @@ class Games(commands.Cog):
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                            bjmessage = bjmessage.edit(embed=embed)
+                            bjmessage = await bjmessage.edit(embed=embed)
                         else:
                             break
 
