@@ -210,12 +210,7 @@ class Games(commands.Cog):
                         break
                 
                 await msg.delete(delay = 0)
-                try:
-                    await continueGame.delete()
-                
-                except Exception:
-                    print("cannot find message to delete")
-                
+                    
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22 and userInt2 >= 22):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
@@ -229,6 +224,7 @@ class Games(commands.Cog):
                         db.commit()                
 
                 else:
+                    await continueGame.delete()
                     if (userInt >= 22 and userInt2 <= 21):
                         temp = userInt
                         userInt = userInt2
