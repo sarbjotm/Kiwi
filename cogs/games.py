@@ -200,7 +200,7 @@ class Games(commands.Cog):
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                            embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", dealerDescription = "Hit or Stand", inline = False)
+                            embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", value = "Hit or Stand", inline = False)
                             await msg.delete(delay = 0)
                             await bjmessage.edit(embed=embed) 
                         else:
