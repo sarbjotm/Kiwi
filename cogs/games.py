@@ -158,7 +158,7 @@ class Games(commands.Cog):
                         
                     elif(userInt == 21 or userInt2 == 21):
                         break
-                    embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
+                    
                     continueGame = await ctx.send(f'Do you want to hit or stand? You have 20 seconds to decide, if you do not reply i will assume you stand. If you enter anything else you will stand')
                     try:
                         msg = await self.client.wait_for(
@@ -170,6 +170,7 @@ class Games(commands.Cog):
                         
                         msg = msg.content.strip().lower()
                         if(msg == "hit"):
+                            embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                             userDescription = ''
                             userCard = random.choice(numbers)
                             while(cardsDictionary[userCard] == 0):
@@ -200,7 +201,7 @@ class Games(commands.Cog):
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await continueGame.delete()
-                            await ctx.message.delete(delay = 0) 
+                            await msg.delete(delay = 0) 
                             bjmessage = await bjmessage.edit(embed=embed) 
                         else:
                             break
