@@ -17,6 +17,7 @@ class Games(commands.Cog):
         self.client = client
 
     @commands.command(aliases = ['21'])
+    @commands.has_permissions(administrator=True)
     async def blackjack(self,ctx,bet):
         cardsDictionary = {
             "A": 4,
@@ -149,7 +150,7 @@ class Games(commands.Cog):
                 dealerDescription = f"{dealerDescription} \n \nScore: {mysteryScore} \n \n Score 2: {mysteryScore2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                await ctx.send(embed=embed)
+                bjmessage = await ctx.send(embed=embed)
                 
                 while(1):
                     if(userInt >= 22 and userInt2 >= 22):
@@ -198,7 +199,7 @@ class Games(commands.Cog):
                             userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                            await ctx.send(embed=embed)
+                            bjmessage = bjmessage.edit(embed=embed)
                         else:
                             break
 
@@ -356,7 +357,7 @@ class Games(commands.Cog):
     @blackjack.error
     async def blackjack_error(self,ctx,error):
         channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Syntax for this command is: **,blackjack bet**. Currently command is mod only while adding card count")
+        await ctx.send("Currently command is mod only while formatting is changed")
         await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
     
 
