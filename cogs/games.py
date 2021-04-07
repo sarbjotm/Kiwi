@@ -202,7 +202,7 @@ class Games(commands.Cog):
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await continueGame.delete()
                             await msg.delete(delay = 0) 
-                            bjmessage = await bjmessage.edit(embed=embed) 
+                            await bjmessage.edit(embed=embed) 
                         else:
                             break
 
