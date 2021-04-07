@@ -201,15 +201,15 @@ class Games(commands.Cog):
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
                             await continueGame.delete()
-                            await msg.delete(delay = 1)
+                            await msg.delete(delay = 0)
                             await bjmessage.edit(embed=embed) 
                         else:
-                            await continueGame.delete(delay = 1)
-                            await msg.delete(delay = 1)
+                            await continueGame.delete(delay = 0)
+                            await msg.delete(delay = 0)
                             break
 
                     except asyncio.TimeoutError:
-                        await continueGame.delete(delay = 1)
+                        await continueGame.delete(delay = 0)
                         break
                 
              
