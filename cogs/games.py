@@ -209,11 +209,12 @@ class Games(commands.Cog):
                     except asyncio.TimeoutError:
                         break
                 
+                await msg.delete(delay = 0)
                 try:
                     await continueGame.delete()
                 
                 except Exception:
-                    print("BLACJACK!")
+                    print("cannot find message to delete")
                 
                 embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if(userInt >= 22 and userInt2 >= 22):
