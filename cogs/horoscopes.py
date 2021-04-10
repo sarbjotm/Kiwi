@@ -50,6 +50,7 @@ class Horoscope(commands.Cog):
                 todayHoroscope = todayHoroscope.replace("People","dodos")
                 todayHoroscope = todayHoroscope.replace("Somebody","some dodo")
                 todayHoroscope = todayHoroscope.replace("Person","dodo")
+                todayHoroscope = todayHoroscope.replace(sign[0].upper() + sign[1:].lower(),str(ctx.message.author)[:-5])
 
 
 
