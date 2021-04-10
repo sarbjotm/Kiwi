@@ -46,8 +46,10 @@ class Horoscope(commands.Cog):
                 todayHoroscope = str(todayHoroscope)
                 todayHoroscope = todayHoroscope.replace("people","dodos")
                 todayHoroscope = todayHoroscope.replace("somebody","some dodo")
-                todayHoroscope = todayHoroscope.replace("people","dodos")
                 todayHoroscope = todayHoroscope.replace("person","dodo")
+                todayHoroscope = todayHoroscope.replace("People","dodos")
+                todayHoroscope = todayHoroscope.replace("Somebody","some dodo")
+                todayHoroscope = todayHoroscope.replace("Person","dodo")
 
 
 
