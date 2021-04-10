@@ -43,6 +43,13 @@ class Horoscope(commands.Cog):
             else:
                 soup = BeautifulSoup(source,'lxml')
                 todayHoroscope = soup.p.text
+                todayHoroscope = str(todayHoroscope)
+                todayHoroscope = todayHoroscope.replace("people","dodos")
+                todayHoroscope = todayHoroscope.replace("somebody","some dodo")
+                todayHoroscope = todayHoroscope.replace("people","dodos")
+                todayHoroscope = todayHoroscope.replace("person","dodo")
+
+
 
                 todayLove = soup.find("a",{"id": "src-horo-matchlove"}).text
                 todayLove = todayLove.replace("\n", " ")
