@@ -298,7 +298,7 @@ async def on_command_error(ctx,error):
 
 @client.command()
 async def ping(ctx):
-    await ctx.send(f'Pong!')
+    await ctx.send(f"Pong {str(round(client.latency, 2))}!")
 
 
 @client.command(pass_context=True)
