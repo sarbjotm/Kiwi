@@ -31,7 +31,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     # emojisToAdd = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
-    # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="SFU Dodo Club | ,"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" to ,help"))
     # guild = client.get_guild(744817281871249428)
     # channel = guild.get_channel(744818329427902504)
     # emojiDescription = "♈ - Aries \n \n♉ - Taurus \n \n♊ - Gemini\n\n♋ - Cancer\n\n♌ - Leo\n\n♍ - Virgo\n\n♎ - Libra\n\n♏ - Scorpio\n\n♐ - Sagittarius\n\n♑ - Capricorn \n\n♒ - Aquarius\n\n♓ - Pisces"
