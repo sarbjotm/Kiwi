@@ -80,3 +80,5 @@ Since Kiwi is changing constantly, it's commands and command parametres are belo
 We welcome changes that benefit the server as a whole! Please feel free to discuss in
 our discord server by pinging one of the moderators or post in one of the chats.
 
+# Development Branch
+**IMPORTANT** If you are adding a feature to Kiwi, use Dev Branch. After you have pushed your code, head over to the development heroku enviornment, turn on the worker and test your commands in the testing server before merging to main
