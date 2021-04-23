@@ -168,6 +168,12 @@ async def about(ctx):
     embed.add_field(name="Donations", value=f"I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)", inline=False)
     await ctx.send(embed=embed)
 
-
+#FOR LOCAL TESTING
+# f = open("kiwi_token.txt", "r")
+# token = f.read()
+# client.run(token)
+                    
 client.run(os.environ['TOKEN'])
+                    
+                  
 
