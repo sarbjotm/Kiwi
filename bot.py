@@ -173,7 +173,7 @@ async def about(ctx):
 # token = f.read()
 # client.run(token)
                     
-client.run(os.environ['TOKEN'])
+client.run(os.environ['DEV_TOKEN'])
                     
                   
 
