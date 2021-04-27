@@ -76,28 +76,28 @@ class Interactions(commands.Cog):
         )
         c = db.cursor() 
         embedDescription = "**Role Information** \n"
-        user = str(ctx.message.author)
+        user = str(member.id)
         
         for role in activateRoles:
             c.execute(f"""SELECT {role}
                         FROM dodos
-                        WHERE id = {ctx.message.author.id}
+                        WHERE id = {member.id}
 
         """)
             roleCount = ''.join(map(str,c.fetchall()[0]))
             embedDescription = embedDescription + roleCount + " Dodo " + role  + " roles" + "\n"
         embed=discord.Embed(title= user + "'s Information", description = embedDescription, color=0xe392fe)    
-        embed.set_author(name= ctx.message.author, icon_url=ctx.member.avatar_url)
+        embed.set_author(name= member, icon_url= member.avatar_url)
         
         c.execute(f"""SELECT money
                         FROM dodos
-                        WHERE id = {ctx.message.author.id}
+                        WHERE id = {member.id}
 
         """)
         money = ''.join(map(str,c.fetchall()[0]))
         c.execute(f"""SELECT birthday
                         FROM dodos
-                        WHERE id = {ctx.message.author.id}
+                        WHERE id = {member.id}
 
         """)
         birthday = ''.join(map(str,c.fetchall()[0]))
