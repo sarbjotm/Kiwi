@@ -106,10 +106,15 @@ class Interactions(commands.Cog):
             embed.add_field(name=f"Birthday", value=f"N/A" , inline=True)
         else:
             embed.add_field(name=f"Birthday", value=f"{birthday}" , inline=True)
+        await ctx.send(embed=embed)
         c.close()
         db.close()
 
-
+    @info.error
+    async def info_error(self,ctx,error):
+        channel = ctx.guild.get_channel(800965152132431892)
+        await ctx.send("Error Occured. Make sure you have mentioned a user")
+        await channel.send(f"{ctx.message.author} experienced a error using info") 
         
 
 def setup(client):
