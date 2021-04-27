@@ -67,7 +67,7 @@ class Interactions(commands.Cog):
         await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
     @commands.command()
-    async def info(self,ctx, member : discord.Member):
+    async def info(self,ctx, member : discord.Member = ctx.message.author):
         db = mysql.connector.connect(
             host= os.environ['HOST'],
             user = os.environ['USER'],
