@@ -40,7 +40,7 @@ async def on_ready():
     # for i in emojisToAdd:
     #     await roleMessage.add_reaction(i)
     print("Bot is Ready")
-    #wishbirthday.start()
+    wishbirthday.start()
 
 @tasks.loop(minutes=1440)
 async def wishbirthday():
@@ -93,12 +93,12 @@ async def on_member_join(member):
 @client.event
 async def on_command_error(ctx,error):
     #if on production use this
-    # guild = client.get_guild(744817281871249428)
-    # channel = guild.get_channel(800965152132431892)
+    guild = client.get_guild(744817281871249428)
+    channel = guild.get_channel(800965152132431892)
 
     #if on dev use these
-    guild = client.get_guild(651565167930376215)
-    channel = guild.get_channel(836498460751429682)
+    #guild = client.get_guild(651565167930376215)
+    #channel = guild.get_channel(836498460751429682)
     if isinstance(error,commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
