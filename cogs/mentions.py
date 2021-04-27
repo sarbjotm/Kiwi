@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 import mysql
-
+import os
 
 #Roles List 
 activateRoles = ['Red','Orange','Yellow','Green','Teal','Copyright','Cyan','Blue','Grape','Purple','Rose','Pink','Salmon','Spring','Matcha','Mint','Ice','Bbblu','Lavender','Special']
