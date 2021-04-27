@@ -6,7 +6,6 @@ import mysql.connector
 import datetime 
 from discord.ext import commands, tasks
 
-#TODO: Have bot add members to database with according values when it is run
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix = ',',intents=intents)
@@ -30,15 +29,7 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    # emojisToAdd = ["♈","♉","♊","♋","♌","♍","♎","♏","♐","♑","♒","♓"]
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" to ,help"))
-    # guild = client.get_guild(744817281871249428)
-    # channel = guild.get_channel(744818329427902504)
-    # emojiDescription = "♈ - Aries \n \n♉ - Taurus \n \n♊ - Gemini\n\n♋ - Cancer\n\n♌ - Leo\n\n♍ - Virgo\n\n♎ - Libra\n\n♏ - Scorpio\n\n♐ - Sagittarius\n\n♑ - Capricorn \n\n♒ - Aquarius\n\n♓ - Pisces"
-    # embed=discord.Embed(title="Get your Zodiac Roles", description = emojiDescription, color=0xe392fe)
-    # roleMessage = await channel.send(embed=embed)
-    # for i in emojisToAdd:
-    #     await roleMessage.add_reaction(i)
     print("Bot is Ready")
     wishbirthday.start()
 
@@ -173,12 +164,8 @@ async def about(ctx):
     embed.add_field(name="Donations", value=f"I fianace this bot personally. Donations will help offset my costs of running and maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:[https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)", inline=False)
     await ctx.send(embed=embed)
 
-#FOR LOCAL TESTING
-# f = open("kiwi_token.txt", "r")
-# token = f.read()
-# client.run(token)
-                    
-client.run(os.environ['DEV_TOKEN'])
+
+client.run(os.environ['TOKEN'])
                     
                   
 
