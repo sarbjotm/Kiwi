@@ -323,6 +323,10 @@ class Economy(commands.Cog):
         
         elif(moneyAmount < int(money)):
             await ctx.send("You do not have that much money to give out")
+        
+        elif(int(money) <= 0):
+            await ctx.send("You have to give at least 1 Dodo Dollar")
+        
         else:
             c.execute(f"""UPDATE dodos
                     SET money = money - {money}
