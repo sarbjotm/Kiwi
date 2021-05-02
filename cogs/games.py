@@ -1,24 +1,22 @@
 import discord
-from datetime import datetime, timedelta
 from discord.ext import commands
 import os
 import random
 import asyncio
 import mysql
-from pathlib import Path
+
+numbers = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]
+suits = ["🍇", "🍉", "🍒", "🍍"]
 
 
-numbers = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"]
-suits = ["🍇","🍉","🍒","🍍"]
-
-#Mentions
+# Mentions
 class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases = ['21'])
-    async def blackjack(self,ctx,bet):
-        cardsDictionary = {
+    @commands.command(aliases=['21'])
+    async def blackjack(self, ctx, bet):
+        cards_dictionary = {
             "A": 4,
             2: 4,
             3: 4,
@@ -32,18 +30,17 @@ class Games(commands.Cog):
             "J": 4,
             "Q": 4,
             "K": 4
-            }
-        
+        }
 
         bet = int(bet)
-        if(bet < 1):
+        if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
         else:
             db = mysql.connector.connect(
-                host= os.environ['HOST'],
-                user = os.environ['USER'],
-                password = os.environ['PASSWORD'],
-                database = os.environ['DATABASE']
+                host=os.environ['HOST'],
+                user=os.environ['USER'],
+                password=os.environ['PASSWORD'],
+                database=os.environ['DATABASE']
             )
             c = db.cursor()
             c.execute(f"""SELECT money
@@ -51,284 +48,272 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
 
             """)
-            balance = ''.join(map(str,c.fetchall()[0]))
-            if(bet > int(balance)):
+            balance = ''.join(map(str, c.fetchall()[0]))
+            if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
-                embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                userBlackjack = False
-                userCards = []
-                userInt = 0
-                userInt2 = 0
-                userSuit = ''
-                userCard = ''
-                userDescription = ''
+                embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                user_blackjack = False
+                user_cards = []
+                user_int = 0
+                user_int2 = 0
+                user_suit = ''
+                user_card = ''
+                user_description = ''
 
-                dealerBlackjack = False
-                dealerCardCount = 2
-                mysteryScore = 0
-                mysteryScore2 = 0
-                dealerCards = []
-                dealerInt = 0
-                dealerInt2 = 0
-                dealerSuit = ''
-                dealerCard = ''
-                dealerDescription = ''
+                dealer_blackjack = False
+                dealer_card_count = 2
+                mystery_score = 0
+                mystery_score2 = 0
+                dealer_cards = []
+                dealer_int = 0
+                dealer_int2 = 0
+                dealer_suit = ''
+                dealer_card = ''
+                dealer_description = ''
 
-                for i in range(0,2):
-                    userCard = random.choice(numbers)
-                    while(cardsDictionary[userCard] == 0):
-                        userCard = random.choice(numbers)
+                for i in range(0, 2):
+                    user_card = random.choice(numbers)
+                    while cards_dictionary[user_card] == 0:
+                        user_card = random.choice(numbers)
 
-                    cardsDictionary[userCard] = cardsDictionary[userCard] - 1
-                    userSuit = random.choice(suits)
-                    while(str(userCard)+userSuit in userCards or str(userCard)+userSuit in dealerCards):
-                        userSuit = random.choice(suits)
+                    cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                    user_suit = random.choice(suits)
+                    while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
+                        user_suit = random.choice(suits)
 
-                    userCards.append(str(userCard)+userSuit)
-                    if(userCard == "J" or userCard == "K" or userCard == "Q"):
-                        userCard = 10
-                        userInt = userInt + 10
-                        userInt2 = userInt2 + 10
-                    elif(userCard == "A"):
-                        userInt = userInt + 1
-                        if(userInt2 + 11 <= 21):
-                            userInt2 = userInt2 + 11
+                    user_cards.append(str(user_card) + user_suit)
+                    if user_card == "J" or user_card == "K" or user_card == "Q":
+                        user_card = 10
+                        user_int = user_int + 10
+                        user_int2 = user_int2 + 10
+                    elif user_card == "A":
+                        user_int = user_int + 1
+                        if user_int2 + 11 <= 21:
+                            user_int2 = user_int2 + 11
                         else:
-                            userInt2 = userInt2 + 1
+                            user_int2 = user_int2 + 1
                     else:
-                        userInt = userInt + userCard
-                        userInt2 = userInt2 + userCard
-                    
+                        user_int = user_int + user_card
+                        user_int2 = user_int2 + user_card
 
-                    dealerCard = random.choice(numbers)
-                    while(cardsDictionary[dealerCard] == 0):
-                        dealerCard = random.choice(numbers)
+                    dealer_card = random.choice(numbers)
+                    while cards_dictionary[dealer_card] == 0:
+                        dealer_card = random.choice(numbers)
 
-                    cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
-                    dealerSuit = random.choice(suits)
-                    while(str(dealerCard)+dealerSuit in userCards or str(dealerCard)+dealerSuit in dealerCards):
-                        dealerSuit = random.choice(suits)
-                    dealerCards.append(str(dealerCard)+dealerSuit)
-                    if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
-                        dealerCard = 10
-                        dealerInt = dealerInt + 10
-                        dealerInt2 = dealerInt2 + 10
-                    elif(dealerCard == "A"):
-                        dealerInt = dealerInt + 1
-                        if(dealerInt2 + 11 <= 21):
-                            dealerInt2 = dealerInt2 + 11
+                    cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
+                    dealer_suit = random.choice(suits)
+                    while str(dealer_card) + dealer_suit in user_cards or str(
+                            dealer_card) + dealer_suit in dealer_cards:
+                        dealer_suit = random.choice(suits)
+                    dealer_cards.append(str(dealer_card) + dealer_suit)
+                    if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
+                        dealer_card = 10
+                        dealer_int = dealer_int + 10
+                        dealer_int2 = dealer_int2 + 10
+                    elif dealer_card == "A":
+                        dealer_int = dealer_int + 1
+                        if dealer_int2 + 11 <= 21:
+                            dealer_int2 = dealer_int2 + 11
                         else:
-                            dealerInt2 = dealerInt2 + 1
+                            dealer_int2 = dealer_int2 + 1
                     else:
-                        dealerInt = dealerInt + dealerCard
-                        dealerInt2 = dealerInt2 + dealerCard
+                        dealer_int = dealer_int + dealer_card
+                        dealer_int2 = dealer_int2 + dealer_card
 
-                    if(i == 0):
-                        mysteryScore = mysteryScore + dealerInt
-                        if(mysteryScore == 1):
-                            mysteryScore2 = mysteryScore2 + dealerInt2
+                    if i == 0:
+                        mystery_score = mystery_score + dealer_int
+                        if mystery_score == 1:
+                            mystery_score2 = mystery_score2 + dealer_int2
                         else:
-                            mysteryScore2 = mysteryScore2 + dealerInt
-                    
-                #Check for instant blackjack
-                if(userInt == 21 or userInt2 == 21):
-                    userBlackjack = True            
-                
-                #Check for instant blackjack
-                if(dealerInt == 21 or dealerInt2 == 21):
-                    dealerBlackjack = True
-    
-                for cards in userCards:
-                    userDescription = userDescription + cards + " "
-                
-                dealerDescription = dealerDescription + dealerCards[0] + " [ ]"
-                
+                            mystery_score2 = mystery_score2 + dealer_int
 
-                userDescription = f"{userDescription} \n \nScore: {userInt} \n \n Score 2: {userInt2}"
-                dealerDescription = f"{dealerDescription} \n \nScore: {mysteryScore} \n \n Score 2: {mysteryScore2}"
-                embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", value = "Hit or Stand", inline = False)
+                # Check for instant blackjack
+                if user_int == 21 or user_int2 == 21:
+                    user_blackjack = True
+
+                    # Check for instant blackjack
+                if dealer_int == 21 or dealer_int2 == 21:
+                    dealer_blackjack = True
+
+                for cards in user_cards:
+                    user_description = user_description + cards + " "
+
+                dealer_description = dealer_description + dealer_cards[0] + " [ ]"
+
+                user_description = f"{user_description} \n \nScore: {user_int} \n \n Score 2: {user_int2}"
+                dealer_description = f"{dealer_description} \n \nScore: {mystery_score} \n \n Score 2: {mystery_score2}"
+                embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}", inline=True)
+                embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Hit or Stand",
+                                inline=False)
                 bjmessage = await ctx.send(embed=embed)
-                
-                while(1):
-                    if(userInt >= 22 and userInt2 >= 22):
+
+                while 1:
+                    if user_int >= 22 and user_int2 >= 22:
                         break
-                        
-                    elif(userInt == 21 or userInt2 == 21):
+
+                    elif user_int == 21 or user_int2 == 21:
                         break
-                        
 
                     try:
                         msg = await self.client.wait_for(
                             "message",
-                            timeout = 20,
+                            timeout=20,
                             check=lambda message: message.author == ctx.message.author \
-                                and message.channel == ctx.channel 
+                                and message.channel == ctx.channel
                         )
-                        
-                        msg_str = msg.content.strip().lower()
-                        if(msg_str == "hit"):
-                            embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                            userDescription = ''
-                            userCard = random.choice(numbers)
-                            while(cardsDictionary[userCard] == 0):
-                                userCard = random.choice(numbers)
-                            
-                            cardsDictionary[userCard] = cardsDictionary[userCard] - 1
-                            userSuit = random.choice(suits)
-                            while(str(userCard)+userSuit in userCards or str(userCard)+userSuit in dealerCards):
-                                userSuit = random.choice(suits)
-                            userCards.append(str(userCard)+userSuit)
-                            if(userCard == "J" or userCard == "K" or userCard == "Q"):
-                                userCard = 10
-                                userInt = userInt + 10
-                                userInt2 = userInt2 + 10
-                            elif(userCard == "A"):
-                                userInt = userInt + 1
-                                if(userInt2 + 11 <= 21):
-                                    userInt2 = userInt2 + 11
-                                else:
-                                    userInt2 = userInt2 + 1
-                            else:
-                                userInt = userInt + userCard
-                                userInt2 = userInt2 + userCard
 
-                            for cards in userCards:
-                                userDescription = userDescription + cards + " "
-                            userDescription = f"{userDescription} \n \n Score: {userInt} \n \n Score2: {userInt2}"
-                            embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                            embed.add_field(name = f"What would you like to do? You have 20 seconds to decide", value = "Hit or Stand", inline = False)
-                            await msg.delete(delay = 0)
-                            await bjmessage.edit(embed=embed) 
+                        msg_str = msg.content.strip().lower()
+                        if msg_str == "hit":
+                            embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                            user_description = ''
+                            user_card = random.choice(numbers)
+                            while cards_dictionary[user_card] == 0:
+                                user_card = random.choice(numbers)
+
+                            cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                            user_suit = random.choice(suits)
+                            while (str(user_card) + user_suit in user_cards or str(
+                                    user_card) + user_suit in dealer_cards):
+                                user_suit = random.choice(suits)
+                            user_cards.append(str(user_card) + user_suit)
+                            if user_card == "J" or user_card == "K" or user_card == "Q":
+                                user_card = 10
+                                user_int = user_int + 10
+                                user_int2 = user_int2 + 10
+                            elif user_card == "A":
+                                user_int = user_int + 1
+                                if user_int2 + 11 <= 21:
+                                    user_int2 = user_int2 + 11
+                                else:
+                                    user_int2 = user_int2 + 1
+                            else:
+                                user_int = user_int + user_card
+                                user_int2 = user_int2 + user_card
+
+                            for cards in user_cards:
+                                user_description = user_description + cards + " "
+                            user_description = f"{user_description} \n \n Score: {user_int} \n \n Score2: {user_int2}"
+                            embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                            inline=True)
+                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                            embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
+                                            value="Hit or Stand", inline=False)
+                            await msg.delete(delay=0)
+                            await bjmessage.edit(embed=embed)
                         else:
-                            await msg.delete(delay = 0)
+                            await msg.delete(delay=0)
                             break
 
                     except asyncio.TimeoutError:
                         break
-                
-             
-                
-                embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                if(userInt >= 22 and userInt2 >= 22):
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
-                        await bjmessage.edit(embed=embed)
-                        c.execute(f"""UPDATE dodos
+
+                embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                if user_int >= 22 and user_int2 >= 22:
+                    embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                    inline=True)
+                    embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                    embed.add_field(name=f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
+                    await bjmessage.edit(embed=embed)
+                    c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
                         """)
-                        db.commit()                
+                    db.commit()
 
                 else:
-                    if (userInt >= 22 and userInt2 <= 21):
-                        temp = userInt
-                        userInt = userInt2
-                        userInt2 = temp
-                
-                    elif(userInt2 >= 22 and userInt <= 21):
-                        userInt = userInt
-                    
-                    elif(userInt2 > userInt):
-                        temp = userInt
-                        userInt = userInt2
-                        userInt2 = temp
-                    else:
-                        userInt = userInt
+                    if user_int >= 22 and user_int2 <= 21:
+                        temp = user_int
+                        user_int = user_int2
+                        user_int2 = temp
 
-                    if(userBlackjack == False and dealerBlackjack == False):
-                        while(1):
-                            if( (dealerInt >= 22) and (dealerInt2 >= 22) ):
+                    elif user_int2 >= 22 and user_int <= 21:
+                        user_int = user_int
+
+                    elif user_int2 > user_int:
+                        temp = user_int
+                        user_int = user_int2
+                        user_int2 = temp
+                    else:
+                        user_int = user_int
+
+                    if user_blackjack is False and dealer_blackjack is False:
+                        while 1:
+                            if (dealer_int >= 22) and (dealer_int2 >= 22):
                                 break
-                            elif(dealerInt >= 17 or dealerInt2 >= 17):
+                            elif dealer_int >= 17 or dealer_int2 >= 17:
                                 break
-                            elif(dealerInt >= userInt):
+                            elif dealer_int >= user_int:
                                 break
                             else:
-                                dealerDescription = ''
-                                dealerCard = random.choice(numbers)
-                                while(cardsDictionary[dealerCard] == 0):
-                                    dealerCard = random.choice(numbers)
-                                cardsDictionary[dealerCard] = cardsDictionary[dealerCard] - 1
-                                dealerSuit = random.choice(suits)
-                                while(str(dealerCard)+dealerSuit in userCards or str(dealerCard)+dealerSuit in dealerCards):
-                                    dealerSuit = random.choice(suits)
-                                dealerCards.append(str(dealerCard)+dealerSuit)
-                                if(dealerCard == "J" or dealerCard == "K" or dealerCard == "Q"):
-                                    dealerCard = 10
-                                    dealerInt = dealerInt + 10
-                                    dealerInt2 = dealerInt2 + 10
-                                elif(dealerCard == "A"):
-                                    dealerInt = dealerInt + 1
-                                    if(dealerInt2 + 11 <= 21):
-                                        dealerInt2 = dealerInt2 + 11
+                                dealer_description = ''
+                                dealer_card = random.choice(numbers)
+                                while cards_dictionary[dealer_card] == 0:
+                                    dealer_card = random.choice(numbers)
+                                cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
+                                dealer_suit = random.choice(suits)
+                                while (str(dealer_card) + dealer_suit in user_cards or str(
+                                        dealer_card) + dealer_suit in dealer_cards):
+                                    dealer_suit = random.choice(suits)
+                                dealer_cards.append(str(dealer_card) + dealer_suit)
+                                if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
+                                    dealer_int = dealer_int + 10
+                                    dealer_int2 = dealer_int2 + 10
+                                elif dealer_card == "A":
+                                    dealer_int = dealer_int + 1
+                                    if dealer_int2 + 11 <= 21:
+                                        dealer_int2 = dealer_int2 + 11
                                     else:
-                                        dealerInt2 = dealerInt2 + 1  
+                                        dealer_int2 = dealer_int2 + 1
                                 else:
-                                    dealerInt = dealerInt + dealerCard
-                                    dealerInt2 = dealerInt2 + dealerCard
-                                
-                                for cards in dealerCards:
-                                    dealerDescription = dealerDescription + cards + " "
-                                dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
-                        
-                    if (dealerInt >= 22 and dealerInt2 <= 21):
-                        temp = dealerInt
-                        dealerInt = dealerInt2
-                        dealerInt2 = temp
-                
-                    elif(dealerInt2 >= 22 and dealerInt <= 21):
-                        userInt = userInt
-                    
-                    elif(dealerInt2 > dealerInt):
-                        temp = dealerInt
-                        dealerInt = dealerInt2
-                        dealerInt2 = temp
+                                    dealer_int = dealer_int + dealer_card
+                                    dealer_int2 = dealer_int2 + dealer_card
+
+                                for cards in dealer_cards:
+                                    dealer_description = dealer_description + cards + " "
+                                dealer_description = f"{dealer_description} \n \n Score: {dealer_int} \n \n Score2: {dealer_int2}"
+
+                    if dealer_int >= 22 and dealer_int2 <= 21:
+                        temp = dealer_int
+                        dealer_int = dealer_int2
+                        dealer_int2 = temp
+
+                    elif dealer_int2 >= 22 and dealer_int <= 21:
+                        dealer_int = dealer_int
+
+                    elif dealer_int2 > dealer_int:
+                        temp = dealer_int
+                        dealer_int = dealer_int2
+                        dealer_int2 = temp
                     else:
-                        dealerInt = dealerInt
+                        dealer_int = dealer_int
 
-                    embed=discord.Embed(title= "Dodo Club Casino | Blackjack", color=0x99c0dd)
-                    dealerDescription = ' '
-                    for cards in dealerCards:
-                        dealerDescription = dealerDescription + cards + " "
-                    dealerDescription = f"{dealerDescription} \n \n Score: {dealerInt} \n \n Score2: {dealerInt2}"
-                    if(dealerBlackjack == True and userBlackjack == True):
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**Well this is awkward... both of us got blackjack. No one wins**", inline=False)
-                        await bjmessage.edit(embed=embed)
-
-                    elif(userBlackjack == True):
+                    embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                    dealer_description = ' '
+                    for cards in dealer_cards:
+                        dealer_description = dealer_description + cards + " "
+                    dealer_description = f"{dealer_description} \n \n Score: {dealer_int} \n \n Score2: {dealer_int2}"
+                    if user_blackjack is True:
                         bet = bet * 2
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**", inline=False)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**",
+                                        inline=False)
                         await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
                         """)
                         db.commit()
-                    
-                    elif(dealerBlackjack == True):
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
-                        await bjmessage.edit(embed=embed)
-                        c.execute(f"""UPDATE dodos
-                        SET money = money - {bet}
-                        WHERE id = {ctx.message.author.id}
-                        """)
-                        db.commit()
-                    
-                    elif(dealerInt > userInt and dealerInt < 22):
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",inline=False)
+
+                    elif dealer_blackjack is True:
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
+                                        inline=False)
                         await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
@@ -336,16 +321,31 @@ class Games(commands.Cog):
                         """)
                         db.commit()
 
-                    elif(dealerInt == userInt):
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have tied! No one wins**", inline=False)
+                    elif user_int < dealer_int < 22:
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
+                                        inline=False)
+                        await bjmessage.edit(embed=embed)
+                        c.execute(f"""UPDATE dodos
+                        SET money = money - {bet}
+                        WHERE id = {ctx.message.author.id}
+                        """)
+                        db.commit()
+
+                    elif dealer_int == user_int:
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"Outcome", value=f"**You have tied! No one wins**", inline=False)
                         await bjmessage.edit(embed=embed)
 
                     else:
-                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{userDescription}" , inline=True)
-                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealerDescription}" , inline=True)
-                        embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await bjmessage.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
@@ -353,32 +353,31 @@ class Games(commands.Cog):
                         """)
                         db.commit()
 
-                    print(cardsDictionary)
-                    del(userCards)
-                    del(dealerCards)
-         
+                    print(cards_dictionary)
+                    del user_cards
+                    del dealer_cards
+
             c.close()
             db.close()
 
     @blackjack.error
-    async def blackjack_error(self,ctx,error):
+    async def blackjack_error(self, ctx, error):
         print(error)
         channel = ctx.guild.get_channel(800965152132431892)
         await ctx.send("Currently command is mod only while formatting is changed")
-        await channel.send(f"{ctx.message.author} experienced a error using blackjack") 
-    
+        await channel.send(f"{ctx.message.author} experienced a error using blackjack")
 
-    @commands.command(aliases = ['cup','cups'])
-    async def cupshuffle(self,ctx,bet):
+    @commands.command(aliases=['cup', 'cups'])
+    async def cupshuffle(self, ctx, bet):
         bet = int(bet)
-        if(bet < 1):
+        if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
         else:
             db = mysql.connector.connect(
-                host= os.environ['HOST'],
-                user = os.environ['USER'],
-                password = os.environ['PASSWORD'],
-                database = os.environ['DATABASE']
+                host=os.environ['HOST'],
+                user=os.environ['USER'],
+                password=os.environ['PASSWORD'],
+                database=os.environ['DATABASE']
             )
             c = db.cursor()
             c.execute(f"""SELECT money
@@ -386,38 +385,40 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
 
             """)
-            balance = ''.join(map(str,c.fetchall()[0]))
-            if(bet > int(balance)):
+            balance = ''.join(map(str, c.fetchall()[0]))
+            if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
-                gem = random.randint(1,3)
-                embedDescription = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
-                endingDescription = ""
-                embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle", description = embedDescription, color=0x99c0dd)
+                gem = random.randint(1, 3)
+                embed_description = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
+                ending_description = ""
+                embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
+                                      color=0x99c0dd)
                 await ctx.send(embed=embed)
                 await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds I will randomly pick for you')
 
                 try:
                     msg = await self.client.wait_for(
                         "message",
-                        timeout = 20,
+                        timeout=20,
                         check=lambda message: message.author == ctx.message.author \
-                            and message.channel == ctx.channel 
+                                              and message.channel == ctx.channel
                     )
                     msg = msg.content.strip().lower()
                     try:
                         msg = int(msg)
                     except:
                         await ctx.send("Gonna give you a random variable for not following rules.")
-                        msg = random.randint(1,4)
-                    if(msg == gem):
-                        for i in range(1,4):
-                            if(i == gem):
-                                endingDescription = endingDescription + "🏆 "
+                        msg = random.randint(1, 4)
+                    if msg == gem:
+                        for i in range(1, 4):
+                            if i == gem:
+                                ending_description = ending_description + "🏆 "
                             else:
-                                endingDescription = endingDescription + "🥝 " 
-                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
-                        embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                                ending_description = ending_description + "🥝 "
+                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                              color=0x99c0dd)
+                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
@@ -425,15 +426,16 @@ class Games(commands.Cog):
                         """)
                         db.commit()
                     else:
-                        for i in range(1,4):
-                            if(i == gem):
-                                endingDescription = endingDescription + "🏆 "
-                            elif(i == msg):
-                                endingDescription = endingDescription + "❌ "
+                        for i in range(1, 4):
+                            if i == gem:
+                                ending_description = ending_description + "🏆 "
+                            elif (i == msg):
+                                ending_description = ending_description + "❌ "
                             else:
-                                endingDescription = endingDescription + "🥝 " 
-                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
-                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                                ending_description = ending_description + "🥝 "
+                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                              color=0x99c0dd)
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
@@ -441,19 +443,19 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
                         """)
                         db.commit()
-                            
 
                 except asyncio.TimeoutError:
-                    userGuess = random.randint(1,3)
-                    await ctx.send(f"Assuming you meant to guess kiwi number: {userGuess}")
-                    if(userGuess == gem):
-                        for i in range(1,4):
-                            if(i == gem):
-                                endingDescription = endingDescription + "🏆 "
+                    user_guess = random.randint(1, 3)
+                    await ctx.send(f"Assuming you meant to guess kiwi number: {user_guess}")
+                    if user_guess == gem:
+                        for i in range(1, 4):
+                            if i == gem:
+                                ending_description = ending_description + "🏆 "
                             else:
-                                endingDescription = endingDescription + "🥝 "
-                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
-                        embed.add_field(name = f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                                ending_description = ending_description + "🥝 "
+                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                              color=0x99c0dd)
+                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
@@ -461,15 +463,16 @@ class Games(commands.Cog):
                         """)
                         db.commit()
                     else:
-                        for i in range(1,4):
-                            if(i == gem):
-                                endingDescription = endingDescription + "🏆 "
-                            elif(i == userGuess):
-                                endingDescription = endingDescription + "❌ "
+                        for i in range(1, 4):
+                            if i == gem:
+                                ending_description = ending_description + "🏆 "
+                            elif i == user_guess:
+                                ending_description = ending_description + "❌ "
                             else:
-                                endingDescription = endingDescription + "🥝 "
-                        embed=discord.Embed(title= "Dodo Club Casino | Cup Shuffle",description = endingDescription, color=0x99c0dd)
-                        embed.add_field(name = f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                                ending_description = ending_description + "🥝 "
+                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                              color=0x99c0dd)
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         embed.set_footer(text=f"Winning Kiwi was number {gem}")
                         await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
@@ -477,17 +480,16 @@ class Games(commands.Cog):
                         WHERE id = {ctx.message.author.id}
                         """)
                         db.commit()
-                
+
             c.close()
             db.close()
-    
 
     @cupshuffle.error
-    async def cupshuffle_error(self,ctx,error):
+    async def cupshuffle_error(self, ctx, error):
         channel = ctx.guild.get_channel(800965152132431892)
         await ctx.send("Syntax for this command is: **,cupshuffle bet**")
-        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle") 
+        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle")
 
-        
+
 def setup(client):
     client.add_cog(Games(client))
