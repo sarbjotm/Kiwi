@@ -362,10 +362,8 @@ class Games(commands.Cog):
 
     @blackjack.error
     async def blackjack_error(self, ctx, error):
-        print(error)
-        channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Currently command is mod only while formatting is changed")
-        await channel.send(f"{ctx.message.author} experienced a error using blackjack")
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
 
     @commands.command(aliases=['cup', 'cups'])
     async def cupshuffle(self, ctx, bet):
@@ -486,9 +484,9 @@ class Games(commands.Cog):
 
     @cupshuffle.error
     async def cupshuffle_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Syntax for this command is: **,cupshuffle bet**")
-        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle")
+        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
 
 def setup(client):

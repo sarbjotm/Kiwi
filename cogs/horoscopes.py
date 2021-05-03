@@ -92,9 +92,9 @@ class Horoscope(commands.Cog):
     # If user doesn't provide zodiac sign, or enters to many parametres
     @horoscope.error
     async def horoscope_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occured. Syntax for this command is: **,horoscope zodiac_sign**")
-        await channel.send(f"{ctx.message.author} experienced a error using horoscope")
+        await channel.send(f"{ctx.message.author} experienced a error using horoscope. {error}")
 
 
 def setup(client):

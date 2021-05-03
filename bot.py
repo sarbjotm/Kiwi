@@ -63,8 +63,8 @@ async def wishbirthday():
 
 @client.event
 async def on_member_join(member):
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
+    guild = client.get_guild(os.environ['GUILD'])
+    channel = guild.get_channel(os.environ['GUILD'])
     db = mysql.connector.connect(
         host=os.environ['HOST'],
         user=os.environ['USER'],
@@ -84,13 +84,8 @@ async def on_member_join(member):
 
 @client.event
 async def on_command_error(ctx, error):
-    # if on production use this
-    guild = client.get_guild(744817281871249428)
-    channel = guild.get_channel(800965152132431892)
-
-    # if on dev use these
-    # guild = client.get_guild(651565167930376215)
-    # channel = guild.get_channel(836498460751429682)
+    guild = client.get_guild(os.environ['GUILD'])
+    channel = guild.get_channel(os.environ['CHANNEL'])
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
@@ -165,7 +160,7 @@ async def help(ctx, category=''):
 
     elif category == 'string':
         embed = discord.Embed(title="String",
-                              description="**,fw message** - add sparkles between words \n\**,spaced message** - "
+                              description="**,fw message** - add sparkles between words \n**,spaced message** - "
                                           "space out your message \n\n**,spongebob message** - SpOnGeBoB MeMe",
                               color=0x66abf9)
 
@@ -186,9 +181,9 @@ async def help(ctx, category=''):
             **,help Minigames** - To view commands that allow you to play games such as blackjack and cup shuffle \n\n\
             **,help Misc** - To view random commands such as kittyclap and random number picking \n\n\
             **,help Role** - To view commands based on Roles such as collecting and trading \n\n\
-            **,help String** - To view commands that alter your messages such as sparkes and spaced \n\n\
-            **,help Weather** - To view commands based on the Weather such as weather \n\nTo learn more about me use the command **,about**",
-                              color=0x66abf9)
+            **,help String** - To view commands that alter your messages such as sparkles and spaced \n\n\
+            **,help Weather** - To view commands based on the Weather such as weather \n\n \
+            To learn more about me use the command **,about**", color=0x66abf9)
 
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)

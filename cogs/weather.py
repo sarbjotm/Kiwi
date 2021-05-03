@@ -62,9 +62,9 @@ class Weather(commands.Cog):
 
     @weather.error
     async def weather_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Syntax for this command is: **,weather city**")
-        await channel.send(f"{ctx.message.author} experienced a error using weather")
+        await channel.send(f"{ctx.message.author} experienced a error using weather. {error}")
 
 
 def setup(client):

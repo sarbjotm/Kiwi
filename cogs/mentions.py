@@ -114,9 +114,9 @@ class Interactions(commands.Cog):
 
     @info.error
     async def info_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occurred. Make sure you have mentioned a user")
-        await channel.send(f"{ctx.message.author} experienced a error using info")
+        await channel.send(f"{ctx.message.author} experienced a error using info. {error}")
 
 
 def setup(client):

@@ -63,9 +63,9 @@ class MiscCommands(commands.Cog):
 
     @randomnumber.error
     async def randomnumber_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occurred. Syntax for this command is: **,rand x y** where x and y are integer values")
-        await channel.send(f"{ctx.message.author} experienced a error using rand")
+        await channel.send(f"{ctx.message.author} experienced a error using rand. {error}")
 
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
@@ -94,10 +94,10 @@ class MiscCommands(commands.Cog):
 
     @_8ball.error
     async def _8ball_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send(
             "Error Occurred. Syntax for this command is: **,8ball question** make sure you have asked a question")
-        await channel.send(f"{ctx.message.author} experienced a error using 8ball")
+        await channel.send(f"{ctx.message.author} experienced a error using 8ball. {error}")
 
     @commands.command(aliases=["flip", "cf", "coin_flip"])
     async def coinflip(self, ctx):
@@ -120,9 +120,9 @@ class MiscCommands(commands.Cog):
 
     @anonmsg.error
     async def anonmsg_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occurred. Syntax for this command is: **,anon message**")
-        await channel.send(f"{ctx.message.author} experienced a error using anon")
+        await channel.send(f"{ctx.message.author} experienced a error using anon. {error}")
 
 
 def setup(client):

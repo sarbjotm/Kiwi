@@ -172,7 +172,7 @@ class Utilities(commands.Cog):
 
     @collect.error
     async def collect_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
             hours = int(seconds // 3600)
@@ -223,9 +223,9 @@ class Utilities(commands.Cog):
 
     @activate.error
     async def activate_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occured. Syntax for this command is: **,activate Dodo Role**")
-        await channel.send(f"{ctx.message.author} experienced a error using activate")
+        await channel.send(f"{ctx.message.author} experienced a error using activate. {error}")
 
     @commands.command()
     async def show(self, ctx, *role):
@@ -262,9 +262,9 @@ class Utilities(commands.Cog):
 
     @show.error
     async def show_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occurred. Syntax for this command is: **,show Dodo Role**")
-        await channel.send(f"{ctx.message.author} experienced a error using show")
+        await channel.send(f"{ctx.message.author} experienced a error using show. {error}")
 
     @commands.command()
     async def showall(self, ctx):
@@ -324,9 +324,9 @@ class Utilities(commands.Cog):
 
     @hide.error
     async def hide_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await ctx.send("Error Occurred. Syntax for this command is: **,hide Dodo Role**")
-        await channel.send(f"{ctx.message.author} experienced a error using hide")
+        await channel.send(f"{ctx.message.author} experienced a error using hide. {error}")
 
     @commands.command()
     async def hideall(self, ctx):
