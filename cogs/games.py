@@ -200,8 +200,8 @@ class Games(commands.Cog):
                     except asyncio.TimeoutError:
                         break
 
-                embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                 if user_int >= 22 and user_int2 >= 22:
+                    embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                     embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -214,17 +214,8 @@ class Games(commands.Cog):
                     db.commit()
 
                 else:
-                    if user_int <= user_int2 <= 21:
+                    if user_int <= user_int2 <= 21 or user_int2 <= 21 < user_int:
                         user_int = user_int2
-
-                    elif user_int2 <= user_int <= 21:
-                        user_int = user_int
-
-                    elif user_int2 <= 21 < user_int:
-                        user_int = user_int2
-
-                    elif user_int <= 21 < user_int2:
-                        user_int = user_int
 
                     if user_blackjack is False and dealer_blackjack is False:
                         while 1:
@@ -256,32 +247,18 @@ class Games(commands.Cog):
                                     dealer_int = dealer_int + dealer_card
                                     dealer_int2 = dealer_int2 + dealer_card
 
-                    if dealer_int >= 22 and dealer_int2 >= 22:
-                        dealer_int = dealer_int
-
-                    elif dealer_int <= dealer_int2 <= 21:
+                    if dealer_int <= dealer_int2 <= 21 or dealer_int2 <= 21 < dealer_int:
                         temp = dealer_int
                         dealer_int = dealer_int2
                         dealer_int2 = temp
 
-                    elif dealer_int2 <= dealer_int <= 21:
-                        dealer_int = dealer_int
-
-                    elif dealer_int2 <= 21 < dealer_int:
-                        temp = dealer_int
-                        dealer_int = dealer_int2
-                        dealer_int2 = temp
-
-                    elif dealer_int <= 21 < dealer_int2:
-                        dealer_int = dealer_int
-
-                    embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                     dealer_description = ' '
                     for cards in dealer_cards:
                         dealer_description = dealer_description + cards + " "
                     dealer_description = f"{dealer_description} \n \n Score: {dealer_int} or {dealer_int2}"
 
                     if user_blackjack is True:
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
@@ -296,6 +273,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_blackjack is True:
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -309,6 +287,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif user_int < dealer_int < 22:
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -322,6 +301,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_int == user_int:
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -329,6 +309,7 @@ class Games(commands.Cog):
                         await game_message.edit(embed=embed)
 
                     else:
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -340,7 +321,6 @@ class Games(commands.Cog):
                         """)
                         db.commit()
 
-                    print(cards_dictionary)
                     del user_cards
                     del dealer_cards
 
@@ -380,7 +360,8 @@ class Games(commands.Cog):
                 embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
                                       color=0x99c0dd)
                 await ctx.send(embed=embed)
-                await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds I will randomly pick for you')
+                await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds \
+                 I will randomly pick for you')
 
                 try:
                     msg = await self.client.wait_for(
