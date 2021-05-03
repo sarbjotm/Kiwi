@@ -37,7 +37,6 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 86400, commands.BucketType.user)
     async def daily(self, ctx):
-        # await ctx.send("Command Disabled while commands are added/removed")   
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
@@ -59,8 +58,6 @@ class Economy(commands.Cog):
         c.execute(f"""SELECT money
             FROM dodos
             WHERE id = {ctx.message.author.id}
-
-
         """)
         money_amount = ''.join(map(str, c.fetchall()[0]))
         money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
@@ -133,7 +130,7 @@ class Economy(commands.Cog):
                 role_amount = ''.join(map(str, c.fetchall()[0]))
                 role_amount = int(role_amount)
 
-                if role_amount - quantity >= 1:
+                if role_amount - quantity >= 0:
                     print("Role Amount is greater than 1")
                     c.execute(f"""UPDATE dodos
                     SET {role} = {role} - {quantity}
@@ -154,48 +151,27 @@ class Economy(commands.Cog):
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
 
-
-                    """)
-                    money_amount = ''.join(map(str, c.fetchall()[0]))
-                    money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                    await ctx.send(
-                        f"You sold your role(s) for ${total_profit} {money_symbol}. \
-                        Your new total is {money_amount} {money_symbol}")
-
-                elif role_amount - quantity == 0:
-                    c.execute(f"""UPDATE dodos
-                    SET {role} = {role} - {quantity}
-                    WHERE id = {ctx.message.author.id}
-                        """)
-                    db.commit()
-                    role_remove = discord.utils.get(ctx.guild.roles, name=dodo_role)
-                    await ctx.message.author.remove_roles(role_remove)
-                    role_remove = discord.utils.get(ctx.guild.roles, name=role)
-                    if role_remove in ctx.message.author.roles:
-                        await ctx.message.author.remove_roles(role_remove)
-
-                    for i in range(quantity):
-                        sold_amount = random.randint(1, 750)
-                        total_profit = total_profit + sold_amount
-                        c.execute(f"""UPDATE dodos
-                        SET money = money + {sold_amount}
-                        WHERE id = {ctx.message.author.id}
-                        """)
-                        db.commit()
-
-                    c.execute(f"""SELECT money
-                        FROM dodos
-                        WHERE id = {ctx.message.author.id}
-
-
                     """)
                     money_amount = ''.join(map(str, c.fetchall()[0]))
                     money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
                     await ctx.send(f"You sold your role(s) for ${total_profit} {money_symbol}. \
-                                   Your new total is {money_amount} {money_symbol}")
+                        Your new total is {money_amount} {money_symbol}")
+
+                    c.execute(f"""SELECT {role}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+
+                    """)
+                    role_amount = ''.join(map(str, c.fetchall()[0]))
+
+                    if int(ole_amount) == 0:
+                        role_remove = discord.utils.get(ctx.guild.roles, name=dodo_role)
+                        await ctx.message.author.remove_roles(role_remove)
+                        role_remove = discord.utils.get(ctx.guild.roles, name=role)
+                        if role_remove in ctx.message.author.roles:
+                            await ctx.message.author.remove_roles(role_remove)
 
                 else:
-                    print("Role Amount is equal to 0")
                     await ctx.send("You do not have that many role(s)")
 
         c.close()
