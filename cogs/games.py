@@ -205,7 +205,7 @@ class Games(commands.Cog):
                     embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                    embed.add_field(name=f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
+                    embed.add_field(name=f"Outcome", value=f"**Bust! You have lost {str(bet)}**", inline=False)
                     await game_message.edit(embed=embed)
                     c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
@@ -287,7 +287,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif user_int < dealer_int < 22:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
+                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
