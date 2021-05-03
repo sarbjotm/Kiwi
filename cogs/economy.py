@@ -209,6 +209,7 @@ class Economy(commands.Cog):
 
             elif role not in rolesList:
                 await ctx.send("Please enter a Dodo Role")
+
             else:
                 bought_amount = 3500 * quantity
                 role = str(role)
@@ -230,7 +231,6 @@ class Economy(commands.Cog):
                     db.commit()
                     role_bought = discord.utils.get(ctx.guild.roles, name=dodo_role)
                     await ctx.message.author.add_roles(role_bought)
-                    print(role)
                     c.execute(f"""UPDATE dodos
                     SET {role} = {role} + {quantity}
                     WHERE id = {ctx.message.author.id}
