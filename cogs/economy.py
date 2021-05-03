@@ -164,9 +164,10 @@ class Economy(commands.Cog):
                     """)
                     role_amount = ''.join(map(str, c.fetchall()[0]))
 
-                    if int(ole_amount) == 0:
+                    if int(role_amount) == 0:
                         role_remove = discord.utils.get(ctx.guild.roles, name=dodo_role)
-                        await ctx.message.author.remove_roles(role_remove)
+                        if role_remove in ctx.message.author.roles:
+                            await ctx.message.author.remove_roles(role_remove)
                         role_remove = discord.utils.get(ctx.guild.roles, name=role)
                         if role_remove in ctx.message.author.roles:
                             await ctx.message.author.remove_roles(role_remove)
