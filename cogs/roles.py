@@ -17,7 +17,7 @@ class Utilities(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def trade(self, ctx, prefix, role, member: discord.Member, otherPrefix, otherRole):
+    async def trade(self, ctx, prefix, role, member: discord.Member, other_prefix, other_role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
@@ -29,8 +29,8 @@ class Utilities(commands.Cog):
         # Convert roles to Dodo Colour format
         role_trading = str(prefix[0].upper()) + str(prefix[1:].lower()) + " " + str(role[0].upper()) + str(
             role[1:].lower())
-        role_trading_for = str(otherPrefix[0].upper()) + str(otherPrefix[1:].lower()) + " " + str(
-            otherRole[0].upper()) + str(otherRole[1:].lower())
+        role_trading_for = str(other_prefix[0].upper()) + str(other_prefix[1:].lower()) + " " + str(
+            other_role[0].upper()) + str(other_role[1:].lower())
         if (str(role_trading) not in rolesList) or (str(role_trading_for) not in rolesList):
             await ctx.send("You can only trade collectable roles, here is an example: ,trade Dodo Red @User Dodo Blue")
 
@@ -46,7 +46,7 @@ class Utilities(commands.Cog):
             """)
             user_role_count = ''.join(map(str, c.fetchall()[0]))
 
-            c.execute(f"""SELECT {otherRole}
+            c.execute(f"""SELECT {other_role}
                         FROM dodos
                         WHERE id = {member.id}
             
@@ -65,8 +65,7 @@ class Utilities(commands.Cog):
                     msg = await self.client.wait_for(
                         "message",
                         timeout=30,
-                        check=lambda message: message.author == member \
-                                              and message.channel == ctx.channel
+                        check=lambda message: message.author == member and message.channel == ctx.channel
                     )
                     # Update user who intiated trade
                     msg = msg.content.strip().lower()
@@ -78,7 +77,7 @@ class Utilities(commands.Cog):
                                 """)
                         db.commit()
                         c.execute(f"""UPDATE dodos
-                                    SET {otherRole} = {otherRole} + 1
+                                    SET {other_role} = {other_role} + 1
                                     WHERE id = {ctx.message.author.id}
                         
                                 """)
@@ -97,7 +96,7 @@ class Utilities(commands.Cog):
 
                         # Other User Updating
                         c.execute(f"""UPDATE dodos
-                                    SET {otherRole} = {otherRole} - 1
+                                    SET {other_role} = {other_role} - 1
                                     WHERE id = {member.id}
                         
                                 """)
@@ -112,7 +111,7 @@ class Utilities(commands.Cog):
                         await member.add_roles(role_assign)
                         # Remove activated role and role colour if user does not have these roles anymore
                         if int(other_user_role_count) - 1 == 0:
-                            role_remove = discord.utils.get(ctx.guild.roles, name=str(otherRole))
+                            role_remove = discord.utils.get(ctx.guild.roles, name=str(other_role))
                             if role_remove in member.roles:
                                 await member.remove_roles(role_remove)
 
@@ -149,8 +148,7 @@ class Utilities(commands.Cog):
         print(role_assign)
         role = discord.utils.get(ctx.guild.roles, name=role_assign)
         await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next \
-                       chance to roll is in 12 hours')
+        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
         role_assign = role_assign.split(" ")
         c.execute(f"""UPDATE dodos
                     SET {role_assign[1]} = {role_assign[1]} + 1
@@ -224,7 +222,7 @@ class Utilities(commands.Cog):
     @activate.error
     async def activate_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Error Occured. Syntax for this command is: **,activate Dodo Role**")
+        await ctx.send("Error Occurred. Syntax for this command is: **,activate Dodo Role**")
         await channel.send(f"{ctx.message.author} experienced a error using activate. {error}")
 
     @commands.command()
@@ -241,7 +239,7 @@ class Utilities(commands.Cog):
         print(role)
         print(role.split())
         if role not in rolesList:
-            await ctx.send("Only can show collecatable roles")
+            await ctx.send("Only can show collectable roles")
         else:
             c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
@@ -303,7 +301,7 @@ class Utilities(commands.Cog):
         role = role[0][0].upper() + role[0][1:].lower() + " " + role[1][0].upper() + role[1][1:].lower()
         role = str(role)
         if role not in rolesList:
-            await ctx.send("Only can hide collecatable roles")
+            await ctx.send("Only can hide collectable roles")
         else:
             c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
