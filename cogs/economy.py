@@ -154,8 +154,7 @@ class Economy(commands.Cog):
                     """)
                     money_amount = ''.join(map(str, c.fetchall()[0]))
                     money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
-                    await ctx.send(f"You sold your role(s) for ${total_profit} {money_symbol}. \
-                        Your new total is {money_amount} {money_symbol}")
+                    await ctx.send(f"You sold your role(s) for ${total_profit} {money_symbol}. Your new total is {money_amount} {money_symbol}")
 
                     c.execute(f"""SELECT {role}
                         FROM dodos
