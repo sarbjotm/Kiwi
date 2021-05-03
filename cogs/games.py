@@ -33,8 +33,9 @@ class Games(commands.Cog):
         }
 
         bet = int(bet)
-        if bet < 1:
+        if bet <= 0:
             await ctx.send("You must bet at least 1 Dodo Dollar")
+            return
         else:
             db = mysql.connector.connect(
                 host=os.environ['HOST'],
@@ -57,19 +58,14 @@ class Games(commands.Cog):
                 user_cards = []
                 user_int = 0
                 user_int2 = 0
-                user_suit = ''
-                user_card = ''
                 user_description = ''
 
                 dealer_blackjack = False
-                dealer_card_count = 2
                 mystery_score = 0
                 mystery_score2 = 0
                 dealer_cards = []
                 dealer_int = 0
                 dealer_int2 = 0
-                dealer_suit = ''
-                dealer_card = ''
                 dealer_description = ''
 
                 for i in range(0, 2):
@@ -84,7 +80,6 @@ class Games(commands.Cog):
 
                     user_cards.append(str(user_card) + user_suit)
                     if user_card == "J" or user_card == "K" or user_card == "Q":
-                        user_card = 10
                         user_int = user_int + 10
                         user_int2 = user_int2 + 10
                     elif user_card == "A":
@@ -103,12 +98,10 @@ class Games(commands.Cog):
 
                     cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
                     dealer_suit = random.choice(suits)
-                    while str(dealer_card) + dealer_suit in user_cards or str(
-                            dealer_card) + dealer_suit in dealer_cards:
+                    while str(dealer_card) + dealer_suit in user_cards or str(dealer_card) + dealer_suit in dealer_cards:
                         dealer_suit = random.choice(suits)
                     dealer_cards.append(str(dealer_card) + dealer_suit)
                     if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
-                        dealer_card = 10
                         dealer_int = dealer_int + 10
                         dealer_int2 = dealer_int2 + 10
                     elif dealer_card == "A":
@@ -139,15 +132,16 @@ class Games(commands.Cog):
                 for cards in user_cards:
                     user_description = user_description + cards + " "
 
+                # initial setup to show face down card
                 dealer_description = dealer_description + dealer_cards[0] + " [ ]"
 
-                user_description = f"{user_description} \n \nScore: {user_int} \n \n Score 2: {user_int2}"
-                dealer_description = f"{dealer_description} \n \nScore: {mystery_score} \n \n Score 2: {mystery_score2}"
+                user_description = f"{user_description} \n \nScore: {user_int} or {user_int2}"
+                dealer_description = f"{dealer_description} \n \nScore: {mystery_score} or {mystery_score2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}", inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                 embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Hit or Stand",
                                 inline=False)
-                bjmessage = await ctx.send(embed=embed)
+                game_message = await ctx.send(embed=embed)
 
                 while 1:
                     if user_int >= 22 and user_int2 >= 22:
@@ -160,8 +154,7 @@ class Games(commands.Cog):
                         msg = await self.client.wait_for(
                             "message",
                             timeout=20,
-                            check=lambda message: message.author == ctx.message.author \
-                                and message.channel == ctx.channel
+                            check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
                         )
 
                         msg_str = msg.content.strip().lower()
@@ -174,12 +167,10 @@ class Games(commands.Cog):
 
                             cards_dictionary[user_card] = cards_dictionary[user_card] - 1
                             user_suit = random.choice(suits)
-                            while (str(user_card) + user_suit in user_cards or str(
-                                    user_card) + user_suit in dealer_cards):
+                            while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
                                 user_suit = random.choice(suits)
                             user_cards.append(str(user_card) + user_suit)
                             if user_card == "J" or user_card == "K" or user_card == "Q":
-                                user_card = 10
                                 user_int = user_int + 10
                                 user_int2 = user_int2 + 10
                             elif user_card == "A":
@@ -194,14 +185,14 @@ class Games(commands.Cog):
 
                             for cards in user_cards:
                                 user_description = user_description + cards + " "
-                            user_description = f"{user_description} \n \n Score: {user_int} \n \n Score2: {user_int2}"
+                            user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
                             embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                             inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                             embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                             value="Hit or Stand", inline=False)
                             await msg.delete(delay=0)
-                            await bjmessage.edit(embed=embed)
+                            await game_message.edit(embed=embed)
                         else:
                             await msg.delete(delay=0)
                             break
@@ -215,7 +206,7 @@ class Games(commands.Cog):
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                     embed.add_field(name=f"Outcome", value=f"Bust! You have lost {str(bet)}", inline=False)
-                    await bjmessage.edit(embed=embed)
+                    await game_message.edit(embed=embed)
                     c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -223,19 +214,16 @@ class Games(commands.Cog):
                     db.commit()
 
                 else:
-                    if user_int >= 22 and user_int2 <= 21:
-                        temp = user_int
+                    if user_int <= user_int2 <= 21:
                         user_int = user_int2
-                        user_int2 = temp
 
-                    elif user_int2 >= 22 and user_int <= 21:
+                    elif user_int2 <= user_int <= 21:
                         user_int = user_int
 
-                    elif user_int2 > user_int:
-                        temp = user_int
+                    elif user_int2 <= 21 < user_int:
                         user_int = user_int2
-                        user_int2 = temp
-                    else:
+
+                    elif user_int <= 21 < user_int2:
                         user_int = user_int
 
                     if user_blackjack is False and dealer_blackjack is False:
@@ -247,14 +235,12 @@ class Games(commands.Cog):
                             elif dealer_int >= user_int:
                                 break
                             else:
-                                dealer_description = ''
                                 dealer_card = random.choice(numbers)
                                 while cards_dictionary[dealer_card] == 0:
                                     dealer_card = random.choice(numbers)
                                 cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
                                 dealer_suit = random.choice(suits)
-                                while (str(dealer_card) + dealer_suit in user_cards or str(
-                                        dealer_card) + dealer_suit in dealer_cards):
+                                while str(dealer_card) + dealer_suit in user_cards or str(dealer_card) + dealer_suit in dealer_cards:
                                     dealer_suit = random.choice(suits)
                                 dealer_cards.append(str(dealer_card) + dealer_suit)
                                 if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
@@ -270,30 +256,31 @@ class Games(commands.Cog):
                                     dealer_int = dealer_int + dealer_card
                                     dealer_int2 = dealer_int2 + dealer_card
 
-                                for cards in dealer_cards:
-                                    dealer_description = dealer_description + cards + " "
-                                dealer_description = f"{dealer_description} \n \n Score: {dealer_int} \n \n Score2: {dealer_int2}"
-
-                    if dealer_int >= 22 and dealer_int2 <= 21:
-                        temp = dealer_int
-                        dealer_int = dealer_int2
-                        dealer_int2 = temp
-
-                    elif dealer_int2 >= 22 and dealer_int <= 21:
+                    if dealer_int >= 22 and dealer_int2 >= 22:
                         dealer_int = dealer_int
 
-                    elif dealer_int2 > dealer_int:
+                    elif dealer_int <= dealer_int2 <= 21:
                         temp = dealer_int
                         dealer_int = dealer_int2
                         dealer_int2 = temp
-                    else:
+
+                    elif dealer_int2 <= dealer_int <= 21:
+                        dealer_int = dealer_int
+
+                    elif dealer_int2 <= 21 < dealer_int:
+                        temp = dealer_int
+                        dealer_int = dealer_int2
+                        dealer_int2 = temp
+
+                    elif dealer_int <= 21 < dealer_int2:
                         dealer_int = dealer_int
 
                     embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                     dealer_description = ' '
                     for cards in dealer_cards:
                         dealer_description = dealer_description + cards + " "
-                    dealer_description = f"{dealer_description} \n \n Score: {dealer_int} \n \n Score2: {dealer_int2}"
+                    dealer_description = f"{dealer_description} \n \n Score: {dealer_int} or {dealer_int2}"
+
                     if user_blackjack is True:
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
@@ -301,7 +288,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**",
                                         inline=False)
-                        await bjmessage.edit(embed=embed)
+                        await game_message.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -314,7 +301,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
                                         inline=False)
-                        await bjmessage.edit(embed=embed)
+                        await game_message.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -327,7 +314,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
                                         inline=False)
-                        await bjmessage.edit(embed=embed)
+                        await game_message.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -339,14 +326,14 @@ class Games(commands.Cog):
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have tied! No one wins**", inline=False)
-                        await bjmessage.edit(embed=embed)
+                        await game_message.edit(embed=embed)
 
                     else:
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await bjmessage.edit(embed=embed)
+                        await game_message.edit(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -399,8 +386,7 @@ class Games(commands.Cog):
                     msg = await self.client.wait_for(
                         "message",
                         timeout=20,
-                        check=lambda message: message.author == ctx.message.author \
-                                              and message.channel == ctx.channel
+                        check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
                     )
                     msg = msg.content.strip().lower()
                     try:
@@ -427,7 +413,7 @@ class Games(commands.Cog):
                         for i in range(1, 4):
                             if i == gem:
                                 ending_description = ending_description + "🏆 "
-                            elif (i == msg):
+                            elif i == msg:
                                 ending_description = ending_description + "❌ "
                             else:
                                 ending_description = ending_description + "🥝 "
