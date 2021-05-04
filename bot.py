@@ -9,10 +9,13 @@ intents.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
 
-rolesList = ['Dodo Red', 'Dodo Orange', 'Dodo Yellow', 'Dodo Green', 'Dodo Teal', 'Dodo Copyright', 'Dodo Cyan',
-             'Dodo Blue', 'Dodo Grape', 'Dodo Purple', 'Dodo Rose', 'Dodo Pink', 'Dodo Salmon']
+rolesList = ['Dodo Red', 'Dodo Orange', 'Dodo Yellow', 'Dodo Spring', 'Dodo Matcha', 'Dodo Mint', 'Dodo Green',
+             'Dodo Ice', 'Dodo Bbblu', 'Dodo Teal', 'Dodo Copyright', 'Dodo Cyan', 'Dodo Blue', 'Dodo Lavender',
+             'Dodo Grape', 'Dodo Purple', 'Dodo Rose', 'Dodo Pink', 'Dodo Salmon', 'Dodo Special', 'Dodo Taffy',
+             'Dodo Oak', 'Dodo Snow', 'Dodo Black', 'Dodo Gold', 'Dodo Dream']
 activateRoles = ['Red', 'Orange', 'Yellow', 'Green', 'Teal', 'Copyright', 'Cyan', 'Blue', 'Grape', 'Purple', 'Rose',
-                 'Pink', 'Salmon', 'Spring', 'Matcha', 'Mint', 'Ice', 'Bbblu', 'Lavender', 'Special']
+                 'Pink', 'Salmon', 'Spring', 'Matcha', 'Mint', 'Ice', 'Bbblu', 'Lavender', 'Special', 'Taffy', 'Oak',
+                 'Snow', 'Black', 'Gold', 'Dream']
 
 
 @client.command()
@@ -74,7 +77,7 @@ async def on_member_join(member):
 
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
-                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
+                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000',0,0,0,0,0,0)
               """)
     db.commit()
     c.close()
