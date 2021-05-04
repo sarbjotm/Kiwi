@@ -130,3 +130,5 @@ dmypy.json
 
 specialCode.txt
 *.DS_Store
+venv/
+
