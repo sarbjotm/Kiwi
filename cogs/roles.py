@@ -146,7 +146,7 @@ class Utilities(commands.Cog):
             database=os.environ['DATABASE']
         )
         c = db.cursor()
-        role_assign = random.choices(rolesList, weights=[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1])[0]
+        role_assign = random.choices(rolesList, weights=[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1])[0]
         print(role_assign)
         role = discord.utils.get(ctx.guild.roles, name=role_assign)
         await ctx.message.author.add_roles(role)
