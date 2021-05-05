@@ -121,7 +121,7 @@ class MiscCommands(commands.Cog):
                          icon_url="https://github.com/SFU-Dodo-Club/Kiwi/blob/main/kiwi.png")
         await ctx.send(embed=embed)
 
-    @anonmsg.error
+    @announcement.error
     async def announcement_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send(f"Error Occurred. Syntax for this command is: **,anon message**. Your specific error is {error}")
