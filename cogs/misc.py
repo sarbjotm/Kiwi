@@ -112,16 +112,19 @@ class MiscCommands(commands.Cog):
         await ctx.message.delete(delay=0)
         await ctx.send("<a:travisclap:774127234184511498>")
 
-    @commands.command(aliases=["private", "a", "anon"])
-    async def anonmsg(self, ctx, *, statement):
+    @commands.is_owner()
+    @commands.command(aliases=["a", "anon", "announce"])
+    async def announcement(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
-        embed = discord.Embed(title="Anonymous Message", description=statement, color=0xe392fe)
+        embed = discord.Embed(title="Announcement", description=statement, color=0xe392fe)
+        embed.set_author(name="Kiwi",
+                         icon_url="https://github.com/SFU-Dodo-Club/Kiwi/blob/main/kiwi.png")
         await ctx.send(embed=embed)
 
     @anonmsg.error
-    async def anonmsg_error(self, ctx, error):
+    async def announcement_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
-        await ctx.send("Error Occurred. Syntax for this command is: **,anon message**")
+        await ctx.send(f"Error Occurred. Syntax for this command is: **,anon message**. Your specific error is {error}")
         await channel.send(f"{ctx.message.author} experienced a error using anon. {error}")
 
 
