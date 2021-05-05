@@ -66,8 +66,8 @@ async def wishbirthday():
 
 @client.event
 async def on_member_join(member):
-    guild = client.get_guild(os.environ['GUILD'])
-    channel = guild.get_channel(os.environ['GUILD'])
+    guild = client.get_guild(int(os.environ['GUILD']))
+    channel = guild.get_channel(int(os.environ['GUILD']))
     db = mysql.connector.connect(
         host=os.environ['HOST'],
         user=os.environ['USER'],
@@ -87,8 +87,8 @@ async def on_member_join(member):
 
 @client.event
 async def on_command_error(ctx, error):
-    guild = client.get_guild(os.environ['GUILD'])
-    channel = guild.get_channel(os.environ['CHANNEL'])
+    guild = client.get_guild(int(os.environ['GUILD']))
+    channel = guild.get_channel(int(os.environ['GUILD']))
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
@@ -174,8 +174,7 @@ async def help(ctx, category=''):
                               color=0x66abf9)
 
     else:
-        embed = discord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi \
-            thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
+        embed = discord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
             **,help Astrology** - To view commands based on Astrology such as zodiac and birthday \n\n\
             **,help Decision** - To view commands to help your decision making such as coinflip and 8ball \n\n\
             **,help Economy** - To view commands based on Economy such as daily and selling/buying roles \n\n\

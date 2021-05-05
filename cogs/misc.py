@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import random
-
+import os
 pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 
 
@@ -44,7 +44,7 @@ class MiscCommands(commands.Cog):
 
     @poll.error
     async def poll_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Syntax for this command are as followed \n **,poll \"Question\" Option1 Option2 ... Option10** \n **,poll \"Question\"** \n **,poll \"Question\" \"Option1 Space\" Option2 ...**")
         await channel.send(f"{ctx.message.author} experienced a error using poll")
 
@@ -63,7 +63,7 @@ class MiscCommands(commands.Cog):
 
     @randomnumber.error
     async def randomnumber_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Syntax for this command is: **,rand x y** where x and y are integer values")
         await channel.send(f"{ctx.message.author} experienced a error using rand. {error}")
 
@@ -94,7 +94,7 @@ class MiscCommands(commands.Cog):
 
     @_8ball.error
     async def _8ball_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send(
             "Error Occurred. Syntax for this command is: **,8ball question** make sure you have asked a question")
         await channel.send(f"{ctx.message.author} experienced a error using 8ball. {error}")
@@ -120,7 +120,7 @@ class MiscCommands(commands.Cog):
 
     @anonmsg.error
     async def anonmsg_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Syntax for this command is: **,anon message**")
         await channel.send(f"{ctx.message.author} experienced a error using anon. {error}")
 
