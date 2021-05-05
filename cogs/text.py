@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-
+import os
 
 # Text Alterations
 class Text(commands.Cog):
@@ -24,7 +24,7 @@ class Text(commands.Cog):
 
     @spongebob.error
     async def spongebob_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Syntax for this command is: **,spongebob Some Random Text**")
         await channel.send(f"{ctx.message.author} experienced a error using spongebob")
 
@@ -39,9 +39,9 @@ class Text(commands.Cog):
 
     @fireworks.error
     async def fireworks_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
-        await ctx.send("Error Occured. Syntax for this command is: **,fireworks Some Random Text**")
-        await channel.send(f"{ctx.message.author} experienced a error using fireworks")
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("Error Occurred. Syntax for this command is: **,fireworks Some Random Text**")
+        await channel.send(f"{ctx.message.author} experienced a error using fireworks. {error}")
 
     @commands.command(aliases=["sp", "space", "spaces"])
     async def spaced(self, ctx, *, message):
@@ -54,7 +54,7 @@ class Text(commands.Cog):
 
     @spaced.error
     async def spaced_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Syntax for this command is: **,spaced Some Random Text**")
         await channel.send(f"{ctx.message.author} experienced a error using spaced")
 

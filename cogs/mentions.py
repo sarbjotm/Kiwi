@@ -26,7 +26,7 @@ class Interactions(commands.Cog):
 
     @waves.error
     async def waves_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a user to wave at")
         await channel.send(f"{ctx.message.author} experienced a error using wave")
 
@@ -38,7 +38,7 @@ class Interactions(commands.Cog):
 
     @hugs.error
     async def hugs_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a user to hug")
         await channel.send(f"{ctx.message.author} experienced a error using hug")
 
@@ -50,7 +50,7 @@ class Interactions(commands.Cog):
 
     @hugsRole.error
     async def hugsRole_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a role to give a group hug to")
         await channel.send(f"{ctx.message.author} experienced a error using grouphug")
 
@@ -62,7 +62,7 @@ class Interactions(commands.Cog):
 
     @wavesRole.error
     async def wavesRole_error(self, ctx, error):
-        channel = ctx.guild.get_channel(800965152132431892)
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Make sure you have mentioned a role to wave at a group")
         await channel.send(f"{ctx.message.author} experienced a error using wavesRole")
 
@@ -119,7 +119,7 @@ class Interactions(commands.Cog):
 
     @info.error
     async def info_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Make sure you have mentioned a user")
         await channel.send(f"{ctx.message.author} experienced a error using info. {error}")
 

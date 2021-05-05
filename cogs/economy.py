@@ -73,7 +73,7 @@ class Economy(commands.Cog):
 
     @daily.error
     async def daily_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
             hours = int(seconds // 3600)
@@ -182,7 +182,7 @@ class Economy(commands.Cog):
 
     @sell.error
     async def sell_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send(
             "Syntax for this command is: **,sell x Dodo Role** Where x is the number of roles you want to sell")
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
@@ -245,7 +245,7 @@ class Economy(commands.Cog):
 
     @buy.error
     async def buy_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send(
             "Syntax for this command is: **,buy x Dodo Role** Where x is the number of roles you want to buy")
         await channel.send(f"{ctx.message.author} experienced a error using buy. {error}")
@@ -324,7 +324,7 @@ class Economy(commands.Cog):
 
     @give.error
     async def give_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Syntax for this command is: **,give @User x** \
                        Where x is the dollar amount you would like to give to the user")
         await channel.send(f"{ctx.message.author} experienced a error using give. {error}")
