@@ -19,7 +19,7 @@ class Moderator(commands.Cog):
         if get(ctx.guild.roles, name=f"{role}"):
             await ctx.send("Role already exists")
             return
-        regex = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        regex = "^([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
         p = re.compile(regex)
         if re.search(p, str(colour)):
             guild = ctx.guild
