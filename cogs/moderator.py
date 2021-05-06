@@ -25,7 +25,7 @@ class Moderator(commands.Cog):
             guild = ctx.guild
             colour_of_role = '0x' + str(colour)
             print(colour_of_role)
-            await guild.create_role(name=role, color=discord.Colour(colour_of_role.upper()))
+            await guild.create_role(name=role, color=discord.Colour(int(f'{colour}', 16)))
             print("role Created")
             await ctx.send(f"{role} created with colour code {colour_of_role}")
         else:
