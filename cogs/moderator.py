@@ -6,8 +6,6 @@ from discord.ext.commands import has_permissions, has_role
 from discord.utils import get
 import re
 
-pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
-
 
 class Moderator(commands.Cog):
     def __init__(self, client):
@@ -31,7 +29,6 @@ class Moderator(commands.Cog):
         else:
             await ctx.send("Enter a valid hex colour code")
 
-    @has_role(name='Dodo Op')
     @commands.command()
     async def echo(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
