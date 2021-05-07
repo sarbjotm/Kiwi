@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 import os
-from discord.ext.commands import has_permissions
+from discord.ext.commands import has_permissions, has_role
 from discord.utils import get
 import re
 
@@ -30,6 +30,14 @@ class Moderator(commands.Cog):
             await ctx.send(f"{role} created with colour code {colour_of_role}")
         else:
             await ctx.send("Enter a valid hex colour code")
+
+    @has_role(name='Dodo Op')
+    @commands.command()
+    async def echo(self, ctx, *, statement):
+        await ctx.message.delete(delay=0)
+        await ctx.send(f"{statement}")
+
+
 
 
 def setup(client):

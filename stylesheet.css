@@ -1,0 +1,19 @@
+
+body{
+    background-color: #2B2B2B
+}
+
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+h1{
+    color: white;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+}
