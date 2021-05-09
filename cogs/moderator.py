@@ -8,7 +8,8 @@ import re
 
 pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 
-
+# Temporarily supressing possibly invalid code
+'''
 class Moderator(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -40,3 +41,4 @@ class Moderator(commands.Cog):
 
 def setup(client):
     client.add_cog(Moderator(client))
+'''
