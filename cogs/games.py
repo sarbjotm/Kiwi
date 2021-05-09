@@ -455,7 +455,7 @@ class Games(commands.Cog):
         await ctx.send("Syntax for this command is: **,cupshuffle bet**")
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
-    @commands.command(aliases=['image_match', 'match_image', 'img_match', 'match_img'])
+    @commands.command(aliases=['match_image', 'img_match', 'match_img'])
     async def image_match(self, ctx, bet):
         bet = int(bet)
         if bet < 1:

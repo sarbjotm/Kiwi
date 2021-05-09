@@ -212,4 +212,7 @@ async def about(ctx):
     await ctx.send(embed=embed)
 
 
-client.run(os.environ['TOKEN'])
+if __name__ == "__main__":
+    client.run(os.environ['TOKEN'])
+else:
+    print("ran the file in lint mode, exiting gracefully.")
