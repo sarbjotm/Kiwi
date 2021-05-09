@@ -31,13 +31,11 @@ class Moderator(commands.Cog):
         else:
             await ctx.send("Enter a valid hex colour code")
 
-    @has_role(name='Dodo Op')
+    @has_role(item='Dodo Op')
     @commands.command()
     async def echo(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{statement}")
-
-
 
 
 def setup(client):
