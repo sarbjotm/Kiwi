@@ -468,7 +468,7 @@ class Games(commands.Cog):
 
             # collect 4 random title & img-src pairs. Choose 1 to be the main image.
             pairs = generate_random_images(4, False)
-            target = random.randint(0, len(pairs))
+            target_pair = pairs[random.randint(0, len(pairs))]
             
             # TODO: utilize https://github.com/RobertJGabriel/Google-profanity-words and parse all the user facing 
             # content, then reject bad words. Repeat if neccesary. 
@@ -477,7 +477,7 @@ class Games(commands.Cog):
             embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
             # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
             # Or just add a time-limit.
-            embed_msg.set_image(target.img) 
+            embed_msg.set_image(target_pair.img) 
             for (pair, i) in pairs.enumerate():
                 embed_msg.add_field("{}: {}".format(i, pair["title"]))
             
