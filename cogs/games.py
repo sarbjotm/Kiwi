@@ -468,7 +468,9 @@ class Games(commands.Cog):
 
             # collect 4 random title & img-src pairs. Choose 1 to be the main image.
             pairs = generate_random_images(4, False)
-            target_pair = pairs[random.randint(0, len(pairs))]
+            await ctx.send(str(pairs))
+            target_pair = pairs[random.randint(0, len(pairs)-1)]
+            await ctx.send(str(target_pair))
             
             # TODO: utilize https://github.com/RobertJGabriel/Google-profanity-words and parse all the user facing 
             # content, then reject bad words. Repeat if neccesary. 
@@ -477,9 +479,9 @@ class Games(commands.Cog):
             embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
             # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
             # Or just add a time-limit.
-            embed_msg.set_image(target_pair.img) 
-            for (pair, i) in pairs.enumerate():
-                embed_msg.add_field("{}: {}".format(i, pair["title"]))
+            embed_msg.set_image(url=target_pair["img"]) 
+            for (i, pair) in enumerate(pairs):
+                embed_msg.add_field(name="*Choice {}*".format(i), value=pair["title"])
             
             await ctx.send(embed=embed_msg)
 
@@ -500,6 +502,22 @@ def test():
     print("testing image_match")
     l = generate_random_images(4, True, True)
     print(str(l))
+
+    # collect 4 random title & img-src pairs. Choose 1 to be the main image.
+    pairs = generate_random_images(4, False)
+    print(str(pairs))
+    target_pair = pairs[random.randint(0, len(pairs)-1)]
+    print(str(target_pair))
+
+    # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
+    embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
+    # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
+    # Or just add a time-limit.
+    embed_msg.set_image(url=target_pair["img"]) 
+    for (i, pair) in enumerate(pairs):
+        embed_msg.add_field(name="*Choice {}*".format(i), value=pair["title"])
+    
+    print(embed_msg)
 
 # --------------------------------------------------------------------------- #
 # Helper Functions: (these do the heavy lifting)

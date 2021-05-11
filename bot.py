@@ -8,9 +8,13 @@ from discord.ext import commands, tasks
 from myconstants import rolesList, activateRoles, load_data
 load_data()
 
-from cogs.games import test
-test()
+# --------------------------------------------------------------------------- #
+# Test cases -- uncomment when testing
 
+#from cogs.games import test
+#test()
+
+# --------------------------------------------------------------------------- #
 
 
 intents = discord.Intents.default()
