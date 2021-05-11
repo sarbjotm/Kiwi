@@ -6,7 +6,7 @@ from discord.ext.commands import has_permissions, has_role
 from discord.utils import get
 import re
 
-pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+from myconstants import pollOptions
 
 
 class Moderator(commands.Cog):

@@ -5,8 +5,7 @@ import random
 import asyncio
 import mysql
 
-numbers = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]
-suits = ["🍇", "🍉", "🍒", "🍍"]
+from myconstants import numbers, suits, words_10k, words_20k_includes_swears
 
 
 # Mentions
@@ -456,25 +455,40 @@ class Games(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
     @commands.command(aliases=['match_image', 'img_match', 'match_img'])
-    async def image_match(self, ctx, bet):
+    async def image_match(self, ctx, bet, no_pain_no_gain):
         bet = int(bet)
         if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
         else:
             desc = "TODO: implement the image_match game for bet of {} dodo dollars.".format(bet)
             embedMsg = discord.Embed(title="Dodo Club Casino | Image Match Game", description=desc, color=0x73ffbb)
-            await ctx.send(embedMsg)
+            await ctx.send(embed=embedMsg)
 
-            # generate random search token 
+            word_list = words_20k_includes_swears if no_pain_no_gain else words_10k 
+
+            # generate random search tokens
+            random_words = []
+            for _ in range(3):
+                random_words.append(random.choice(word_list))
+
+            await ctx.send("secret words: {}".format(" ".join(random_words)))
 
             # make an html request
 
             # collect 4 random title & img-src pairs. Choose 1 to be the main image.
 
+            # TODO: utilize https://github.com/RobertJGabriel/Google-profanity-words and parse all the user facing 
+            # content, then reject bad words. Repeat if neccesary. 
+
             # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
 
             # verify, then manage the money won / lost here
 
+    @image_match.error
+    async def image_match_error(self, ctx, error):
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        await ctx.send("Syntax for this command is: **,match_image bet**")
+        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
 def setup(client):
     client.add_cog(Games(client))
