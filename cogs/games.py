@@ -1,14 +1,14 @@
-import discord
-from discord.ext import commands
-import os
-import random
-import asyncio
+import os, random, asyncio, requests
 import mysql
+
+from discord.ext import commands
+import discord
+
+from bs4 import BeautifulSoup
 
 from myconstants import numbers, suits, words_10k, words_20k_includes_swears
 
 
-# Mentions
 class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -348,7 +348,7 @@ class Games(commands.Cog):
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
 
-            """)
+            """) #BUG: If the user doesn't exist in the db then crash.
             balance = ''.join(map(str, c.fetchall()[0]))
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
@@ -455,40 +455,109 @@ class Games(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
     @commands.command(aliases=['match_image', 'img_match', 'match_img'])
-    async def image_match(self, ctx, bet, no_pain_no_gain):
+    async def image_match(self, ctx, bet, no_pain_no_gain=True):
         bet = int(bet)
         if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
+        elif bet > 200:
+            await ctx.send("You can't bet too much, since this game might be too easy. 200 is the maximum bet.")
         else:
             desc = "TODO: implement the image_match game for bet of {} dodo dollars.".format(bet)
-            embedMsg = discord.Embed(title="Dodo Club Casino | Image Match Game", description=desc, color=0x73ffbb)
-            await ctx.send(embed=embedMsg)
-
-            word_list = words_20k_includes_swears if no_pain_no_gain else words_10k 
-
-            # generate random search tokens
-            random_words = []
-            for _ in range(3):
-                random_words.append(random.choice(word_list))
-
-            await ctx.send("secret words: {}".format(" ".join(random_words)))
-
-            # make an html request
+            embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description=desc, color=0x73ffbb)
+            await ctx.send(embed=embed_msg)
 
             # collect 4 random title & img-src pairs. Choose 1 to be the main image.
-
+            pairs = generate_random_images(4, False)
+            target = random.randint(0, len(pairs))
+            
             # TODO: utilize https://github.com/RobertJGabriel/Google-profanity-words and parse all the user facing 
             # content, then reject bad words. Repeat if neccesary. 
 
             # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
+            embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
+            # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
+            # Or just add a time-limit.
+            embed_msg.set_image(target.img) 
+            for (pair, i) in pairs.enumerate():
+                embed_msg.add_field("{}: {}".format(i, pair["title"]))
+            
+            await ctx.send(embed=embed_msg)
 
             # verify, then manage the money won / lost here
 
     @image_match.error
     async def image_match_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Syntax for this command is: **,match_image bet**")
-        await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
+        await ctx.send("Syntax for this command is: `,match_image bet <true>`, where \"< >\" denotes an optional parameter.")
+        await channel.send(f"{ctx.message.author} experienced a error using image_match. {error}")
+
+# --------------------------------------------------------------------------- #
 
 def setup(client):
     client.add_cog(Games(client))
+
+def test():
+    print("testing image_match")
+    l = generate_random_images(4, True, True)
+    print(str(l))
+
+# --------------------------------------------------------------------------- #
+# Helper Functions: (these do the heavy lifting)
+
+# TODO: option to show the secret words
+def generate_random_images(num_images, includes_swears, debug=False):
+    word_list = words_20k_includes_swears if includes_swears else words_10k 
+
+    images = None
+    width, height = 0, 0
+    while images == None:
+        # generate random search tokens
+        random_words = []
+        for _ in range(3):
+            random_words.append(random.choice(word_list))
+
+        if debug: print("secret words: {}".format(" ".join(random_words)))
+
+        # NOTE: if google's address convention changes, this will need to be updated
+        url = "https://www.google.com/search?q=" + "+".join(random_words) + "&tbm=isch"
+
+        # make an html request & parse the document
+        r = requests.get(url)
+        if r.status_code != 200:
+            if debug: print("Huh, something went wrong. It should work if you try again right away, but if not please let someone know. ^-^")
+        soup = BeautifulSoup(r.text, 'html.parser')
+    
+        images = soup.body.div.next_sibling.next_sibling.table
+        if images == None:
+            if debug: print("Ooops somthing messed up")
+            continue
+        elif images.tr == None:
+            if debug: print("Ooops, something extra special messed up")
+            continue
+
+        height, width = len(images), len(images.tr)
+        if width * height < 4:
+            if debug: print("Oops, the secret words were a bit too specific -> TODO try again.")
+            images = None
+
+    chosen = set()
+    choices_list = []
+    while len(choices_list) < num_images:
+        x = random.randint(0, width-1)
+        y = random.randint(0, height-1)
+        if debug: print("{} {}".format(x, y))
+
+        identity_str = "{},{}".format(x, y)
+        if identity_str in chosen:
+            continue
+        else:
+            chosen.add(identity_str)
+
+            jumbled_pair = list(list(images.children)[y].children)[x]
+            stub_head = jumbled_pair.div.div.div.div.table
+
+            img = stub_head.tr.td.a.div.img.get("src") # TODO: write a function which does a http request for the full title of the webpage here, defaulting to the short one on failure.
+            title = stub_head.tr.next_sibling.td.a.div.span.span.get_text()
+            choices_list.append({"img": img, "title": title})
+            
+    return choices_list

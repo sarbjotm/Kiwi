@@ -8,11 +8,15 @@ from discord.ext import commands, tasks
 from myconstants import rolesList, activateRoles, load_data
 load_data()
 
+from cogs.games import test
+test()
+
+
+
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
-
 
 @client.command()
 async def load(ctx, extension):
