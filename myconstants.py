@@ -45,20 +45,6 @@ zodiacAvatars = ["", "https://www.horoscope.com/images-US/signs/profile-aries.pn
 
 pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 
-weather_table = {
-    "clouds"  : "http://getdrawings.com/free-icon/cloudy-icon-62.png",
-
-    "clear"   : "https://cdn3.iconfinder.com/data/icons/summertime-1/44/summertime-03-512.png", 
-    "sun"     : "https://cdn3.iconfinder.com/data/icons/summertime-1/44/summertime-03-512.png", 
-    "sunny"   : "https://cdn3.iconfinder.com/data/icons/summertime-1/44/summertime-03-512.png",
-
-    "snow"    : "https://www.freeiconspng.com/thumbs/snow-icon/blue-snow-icon-8.png",
-
-    "rain"    : "https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png",
-    "showers" : "https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png",
-
-    "default" : "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/63069/weather-icon-clipart-md.png"
-}
 
 # --------------------------------------------------------------------------- #
 
