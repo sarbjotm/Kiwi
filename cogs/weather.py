@@ -5,8 +5,6 @@ import requests
 from requests.exceptions import Timeout
 from bs4 import BeautifulSoup
 
-from myconstants import weather_table
-
 
 class Weather(commands.Cog):
     def __init__(self, client):
@@ -40,13 +38,6 @@ class Weather(commands.Cog):
             # to the "description" key at 
             # the 0th index of z
             weather_description = z[0]["description"]
-            if weather_description in weather_table:
-                logo = weather_table[weather_description]
-            else:
-                logo = weather_table["default"]
-            
-            # TODO: remove this code
-            """   
             if "clouds" in weather_description:
                 logo = "http://getdrawings.com/free-icon/cloudy-icon-62.png"
             elif "clear" in weather_description or "sun" in weather_description or "sunny" in weather_description:
@@ -57,7 +48,6 @@ class Weather(commands.Cog):
                 logo = "https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather07-512.png"
             else:
                 logo = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/63069/weather-icon-clipart-md.png"
-            """
 
             embed = discord.Embed(title=f"Weather in {city}", color=0x6cf178)
             embed.set_thumbnail(url=logo)
