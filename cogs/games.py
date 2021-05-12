@@ -457,8 +457,8 @@ class Games(commands.Cog):
             # content, then reject bad words. Repeat if neccesary. 
 
             # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
-            line1 = "You bet {} Dodo Dollars. Now, which choice do you think captions the following image?:\n\n".format(bet)
-            desc = "**Choice 1:**\t`{}` \n**Choice 2:**\t`{}` \n**Choice 3**\t`{}` \n**Choice 4:**\t`{}` \n\n".format(pairs[0]["title"], 
+            line1 = "Which caption do you think corresponds to the following image?:\n\n".format(bet)
+            desc = "**Choice 1:** \t`{}` \n**Choice 2:** \t`{}` \n**Choice 3:** \t`{}` \n**Choice 4:** \t`{}` \n\n".format(pairs[0]["title"], 
                 pairs[1]["title"], pairs[2]["title"], pairs[3]["title"])
             end_line =  "You have 30s to respond with your choice of 1, 2, 3, or 4."
             embed_msg = discord.Embed(
@@ -467,7 +467,7 @@ class Games(commands.Cog):
                 color=0x5ce6cc)
 
             # TODO: make it so that this image is downloaded then served, so that the website can't be easily traced.
-            # Or just add a time-limit.
+            # Or just add a time-limit, but only when I finally decide to improve 
             embed_msg.set_image(url=target_pair["img"]) 
             embed_msg.set_footer(text="no_pain_no_gain={}".format(no_pain_no_gain))
             #for (i, pair) in enumerate(pairs):
@@ -484,7 +484,7 @@ class Games(commands.Cog):
             # verify, then manage the money won / lost here
             valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "1":1, "2":2, "3":3, "4":4 }
             if not response in valid_responses:
-                line1 = "Invalid response, you lose {} Dodo Dollars!".format(bet)
+                line1 = "Invalid response, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"])
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
@@ -492,7 +492,7 @@ class Games(commands.Cog):
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
             elif valid_responses[response] != target_i+1:
-                line1 = "Wrong answer, you lose {} Dodo Dollars!".format(bet)
+                line1 = "Wrong answer, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, `{}`.".format(target_i+1, pairs[target_i]["title"])
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
@@ -500,7 +500,7 @@ class Games(commands.Cog):
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
             else:
-                line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
+                line1 = "Correct answer, you win {} Dodo Dollars! :money~1:".format(bet)
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1, 
