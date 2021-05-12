@@ -150,7 +150,7 @@ async def help(ctx, category=''):
                                           "\n\n**,trivia bet <safe_filter_off=false>** - Kiwi finds a random image"
                                           "online and 4 similar captions; you have to figure out which one is real!"
                                           "The safe filter is initially on, however if you turn it off kiwi can be more"
-                                          "risky with their search terms."
+                                          "risky with their search terms.",
                               color=0x66abf9)
 
     elif category == 'misc':
