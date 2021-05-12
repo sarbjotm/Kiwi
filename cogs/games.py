@@ -481,14 +481,14 @@ class Games(commands.Cog):
             if not response in valid_responses:
                 await ctx.send("Invalid response, you lose {} Dodo Dollars!".format(bet))
                 await ctx.send("The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"]))
-                update_money(cur, db, user_id, -bet)
+                update_money(db, cur, user_id, -bet)
             elif valid_responses[response] != target_i+1:
                 await ctx.send("Wrong answer, you lose {} Dodo Dollars!".format(bet))
                 await ctx.send("The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"]))
-                update_money(cur, db, user_id, -bet)
+                update_money(db, cur, user_id, -bet)
             else:
                 await ctx.send("Correct answer, you win {} Dodo Dollars!".format(bet))
-                update_money(cur, db, user_id, bet)
+                update_money(db, cur, user_id, bet)
             close_db(cur, db)
         
     @image_match.error
