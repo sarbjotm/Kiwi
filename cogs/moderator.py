@@ -7,6 +7,9 @@ from discord.utils import get
 import re
 
 
+from myconstants import pollOptions
+
+
 class Moderator(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -29,12 +32,11 @@ class Moderator(commands.Cog):
         else:
             await ctx.send("Enter a valid hex colour code")
 
+
     @commands.command()
     async def echo(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{statement}")
-
-
 
 
 def setup(client):

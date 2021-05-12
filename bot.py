@@ -4,19 +4,23 @@ import mysql.connector
 import datetime
 from discord.ext import commands, tasks
 
+# so we only have to load the word lists into memory one time -> ~0.22MB total
+from myconstants import rolesList, activateRoles, load_data
+load_data()
+
+# --------------------------------------------------------------------------- #
+# Test cases -- uncomment when testing
+
+#from cogs.games import test
+#test()
+
+# --------------------------------------------------------------------------- #
+
+
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
-
-rolesList = ['Dodo Red', 'Dodo Orange', 'Dodo Yellow', 'Dodo Spring', 'Dodo Matcha', 'Dodo Mint', 'Dodo Green',
-             'Dodo Ice', 'Dodo Bbblu', 'Dodo Teal', 'Dodo Copyright', 'Dodo Cyan', 'Dodo Blue', 'Dodo Lavender',
-             'Dodo Grape', 'Dodo Purple', 'Dodo Rose', 'Dodo Pink', 'Dodo Salmon', 'Dodo Special', 'Dodo Taffy',
-             'Dodo Oak', 'Dodo Snow', 'Dodo Black', 'Dodo Gold', 'Dodo Dream']
-activateRoles = ['Red', 'Orange', 'Yellow', 'Green', 'Teal', 'Copyright', 'Cyan', 'Blue', 'Grape', 'Purple', 'Rose',
-                 'Pink', 'Salmon', 'Spring', 'Matcha', 'Mint', 'Ice', 'Bbblu', 'Lavender', 'Special', 'Taffy', 'Oak',
-                 'Snow', 'Black', 'Gold', 'Dream']
-
 
 @client.command()
 async def load(ctx, extension):
@@ -142,7 +146,11 @@ async def help(ctx, category=''):
         embed = discord.Embed(title="Minigames",
                               description="**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount "
                                           "\n\n**,cup bet** - Play the classic 'guess where the gem' is game, "
-                                          "pick the right cup and win!",
+                                          "pick the right cup and win!"
+                                          "\n\n**,trivia bet <safe_filter_off=false>** - Kiwi finds a random image"
+                                          "online and 4 similar captions; you have to figure out which one is real!"
+                                          "The safe filter is initially on, however if you turn it off kiwi can be more"
+                                          "risky with their search terms.",
                               color=0x66abf9)
 
     elif category == 'misc':
@@ -212,4 +220,7 @@ async def about(ctx):
     await ctx.send(embed=embed)
 
 
-client.run(os.environ['TOKEN'])
+if __name__ == "__main__":
+    client.run(os.environ['TOKEN'])
+else:
+    print("ran the file in lint mode, exiting gracefully.")

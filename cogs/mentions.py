@@ -3,14 +3,7 @@ from discord.ext import commands
 import mysql
 import os
 
-# Roles List
-rolesList = ['Dodo Red', 'Dodo Orange', 'Dodo Yellow', 'Dodo Spring', 'Dodo Matcha', 'Dodo Mint', 'Dodo Green',
-             'Dodo Ice', 'Dodo Bbblu', 'Dodo Teal', 'Dodo Copyright', 'Dodo Cyan', 'Dodo Blue', 'Dodo Lavender',
-             'Dodo Grape', 'Dodo Purple', 'Dodo Rose', 'Dodo Pink', 'Dodo Salmon', 'Dodo Special', 'Dodo Taffy',
-             'Dodo Oak', 'Dodo Snow', 'Dodo Black', 'Dodo Gold', 'Dodo Dream']
-activateRoles = ['Red', 'Orange', 'Yellow', 'Green', 'Teal', 'Copyright', 'Cyan', 'Blue', 'Grape', 'Purple', 'Rose',
-                 'Pink', 'Salmon', 'Spring', 'Matcha', 'Mint', 'Ice', 'Bbblu', 'Lavender', 'Special', 'Taffy', 'Oak',
-                 'Snow', 'Black', 'Gold', 'Dream']
+from myconstants import rolesList, activateRoles
 
 
 # Mentions
@@ -35,7 +28,7 @@ class Interactions(commands.Cog):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} gibs beeeeg hug to {member.mention}")
         await ctx.send("https://media.tenor.com/images/0a1652de311806ce55820a7115993853/tenor.gif")
-
+ 
     @hugs.error
     async def hugs_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))

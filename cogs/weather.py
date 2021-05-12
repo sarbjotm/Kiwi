@@ -2,9 +2,6 @@ import discord
 import os
 from discord.ext import commands
 import requests
-from requests.exceptions import Timeout
-from bs4 import BeautifulSoup
-
 
 class Weather(commands.Cog):
     def __init__(self, client):
