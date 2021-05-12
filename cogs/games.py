@@ -485,7 +485,7 @@ class Games(commands.Cog):
             valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "1":1, "2":2, "3":3, "4":4 }
             if not response in valid_responses:
                 line1 = "Invalid response, you lose {} Dodo Dollars!\n".format(bet)
-                line2 = "The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"])
+                line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1+line2, 
@@ -493,14 +493,14 @@ class Games(commands.Cog):
                 update_money(db, cur, user_id, -bet)
             elif valid_responses[response] != target_i+1:
                 line1 = "Wrong answer, you lose {} Dodo Dollars!\n".format(bet)
-                line2 = "The correct answer was {}, `{}`.".format(target_i+1, pairs[target_i]["title"])
+                line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1+line2, 
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
             else:
-                line1 = "Correct answer, you win {} Dodo Dollars! :money~1:".format(bet)
+                line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
                 embed_msg = discord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1, 
