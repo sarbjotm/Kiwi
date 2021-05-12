@@ -24,7 +24,7 @@ def get_balance(cursor, user_id):
     balance = ''.join(map(str, cursor.fetchall()[0]))
     return balance
 
-def update_money(cursor, db, user_id, money):
+def update_money(db, cursor, user_id, money):
     sign = "+" if money >= 0 else "-"
     cursor.execute(f"""UPDATE dodos
         SET money = money {sign} {abs(money)}
