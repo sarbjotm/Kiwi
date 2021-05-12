@@ -506,6 +506,8 @@ class Games(commands.Cog):
                     description=line1, 
                     color=0x70febc)
                 update_money(db, cur, user_id, bet)
+            
+            await ctx.send(embed=embed_msg)
             close_db(cur, db)
         
     @image_match.error
