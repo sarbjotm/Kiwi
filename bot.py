@@ -146,7 +146,11 @@ async def help(ctx, category=''):
         embed = discord.Embed(title="Minigames",
                               description="**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount "
                                           "\n\n**,cup bet** - Play the classic 'guess where the gem' is game, "
-                                          "pick the right cup and win!",
+                                          "pick the right cup and win!"
+                                          "\n\n**,trivia bet <safe_filter_off=false>** - Kiwi finds a random image"
+                                          "online and 4 similar captions; you have to figure out which one is real!"
+                                          "The safe filter is initially on, however if you turn it off kiwi can be more"
+                                          "risky with their search terms."
                               color=0x66abf9)
 
     elif category == 'misc':

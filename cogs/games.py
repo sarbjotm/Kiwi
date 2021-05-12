@@ -432,13 +432,13 @@ class Games(commands.Cog):
         await ctx.send("Syntax for this command is: **,cupshuffle bet**")
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
-    @commands.command(aliases=['match_image', 'img_match', 'match_img'])
+    @commands.command(aliases=['match_image', 'img_match', 'match_img', 'trivia'])
     async def image_match(self, ctx, bet, no_pain_no_gain=False):
         bet = int(bet)
         if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
-        elif bet > 200:
-            await ctx.send("You can't bet too much, since this game might be too easy. 200 is the maximum bet.")
+        #elif bet > 200:
+        #    await ctx.send("You can't bet too much, since this game might be too easy. 200 is the maximum bet.")
         else:
             user_id = ctx.message.author.id
             db, cur = connect_to_db()
@@ -457,14 +457,14 @@ class Games(commands.Cog):
             # content, then reject bad words. Repeat if neccesary. 
 
             # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
-            bet_desc = "You bet {} Dodo Dollars, now your options are:\n".format(bet)
-            desc = "*Choice 1:* {} \n*Choice 2:* {} \nChoice 3* {} \n*Choice 4:* {} \n".format(pairs[0]["title"], 
+            line1 = "You bet {} Dodo Dollars. Now, which choice do you think captions the following image?:\n\n".format(bet)
+            desc = "**Choice 1:**\t`{}` \n**Choice 2:**\t`{}` \n**Choice 3**\t`{}` \n**Choice 4:**\t`{}` \n\n".format(pairs[0]["title"], 
                 pairs[1]["title"], pairs[2]["title"], pairs[3]["title"])
-            final_desc =  "You have 30s to respond with your choice of 1, 2, 3, or 4."
+            end_line =  "You have 30s to respond with your choice of 1, 2, 3, or 4."
             embed_msg = discord.Embed(
                 title="Dodo Club Casino | Image Match Game", 
-                description=bet_desc+desc+final_desc, 
-                color=0x70febc)
+                description=line1+desc+end_line, 
+                color=0x5ce6cc)
 
             # TODO: make it so that this image is downloaded then served, so that the website can't be easily traced.
             # Or just add a time-limit.
@@ -474,27 +474,44 @@ class Games(commands.Cog):
             #    embed_msg.add_field(name="*Choice {}*".format(i), value=pair["title"])
             await ctx.send(embed=embed_msg)
 
-            response = await wait_for_response(self, ctx, 30)
+            response = await wait_for_response(self, ctx, 20)
+            
+            if response == None:
+                await ctx.send("You have 10s left, choose quickly!")
+                response = await wait_for_response(self, ctx, 10)
+
 
             # verify, then manage the money won / lost here
             valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "1":1, "2":2, "3":3, "4":4 }
             if not response in valid_responses:
-                await ctx.send("Invalid response, you lose {} Dodo Dollars!".format(bet))
-                await ctx.send("The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"]))
+                line1 = "Invalid response, you lose {} Dodo Dollars!".format(bet)
+                line2 = "The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"])
+                embed_msg = discord.Embed(
+                    title="Dodo Club Casino | Image Match Game", 
+                    description=line1+line2, 
+                    color=0xf27961)
                 update_money(db, cur, user_id, -bet)
             elif valid_responses[response] != target_i+1:
-                await ctx.send("Wrong answer, you lose {} Dodo Dollars!".format(bet))
-                await ctx.send("The correct answer was {}, {}.".format(target_i+1, pairs[target_i]["title"]))
+                line1 = "Wrong answer, you lose {} Dodo Dollars!".format(bet)
+                line2 = "The correct answer was {}, `{}`.".format(target_i+1, pairs[target_i]["title"])
+                embed_msg = discord.Embed(
+                    title="Dodo Club Casino | Image Match Game", 
+                    description=line1+line2, 
+                    color=0xf27961)
                 update_money(db, cur, user_id, -bet)
             else:
-                await ctx.send("Correct answer, you win {} Dodo Dollars!".format(bet))
+                line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
+                embed_msg = discord.Embed(
+                    title="Dodo Club Casino | Image Match Game", 
+                    description=line1, 
+                    color=0x70febc)
                 update_money(db, cur, user_id, bet)
             close_db(cur, db)
         
     @image_match.error
     async def image_match_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Syntax for this command is: `,match_image bet <True>`, where \"< >\" denotes an optional parameter.")
+        await ctx.send("Syntax for this command is: `,image_match bet <True>`, where \"< >\" denotes an optional parameter.")
         await channel.send(f"{ctx.message.author} experienced a error using image_match. {error}")
 
 # --------------------------------------------------------------------------- #
