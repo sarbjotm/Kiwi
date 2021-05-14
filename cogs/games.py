@@ -448,8 +448,8 @@ class Games(commands.Cog):
                 close_db(cur, db)
                 return
 
-            # collect 4 random title & img-src pairs. Choose 1 to be the main image.
-            pairs = generate_random_images(4, False)
+            # collect 5 random title & img-src pairs. Choose 1 to be the main image.
+            pairs = generate_random_images(5, False)
             target_i = random.randint(0, len(pairs)-1)
             target_pair = pairs[target_i]
 
@@ -457,10 +457,10 @@ class Games(commands.Cog):
             # content, then reject bad words. Repeat if neccesary. 
 
             # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
-            line1 = "Which caption do you think corresponds to the following image?:\n\n".format(bet)
-            desc = "**Choice 1:** \t`{}` \n**Choice 2:** \t`{}` \n**Choice 3:** \t`{}` \n**Choice 4:** \t`{}` \n\n".format(pairs[0]["title"], 
-                pairs[1]["title"], pairs[2]["title"], pairs[3]["title"])
-            end_line =  "You have 30s to respond with your choice of 1, 2, 3, or 4."
+            line1 = "Which caption do you think corresponds to the following image?\n\n".format(bet)
+            desc = "**Choice 1:** \t`{}` \n**Choice 2:** \t`{}` \n**Choice 3:** \t`{}` \n**Choice 4:** \t`{}` \n**Choice 5:** \t`{}`\n\n".format(
+                pairs[0]["title"], pairs[1]["title"], pairs[2]["title"], pairs[3]["title"], pairs[4]["title"])
+            end_line =  "You have 30s to respond with your choice of 1, 2, 3, 4, or 5."
             embed_msg = discord.Embed(
                 title="Dodo Club Casino | Image Match Game", 
                 description=line1+desc+end_line, 
@@ -527,7 +527,7 @@ def test():
     print(str(l))
 
     # collect 4 random title & img-src pairs. Choose 1 to be the main image.
-    pairs = generate_random_images(4, True)
+    pairs = generate_random_images(5, True)
     print(str(pairs))
     target_pair = pairs[random.randint(0, len(pairs)-1)]
     print(str(target_pair))
@@ -577,10 +577,13 @@ def generate_random_images(num_images, includes_swears, debug=False):
             continue
 
         height, width = len(images), len(images.tr)
-        if width * height < 4:
+        if width * height < num_images:
             if debug: print("Oops, the secret words were a bit too specific -> TODO try again.")
             images = None
 
+    num_duplicate_captions = 0
+
+    chosen_titles = [] # probably faster than a hashset
     chosen = set()
     choices_list = []
     while len(choices_list) < num_images:
@@ -592,15 +595,21 @@ def generate_random_images(num_images, includes_swears, debug=False):
         if identity_str in chosen:
             continue
         else:
-            chosen.add(identity_str)
-
-            jumbled_pair = list(list(images.children)[y].children)[x]
-            stub_head = jumbled_pair.div.div.div.div.table
-            
+            messy_pair = list(list(images.children)[y].children)[x]
+            stub_head = messy_pair.div.div.div.div.table
             # TODO: write a function which does a http request for the full title of the webpage here, 
             # defaulting to the short one on failure.
             img = stub_head.tr.td.a.div.img.get("src") 
             title = stub_head.tr.next_sibling.td.a.div.span.span.get_text()
-            choices_list.append({"img": img, "title": title})
+
+            if num_duplicate_captions < num_images and title in chosen_titles:
+                num_duplicate_captions += 1
+                continue
             
+            chosen_titles.append(title)
+            chosen.add(identity_str)
+            choices_list.append({"img": img, "title": title})
+    
+    if debug: print("num duplicates: {}".format(num_duplicate_captions))
+
     return choices_list
