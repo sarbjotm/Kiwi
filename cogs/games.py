@@ -437,8 +437,6 @@ class Games(commands.Cog):
         bet = int(bet)
         if bet < 1:
             await ctx.send("You must bet at least 1 Dodo Dollar")
-        #elif bet > 200:
-        #    await ctx.send("You can't bet too much, since this game might be too easy. 200 is the maximum bet.")
         else:
             user_id = ctx.message.author.id
             db, cur = connect_to_db()
@@ -470,8 +468,6 @@ class Games(commands.Cog):
             # Or just add a time-limit, but only when I finally decide to improve 
             embed_msg.set_image(url=target_pair["img"]) 
             embed_msg.set_footer(text="no_pain_no_gain={}".format(no_pain_no_gain))
-            #for (i, pair) in enumerate(pairs):
-            #    embed_msg.add_field(name="*Choice {}*".format(i), value=pair["title"])
             await ctx.send(embed=embed_msg)
 
             response = await wait_for_response(self, ctx, 20)
@@ -480,9 +476,8 @@ class Games(commands.Cog):
                 await ctx.send("You have 10s left, choose quickly!")
                 response = await wait_for_response(self, ctx, 10)
 
-
             # verify, then manage the money won / lost here
-            valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "1":1, "2":2, "3":3, "4":4 }
+            valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "choice 5":5, "1":1, "2":2, "3":3, "4":4, "5":5 }
             if not response in valid_responses:
                 line1 = "Invalid response, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
@@ -491,6 +486,7 @@ class Games(commands.Cog):
                     description=line1+line2, 
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
+
             elif valid_responses[response] != target_i+1:
                 line1 = "Wrong answer, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
@@ -499,6 +495,7 @@ class Games(commands.Cog):
                     description=line1+line2, 
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
+            
             else:
                 line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
                 embed_msg = discord.Embed(
@@ -526,7 +523,7 @@ def test():
     l = generate_random_images(4, True, True)
     print(str(l))
 
-    # collect 4 random title & img-src pairs. Choose 1 to be the main image.
+    # collect 5 random title & img-src pairs. Choose 1 to be the main image.
     pairs = generate_random_images(5, True)
     print(str(pairs))
     target_pair = pairs[random.randint(0, len(pairs)-1)]
