@@ -3,5 +3,4 @@ mysql-connector-python~=8.0.24
 bs4~=0.0.1
 requests~=2.25.1
 lxml
---upgrade discord-components
 beautifulsoup4~=4.9.3
