@@ -3,16 +3,17 @@ import os
 import mysql.connector
 import datetime
 from discord.ext import commands, tasks
-
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
+
 load_data()
 
 # --------------------------------------------------------------------------- #
 # Test cases -- uncomment when testing
 
-#from cogs.games import test
-#test()
+# from cogs.games import test
+# test()
 
 # --------------------------------------------------------------------------- #
 
@@ -21,6 +22,7 @@ intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
+
 
 @client.command()
 async def load(ctx, extension):
@@ -41,6 +43,7 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" to ,help"))
     print("Bot is Ready")
+    DiscordComponents(client)
     wishbirthday.start()
 
 
@@ -101,6 +104,25 @@ async def on_command_error(ctx, error):
 @client.command()
 async def ping(ctx):
     await ctx.send(f"Pong {str(round(client.latency, 2))}!")
+
+
+@client.command()
+async def testingtesting(ctx, msg):
+    await msg.channel.send(
+        "Testing Some Stuff",
+        components=[
+            Button(style=ButtonStyle.blue, label="Blue"),
+            Button(style=ButtonStyle.red, label="Red"),
+            Button(style=ButtonStyle.URL, label="url", url="https://example.org"),
+        ],
+    )
+
+    res = await client.wait_for("button_click")
+    if res.channel == msg.channel:
+        await res.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f'{res.component.label} clicked'
+        )
 
 
 @client.command(pass_context=True)
