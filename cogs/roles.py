@@ -377,8 +377,16 @@ class Utilities(commands.Cog):
             embed_description = embed_description + role + "\n"
         embed = discord.Embed(title="Collectable Roles List", description=embed_description, color=0xe392fe)
         await ctx.send(embed=embed)
+     
+    @commands.command()
+    async def keep(self, ctx):
+        await ctx.send("Wow wow wow wow this is very fancy, let me think on what I want to do")
+        await asyncio.sleep(3)
+        await ctx.send("Nope!")
 
-
+    
+    
+    
 # setup
 def setup(client):
     client.add_cog(Utilities(client))

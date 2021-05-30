@@ -3,7 +3,6 @@ import os
 import mysql.connector
 import datetime
 from discord.ext import commands, tasks
-from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
 
@@ -42,8 +41,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" to ,help"))
-    print("Bot is Ready")
-    DiscordComponents(client)
+    print("Kiwi is Ready")
     wishbirthday.start()
 
 
