@@ -413,7 +413,7 @@ class Utilities(commands.Cog):
                 db.commit()
                 money = money + random.randint(1, 1000)
 
-        await reply.edit(content='Task Completed')
+        await reply.edit(content=f'Task Completed. You earned {money}')
         c.close()
         db.close()
     
