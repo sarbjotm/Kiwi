@@ -396,14 +396,14 @@ class Utilities(commands.Cog):
         )
         c = db.cursor()
         for role in activateRoles:
-            for i in range(0, number):
+            while True:
                 c.execute(f"""SELECT {role}
                                 FROM dodos
                                 WHERE id = {ctx.message.author.id}
 
                 """)
                 role_count = ''.join(map(str, c.fetchall()[0]))
-                if role_count == 0:
+                if role_count == number or role_count < number:
                     break
 
                 c.execute(f"""UPDATE dodos
