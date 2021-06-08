@@ -425,6 +425,12 @@ class Utilities(commands.Cog):
         await reply.edit(content=f'Task Completed. You earned {money_gained}. Your new total is {money} {money_symbol}')
         c.close()
         db.close()
+
+    @keep.error
+    async def keep_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("Syntax for this command is: **,keep x** Where x is the number of roles you would like to keep from each role")
+        await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
     
     
 # setup
