@@ -421,6 +421,13 @@ class Utilities(commands.Cog):
                           WHERE id = {ctx.message.author.id}
                               """)
         db.commit()
+
+        c.execute(f"""SELECT {money}
+                        FROM dodos
+                        WHERE id = {ctx.message.author.id}
+
+        """)
+        money = ''.join(map(str, c.fetchall()[0]))
         money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
         await reply.edit(content=f'Task Completed. You earned {money_gained}. Your new total is {money} {money_symbol}')
         c.close()
