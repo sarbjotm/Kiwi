@@ -422,7 +422,7 @@ class Utilities(commands.Cog):
                               """)
         db.commit()
 
-        c.execute(f"""SELECT {money}
+        c.execute(f"""SELECT money
                         FROM dodos
                         WHERE id = {ctx.message.author.id}
 
