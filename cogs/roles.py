@@ -378,12 +378,15 @@ class Utilities(commands.Cog):
      
     @commands.command()
     async def keep(self, ctx, number):
-        if number <= -1:
-            await ctx.send("Enter a number that is greater to or equal to 0")
+
+        if not number.isdigit():
+            await ctx.send("Please enter a whole number for quantity.")
             return
 
-        if not quantity.isdigit():
-            await ctx.send("Please enter a whole number for quantity.")
+        await ctx.send("TESTING")
+
+        if number <= -1:
+            await ctx.send("Enter a number that is greater to or equal to 0")
             return
 
         reply = await ctx.send("Working on it! Please wait")
