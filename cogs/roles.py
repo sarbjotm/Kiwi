@@ -240,8 +240,6 @@ class Utilities(commands.Cog):
             c.execute(f"""SELECT {role.split()[1]}
                     FROM dodos
                     WHERE id = {ctx.message.author.id}
-    
-    
             """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) > 0:
@@ -379,12 +377,45 @@ class Utilities(commands.Cog):
         await ctx.send(embed=embed)
      
     @commands.command()
-    async def keep(self, ctx):
-        await ctx.send("Wow wow wow wow this is very fancy, let me think on what I want to do")
-        await asyncio.sleep(3)
-        await ctx.send("Nope!")
+    async def keep(self, ctx, number):
+        if number <= -1:
+            await ctx.send("Enter a number that is greater to or equal to 0")
+            return
 
-    
+        if not quantity.isdigit():
+            await ctx.send("Please enter a whole number for quantity.")
+            return
+
+        reply = await ctx.send("Working on it! Please wait")
+        money = 0
+        db = mysql.connector.connect(
+            host=os.environ['HOST'],
+            user=os.environ['USER'],
+            password=os.environ['PASSWORD'],
+            database=os.environ['DATABASE']
+        )
+        c = db.cursor()
+        for role in activateRoles:
+            for i in range(0, number):
+                c.execute(f"""SELECT {role}
+                                FROM dodos
+                                WHERE id = {ctx.message.author.id}
+
+                """)
+                role_count = ''.join(map(str, c.fetchall()[0]))
+                if role_count == 0:
+                    break
+
+                c.execute(f"""UPDATE dodos
+                  SET {role} = {role} - 1
+                  WHERE id = {ctx.message.author.id}
+                      """)
+                db.commit()
+                money = money + random.randint(1, 1000)
+
+        await reply.edit(content='Task Completed')
+        c.close()
+        db.close()
     
     
 # setup
