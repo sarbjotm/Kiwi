@@ -383,7 +383,7 @@ class Utilities(commands.Cog):
             await ctx.send("Please enter a whole number for quantity.")
             return
 
-        await ctx.send("TESTING")
+        number = int(number)
 
         if number <= -1:
             await ctx.send("Enter a number that is greater to or equal to 0")
@@ -406,7 +406,7 @@ class Utilities(commands.Cog):
 
                 """)
                 role_count = ''.join(map(str, c.fetchall()[0]))
-                if role_count == number or role_count < number:
+                if int(role_count) == number or int(role_count) < number:
                     break
 
                 c.execute(f"""UPDATE dodos
