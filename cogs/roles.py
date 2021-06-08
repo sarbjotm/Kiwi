@@ -390,7 +390,7 @@ class Utilities(commands.Cog):
             return
 
         reply = await ctx.send("Working on it! Please wait")
-        money = 0
+        money_gained = 0
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
@@ -414,9 +414,15 @@ class Utilities(commands.Cog):
                   WHERE id = {ctx.message.author.id}
                       """)
                 db.commit()
-                money = money + random.randint(1, 1000)
+                money_gained = money_gained + random.randint(1, 1000)
 
-        await reply.edit(content=f'Task Completed. You earned {money}')
+        c.execute(f"""UPDATE dodos
+                          SET money = money + {money_gained}
+                          WHERE id = {ctx.message.author.id}
+                              """)
+        db.commit()
+        money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        await reply.edit(content=f'Task Completed. You earned {money_gained}. Your new total is {money} {money_symbol}')
         c.close()
         db.close()
     
