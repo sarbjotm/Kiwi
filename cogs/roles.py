@@ -406,6 +406,15 @@ class Utilities(commands.Cog):
 
                 """)
                 role_count = ''.join(map(str, c.fetchall()[0]))
+
+                if int(role_count) == 0:
+                    role_remove = discord.utils.get(ctx.guild.roles, name=role)
+                    if role_remove in ctx.message.author.roles:
+                        await ctx.message.author.remove_roles(role_remove)
+                    role_remove = discord.utils.get(ctx.guild.roles, name=f"Dodo {role}")
+                    if role_remove in ctx.message.author.roles:
+                        await ctx.message.author.remove_roles(role_remove)
+
                 if int(role_count) == number or int(role_count) < number:
                     break
 
