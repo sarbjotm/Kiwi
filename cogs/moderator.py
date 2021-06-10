@@ -6,7 +6,6 @@ from discord.ext.commands import has_permissions, has_role
 from discord.utils import get
 import re
 
-
 from myconstants import pollOptions
 
 
@@ -32,12 +31,35 @@ class Moderator(commands.Cog):
         else:
             await ctx.send("Enter a valid hex colour code")
 
+    @createrole.error
+    async def createrole_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("No Permissions")
+        await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
     @commands.command()
+    @commands.has_role('Dodo Op')
     async def echo(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{statement}")
 
+    @echo.error
+    async def echo_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("No Permissions")
+        await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
+
+    @commands.command()
+    @commands.has_role('Dodo Op')
+    async def mute(self, ctx, member: discord.Member):
+        role = discord.utils.get(ctx.guild.roles, name="Muted")
+        await member.add_roles(role)
+
+    @mute.error
+    async def mute_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("No Permissions")
+        await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
 def setup(client):
     client.add_cog(Moderator(client))
