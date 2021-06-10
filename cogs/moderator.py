@@ -73,5 +73,17 @@ class Moderator(commands.Cog):
         await ctx.send("No Permissions")
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
+    @commands.command()
+    @commands.has_role('Dodo Op')
+    async def purge(self, ctx, amount=5):
+        await ctx.channel.purge(limit=amount + 1)
+
+    @purge.error
+    async def purge_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("No Permissions")
+        await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
+
+
 def setup(client):
     client.add_cog(Moderator(client))
