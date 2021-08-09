@@ -209,7 +209,10 @@ class Utilities(commands.Cog):
 
                 role_assign = discord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
                 await ctx.message.author.add_roles(role_assign)
-                await ctx.message.add_reaction("👍")
+                try:
+                    await ctx.message.add_reaction("👍")
+                except:
+                    await ctx.send("Cannot react to your message since you have me blocked, but letting you know you have performed the command.")
             else:
                 await ctx.send("You do not have that role.")
         c.close()
