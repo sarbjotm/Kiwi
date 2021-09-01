@@ -477,6 +477,7 @@ class Utilities(commands.Cog):
             embed = discord.Embed(title=f"Users who have the role {role_string} activated",
                                   description=embed_description, color=0xe392fe)
             await ctx.send(embed=embed)
+            print("WORKING")
             if len(embed_description2) > 1:
                 embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
                                        description=embed_description, color=0xe392fe)
