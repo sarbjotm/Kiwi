@@ -464,7 +464,7 @@ class Utilities(commands.Cog):
         embed_description2 = ""
         for i in range(0, len(role)):
             role_string = role_string + role[i][0].upper() + role[i][1:].lower() + " "
-
+        print(role_string)
         role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
         for m in ctx.guild.members:
             print(m)
