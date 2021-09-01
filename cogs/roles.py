@@ -465,25 +465,29 @@ class Utilities(commands.Cog):
         for i in range(0, len(role)):
             role_string = role_string + role[i][0].upper() + role[i][1:].lower() + " "
 
-        if get(ctx.guild.roles, name=role_string):
-            role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
-            for m in ctx.guild.members:
-                if role_discord in m.roles:
-                    if len(embed_description) + len(m.nick) + 1 <= 4098:
-                        embed_description = embed_description + m.nick + "\n"
-                    else:
-                        embed_description2 = embed_description2 + m.nick + "\n"
+        
+        role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
+        for m in ctx.guild.members:
+        	if role_discord in m.roles:
+				if len(embed_description) + len(m.nick) + 1 <= 4098:
+					embed_description = embed_description + m.nick + "\n"
+            	else:
+					embed_description2 = embed_description2 + m.nick + "\n"
 
-            embed = discord.Embed(title=f"Users who have the role {role_string} activated",
+        embed = discord.Embed(title=f"Users who have the role {role_string} activated",
                                   description=embed_description, color=0xe392fe)
-            await ctx.send(embed=embed)
-            print("WORKING")
-            if len(embed_description2) > 1:
-                embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
+        await ctx.send(embed=embed)
+        print("WORKING")
+        if len(embed_description2) > 1:
+			embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
                                        description=embed_description, color=0xe392fe)
-                await ctx.send(embed=embed2)
+            await ctx.send(embed=embed2)
 
-
+	@whois.error
+    async def whois_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("Error Occurred. Insert Generic message here")
+        await channel.send(f"{ctx.message.author} experienced a error using whois. {error}")
 # setup
 def setup(client):
     client.add_cog(Utilities(client))
