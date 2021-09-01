@@ -467,6 +467,8 @@ class Utilities(commands.Cog):
 
         role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
         for m in ctx.guild.members:
+            print(m)
+            print(role_discord in m.roles)
             if role_discord in m.roles:
                 if len(embed_description) + len(m.nick) + 1 <= 4098:
                     embed_description = embed_description + m.nick + "\n"
