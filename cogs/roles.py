@@ -483,7 +483,8 @@ class Utilities(commands.Cog):
                                        description=embed_description, color=0xe392fe)
             await ctx.send(embed=embed2)
 
-	@whois.error
+	
+    @whois.error
     async def whois_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Insert Generic message here")
