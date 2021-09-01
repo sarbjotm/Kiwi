@@ -457,7 +457,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
     @commands.command()
-    async def whois(self, *, role):
+    async def whois(self, ctx, *, role):
         role = role.split()
         role_string = ""
         embed_description = ""
