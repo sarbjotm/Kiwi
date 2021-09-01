@@ -4,7 +4,7 @@ import os
 import random
 import asyncio
 import mysql
-
+from discord.utils import get
 from myconstants import rolesList, activateRoles
 
 
@@ -140,11 +140,14 @@ class Utilities(commands.Cog):
             database=os.environ['DATABASE']
         )
         c = db.cursor()
-        role_assign = random.choices(rolesList, weights=[2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1])[0]
+        role_assign = random.choices(rolesList,
+                                     weights=[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                                              1, 1])[0]
         print(role_assign)
         role = discord.utils.get(ctx.guild.roles, name=role_assign)
         await ctx.message.author.add_roles(role)
-        await ctx.send(f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
+        await ctx.send(
+            f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
         role_assign = role_assign.split(" ")
         c.execute(f"""UPDATE dodos
                     SET {role_assign[1]} = {role_assign[1]} + 1
@@ -212,7 +215,8 @@ class Utilities(commands.Cog):
                 try:
                     await ctx.message.add_reaction("👍")
                 except:
-                    await ctx.send("Cannot react to your message since you have me blocked, but letting you know you have performed the command.")
+                    await ctx.send(
+                        "Cannot react to your message since you have me blocked, but letting you know you have performed the command.")
             else:
                 await ctx.send("You do not have that role.")
         c.close()
@@ -378,7 +382,7 @@ class Utilities(commands.Cog):
             embed_description = embed_description + role + "\n"
         embed = discord.Embed(title="Collectable Roles List", description=embed_description, color=0xe392fe)
         await ctx.send(embed=embed)
-     
+
     @commands.command()
     async def keep(self, ctx, number):
 
@@ -448,10 +452,37 @@ class Utilities(commands.Cog):
     @keep.error
     async def keep_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
-        await ctx.send("Syntax for this command is: **,keep x** Where x is the number of roles you would like to keep from each role")
+        await ctx.send(
+            "Syntax for this command is: **,keep x** Where x is the number of roles you would like to keep from each role")
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
-    
-    
+
+    @commands.command()
+    async def whois(self, *, role):
+        role = role.split()
+        role_string = ""
+        embed_description = ""
+        embed_description2 = ""
+        for i in range(0, len(role)):
+            role_string = role_string + role[i][0].upper() + role[i][1:].lower() + " "
+
+        if get(ctx.guild.roles, name=role_string):
+            role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
+            for m in ctx.guild.members:
+                if role_discord in m.roles:
+                    if len(embed_description) + len(m.nick) + 1 <= 4098:
+                        embed_description = embed_description + m.nick + "\n"
+                    else:
+                        embed_description2 = embed_description2 + m.nick + "\n"
+
+            embed = discord.Embed(title=f"Users who have the role {role_string} activated",
+                                  description=embed_description, color=0xe392fe)
+            await ctx.send(embed=embed)
+            if len(embed_description2) > 1:
+                embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
+                                       description=embed_description, color=0xe392fe)
+                await ctx.send(embed=embed2)
+
+
 # setup
 def setup(client):
     client.add_cog(Utilities(client))
