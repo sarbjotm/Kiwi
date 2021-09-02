@@ -457,7 +457,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
     @commands.command()
-    async def whois(self, ctx, *, role):
+    async def whois(self, ctx, *role):
         role = role.split()
         role_string = ""
         embed_description = ""
@@ -479,7 +479,7 @@ class Utilities(commands.Cog):
                               description=embed_description, color=0xe392fe)
         await ctx.send(embed=embed)
         print("WORKING")
-        if len(embed_description2) > 1:
+        if len(str(embed_description2)) > 1:
             embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
                                    description=embed_description, color=0xe392fe)
             await ctx.send(embed=embed2)
