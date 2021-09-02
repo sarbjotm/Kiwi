@@ -470,7 +470,7 @@ class Utilities(commands.Cog):
             print(m)
             print(role_discord in m.roles)
             if role_discord in m.roles:
-                if len(embed_description) + len(m.nick) + 1 <= 4098:
+                if len(embed_description) + len(str(m.nick)) + 1 <= 4098:
                     embed_description = embed_description + m.nick + "\n"
                 else:
                     embed_description2 = embed_description2 + m.nick + "\n"
@@ -489,6 +489,7 @@ class Utilities(commands.Cog):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Insert Generic message here")
         await channel.send(f"{ctx.message.author} experienced a error using whois. {error}")
+        
 
 
 # setup
