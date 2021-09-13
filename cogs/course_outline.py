@@ -29,12 +29,12 @@ class Outline(commands.Cog):
             embed_description = course_description[1].get_text() + "\n"
             course_title = soup.find_all('h1')
             course_title = str(course_title[1].get_text()).split()
-            embed_title = course_name.upper()+str(course_number) + " " + section + " - "
+            embed_title = course_name.upper()+str(course_number).upper() + " " + section + " - "
             for i in range(0,len(course_title) - 3):
-                embed_title = embed_title + course_title[i]
+                embed_title = embed_title + course_title[i] + " "
         
             try:
-                source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name}/{course_number}/{section}',timeout=5).text
+                source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name.lower()}/{course_number}/{section}',timeout=5).text
 
             except Timeout:
                 await ctx.send("Error accessing server data, please try again later")
