@@ -26,7 +26,12 @@ class Outline(commands.Cog):
         else:
             soup = BeautifulSoup(source,'lxml')
             course_description = soup.find_all('p')
-            embed_description = course_description[1].get_text() + "\n \n"
+            embed_description = course_description[1].get_text() + "\n"
+            course_title = soup.find_all('h1')
+            course_title = str(course_title[1].get_text()).split()
+            embed_title = course_name.upper()+str(course_number) + " " + section + " - "
+            for i in range(0,len(course_title) - 3):
+                embed_title = embed_title + course_title[i]
         
             try:
                 source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name}/{course_number}/{section}',timeout=5).text
@@ -36,18 +41,14 @@ class Outline(commands.Cog):
 
             else:
                 soup = BeautifulSoup(source, 'lxml')
-                embed_title = course_name.upper()+str(course_number) + " " + section + " - "
-                courses_name = soup.find("h2", {"id": "title"})
+                
+                courses_name = soup.find("h2", {"id": "title"}) #We are back at the main page since class not offered
                 
                 if courses_name is None:
                     embed_description = embed_description + "This course is not offered this term so other details are not known. "
                     embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
                     await ctx.send(embed=embed)
                     return
-                
-                courses_name = courses_name.text.split()
-                for i in range(0,len(courses_name)):
-                    embed_title = embed_title + courses_name[i] + " "
 
                 time = soup.find("li", {"class": "course-times"}).text
                 time = time.split()
