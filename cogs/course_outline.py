@@ -18,7 +18,7 @@ class Outline(commands.Cog):
         course_number = course[len(course)-3:]
         
         try:
-            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name}/{course_number}', timeout = 5).text
+            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name.lower()}/{course_number}', timeout = 5).text
             
         except Timeout:
             await ctx.send("Error accessing server data, please try again later")
