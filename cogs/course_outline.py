@@ -64,8 +64,8 @@ class Outline(commands.Cog):
             else:
                 soup = BeautifulSoup(source,'lxml')
                 course_description = soup.find_all('p')
-                print(course_description[1].get_text()) 
-                embed_description = embed_description + "\n" + course_description[1]
+                #print(course_description[1].get_text()) 
+                embed_description = embed_description + "\n" + course_description[1].get_text()
                 embed_description = embed_description.strip(" ")
                 embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
                 await ctx.send(embed=embed)
