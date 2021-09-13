@@ -14,7 +14,6 @@ class Outline(commands.Cog):
     # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command(aliases=['sfu'])
     async def outline(self, ctx, course, section = "D100"):
-        course = str(course).split(" ")
         await ctx.send(course)
         course_name = course[0:len(course)-3]
         await ctx.send(name)
