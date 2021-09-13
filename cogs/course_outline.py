@@ -41,7 +41,7 @@ class Outline(commands.Cog):
 
             for i in range(0, len(time)):
                 embed_description = embed_description + time[i] + " "
-                if time[i]: == "Location:" or time[i] == "Burnaby" or time[i] == "Surrey":
+                if time[i] == "Location:" or time[i] == "Burnaby" or time[i] == "Surrey":
                         embed_description = embed_description + "\n"
             
             embed_description = embed_description + "\n \n"
