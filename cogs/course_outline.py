@@ -14,11 +14,12 @@ class Outline(commands.Cog):
     # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command(aliases=['sfu'])
     async def outline(self, ctx, course, section = "D100"):
-
         course = str(course).split(" ")
+        await ctx.send(course)
         course_name = course[0:len(course)-3]
+        await ctx.send(name)
         course_number = course[len(course)-3:]
-        print(course)
+        await ctx.send(number)
         try:
             source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name}/{course_number}/{section}',timeout=5).text
 
@@ -26,6 +27,7 @@ class Outline(commands.Cog):
             await ctx.send("Error accessing server data, please try again later")
             
         else:
+            soup = BeautifulSoup(source, 'lxml')
             embed_description = ""
             await ctx.send(course_name)
             await ctx.send(course_number)
