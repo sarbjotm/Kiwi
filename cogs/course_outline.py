@@ -27,7 +27,10 @@ class Outline(commands.Cog):
             
         else:
             embed_description = ""
-            title = course_name[0] + " " + course_number[0] + " - "
+            await ctx.send(course_name)
+            await ctx.send(course_number)
+            #title = course_name[0] + " " + course_number[0] + " - "
+            title = "101 "
             courses_name = soup.find("h2", {"id": "title"}).text
             courses_name = courses_name.split()
             for i in range(0,len(courses_name)):
