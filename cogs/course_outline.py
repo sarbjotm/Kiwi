@@ -18,7 +18,8 @@ class Outline(commands.Cog):
         course = str(course).split(" ")
         course_name = course[0:len(course)-3]
         course_number = course[len(course)-3:]
-
+        print(course)
+        await ctx.send("TEST MESSAGE")
         try:
             source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course}/{course_number}/{section}',timeout=5).text
 
