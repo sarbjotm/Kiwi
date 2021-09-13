@@ -26,7 +26,7 @@ class Outline(commands.Cog):
         else:
             soup = BeautifulSoup(source, 'lxml')
             embed_description = ""
-            embed_title = course + " " + section + " - "
+            embed_title = course_name.upper()+str(course_number) + " " + section + " - "
             courses_name = soup.find("h2", {"id": "title"}).text
             courses_name = courses_name.split()
             for i in range(0,len(courses_name)):
@@ -55,7 +55,7 @@ class Outline(commands.Cog):
                 embed_description = embed_description + instructor[i] + " "
             
             try:
-	            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name}/{course_number}', timeout = 5).text
+		source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name}/{course_number}', timeout = 5).text
 	
             except Timeout:
                 await ctx.send("Error connecting to course description"
