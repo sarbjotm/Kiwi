@@ -69,7 +69,7 @@ class Outline(commands.Cog):
     @outline.error
     async def outline_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Error Occured. Make sure the class exists")
+        await ctx.send("Error Occured. Make sure the class exists and is offered in the Fall 2021 semester")
         await channel.send(f"{ctx.message.author} experienced a error using outline/sfu. {error}")
 
 
