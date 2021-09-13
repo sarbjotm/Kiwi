@@ -19,16 +19,15 @@ class Outline(commands.Cog):
         course_name = course[0:len(course)-3]
         course_number = course[len(course)-3:]
         print(course)
-        await ctx.send("TEST MESSAGE")
         try:
-            source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course}/{course_number}/{section}',timeout=5).text
+            source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name}/{course_number}/{section}',timeout=5).text
 
         except Timeout:
             await ctx.send("Error accessing server data, please try again later")
             
         else:
             embed_description = ""
-            title = courses_name + " " + course_number + " - "
+            title = course_name + " " + course_number + " - "
             courses_name = soup.find("h2", {"id": "title"}).text
             courses_name = courses_name.split()
             for i in range(0,len(courses_name)):
@@ -55,8 +54,6 @@ class Outline(commands.Cog):
                 embed_description = embed_description + instructor[i] + " "
             
             
-            print("TEST MESSAGE 2")
-            print(embed_description)
             embed = discord.Embed(title=f"title",
                               description=embed_description, color=0xa6192e)
             
