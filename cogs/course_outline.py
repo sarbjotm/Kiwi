@@ -37,8 +37,7 @@ class Outline(commands.Cog):
             else:
                 soup = BeautifulSoup(source, 'lxml')
                 embed_title = course_name.upper()+str(course_number) + " " + section + " - "
-                embed_description = embed_description + "\n \n"
-                courses_name = soup.find("h2", {"id": "title"}).text
+                courses_name = soup.find("h2", {"id": "title"})
                 
                 if courses_name is None:
                     embed_description = embed_description + "This course is not offered this term so other details are not known. "
@@ -46,7 +45,7 @@ class Outline(commands.Cog):
                     await ctx.send(embed=embed)
                     return
                 
-                courses_name = courses_name.split()
+                courses_name = courses_name.text.split()
                 for i in range(0,len(courses_name)):
                     embed_title = embed_title + courses_name[i] + " "
 
@@ -66,7 +65,8 @@ class Outline(commands.Cog):
 
                 for i in range(0, len(instructor)):
                     embed_description = embed_description + instructor[i] + " "
-
+                
+                embed_description = embed_description + "\n \n"
                 for i in range(0, len(time)):
                     embed_description = embed_description + time[i] + " "
                     if time[i] == "Location:" or time[i] == "Burnaby" or time[i] == "Surrey":
