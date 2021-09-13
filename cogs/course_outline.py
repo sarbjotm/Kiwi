@@ -49,16 +49,27 @@ class Outline(commands.Cog):
                     embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
                     await ctx.send(embed=embed)
                     return
-
-                time = soup.find("li", {"class": "course-times"}).text
-                time = time.split()
-                prereq = soup.find("li", {"class": "prereq"}).text
-                prereq = prereq.split()
-                instructor = soup.find("li", {"class": "instructor"}).text
-                instructor = instructor.split()
+                
+                time = soup.find("li", {"class": "course-times"})
+                if time is None:
+                    time = ["Course Times + Location:", "N/A"] 
+                else:
+                   time = time.text.split()
+                
+                prereq = soup.find("li", {"class": "prereq"})
+                if prereq is None:
+                    prereq = ["Prerequisites:", "N/A"]
+                else:
+                    prereq = prereq.text.split()
+                instructor = soup.find("li", {"class": "instructor"})
+                
+                if instructor is None:
+                    instructor = ["Instructor:", "N/A"]
+                else:
+                    instructor = instructor.text.split()
 
                 
-               
+                
                 for i in range(0, len(prereq)):
                     embed_description = embed_description + prereq[i] + " "
 
