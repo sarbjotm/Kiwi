@@ -54,8 +54,13 @@ class Outline(commands.Cog):
             for i in range(0, len(instructor)):
                 embed_description = embed_description + instructor[i] + " "
             
+            
+            print("TEST MESSAGE 2")
+            print(embed_description)
             embed = discord.Embed(title=f"title",
                               description=embed_description, color=0xa6192e)
+            
+            
             await ctx.send(embed=embed)
 
 
