@@ -14,11 +14,9 @@ class Outline(commands.Cog):
     # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command(aliases=['sfu'])
     async def outline(self, ctx, course, section = "D100"):
-        await ctx.send(course)
         course_name = course[0:len(course)-3]
-        await ctx.send(course_name)
         course_number = course[len(course)-3:]
-        await ctx.send(course_number)
+        
         try:
             source = requests.get(f'http://www.sfu.ca/outlines.html?2021/fall/{course_name}/{course_number}/{section}',timeout=5).text
 
@@ -28,14 +26,11 @@ class Outline(commands.Cog):
         else:
             soup = BeautifulSoup(source, 'lxml')
             embed_description = ""
-            await ctx.send(course_name)
-            await ctx.send(course_number)
-            #title = course_name[0] + " " + course_number[0] + " - "
-            title = "101 "
+            title = course_name[0] + " " + course_number[0] + " - "
             courses_name = soup.find("h2", {"id": "title"}).text
             courses_name = courses_name.split()
             for i in range(0,len(courses_name)):
-                title = title + course_name[i] + " "
+                title = title + courses_name[i] + " "
             
             time = soup.find("li", {"class": "course-times"}).text
             time = time.split()
