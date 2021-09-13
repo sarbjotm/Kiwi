@@ -37,7 +37,15 @@ class Outline(commands.Cog):
             else:
                 soup = BeautifulSoup(source, 'lxml')
                 embed_title = course_name.upper()+str(course_number) + " " + section + " - "
+                embed_description = embed_description + "\n \n"
                 courses_name = soup.find("h2", {"id": "title"}).text
+                
+                if courses_name is None:
+                    embed_description = embed_description + "This course is not offered this term so other details are not known. "
+                    embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
+                    await ctx.send(embed=embed)
+                    return
+                
                 courses_name = courses_name.split()
                 for i in range(0,len(courses_name)):
                     embed_title = embed_title + courses_name[i] + " "
@@ -49,8 +57,8 @@ class Outline(commands.Cog):
                 instructor = soup.find("li", {"class": "instructor"}).text
                 instructor = instructor.split()
 
-                embed_description = embed_description + "\n \n"
-
+                
+               
                 for i in range(0, len(prereq)):
                     embed_description = embed_description + prereq[i] + " "
 
