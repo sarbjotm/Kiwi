@@ -54,12 +54,23 @@ class Outline(commands.Cog):
             for i in range(0, len(instructor)):
                 embed_description = embed_description + instructor[i] + " "
             
+            try:
+	            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name}/{course_number}', timeout = 5).text
+	
+            except Timeout:
+                await ctx.send("Error connecting to course description"
             
-            embed = discord.Embed(title=embed_title,
+            else:
+                soup = BeautifulSoup(source,'lxml')
+                course_description = soup.find_all('p')
+                print(todayTemp[1].get_text()) 
+                embed_description = embed_description + "\n" + course_description[1]
+                embed_description = embed_description.strip(" ")
+                embed = discord.Embed(title=embed_title,
                               description=embed_description, color=0xa6192e)
             
             
-            await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
 
     # If user doesn't provide zodiac sign, or enters to many parametres
