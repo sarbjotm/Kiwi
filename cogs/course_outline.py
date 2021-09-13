@@ -54,11 +54,12 @@ class Outline(commands.Cog):
             for i in range(0, len(instructor)):
                 embed_description = embed_description + instructor[i] + " "
             
+            
             try:
                 source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name}/{course_number}', timeout = 5).text
-	
+
             except Timeout:
-                await ctx.send("Error connecting to course description"
+                await ctx.send("Error accessing server data, please try again later")
             
             else:
                 soup = BeautifulSoup(source,'lxml')
