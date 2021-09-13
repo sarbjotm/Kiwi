@@ -57,7 +57,7 @@ class Moderator(commands.Cog):
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
-        await channel.send(f"{ctx.message.author} muted {member} for {reason}
+        await channel.send(f"{ctx.message.author} muted {member} for {reason}")
 
     @mute.error
     async def mute_error(self, ctx, error):
@@ -71,7 +71,7 @@ class Moderator(commands.Cog):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(role)
         channel = ctx.guild.get_channel(int(853152816398729286))
-        await channel.send(f"{ctx.message.author} unmuted {member}
+        await channel.send(f"{ctx.message.author} unmuted {member}")
 
     @mute.error
     async def unmute_error(self, ctx, error):
@@ -97,7 +97,7 @@ class Moderator(commands.Cog):
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
-        await channel.send(f"{ctx.message.author} banned {member} for {reason}
+        await channel.send(f"{ctx.message.author} banned {member} for {reason}")
 
     @ban.error
     async def ban_error(self, ctx, error):
@@ -112,7 +112,7 @@ class Moderator(commands.Cog):
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
-        await channel.send(f"{ctx.message.author} muted {member} for {reason}
+        await channel.send(f"{ctx.message.author} muted {member} for {reason}")
 
     @kick.error
     async def kick_error(self, ctx, error):
