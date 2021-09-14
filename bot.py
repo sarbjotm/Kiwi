@@ -24,11 +24,15 @@ client.remove_command('help')
 
 
 @client.command()
+@commands.guild_only()
+@commands.has_any_role("Dodo Op")
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')
 
 
 @client.command()
+@commands.guild_only()
+@commands.has_any_role("Dodo Op")
 async def unload(ctx, extension):
     client.unload_extension(f'cogs.{extension}')
 
@@ -104,11 +108,13 @@ async def on_command_error(ctx, error):
 
 
 @client.command()
+@commands.guild_only()
 async def ping(ctx):
     await ctx.send(f"Pong {str(round(client.latency, 2))}!")
 
 
 @client.command()
+@commands.guild_only()
 async def testingtesting(ctx, msg):
     await msg.channel.send(
         "Testing Some Stuff",
@@ -128,6 +134,7 @@ async def testingtesting(ctx, msg):
 
 
 @client.command(pass_context=True)
+@commands.guild_only()
 async def help(ctx, category=''):
     category = str(category).lower()
     if category == 'astrology':

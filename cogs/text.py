@@ -8,6 +8,7 @@ class Text(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.guild_only()
     async def spongebob(self, ctx, *, message):
         new = list(message)
         for i in range(0, len(new)):
@@ -29,6 +30,7 @@ class Text(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using spongebob")
 
     @commands.command(aliases=["fw", "sparkles"])
+    @commands.guild_only()
     async def fireworks(self, ctx, *, message):
         emoji = "✨"
         message_list = message.split()
@@ -44,6 +46,7 @@ class Text(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using fireworks. {error}")
 
     @commands.command(aliases=["sp", "space", "spaces"])
+    @commands.guild_only()
     async def spaced(self, ctx, *, message):
         no_space_string = message.replace(" ", "")
         spaced_string = ""

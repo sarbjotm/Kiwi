@@ -15,6 +15,7 @@ class Moderator(commands.Cog):
 
     @has_permissions(manage_roles=True)
     @commands.command()
+    @commands.guild_only()
     async def createrole(self, ctx, colour, *, role):
         if get(ctx.guild.roles, name=f"{role}"):
             await ctx.send("Role already exists")
@@ -39,6 +40,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def echo(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{statement}")
@@ -51,6 +53,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def mute(self, ctx, member: discord.Member, reason = None):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.add_roles(role)
@@ -70,6 +73,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def unmute(self, ctx, member: discord.Member):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(role)
@@ -86,6 +90,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def purge(self, ctx, amount=5):
         await ctx.channel.purge(limit=amount + 1)
 
@@ -97,6 +102,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def ban(self, ctx, member: discord.Member, *, reason=None):
         await member.ban(reason=reason)
         channel = ctx.guild.get_channel(int(853152816398729286))
@@ -114,6 +120,7 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
+    @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason=None):
         await member.kick(reason=reason)
         channel = ctx.guild.get_channel(int(853152816398729286))

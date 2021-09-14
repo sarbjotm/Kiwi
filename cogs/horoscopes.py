@@ -13,6 +13,7 @@ class Horoscope(commands.Cog):
 
     # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command(aliases=['zodiac'])
+    @commands.guild_only()
     async def horoscope(self, ctx, zodiac):
         # Convert inputted zodiac sign to lower, to access dictionary value
         sign = str(zodiac).lower()

@@ -15,6 +15,7 @@ class Games(commands.Cog):
         self.client = client
 
     @commands.command(aliases=['21'])
+    @commands.guild_only()
     async def blackjack(self, ctx, bet):
         cards_dictionary = {
             "A": 4,
@@ -333,6 +334,7 @@ class Games(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
 
     @commands.command(aliases=['cup', 'cups'])
+    @commands.guild_only()
     async def cupshuffle(self, ctx, bet):
         bet = int(bet)
         if bet < 1:
@@ -433,6 +435,7 @@ class Games(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
     @commands.command(aliases=['match_image', 'img_match', 'match_img', 'trivia'])
+    @commands.guild_only()
     async def image_match(self, ctx, bet, no_pain_no_gain=False):
         bet = int(bet)
         if bet < 1:
