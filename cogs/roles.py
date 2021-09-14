@@ -13,6 +13,7 @@ class Utilities(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.guild_only()
     async def trade(self, ctx, prefix, role, member: discord.Member, other_prefix, other_role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -131,6 +132,7 @@ class Utilities(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 43200, commands.BucketType.user)
+    @commands.guild_only()
     async def collect(self, ctx):
         # await ctx.send("Command disabled while other commands are added/edited")
         db = mysql.connector.connect(
@@ -184,6 +186,7 @@ class Utilities(commands.Cog):
             await channel.send(f"{ctx.message.author} experienced a cooldown error. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def activate(self, ctx, *role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -229,6 +232,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using activate. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def show(self, ctx, *role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -266,6 +270,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using show. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def showall(self, ctx):
         kiwi_message = await ctx.send("Hacking in... please wait, will reply when finished")
         db = mysql.connector.connect(
@@ -291,6 +296,7 @@ class Utilities(commands.Cog):
         db.close()
 
     @commands.command()
+    @commands.guild_only()
     async def hide(self, ctx, *role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -328,6 +334,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using hide. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def hideall(self, ctx):
         kiwi_message = await ctx.send("Hacking in... please wait, will reply when finished")
         db = mysql.connector.connect(
@@ -347,6 +354,7 @@ class Utilities(commands.Cog):
         db.close()
 
     @commands.command()
+    @commands.guild_only()
     async def myroles(self, ctx):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -376,6 +384,7 @@ class Utilities(commands.Cog):
         db.close()
 
     @commands.command()
+    @commands.guild_only()
     async def roles(self, ctx):
         embed_description = ""
         for role in rolesList:
@@ -384,6 +393,7 @@ class Utilities(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
+    @commands.guild_only()
     async def keep(self, ctx, number):
 
         if not number.isdigit():
@@ -457,6 +467,7 @@ class Utilities(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def whois(self, ctx, *role):
         role = role.split()
         role_string = ""

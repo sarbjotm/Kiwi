@@ -9,6 +9,7 @@ class Weather(commands.Cog):
 
     # Weather function - get weather information
     @commands.command()
+    @commands.guild_only()
     async def weather(self, ctx, city):
         city = str(city)
         base_url = str(os.environ['BASE_URL'])

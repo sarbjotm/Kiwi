@@ -12,6 +12,7 @@ class Interactions(commands.Cog):
         self.client = client
 
     @commands.command(aliases=['wave'])
+    @commands.guild_only()
     async def waves(self, ctx, member: discord.Member):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} waves to {member.mention}")
@@ -24,6 +25,7 @@ class Interactions(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using wave")
 
     @commands.command(aliases=['hug'])
+    @commands.guild_only()
     async def hugs(self, ctx, member: discord.Member):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} gibs beeeeg hug to {member.mention}")
@@ -36,6 +38,7 @@ class Interactions(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using hug")
 
     @commands.command(aliases=['hugRole', 'hugsrole', 'grouphug'])
+    @commands.guild_only()
     async def hugsRole(self, ctx, role: discord.Role):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} gibs beeeeg group hug to {role.mention}")
@@ -48,6 +51,7 @@ class Interactions(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using grouphug")
 
     @commands.command(aliases=['waveRole', 'waverole', 'groupwave'])
+    @commands.guild_only()
     async def wavesRole(self, ctx, role: discord.Role):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} waves to {role.mention}")
@@ -60,10 +64,12 @@ class Interactions(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using wavesRole")
 
     @commands.command(aliases=["bringpeace"])
+    @commands.guild_only()
     async def banAlly(self, ctx):
         await ctx.send('Yes let us ban Ally!! Let us also ban Kyle!!')
 
     @commands.command()
+    @commands.guild_only()
     async def info(self, ctx, member: discord.Member = None):
         if member is None:
             member = ctx.message.author
