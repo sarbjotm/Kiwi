@@ -24,12 +24,12 @@ class Outline(commands.Cog):
             await ctx.send("Error accessing server data, please try again later")
             
         else:
-            if source == 404:
+            if source.status_code == 404:
                 embed = discord.Embed(title="Course Not Found",description="404 Error: This course does not exist", color=0xa6192e)
                 await ctx.send(embed=embed)
                 return
             
-            elif source != 200:
+            elif source.status_code != 200:
                 embed = discord.Embed(title="Error Accessing Webpage",description=f"{source} error. Try again later", color=0xa6192e)
                 await ctx.send(embed=embed)
                 return
