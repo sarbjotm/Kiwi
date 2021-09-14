@@ -26,7 +26,10 @@ class Outline(commands.Cog):
         else:
             soup = BeautifulSoup(source,'lxml')
             course_description = soup.find_all('p')
-            embed_description = course_description[1].get_text() + "\n"
+            if course_description[1].get_text().split()[0] == "Sorry,":
+                embed_description = ""
+            else:
+                embed_description = course_description[1].get_text() + "\n"
             course_title = soup.find_all('h1')
             course_title = str(course_title[1].get_text()).split()
             embed_title = course_name.upper()+str(course_number).upper() + " " + section + " - "
@@ -45,7 +48,7 @@ class Outline(commands.Cog):
                 courses_name = soup.find("h2", {"id": "title"}) #We are back at the main page since class not offered
                 
                 if courses_name is None:
-                    embed_description = embed_description + "This course is not offered this term so other details are not known. "
+                    embed_description = embed_description + "This course does not exist or is not offered this term so other details are not known. "
                     embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
                     await ctx.send(embed=embed)
                     return
