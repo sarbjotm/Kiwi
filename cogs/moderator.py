@@ -51,22 +51,33 @@ class Moderator(commands.Cog):
 
     @commands.command()
     @commands.has_role('Dodo Op')
-    async def mute(self, ctx, member: discord.Member):
+    async def mute(self, ctx, member: discord.Member, reason = None):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.add_roles(role)
+        channel = ctx.guild.get_channel(int(853152816398729286))
+        if reason is None:
+            reason = "N/A"
+        await channel.send(f"{ctx.message.author} muted {member} for {reason}")
+        embed = discord.Embed(title="Muted",description=f"You have been muted.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @mute.error
     async def mute_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("No Permissions")
         await channel.send(f"{ctx.message.author} experienced a error. {error}")
+        
 
     @commands.command()
     @commands.has_role('Dodo Op')
     async def unmute(self, ctx, member: discord.Member):
         role = discord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(role)
-
+        channel = ctx.guild.get_channel(int(853152816398729286))
+        await channel.send(f"{ctx.message.author} unmuted {member}")
+        embed = discord.Embed(title="Unmuted",description=f"You have been unmuted", color=0xff0000)
+        await member.send(embed=embed)
+        
     @mute.error
     async def unmute_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
@@ -88,6 +99,12 @@ class Moderator(commands.Cog):
     @commands.has_role('Dodo Op')
     async def ban(self, ctx, member: discord.Member, *, reason=None):
         await member.ban(reason=reason)
+        channel = ctx.guild.get_channel(int(853152816398729286))
+        if reason is None:
+            reason = "N/A"
+        await channel.send(f"{ctx.message.author} banned {member} for {reason}")
+        embed = discord.Embed(title="Banned",description=f"You have been banned.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @ban.error
     async def ban_error(self, ctx, error):
@@ -99,6 +116,12 @@ class Moderator(commands.Cog):
     @commands.has_role('Dodo Op')
     async def kick(self, ctx, member: discord.Member, *, reason=None):
         await member.kick(reason=reason)
+        channel = ctx.guild.get_channel(int(853152816398729286))
+        if reason is None:
+            reason = "N/A"
+        await channel.send(f"{ctx.message.author} muted {member} for {reason}")
+        embed = discord.Embed(title="Kicked",description=f"You have been kicked.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @kick.error
     async def kick_error(self, ctx, error):
