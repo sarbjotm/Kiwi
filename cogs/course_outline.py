@@ -18,18 +18,26 @@ class Outline(commands.Cog):
         course_number = course[len(course)-3:]
         
         try:
-            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name.lower()}/{course_number}', timeout = 5).text
+            source = requests.get(f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name.lower()}/{course_number}', timeout = 5)
             
         except Timeout:
             await ctx.send("Error accessing server data, please try again later")
             
         else:
-            soup = BeautifulSoup(source,'lxml')
+            if source == 404:
+                embed = discord.Embed(title="Course Not Found",description="404 Error: This course does not exist", color=0xa6192e)
+                await ctx.send(embed=embed)
+                return
+            
+            elif source != 200:
+                embed = discord.Embed(title="Error Accessing Webpage",description=f"{source} error. Try again later", color=0xa6192e)
+                await ctx.send(embed=embed)
+                return
+            
+            soup = BeautifulSoup(source.text,'lxml')
             course_description = soup.find_all('p')
-            if course_description[1].get_text().split()[0] == "Sorry,":
-                embed_description = ""
-            else:
-                embed_description = course_description[1].get_text() + "\n"
+            
+            embed_description = course_description[1].get_text() + "\n"
             course_title = soup.find_all('h1')
             course_title = str(course_title[1].get_text()).split()
             embed_title = course_name.upper()+str(course_number).upper() + " " + section + " - "
@@ -44,14 +52,6 @@ class Outline(commands.Cog):
 
             else:
                 soup = BeautifulSoup(source, 'lxml')
-                
-                courses_name = soup.find("h2", {"id": "title"}) #We are back at the main page since class not offered
-                
-                if courses_name is None:
-                    embed_description = embed_description + "This course does not exist or is not offered this term so other details are not known. "
-                    embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
-                    await ctx.send(embed=embed)
-                    return
                 
                 time = soup.find("li", {"class": "course-times"})
                 if time is None:
@@ -91,7 +91,7 @@ class Outline(commands.Cog):
                     
                     if time[i] == "Location:" or time[i] == "Burnaby" or time[i] == "Surrey":
                             embed_description = embed_description + "\n"
-
+                
                 embed_description = embed_description.strip(" ")
                 embed = discord.Embed(title=embed_title,description=embed_description, color=0xa6192e)
                 await ctx.send(embed=embed)
