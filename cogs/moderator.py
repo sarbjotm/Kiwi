@@ -58,12 +58,15 @@ class Moderator(commands.Cog):
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} muted {member} for {reason}")
+        embed = discord.Embed(title="Muted",description=f"You have been muted.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @mute.error
     async def mute_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("No Permissions")
         await channel.send(f"{ctx.message.author} experienced a error. {error}")
+        
 
     @commands.command()
     @commands.has_role('Dodo Op')
@@ -72,7 +75,9 @@ class Moderator(commands.Cog):
         await member.remove_roles(role)
         channel = ctx.guild.get_channel(int(853152816398729286))
         await channel.send(f"{ctx.message.author} unmuted {member}")
-
+        embed = discord.Embed(title="Unmuted",description=f"You have been unmuted", color=0xff0000)
+        await member.send(embed=embed)
+        
     @mute.error
     async def unmute_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
@@ -98,6 +103,8 @@ class Moderator(commands.Cog):
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} banned {member} for {reason}")
+        embed = discord.Embed(title="Banned",description=f"You have been banned.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @ban.error
     async def ban_error(self, ctx, error):
@@ -113,6 +120,8 @@ class Moderator(commands.Cog):
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} muted {member} for {reason}")
+        embed = discord.Embed(title="Kicked",description=f"You have been kicked.\nReason: {reason}", color=0xff0000)
+        await member.send(embed=embed)
 
     @kick.error
     async def kick_error(self, ctx, error):
