@@ -12,6 +12,7 @@ class MiscCommands(commands.Cog):
 
     # Poll Command
     @commands.command()
+    @commands.guild_only()
     async def poll(self, ctx, question, *options):
         size = len(options)
         # Yes or No Question so add thumbs up/down
@@ -50,6 +51,7 @@ class MiscCommands(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using poll")
 
     @commands.command(aliases=['rand'])
+    @commands.guild_only()
     async def randomnumber(self, ctx, num1, num2):
         if (num1.isdigit()) and (num2.isdigit()):
             if num1 > num2:
@@ -69,6 +71,7 @@ class MiscCommands(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using rand. {error}")
 
     @commands.command(aliases=['8ball'])
+    @commands.guild_only()
     async def _8ball(self, ctx, *, question):
         responses = ["As I see it, yes",
                      "Ask again later",
@@ -101,6 +104,7 @@ class MiscCommands(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using 8ball. {error}")
 
     @commands.command(aliases=["flip", "cf", "coin_flip"])
+    @commands.guild_only()
     async def coinflip(self, ctx):
         coin = random.randint(0, 1)
         if coin > 0:
@@ -109,11 +113,13 @@ class MiscCommands(commands.Cog):
             await ctx.send(f"Tails")
 
     @commands.command(aliases=["travisclap"])
+    @commands.guild_only()
     async def kittyclap(self, ctx):
         await ctx.message.delete(delay=0)
         await ctx.send("<a:travisclap:774127234184511498>")
 
     @commands.is_owner()
+    @commands.guild_only()
     @commands.command(aliases=["a", "anon", "announce"])
     async def announcement(self, ctx, *, statement):
         await ctx.message.delete(delay=0)

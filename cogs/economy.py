@@ -13,6 +13,7 @@ class Economy(commands.Cog):
         self.client = client
 
     @commands.command(aliases=['balance'])
+    @commands.guild_only()
     async def bal(self, ctx):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -34,6 +35,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 86400, commands.BucketType.user)
+    @commands.guild_only()
     async def daily(self, ctx):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -83,6 +85,7 @@ class Economy(commands.Cog):
             await channel.send(f"{ctx.message.author} experienced a cooldown error")
 
     @commands.command(aliases=['shopinfo'])
+    @commands.guild_only()
     async def shop(self, ctx):
         embed = discord.Embed(title="Kiwi Shop", color=0xe392fe)
         embed.set_thumbnail(url="https://i.pinimg.com/originals/6c/ce/3e/6cce3e4715c7886a4d599e3f029ef012.png")
@@ -91,6 +94,7 @@ class Economy(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
+    @commands.guild_only()
     async def sell(self, ctx, quantity, *role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -183,6 +187,7 @@ class Economy(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using sell. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def buy(self, ctx, quantity, *role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -246,6 +251,7 @@ class Economy(commands.Cog):
         await channel.send(f"{ctx.message.author} experienced a error using buy. {error}")
 
     @commands.command()
+    @commands.guild_only()
     async def leaderboard(self, ctx):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
@@ -272,6 +278,7 @@ class Economy(commands.Cog):
         db.close()
 
     @commands.command()
+    @commands.guild_only()
     async def give(self, ctx, member: discord.Member, money):
         db = mysql.connector.connect(
             host=os.environ['HOST'],

@@ -8,7 +8,9 @@ class Birthday(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    
     @commands.command(aliases=['birthday'])
+    @commands.guild_only()
     async def setbirthday(self, ctx, mmdd):
         db = mysql.connector.connect(
             host=os.environ['HOST'],

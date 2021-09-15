@@ -13,6 +13,7 @@ class Outline(commands.Cog):
 
     # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
     @commands.command(aliases=['sfu'])
+    @commands.guild_only()
     async def outline(self, ctx, course, section = "D100"):
         course_name = course[0:len(course)-3]
         course_number = course[len(course)-3:]
