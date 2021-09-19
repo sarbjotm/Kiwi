@@ -102,6 +102,8 @@ async def on_member_join(member):
 async def on_command_error(ctx, error):
     guild = client.get_guild(int(os.environ['GUILD']))
     channel = guild.get_channel(int(os.environ['CHANNEL']))
+    if ctx.message == ",hit":
+        return
     if isinstance(error, commands.CommandNotFound):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
