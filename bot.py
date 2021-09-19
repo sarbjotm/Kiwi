@@ -102,6 +102,7 @@ async def on_member_join(member):
 async def on_command_error(ctx, error):
     guild = client.get_guild(int(os.environ['GUILD']))
     channel = guild.get_channel(int(os.environ['CHANNEL']))
+    print(ctx.message)
     if ctx.message == ",hit":
         return
     if isinstance(error, commands.CommandNotFound):
@@ -115,7 +116,7 @@ async def ping(ctx):
     await ctx.send(f"Pong {str(round(client.latency, 2))}!")
 
 
-@client.command()
+@client.command(pass_context=True)
 @commands.guild_only()
 async def testingtesting(ctx, msg):
     await msg.channel.send(
