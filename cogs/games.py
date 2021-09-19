@@ -159,7 +159,7 @@ class Games(commands.Cog):
                         )
 
                         msg_str = msg.content.strip().lower()
-                        if msg_str == "hit":
+                        if msg_str == "hit" or msg_str == ",hit":
                             embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                             user_description = ''
                             user_card = random.choice(numbers)
