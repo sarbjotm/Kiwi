@@ -140,7 +140,7 @@ class Games(commands.Cog):
                 dealer_description = f"{dealer_description} \n \nScore: {mystery_score} or {mystery_score2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}", inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Hit or Stand",
+                embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Enter Hit or Stand",
                                 inline=False)
                 game_message = await ctx.send(embed=embed)
 
@@ -191,7 +191,7 @@ class Games(commands.Cog):
                                             inline=True)
                             embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                             embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
-                                            value="Hit or Stand", inline=False)
+                                            value="Enter Hit or Stand", inline=False)
                             await msg.delete(delay=0)
                             await game_message.edit(embed=embed)
                         else:
