@@ -111,9 +111,14 @@ async def on_command_error(ctx, error):
 @commands.guild_only()
 async def ping(ctx):
     await ctx.send(f"Pong {str(round(client.latency, 2))}!")
-
-
+    
 @client.command()
+@commands.guild_only()
+async def hit(ctx):
+    pass
+
+
+@client.command(pass_context=True)
 @commands.guild_only()
 async def testingtesting(ctx, msg):
     await msg.channel.send(
