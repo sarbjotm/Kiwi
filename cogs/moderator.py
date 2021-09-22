@@ -14,7 +14,7 @@ class Moderator(commands.Cog):
         self.client = client
 
     @has_permissions(manage_roles=True)
-    @commands.command(aliases=['newrole')
+    @commands.command(aliases=['newrole'])
     @commands.guild_only()
     async def createrole(self, ctx, colour, *role):
         if get(ctx.guild.roles, name=f"{role}"):
