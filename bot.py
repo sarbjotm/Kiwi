@@ -80,6 +80,9 @@ async def on_member_join(member):
     if 'h0nde' in member.name.lower() or 'honde' in member.name.lower():
         await member.ban(reason='h0nde')
         return
+    if str(member.id) == '445926522222542850':
+        await member.ban(reason='')
+        return
 
     db = mysql.connector.connect(
         host=os.environ['HOST'],
