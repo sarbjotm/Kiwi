@@ -125,7 +125,7 @@ class Interactions(commands.Cog):
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
             print(birthday)
-            if len(dob) == 4:
+            if len(birthday) == 4:
                 dob = months.get(str(birthday)[0] + str(birthday)[1])
                 dob = dob + " " + str(birthday)[2:]
                 print(dob)
