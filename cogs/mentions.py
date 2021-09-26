@@ -124,11 +124,15 @@ class Interactions(commands.Cog):
         if birthday == '0' or birthday == '0000':
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
-            dob = months.get(str(birthday)[0] + str(birthday)[1])
-            print(dob)
-            print(str(birthday)[2:])
-            #dob = dob + " " + str(birthday)[2:]
-            #embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
+            print(birthday)
+            if len(dob) == 4:
+                dob = months.get(str(birthday)[0] + str(birthday)[1])
+                dob = dob + " " + str(birthday)[2:]
+            else:
+                dob = months.get(str(birthday)[0]
+                dob = dob + " " + str(birthday)[1:]
+                                 
+        embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
         db.close()
