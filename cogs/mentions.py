@@ -80,7 +80,7 @@ class Interactions(commands.Cog):
             database=os.environ['DATABASE']
         )
         c = db.cursor()
-        empty_role = f"{member} has not obtained: "
+        empty_role = ""
         embed_description = "**Role Information** \n"
         user = str(member.id)
 
@@ -94,11 +94,15 @@ class Interactions(commands.Cog):
             if int(role_count) == 0:
                 empty_role = empty_role + f"Dodo {role}, "
             else:
-                embed_description = embed_description + role_count + " Dodo " + role + " roles" + "\n"
-        empty_role = empty_role.strip()
-        empty_role = empty_role.rstrip(empty_role[-1])
-        if empty_role is not None:
-            embed_description = embed_description + "\n" + empty_role
+                embed_description = embed_description + role_count + " Dodo " + role + " roles\n"
+        
+
+        if empty_role != "":
+            empty_role = empty_role.strip()
+            empty_role = empty_role.rstrip(empty_role[-1])
+            empty_role = empty_role + "have not been obtained"
+            embed_description = embed_description + "\n \n" + empty_role
+            
         embed = discord.Embed(title=member.display_name + "'s Information", description=embed_description,
                               color=0xe392fe)
         embed.set_thumbnail(url=member.avatar_url)
