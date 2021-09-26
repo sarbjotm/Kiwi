@@ -43,6 +43,21 @@ zodiacAvatars = ["", "https://www.horoscope.com/images-US/signs/profile-aries.pn
                  "https://www.horoscope.com/images-US/signs/profile-aquarius.png",
                  "https://www.horoscope.com/images-US/signs/profile-pisces.png"]
 
+months = {
+    "1": "January",
+    "2": "Febuary",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+}
+
 pollOptions = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 
 
