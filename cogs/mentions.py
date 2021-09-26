@@ -3,7 +3,7 @@ from discord.ext import commands
 import mysql
 import os
 
-from myconstants import rolesList, activateRoles
+from myconstants import rolesList, activateRoles, months
 
 
 # Mentions
@@ -118,7 +118,13 @@ class Interactions(commands.Cog):
         if birthday == '0' or birthday == '0000':
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
-            embed.add_field(name=f"Birthday", value=f"{birthday}", inline=True)
+            if str(birthday) == 4:
+                dob = months.get(str(birthday)[0] + str(birthday)[1])
+                dob = dob + " " + str(birthday)[2:]
+            else:
+                dob = months.get(str(birthday)[0])
+                dob = dob + " " + str(birthday)[1:]
+            embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
         db.close()
