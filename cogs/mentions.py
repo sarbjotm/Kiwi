@@ -128,10 +128,11 @@ class Interactions(commands.Cog):
             if len(dob) == 4:
                 dob = months.get(str(birthday)[0] + str(birthday)[1])
                 dob = dob + " " + str(birthday)[2:]
+                print(dob)
             else:
-                dob = months.get(str(birthday)[0]
+                dob = months.get(str(birthday))[0]
                 dob = dob + " " + str(birthday)[1:]
-                                 
+                print(dob)        
         embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
