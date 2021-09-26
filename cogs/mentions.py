@@ -80,7 +80,7 @@ class Interactions(commands.Cog):
             database=os.environ['DATABASE']
         )
         c = db.cursor()
-        empty_role = ""
+        empty_role = " "
         embed_description = "**Role Information** \n"
         user = str(member.id)
 
@@ -92,7 +92,7 @@ class Interactions(commands.Cog):
         """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) == 0:
-                empty_role = empty_role + f"Dodo {role}, "
+                empty_role = empty_role + "Dodo " + role
             else:
                 embed_description = embed_description + role_count + " Dodo " + role + " Roles\n"
         
@@ -123,9 +123,9 @@ class Interactions(commands.Cog):
         if birthday == '0' or birthday == '0000':
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
-            dob = months.get(str(birthday)[0] + str(birthday)[1])
-            dob = dob + " " + str(birthday)[2:]
-            embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
+            #dob = months.get(str(birthday)[0] + str(birthday)[1])
+            #dob = dob + " " + str(birthday)[2:]
+            #embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
         db.close()
