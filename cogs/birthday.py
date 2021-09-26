@@ -1,7 +1,6 @@
-from discord.ext import commands
+rom discord.ext import commands
 import os
 import mysql
-from myconstants import months
 
 
 # Mentions
@@ -22,8 +21,7 @@ class Birthday(commands.Cog):
         c = db.cursor()
         date = str(mmdd)
         if len(date) != 4:
-            await ctx.send("Please enter your birthdate in the following way: mmdd. For instance: ,setbirthday 0905 for Sept 5")
-       
+            await ctx.send("Please enter your birthdate in the following way: mmdd")
         elif (int(date[0:2]) > 12) or (int(date[0:2]) < 1):
             await ctx.send("Not a valid month. Enter your birthdate in the following way: mmdd")
         elif (int(date[2:4]) > 31) or (int(date[2:4]) < 1):
@@ -42,12 +40,9 @@ class Birthday(commands.Cog):
             c.execute(f"""UPDATE dodos
             SET birthday = {date}
             WHERE id = {ctx.message.author.id}
-
         """)
             db.commit()
-            dob = months.get(str(date)[0] + str(date)[1])
-            dob = dob + " " + str(date)[2:]
-            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday on then!")
+            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday then!")
         c.close()
         db.close()
 
