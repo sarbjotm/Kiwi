@@ -1,6 +1,7 @@
 from discord.ext import commands
 import os
 import mysql
+from myconstants import months
 
 
 # Mentions
@@ -44,7 +45,9 @@ class Birthday(commands.Cog):
 
         """)
             db.commit()
-            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday then!")
+            dob = months.get(str(date)[0] + str(date)[1])
+            dob = dob + " " + str(date)[2:]
+            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday on {dob}!")
         c.close()
         db.close()
 
