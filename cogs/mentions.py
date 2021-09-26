@@ -100,7 +100,7 @@ class Interactions(commands.Cog):
         if empty_role != " ":
             empty_role = empty_role.strip()
             empty_role = empty_role.rstrip(empty_role[-1])
-            empty_role = empty_role + "have not been obtained"
+            empty_role = empty_role + " have not been obtained"
             embed_description = embed_description + "\n \n" + empty_role
             
         embed = discord.Embed(title=member.display_name + "'s Information", description=embed_description,
