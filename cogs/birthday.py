@@ -47,7 +47,7 @@ class Birthday(commands.Cog):
             db.commit()
             dob = months.get(str(date)[0] + str(date)[1])
             dob = dob + " " + str(date)[2:]
-            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday on {dob}!")
+            await ctx.send(f"Added {date} as your birthday. Will wish you a happy birthday on then!")
         c.close()
         db.close()
 
