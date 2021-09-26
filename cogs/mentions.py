@@ -97,7 +97,7 @@ class Interactions(commands.Cog):
                 embed_description = embed_description + role_count + " Dodo " + role + " roles" + "\n"
         empty_role = empty_role.strip()
         empty_role = empty_role.rstrip(empty_role[-1])
-        embed_description = embed_description + empty_role
+        embed_description = embed_description + "\n" + empty_role
         embed = discord.Embed(title=member.display_name + "'s Information", description=embed_description,
                               color=0xe392fe)
         embed.set_thumbnail(url=member.avatar_url)
