@@ -94,14 +94,14 @@ class Interactions(commands.Cog):
             if int(role_count) == 0:
                 empty_role = empty_role + f"Dodo {role}, "
             else:
-                embed_description = embed_description + role_count + " Dodo " + role + " roles\n"
+                embed_description = embed_description + role_count + " Dodo " + role + " Roles\n"
         
 
-        if empty_role != "":
-            empty_role = empty_role.strip()
-            empty_role = empty_role.rstrip(empty_role[-1])
-            empty_role = empty_role + "have not been obtained"
-            embed_description = embed_description + "\n \n" + empty_role
+#         if empty_role != "":
+#             empty_role = empty_role.strip()
+#             empty_role = empty_role.rstrip(empty_role[-1])
+#             empty_role = empty_role + "have not been obtained"
+#             embed_description = embed_description + "\n \n" + empty_role
             
         embed = discord.Embed(title=member.display_name + "'s Information", description=embed_description,
                               color=0xe392fe)
