@@ -20,8 +20,9 @@ class Birthday(commands.Cog):
         )
         c = db.cursor()
         date = str(mmdd)
-        if len(date) < 3 or len(date) > 4:
-            await ctx.send("Please enter your birthdate in the following way: mmdd")
+        if len(date) != 4:
+            await ctx.send("Please enter your birthdate in the following way: mmdd. For instance: ,setbirthday 0905 for Sept 5")
+       
         elif (int(date[0:2]) > 12) or (int(date[0:2]) < 1):
             await ctx.send("Not a valid month. Enter your birthdate in the following way: mmdd")
         elif (int(date[2:4]) > 31) or (int(date[2:4]) < 1):
