@@ -92,7 +92,7 @@ class Interactions(commands.Cog):
         """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) == 0:
-                empty_role = empty_role + "Dodo " + role
+                empty_role = empty_role + "Dodo " + role + ", "
             else:
                 embed_description = embed_description + role_count + " Dodo " + role + " Roles\n"
         
