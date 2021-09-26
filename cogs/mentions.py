@@ -120,9 +120,9 @@ class Interactions(commands.Cog):
         """)
         birthday = ''.join(map(str, c.fetchall()[0]))
         embed.add_field(name=f"Money Balance", value=f"{money}", inline=True)
-        if birthday == '0' or birthday == '0000':
-            embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
-        else:
+#         if birthday == '0' or birthday == '0000':
+#             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
+#         else:
             #dob = months.get(str(birthday)[0] + str(birthday)[1])
             #dob = dob + " " + str(birthday)[2:]
             #embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
