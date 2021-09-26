@@ -37,10 +37,6 @@ class Economy(commands.Cog):
     @commands.cooldown(1, 86400, commands.BucketType.user)
     @commands.guild_only()
     async def daily(self, ctx):
-        if str(ctx.message.author.id) == "378752075787403265" or str(ctx.message.author.id) == "328440224130793472":
-            await ctx.send("Bonk")
-            return
-        
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
