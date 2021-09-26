@@ -68,7 +68,7 @@ async def wishbirthday():
     birthday_dodos = c.fetchall()
     for i in range(0, len(birthday_dodos)):
         username = int(birthday_dodos[i][0])
-        await channel.send(f"THIS IS JUST A TEST FOR <@{username}>!!")
+        await channel.send(f"Happy Birthday <@{username}>!!")
     c.close()
     db.close()
 
