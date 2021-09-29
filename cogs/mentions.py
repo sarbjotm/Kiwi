@@ -121,7 +121,7 @@ class Interactions(commands.Cog):
         birthday = ''.join(map(str, c.fetchall()[0]))
         embed.add_field(name=f"Money Balance", value=f"{money}", inline=True)
         #print(birthday)
-        if birthday == '0' or birthday == '0000':
+        if birthday == '0' or birthday == '0000' or birthday == 0 or birthday == 0000:
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
             print(birthday)
