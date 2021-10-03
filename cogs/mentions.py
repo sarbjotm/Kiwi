@@ -121,7 +121,7 @@ class Interactions(commands.Cog):
         
         embed.add_field(name=f"Money Balance", value=f"{money}", inline=True)
         
-        dob = ""
+        dob = "N/A"
         birthday = ''.join(map(str, c.fetchall()[0]))
         if birthday == '0' or birthday == '0000' or birthday == 0 or birthday == 0000:
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
@@ -134,7 +134,7 @@ class Interactions(commands.Cog):
                 dob = months.get(str(birthday)[0])
                 dob = dob + " " + str(birthday)[1:]
                 
-        embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
+            embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
         db.close()
