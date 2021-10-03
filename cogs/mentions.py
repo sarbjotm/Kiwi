@@ -118,9 +118,11 @@ class Interactions(commands.Cog):
                         WHERE id = {member.id}
 
         """)
-        birthday = ''.join(map(str, c.fetchall()[0]))
+        
         embed.add_field(name=f"Money Balance", value=f"{money}", inline=True)
-        #print(birthday)
+        
+        dob = ""
+        birthday = ''.join(map(str, c.fetchall()[0]))
         if birthday == '0' or birthday == '0000' or birthday == 0 or birthday == 0000:
             embed.add_field(name=f"Birthday", value=f"N/A", inline=True)
         else:
@@ -128,11 +130,10 @@ class Interactions(commands.Cog):
             if len(birthday) == 4:
                 dob = months.get(str(birthday)[0] + str(birthday)[1])
                 dob = dob + " " + str(birthday)[2:]
-                print(dob)
             else:
                 dob = months.get(str(birthday)[0])
                 dob = dob + " " + str(birthday)[1:]
-                print(dob)        
+                
         embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
