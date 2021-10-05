@@ -30,12 +30,13 @@ class Horoscope(commands.Cog):
                 soup = BeautifulSoup(source, 'lxml')
                 today_horoscope = soup.p.text
                 today_horoscope = str(today_horoscope)
-                today_horoscope = today_horoscope.replace("people", "dodos")
-                today_horoscope = today_horoscope.replace("somebody", "some dodo")
-                today_horoscope = today_horoscope.replace("person", "dodo")
-                today_horoscope = today_horoscope.replace("People", "dodos")
-                today_horoscope = today_horoscope.replace("Somebody", "some dodo")
-                today_horoscope = today_horoscope.replace("Person", "dodo")
+                today_horoscope = today_horoscope.replace("people", "Kiwi")
+                today_horoscope = today_horoscope.replace("somebody", "some kiwi")
+                today_horoscope = today_horoscope.replace("person", "Kiwi")
+                today_horoscope = today_horoscope.replace("People", "Kiwis")
+                today_horoscope = today_horoscope.replace("Somebody", "some kiwi")
+                today_horoscope = today_horoscope.replace("Person", "Kiwi")
+                today_horoscope = today_horoscope.replace("Kiwial", "personal")
                 today_horoscope = today_horoscope.replace(sign[0].upper() + sign[1:].lower(),
                                                         str(ctx.message.author)[:-5])
 
@@ -49,13 +50,13 @@ class Horoscope(commands.Cog):
                 today_career = today_career.replace("\n", " ")
 
                 embed = discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope",
-                                      description=f" **Daily Horoscope** \n \n {today_horoscope} \n \n **Today's Compatibility** \n \n",
+                                      description=f" **Daily Horoscope** \n \n Kiwi is all powerful. Obey Kiwi \n \n **Today's Compatibility** \n \n",
                                       color=0x968cec)
                 embed.set_thumbnail(url=zodiacAvatars[int(number)])
-                embed.add_field(name=f"**{today_love[0:5].strip()}** ❤", value=f"{today_love[7:].strip()}", inline=True)
-                embed.add_field(name=f"**{today_friend[0:11].strip()}** 🌻", value=f"{today_friend[13:].strip()}",
+                embed.add_field(name=f"**{today_love[0:5].strip()}** 🧡", value=f"Kiwi", inline=True)
+                embed.add_field(name=f"**{today_friend[0:11].strip()}** 🌻", value=f"Kiwi",
                                 inline=True)
-                embed.add_field(name=f"**{today_career[0:7].strip()}** 💰", value=f"{today_career[9:].strip()}",
+                embed.add_field(name=f"**{today_career[0:7].strip()}** 💰", value=f"Kiwi",
                                 inline=True)
                 embed.set_footer(text="https://www.horoscope.com/us/index.aspx")
                 await ctx.send(embed=embed)
@@ -65,7 +66,7 @@ class Horoscope(commands.Cog):
     # If user doesn't provide zodiac sign, or enters to many parametres
     @horoscope.error
     async def horoscope_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        channel = ctx.guild.get_channel(os.envsiron['CHANNEL'])
         await ctx.send("Error Occured. Syntax for this command is: **,horoscope zodiac_sign**")
         await channel.send(f"{ctx.message.author} experienced a error using horoscope. {error}")
 
