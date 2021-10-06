@@ -5,6 +5,7 @@ import datetime
 from discord.ext import commands, tasks
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
+import random
 
 load_data()
 
@@ -46,6 +47,11 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
+    halloween_roles = ["Skeletons", "Ghosts", "Jack-O-Lanterns", "Goblins", "Witches"]
+    for m in guild.members:
+        role = discord.utils.get(ctx.guild.roles, name=random.choices(halloween_roles))
+        await ctx.message.author.add_roles(role)
+
     wishbirthday.start()
 
 
