@@ -1,8 +1,8 @@
 import os, random, asyncio, requests
 import mysql
 
-from discord.ext import commands
-import discord
+from nextcord.ext import commands
+import nextcord
 
 from bs4 import BeautifulSoup
 
@@ -54,7 +54,7 @@ class Games(commands.Cog):
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
-                embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                 user_blackjack = False
                 user_cards = []
                 user_int = 0
@@ -160,7 +160,7 @@ class Games(commands.Cog):
 
                         msg_str = msg.content.strip().lower()
                         if msg_str == "hit" or msg_str == ",hit":
-                            embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                            embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                             user_description = ''
                             user_card = random.choice(numbers)
                             while cards_dictionary[user_card] == 0:
@@ -202,7 +202,7 @@ class Games(commands.Cog):
                         break
 
                 if user_int >= 22 and user_int2 >= 22:
-                    embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                    embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                     embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -259,7 +259,7 @@ class Games(commands.Cog):
                     dealer_description = f"{dealer_description} \n \n Score: {dealer_int} or {dealer_int2}"
 
                     if user_blackjack is True:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
@@ -274,7 +274,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_blackjack is True:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -288,7 +288,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif user_int < dealer_int < 22:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -302,7 +302,7 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_int == user_int:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -310,7 +310,7 @@ class Games(commands.Cog):
                         await game_message.edit(embed=embed)
 
                     else:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
@@ -349,7 +349,7 @@ class Games(commands.Cog):
                 gem = random.randint(1, 3)
                 embed_description = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
                 ending_description = ""
-                embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
+                embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
                                       color=0x99c0dd)
                 await ctx.send(embed=embed)
                 await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds '
@@ -373,7 +373,7 @@ class Games(commands.Cog):
                                 ending_description = ending_description + "🏆 "
                             else:
                                 ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                               color=0x99c0dd)
                         embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
@@ -387,7 +387,7 @@ class Games(commands.Cog):
                                 ending_description = ending_description + "❌ "
                             else:
                                 ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                               color=0x99c0dd)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         embed.set_footer(text=f"Winning Kiwi was number {gem}")
@@ -404,7 +404,7 @@ class Games(commands.Cog):
                                 ending_description = ending_description + "🏆 "
                             else:
                                 ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                               color=0x99c0dd)
                         embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
                         await ctx.send(embed=embed)
@@ -418,7 +418,7 @@ class Games(commands.Cog):
                                 ending_description = ending_description + "❌ "
                             else:
                                 ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                               color=0x99c0dd)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                         embed.set_footer(text=f"Winning Kiwi was number {gem}")
@@ -462,7 +462,7 @@ class Games(commands.Cog):
             desc = "**Choice 1:** \t`{}` \n**Choice 2:** \t`{}` \n**Choice 3:** \t`{}` \n**Choice 4:** \t`{}` \n**Choice 5:** \t`{}`\n\n".format(
                 pairs[0]["title"], pairs[1]["title"], pairs[2]["title"], pairs[3]["title"], pairs[4]["title"])
             end_line =  "You have 30s to respond with your choice of 1, 2, 3, 4, or 5."
-            embed_msg = discord.Embed(
+            embed_msg = nextcord.Embed(
                 title="Dodo Club Casino | Image Match Game", 
                 description=line1+desc+end_line, 
                 color=0x5ce6cc)
@@ -484,7 +484,7 @@ class Games(commands.Cog):
             if not response in valid_responses:
                 line1 = "Invalid response, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
-                embed_msg = discord.Embed(
+                embed_msg = nextcord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1+line2, 
                     color=0xf27961)
@@ -493,7 +493,7 @@ class Games(commands.Cog):
             elif valid_responses[response] != target_i+1:
                 line1 = "Wrong answer, you lose {} Dodo Dollars!\n".format(bet)
                 line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
-                embed_msg = discord.Embed(
+                embed_msg = nextcord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1+line2, 
                     color=0xf27961)
@@ -501,7 +501,7 @@ class Games(commands.Cog):
             
             else:
                 line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
-                embed_msg = discord.Embed(
+                embed_msg = nextcord.Embed(
                     title="Dodo Club Casino | Image Match Game", 
                     description=line1, 
                     color=0x70febc)
@@ -533,7 +533,7 @@ def test():
     print(str(target_pair))
 
     # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
-    embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
+    embed_msg = nextcord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
     # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
     # Or just add a time-limit.
     embed_msg.set_image(url=target_pair["img"]) 
