@@ -172,7 +172,8 @@ class Games(commands.Cog):
 
                     view.view = None
                     await view.wait()
-                    if view.value:
+                    print(view.value)
+                    if view.value is True:
                         await ctx.send("Got into if statement")
                         embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                         user_description = ''
