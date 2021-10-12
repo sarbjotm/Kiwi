@@ -1,6 +1,6 @@
-import discord
+import nextcord
 import os
-from discord.ext import commands
+from nextcord.ext import commands
 import requests
 
 class Weather(commands.Cog):
@@ -47,7 +47,7 @@ class Weather(commands.Cog):
             else:
                 logo = "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/63069/weather-icon-clipart-md.png"
 
-            embed = discord.Embed(title=f"Weather in {city}", color=0x6cf178)
+            embed = nextcord.Embed(title=f"Weather in {city}", color=0x6cf178)
             embed.set_thumbnail(url=logo)
             embed.add_field(name="Temperature in C", value=temperature_c, inline=True)
             embed.add_field(name="Temperature in F", value=temperature_f, inline=True)
