@@ -218,6 +218,7 @@ async def help(ctx, category=''):
 
 
 @client.command(pass_context=True)
+@commands.guild_only()
 async def about(ctx):
     embed = nextcord.Embed(title="About",
                           description="Kiwi is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi "
@@ -226,15 +227,15 @@ async def about(ctx):
                           color=0x66abf9)
     # embed.set_author(name="Amander",
     #                  icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
-    embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
-    embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
-    embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)',
-                    inline=False)
-    embed.add_field(name="Donations",
-                    value=f"I fianace this bot personally. Donations will help offset my costs of running and "
-                          f"maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:["
-                          f"https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)",
-                    inline=False)
+    # embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
+    # embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
+    # embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)',
+    #                 inline=False)
+    # embed.add_field(name="Donations",
+    #                 value=f"I fianace this bot personally. Donations will help offset my costs of running and "
+    #                       f"maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:["
+    #                       f"https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)",
+    #                 inline=False)
     await ctx.send(embed=embed)
 
 
