@@ -16,16 +16,16 @@ class HitOrStand(nextcord.ui.View):
         super().__init__()
         self.value = None
 
-        @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
-        async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-            await interaction.response.send_message('Hit', ephemeral=True)
-            self.value = True
+    @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
+    async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await interaction.response.send_message('Hit', ephemeral=True)
+        self.value = True
 
-        @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
-        async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-            await interaction.response.send_message('Stand', ephemeral=True)
-            self.value = False
-            self.stop()
+    @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
+    async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await interaction.response.send_message('Stand', ephemeral=True)
+        self.value = False
+        self.stop()
 
 
 class Games(commands.Cog):
