@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import random
 import os
 
@@ -17,7 +17,7 @@ class MiscCommands(commands.Cog):
         size = len(options)
         # Yes or No Question so add thumbs up/down
         if size == 0:
-            embed = discord.Embed(title=question, color=0xe392fe)
+            embed = nextcord.Embed(title=question, color=0xe392fe)
             embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Poll", value=question, inline=True)
             sent = await ctx.send(embed=embed)
@@ -30,12 +30,11 @@ class MiscCommands(commands.Cog):
             for i in range(0, len(options)):
                 description_embed = description_embed + pollOptions[i] + " " + options[i] + "\n"
 
-            embed = discord.Embed(title=question, color=0xe392fe)
+            embed = nextcord.Embed(title=question, color=0xe392fe)
             embed.set_thumbnail(url="https://i.imgur.com/Yx2cH7O.png")
             embed.add_field(name="Options", value=description_embed, inline=True)
             await ctx.message.delete(delay=0)
             sent = await ctx.send(embed=embed)
-            # Add 1 2 3 4 ... options as reacts
             for i in range(0, len(options)):
                 await sent.add_reaction(pollOptions[i])
 
@@ -94,7 +93,7 @@ class MiscCommands(commands.Cog):
                      "Yes – definitely",
                      " You may rely on it"
                      ]
-        await ctx.send(f"{ctx.message.author.mention}'s Question: {question}\nOutlook: {random.choice(responses)}")
+        await ctx.reply(f"{ctx.message.author.mention}'s Question: {question}\nOutlook: {random.choice(responses)}")
 
     @_8ball.error
     async def _8ball_error(self, ctx, error):
@@ -123,7 +122,7 @@ class MiscCommands(commands.Cog):
     @commands.command(aliases=["a", "anon", "announce"])
     async def announcement(self, ctx, *, statement):
         await ctx.message.delete(delay=0)
-        embed = discord.Embed(title="Announcement", description=statement, color=0xe392fe)
+        embed = nextcord.Embed(title="Announcement", description=statement, color=0xe392fe)
         embed.set_author(name="Kiwi",
                          icon_url="https://github.com/SFU-Dodo-Club/Kiwi/blob/main/kiwi.png")
         await ctx.send(embed=embed)
