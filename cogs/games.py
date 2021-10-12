@@ -162,7 +162,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                 value="Enter Hit or Stand",
                                 inline=False)
-                game_message = await ctx.send(embed=embed, view=view)
+                game_message = await ctx.send(embed=embed, view=view, ephemeral=True)
 
                 while 1:
                     if user_int >= 22 and user_int2 >= 22:
@@ -209,7 +209,7 @@ class Games(commands.Cog):
 
 
                         view = HitOrStand()
-                        await game_message.edit(embed=embed, view=view)
+                        await game_message.edit(embed=embed, view=view, ephemeral=True)
                     else:
                         break
                 await game_message.delete(delay=0)
