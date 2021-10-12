@@ -104,7 +104,7 @@ class Interactions(commands.Cog):
 
         embed = nextcord.Embed(title=member.display_name + "'s Information", description=embed_description,
                               color=0xe392fe)
-        embed.set_thumbnail(url=member.avatar_url)
+        #embed.set_thumbnail(url=member.avatar_url)
 
         c.execute(f"""SELECT money
                         FROM dodos
