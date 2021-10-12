@@ -173,9 +173,7 @@ class Games(commands.Cog):
 
                     view.view = None
                     await view.wait()
-                    print(view.value)
                     if view.value:
-                        await ctx.send("Got into if statement")
                         embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                         user_description = ''
                         user_card = random.choice(numbers)
@@ -200,7 +198,6 @@ class Games(commands.Cog):
                             user_int = user_int + user_card
                             user_int2 = user_int2 + user_card
 
-                        await ctx.send("Gave card values")
                         for cards in user_cards:
                             user_description = user_description + cards + " "
                         user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
@@ -210,19 +207,19 @@ class Games(commands.Cog):
                         embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                         value="Enter Hit or Stand", inline=False)
 
-                        await ctx.send("Got to before we send the embed")
+
                         view = HitOrStand()
                         await game_message.edit(embed=embed, view=view)
                     else:
                         break
-
+                await game_message.delete(delay=0)
                 if user_int >= 22 and user_int2 >= 22:
                     embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                     embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                     embed.add_field(name=f"Outcome", value=f"**Bust! You have lost {str(bet)}**", inline=False)
-                    await game_message.edit(embed=embed)
+                    await ctx.send(embed=embed)
                     c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -282,7 +279,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -294,9 +291,9 @@ class Games(commands.Cog):
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi got Blackjack!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -310,7 +307,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -323,7 +320,7 @@ class Games(commands.Cog):
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have tied! No one wins**", inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
 
                     else:
                         embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
@@ -331,7 +328,7 @@ class Games(commands.Cog):
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
