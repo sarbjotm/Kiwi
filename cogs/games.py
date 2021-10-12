@@ -10,6 +10,24 @@ from myconstants import numbers, suits, words_10k, words_20k_includes_swears
 from dbcontroller import connect_to_db, close_db, get_balance, update_money
 from async_util import wait_for_response
 
+
+class HitOrStand(nextcord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.value = None
+
+        @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
+        async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+            await interaction.response.send_message('Hit', ephemeral=True)
+            self.value = True
+
+        @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
+        async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+            await interaction.response.send_message('Stand', ephemeral=True)
+            self.value = False
+            self.stop()
+
+
 class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -54,6 +72,7 @@ class Games(commands.Cog):
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
+                view = HitOrStand()
                 embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                 user_blackjack = False
                 user_cards = []
@@ -142,7 +161,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                 embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Enter Hit or Stand",
                                 inline=False)
-                game_message = await ctx.send(embed=embed)
+                game_message = await ctx.send(embed=embed, view=view)
 
                 while 1:
                     if user_int >= 22 and user_int2 >= 22:
@@ -151,55 +170,47 @@ class Games(commands.Cog):
                     elif user_int == 21 or user_int2 == 21:
                         break
 
-                    try:
-                        msg = await self.client.wait_for(
-                            "message",
-                            timeout=20,
-                            check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
-                        )
 
-                        msg_str = msg.content.strip().lower()
-                        if msg_str == "hit" or msg_str == ",hit":
-                            embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
-                            user_description = ''
+                    await view.wait()
+                    if view.value:
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                        user_description = ''
+                        user_card = random.choice(numbers)
+                        while cards_dictionary[user_card] == 0:
                             user_card = random.choice(numbers)
-                            while cards_dictionary[user_card] == 0:
-                                user_card = random.choice(numbers)
 
-                            cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                        cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                        user_suit = random.choice(suits)
+                        while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
                             user_suit = random.choice(suits)
-                            while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
-                                user_suit = random.choice(suits)
-                            user_cards.append(str(user_card) + user_suit)
-                            if user_card == "J" or user_card == "K" or user_card == "Q":
-                                user_int = user_int + 10
-                                user_int2 = user_int2 + 10
-                            elif user_card == "A":
-                                user_int = user_int + 1
-                                if user_int2 + 11 <= 21:
-                                    user_int2 = user_int2 + 11
-                                else:
-                                    user_int2 = user_int2 + 1
+                        user_cards.append(str(user_card) + user_suit)
+                        if user_card == "J" or user_card == "K" or user_card == "Q":
+                            user_int = user_int + 10
+                            user_int2 = user_int2 + 10
+                        elif user_card == "A":
+                            user_int = user_int + 1
+                            if user_int2 + 11 <= 21:
+                                user_int2 = user_int2 + 11
                             else:
-                                user_int = user_int + user_card
-                                user_int2 = user_int2 + user_card
-
-                            for cards in user_cards:
-                                user_description = user_description + cards + " "
-                            user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
-                            embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
-                                            inline=True)
-                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                            embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
-                                            value="Enter Hit or Stand", inline=False)
-                            await msg.delete(delay=0)
-                            await game_message.edit(embed=embed)
+                                user_int2 = user_int2 + 1
                         else:
-                            await msg.delete(delay=0)
-                            break
+                            user_int = user_int + user_card
+                            user_int2 = user_int2 + user_card
 
-                    except asyncio.TimeoutError:
+                        for cards in user_cards:
+                            user_description = user_description + cards + " "
+                        user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
+                                        value="Enter Hit or Stand", inline=False)
+                        await msg.delete(delay=0)
+                        await game_message.edit(embed=embed, view=view)
+                    else:
+                        await msg.delete(delay=0)
                         break
+
 
                 if user_int >= 22 and user_int2 >= 22:
                     embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
