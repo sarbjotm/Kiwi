@@ -1,10 +1,10 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import os
 import random
 import asyncio
 import mysql
-from discord.utils import get
+from nextcord.utils import get
 from myconstants import rolesList, activateRoles
 
 
@@ -14,7 +14,7 @@ class Utilities(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def trade(self, ctx, prefix, role, member: discord.Member, other_prefix, other_role):
+    async def trade(self, ctx, prefix, role, member: nextcord.Member, other_prefix, other_role):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
@@ -79,15 +79,15 @@ class Utilities(commands.Cog):
                         
                                 """)
                         db.commit()
-                        role_assign = discord.utils.get(ctx.guild.roles, name=str(role_trading_for))
+                        role_assign = nextcord.utils.get(ctx.guild.roles, name=str(role_trading_for))
                         await ctx.message.author.add_roles(role_assign)
                         # Remove activated role and role colour if user does not have these roles anymore
                         if int(user_role_count) - 1 == 0:
-                            role_remove = discord.utils.get(ctx.guild.roles, name=str(role))
+                            role_remove = nextcord.utils.get(ctx.guild.roles, name=str(role))
                             if role_remove in ctx.message.author.roles:
                                 await ctx.message.author.remove_roles(role_remove)
 
-                            role_remove = discord.utils.get(ctx.guild.roles, name=str(role_trading))
+                            role_remove = nextcord.utils.get(ctx.guild.roles, name=str(role_trading))
                             if role_remove in ctx.message.author.roles:
                                 await ctx.message.author.remove_roles(role_remove)
 
@@ -104,15 +104,15 @@ class Utilities(commands.Cog):
                         
                                 """)
                         db.commit()
-                        role_assign = discord.utils.get(ctx.guild.roles, name=str(role_trading))
+                        role_assign = nextcord.utils.get(ctx.guild.roles, name=str(role_trading))
                         await member.add_roles(role_assign)
                         # Remove activated role and role colour if user does not have these roles anymore
                         if int(other_user_role_count) - 1 == 0:
-                            role_remove = discord.utils.get(ctx.guild.roles, name=str(other_role))
+                            role_remove = nextcord.utils.get(ctx.guild.roles, name=str(other_role))
                             if role_remove in member.roles:
                                 await member.remove_roles(role_remove)
 
-                            role_remove = discord.utils.get(ctx.guild.roles, name=str(role_trading_for))
+                            role_remove = nextcord.utils.get(ctx.guild.roles, name=str(role_trading_for))
                             if role_remove in member.roles:
                                 await member.remove_roles(role_remove)
 
@@ -146,7 +146,7 @@ class Utilities(commands.Cog):
                                      weights=[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                               1, 1])[0]
         print(role_assign)
-        role = discord.utils.get(ctx.guild.roles, name=role_assign)
+        role = nextcord.utils.get(ctx.guild.roles, name=role_assign)
         await ctx.message.author.add_roles(role)
         await ctx.send(
             f'You have drawn the {role} role! To activate it use the ,activate {role} command. Your next chance to roll is in 12 hours')
@@ -208,12 +208,12 @@ class Utilities(commands.Cog):
 
             if int(role_count) > 0:
                 for r in activateRoles:
-                    role_remove = discord.utils.get(ctx.guild.roles, name=r)
+                    role_remove = nextcord.utils.get(ctx.guild.roles, name=r)
                     if role_remove in ctx.message.author.roles:
                         await ctx.message.author.remove_roles(role_remove)
                         break
 
-                role_assign = discord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
+                role_assign = nextcord.utils.get(ctx.guild.roles, name=role.split(" ")[1])
                 await ctx.message.author.add_roles(role_assign)
                 try:
                     await ctx.message.add_reaction("👍")
@@ -254,7 +254,7 @@ class Utilities(commands.Cog):
             """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) > 0:
-                role = discord.utils.get(ctx.guild.roles, name=role)
+                role = nextcord.utils.get(ctx.guild.roles, name=role)
                 await ctx.message.author.add_roles(role)
                 await ctx.message.add_reaction("👍")
             else:
@@ -289,7 +289,7 @@ class Utilities(commands.Cog):
             """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) > 0:
-                role = discord.utils.get(ctx.guild.roles, name=role)
+                role = nextcord.utils.get(ctx.guild.roles, name=role)
                 await ctx.message.author.add_roles(role)
         await kiwi_message.edit(content='Task Completed')
         c.close()
@@ -318,7 +318,7 @@ class Utilities(commands.Cog):
             """)
             role_count = ''.join(map(str, c.fetchall()[0]))
             if int(role_count) > 0:
-                role = discord.utils.get(ctx.guild.roles, name=role)
+                role = nextcord.utils.get(ctx.guild.roles, name=role)
                 await ctx.message.author.remove_roles(role)
                 await ctx.message.add_reaction("👍")
             else:
@@ -345,7 +345,7 @@ class Utilities(commands.Cog):
         )
         c = db.cursor()
         for role in rolesList:
-            role_remove = discord.utils.get(ctx.guild.roles, name=role)
+            role_remove = nextcord.utils.get(ctx.guild.roles, name=role)
             if role_remove in ctx.message.author.roles:
                 await ctx.message.author.remove_roles(role_remove)
 
@@ -375,7 +375,7 @@ class Utilities(commands.Cog):
             role_count = ''.join(map(str, c.fetchall()[0]))
             embed_description = embed_description + role_count + " Dodo " + role + " roles" + "\n"
 
-        embed = discord.Embed(title=user + "'s Roles", description=embed_description, color=0xe392fe)
+        embed = nextcord.Embed(title=user + "'s Roles", description=embed_description, color=0xe392fe)
         embed.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
         # embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
@@ -389,7 +389,7 @@ class Utilities(commands.Cog):
         embed_description = ""
         for role in rolesList:
             embed_description = embed_description + role + "\n"
-        embed = discord.Embed(title="Collectable Roles List", description=embed_description, color=0xe392fe)
+        embed = nextcord.Embed(title="Collectable Roles List", description=embed_description, color=0xe392fe)
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -425,10 +425,10 @@ class Utilities(commands.Cog):
                 role_count = ''.join(map(str, c.fetchall()[0]))
 
                 if int(role_count) == 0:
-                    role_remove = discord.utils.get(ctx.guild.roles, name=role)
+                    role_remove = nextcord.utils.get(ctx.guild.roles, name=role)
                     if role_remove in ctx.message.author.roles:
                         await ctx.message.author.remove_roles(role_remove)
-                    role_remove = discord.utils.get(ctx.guild.roles, name=f"Dodo {role}")
+                    role_remove = nextcord.utils.get(ctx.guild.roles, name=f"Dodo {role}")
                     if role_remove in ctx.message.author.roles:
                         await ctx.message.author.remove_roles(role_remove)
 
@@ -454,7 +454,7 @@ class Utilities(commands.Cog):
 
         """)
         money = ''.join(map(str, c.fetchall()[0]))
-        money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
         await reply.edit(content=f'Task Completed. You earned {money_gained}. Your new total is {money} {money_symbol}')
         c.close()
         db.close()
@@ -476,7 +476,7 @@ class Utilities(commands.Cog):
         for i in range(0, len(role)):
             role_string = role_string + role[i][0].upper() + role[i][1:].lower() + " "
         role_string = role_string.strip()
-        role_discord = discord.utils.get(ctx.guild.roles, name=role_string)
+        role_discord = nextcord.utils.get(ctx.guild.roles, name=role_string)
         for m in ctx.guild.members:
             print(m)
             print(role_discord in m.roles)
@@ -486,12 +486,12 @@ class Utilities(commands.Cog):
                 else:
                     embed_description2 = embed_description2 + m.nick + "\n"
 
-        embed = discord.Embed(title=f"Users who have the role {role_string} activated",
+        embed = nextcord.Embed(title=f"Users who have the role {role_string} activated",
                               description=embed_description, color=0xe392fe)
         await ctx.send(embed=embed)
         print("WORKING")
         if len(str(embed_description2)) > 1:
-            embed2 = discord.Embed(title=f"Users who have the role {role_string} activated continued",
+            embed2 = nextcord.Embed(title=f"Users who have the role {role_string} activated continued",
                                    description=embed_description, color=0xe392fe)
             await ctx.send(embed=embed2)
 
