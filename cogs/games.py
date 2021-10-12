@@ -205,6 +205,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                         value="Enter Hit or Stand", inline=False)
 
+                        view = HitOrStand()
                         await game_message.edit(embed=embed, view=view)
                     else:
                         break
