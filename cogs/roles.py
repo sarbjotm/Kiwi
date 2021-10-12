@@ -376,8 +376,8 @@ class Utilities(commands.Cog):
             embed_description = embed_description + role_count + " Dodo " + role + " roles" + "\n"
 
         embed = nextcord.Embed(title=user + "'s Roles", description=embed_description, color=0xe392fe)
-        #embed.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        embed.set_thumbnail(url=ctx.message.author.avatar_url)
+        embed.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar.url)
+        #embed.set_thumbnail(url=ctx.message.author.avatar_url)
 
         await ctx.send(embed=embed)
         c.close()

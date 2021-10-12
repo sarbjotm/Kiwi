@@ -224,8 +224,8 @@ async def about(ctx):
                                       "is constantly being updated and is maintend by myself. Kiwi is currently being "
                                       "hosted on Heroku under a Hobby Plan and has an MySQL Database connected to it.",
                           color=0x66abf9)
-    embed.set_author(name="Amander",
-                     icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
+    # embed.set_author(name="Amander",
+    #                  icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
     embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)',
