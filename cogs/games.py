@@ -19,6 +19,7 @@ class HitOrStand(nextcord.ui.View):
     @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
     async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
         self.value = True
+        self.stop()
 
     @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
     async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
@@ -173,7 +174,7 @@ class Games(commands.Cog):
                     view.view = None
                     await view.wait()
                     print(view.value)
-                    if view.value is True:
+                    if view.value:
                         await ctx.send("Got into if statement")
                         embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                         user_description = ''
