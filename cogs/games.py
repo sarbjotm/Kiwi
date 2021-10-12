@@ -18,12 +18,10 @@ class HitOrStand(nextcord.ui.View):
 
     @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
     async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        await interaction.response.send_message('Hit', ephemeral=True)
         self.value = True
 
     @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
     async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
-        await interaction.response.send_message('Stand', ephemeral=True)
         self.value = False
         self.stop()
 
