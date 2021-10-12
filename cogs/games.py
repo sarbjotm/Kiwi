@@ -170,8 +170,10 @@ class Games(commands.Cog):
                     elif user_int == 21 or user_int2 == 21:
                         break
 
+                    view.view = None
                     await view.wait()
                     if view.value:
+                        await ctx.send("Got into if statement")
                         embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                         user_description = ''
                         user_card = random.choice(numbers)
@@ -196,6 +198,7 @@ class Games(commands.Cog):
                             user_int = user_int + user_card
                             user_int2 = user_int2 + user_card
 
+                        await ctx.send("Gave card values")
                         for cards in user_cards:
                             user_description = user_description + cards + " "
                         user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
@@ -205,6 +208,7 @@ class Games(commands.Cog):
                         embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                         value="Enter Hit or Stand", inline=False)
 
+                        await ctx.send("Got to before we send the embed")
                         view = HitOrStand()
                         await game_message.edit(embed=embed, view=view)
                     else:
