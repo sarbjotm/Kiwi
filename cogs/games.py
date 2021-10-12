@@ -163,7 +163,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
                                 value="Enter Hit or Stand",
                                 inline=False)
-                game_message = await ctx.send("Testing with strings", view=view)
+                game_message = await ctx.send(embed=embed, view=view)
 
                 while 1:
                     if user_int >= 22 and user_int2 >= 22:
@@ -350,7 +350,7 @@ class Games(commands.Cog):
     async def ask(self, ctx):
         """Asks the user a question to confirm something."""
         # We create the view and assign it to a variable so we can wait for it later.
-        view = Confirm()
+        view = HitOrStand()
         await ctx.send('Do you want to continue?', view=view)
         # Wait for the View to stop listening for input...
         await view.wait()
