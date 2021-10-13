@@ -17,7 +17,7 @@ class HitOrStand(nextcord.ui.View):
         self.ctx = ctx
         self.value = None
 
-    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+    async def interaction_check(self, interaction: nextcord.Interaction) -> bool:
         if interaction.user and interaction.user.id == self.ctx.author.id:
             return True
         else:
