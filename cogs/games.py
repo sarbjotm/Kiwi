@@ -34,6 +34,34 @@ class HitOrStand(nextcord.ui.View):
         self.value = False
         self.stop()
 
+class CupShuffle(nextcord.ui.View):
+    def __init__(self, ctx):
+        super().__init__(timeout = 20.0)
+        self.ctx = ctx
+        self.value = ""
+
+    async def interaction_check(self, interaction: nextcord.Interaction):
+        if interaction.user and interaction.user.id == self.ctx.author.id:
+            return True
+        else:
+            await interaction.response.send_message('This game is not yours', ephemeral=True)
+            return False
+
+    @nextcord.ui.button(label='1', style=nextcord.ButtonStyle.green)
+    async def one_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "1"
+        self.stop()
+
+    @nextcord.ui.button(label='2', style=nextcord.ButtonStyle.blurple)
+    async def two_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "2"
+        self.stop()
+
+    @nextcord.ui.button(label='3', style=nextcord.ButtonStyle.red)
+    async def three_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "3"
+        self.stop()
+
 
 class Games(commands.Cog):
     def __init__(self, client):
@@ -383,85 +411,55 @@ class Games(commands.Cog):
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
+                view = CupShuffle(ctx)
                 gem = random.randint(1, 3)
                 embed_description = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
                 ending_description = ""
                 embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
                                        color=0x99c0dd)
-                await ctx.send(embed=embed)
-                await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds '
-                               'I will randomly pick for you.')
+                embed.add_field(name=f"**Instructions", value=f"Where is the trophy hidden? You have 20 seconds until I pick for you",
+                                inline=True)
+                game_message = await  ctx.send(embed=embed, view=view)
+                await view.wait()
+                if view.value = "1":
+                    msg = 1
+                elif view.value = "2":
+                    msg = 2
+                elif view.value = "3":
+                    msg = 3
+                else:
+                    msg = random.randint(1,4)
 
-                try:
-                    msg = await self.client.wait_for(
-                        "message",
-                        timeout=20,
-                        check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
-                    )
-                    msg = msg.content.strip().lower()
-                    try:
-                        msg = int(msg)
-                    except:
-                        await ctx.send("Gonna give you a random variable for not following rules.")
-                        msg = random.randint(1, 4)
-                    if msg == gem:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                               color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await ctx.send(embed=embed)
+                if msg == gem:
+                    for i in range(1, 4):
+                        if i == gem:
+                            ending_description = ending_description + "🏆 "
+                        else:
+                            ending_description = ending_description + "🥝 "
+                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                           color=0x99c0dd)
+                    embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                    await game_message.edit(embed=embed
 
-                        update_money(db, cur, user_id, bet)
-                    else:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            elif i == msg:
-                                ending_description = ending_description + "❌ "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                               color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
-                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
-                        await ctx.send(embed=embed)
+                    update_money(db, cur, user_id, bet)
+                else:
+                    for i in range(1, 4):
+                        if i == gem:
+                            ending_description = ending_description + "🏆 "
+                        elif i == msg:
+                            ending_description = ending_description + "❌ "
+                        else:
+                            ending_description = ending_description + "🥝 "
+                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                           color=0x99c0dd)
+                    embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                    embed.set_footer(text=f"Winning Kiwi was number {gem}")
+                    await game_message.edit(embed=embed
 
-                        update_money(db, cur, user_id, -bet)
+                    update_money(db, cur, user_id, -bet)
 
-                except asyncio.TimeoutError:
-                    user_guess = random.randint(1, 3)
-                    await ctx.send(f"Assuming you meant to guess kiwi number: {user_guess}")
-                    if user_guess == gem:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                               color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await ctx.send(embed=embed)
 
-                        update_money(db, cur, user_id, bet)
-                    else:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            elif i == user_guess:
-                                ending_description = ending_description + "❌ "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                               color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
-                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
-                        await ctx.send(embed=embed)
 
-                        update_money(db, cur, user_id, -bet)
 
             close_db(cur, db)
 
