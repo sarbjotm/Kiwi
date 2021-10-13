@@ -418,7 +418,7 @@ class Games(commands.Cog):
                 ending_description = ""
                 embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
                                        color=0x99c0dd)
-                embed.add_field(name=f"**Instructions", value=f"Where is the trophy hidden? You have 20 seconds until I pick for you",
+                embed.add_field(name=f"Instructions", value=f"Where is the trophy hidden? You have 20 seconds until I pick for you",
                                 inline=True)
                 game_message = await ctx.send(embed=embed, view=view)
                 await view.wait()
