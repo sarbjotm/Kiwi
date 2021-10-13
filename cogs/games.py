@@ -168,7 +168,7 @@ class Games(commands.Cog):
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}", inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                 embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
-                                value="Enter Hit or Stand",
+                                value="Hit or Stand",
                                 inline=False)
                 game_message = await ctx.send(embed=embed, view=view)
 
@@ -213,7 +213,7 @@ class Games(commands.Cog):
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
-                                        value="Enter Hit or Stand", inline=False)
+                                        value="Hit or Stand", inline=False)
 
 
                         view = HitOrStand(ctx)
