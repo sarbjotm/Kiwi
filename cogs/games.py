@@ -70,7 +70,7 @@ class Games(commands.Cog):
 
     @commands.command(aliases=['21'])
     @commands.guild_only()
-    async def blackjack(self, ctx, bet):
+    async def blackjack(self, ctx, bet = 0):
         cards_dictionary = {
             "A": 4,
             2: 4,
@@ -380,24 +380,11 @@ class Games(commands.Cog):
 
     @blackjack.error
     async def blackjack_error(self, ctx, error):
-        #channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
+        await ctx.send("Make sure to bet some money! For example: ,blackjack 100")
+        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
 
-    @commands.command()
-    @commands.guild_only()
-    async def ask(self, ctx):
-        """Asks the user a question to confirm something."""
-        # We create the view and assign it to a variable so we can wait for it later.
-        view = HitOrStand(ctx)
-        await ctx.send('Do you want to continue?', view=view)
-        # Wait for the View to stop listening for input...
-        await view.wait()
-        if view.value is None:
-            print('Timed out...')
-        elif view.value:
-            print('Confirmed...')
-        else:
-            print('Cancelled...')
+
 
     @commands.command(aliases=['cup', 'cups'])
     @commands.guild_only()
