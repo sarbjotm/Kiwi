@@ -12,8 +12,8 @@ from async_util import wait_for_response
 
 
 class HitOrStand(nextcord.ui.View):
-    def __init__(self, ctx, *, timeout = 20.0):
-        super().__init__(timeout=timeout)
+    def __init__(self, ctx):
+        super().__init__()
         self.ctx = ctx
         self.value = None
 
@@ -352,7 +352,7 @@ class Games(commands.Cog):
     @blackjack.error
     async def blackjack_error(self, ctx, error):
         #channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
+        await ctx.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
 
     @commands.command()
     @commands.guild_only()
