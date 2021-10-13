@@ -50,6 +50,7 @@ class CupShuffle(nextcord.ui.View):
     @nextcord.ui.button(label='1', style=nextcord.ButtonStyle.green)
     async def one_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
         self.value = "1"
+        print("HELLO")
         self.stop()
 
     @nextcord.ui.button(label='2', style=nextcord.ButtonStyle.blurple)
@@ -421,6 +422,7 @@ class Games(commands.Cog):
                                 inline=True)
                 game_message = await  ctx.send(embed=embed, view=view)
                 await view.wait()
+                print(view.value)
                 if view.value == "1":
                     msg = 1
                 elif view.value == "2":
