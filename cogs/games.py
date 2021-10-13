@@ -420,9 +420,9 @@ class Games(commands.Cog):
                                        color=0x99c0dd)
                 embed.add_field(name=f"**Instructions", value=f"Where is the trophy hidden? You have 20 seconds until I pick for you",
                                 inline=True)
-                game_message = await  ctx.send(embed=embed, view=view)
+                game_message = await ctx.send(embed=embed, view=view)
                 await view.wait()
-                print(view.value)
+
                 if view.value == "1":
                     msg = 1
                 elif view.value == "2":
@@ -431,7 +431,7 @@ class Games(commands.Cog):
                     msg = 3
                 else:
                     msg = random.randint(1,4)
-
+                print("Assigned values...")
                 if msg == gem:
                     for i in range(1, 4):
                         if i == gem:
@@ -441,7 +441,8 @@ class Games(commands.Cog):
                     embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                            color=0x99c0dd)
                     embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                    await game_message.edit(embed=embed)
+                    await game_message.delete(delay=0)
+                    await ctx.send(embed=embed)
                     update_money(db, cur, user_id, bet)
 
             close_db(cur, db)
