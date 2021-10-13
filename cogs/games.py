@@ -432,6 +432,7 @@ class Games(commands.Cog):
                 else:
                     msg = random.randint(1,4)
                 print("Assigned values...")
+                await game_message.delete(delay=0)
                 if msg == gem:
                     for i in range(1, 4):
                         if i == gem:
@@ -441,7 +442,6 @@ class Games(commands.Cog):
                     embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                            color=0x99c0dd)
                     embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                    await game_message.delete(delay=0)
                     await ctx.send(embed=embed)
                     update_money(db, cur, user_id, bet)
                 else:
@@ -452,7 +452,7 @@ class Games(commands.Cog):
                             ending_description = ending_description + "❌ "
                         else:
                             ending_description = ending_description + "🥝 "
-                    embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                           color=0x99c0dd)
                     embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
                     embed.set_footer(text=f"Winning Kiwi was number {gem}")
