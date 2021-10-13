@@ -421,11 +421,11 @@ class Games(commands.Cog):
                                 inline=True)
                 game_message = await  ctx.send(embed=embed, view=view)
                 await view.wait()
-                if view.value = "1":
+                if view.value == "1":
                     msg = 1
-                elif view.value = "2":
+                elif view.value == "2":
                     msg = 2
-                elif view.value = "3":
+                elif view.value == "3":
                     msg = 3
                 else:
                     msg = random.randint(1,4)
