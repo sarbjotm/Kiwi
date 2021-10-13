@@ -1,8 +1,8 @@
-import discord
+import nextcord
 import os
 import mysql.connector
 import datetime
-from discord.ext import commands, tasks
+from nextcord.ext import commands, tasks
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
 
@@ -17,8 +17,8 @@ load_data()
 # --------------------------------------------------------------------------- #
 
 
-intents = discord.Intents.default()
-intents.members = True
+intents = nextcord.Intents.default()
+nextcord.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
 
@@ -44,7 +44,7 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=" ,help"))
+    await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
     wishbirthday.start()
 
@@ -113,53 +113,32 @@ async def on_command_error(ctx, error):
 @client.command()
 @commands.guild_only()
 async def ping(ctx):
-    await ctx.send(f"Pong {str(round(client.latency, 2))}!")
+    await ctx.reply(f"Pong {str(round(client.latency, 2))}!")
     
 @client.command()
 @commands.guild_only()
 async def hit(ctx):
     pass
 
-
-@client.command(pass_context=True)
-@commands.guild_only()
-async def testingtesting(ctx, msg):
-    await msg.channel.send(
-        "Testing Some Stuff",
-        components=[
-            Button(style=ButtonStyle.blue, label="Blue"),
-            Button(style=ButtonStyle.red, label="Red"),
-            Button(style=ButtonStyle.URL, label="url", url="https://example.org"),
-        ],
-    )
-
-    res = await client.wait_for("button_click")
-    if res.channel == msg.channel:
-        await res.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f'{res.component.label} clicked'
-        )
-
-
 @client.command(pass_context=True)
 @commands.guild_only()
 async def help(ctx, category=''):
     category = str(category).lower()
     if category == 'astrology':
-        embed = discord.Embed(title="Astrology and Birthday", description="**,horoscope zodiac** - This will return your \
+        embed = nextcord.Embed(title="Astrology and Birthday", description="**,horoscope zodiac** - This will return your \
             Daily Horoscope based off of your zodiac sign \n\n \
             **,birthday mmdd** - This will set your birthday! Kiwi will wish you a happy birthday on your special day",
                               color=0x66abf9)
 
     elif category == 'decision':
-        embed = discord.Embed(title="Decision Making",
+        embed = nextcord.Embed(title="Decision Making",
                               description="**,8ball question** - ask Kiwi a question \n\n**,coinflip** - flip a coin "
                                           "\n\n**,poll \"Question\" option1 option2 ... option10** - Display a poll "
                                           "with n (2 <= n <= 10) options or a yes/no without any options shown",
                               color=0x66abf9)
 
     elif category == 'economy':
-        embed = discord.Embed(title="Economy",
+        embed = nextcord.Embed(title="Economy",
                               description="**,bal** - View your balance \n\n**,buy quantity role** Buy a role \n\n "
                                           "**,daily** - Recieve between 1-1000 discord dollars \n\n**,give @User x** "
                                           "- Give @User x dodo dollars \n\n**,leaderboard** - See top 5 Richest Dodos "
@@ -168,21 +147,21 @@ async def help(ctx, category=''):
                               color=0x66abf9)
 
     elif category == 'help':
-        embed = discord.Embed(title="Help",
+        embed = nextcord.Embed(title="Help",
                               description="**,help** - To view all categories otherwise do **,help category** for "
                                           "info regarding the specified category \n\n **,ping** - See if bot is "
                                           "offline \n\n",
                               color=0x66abf9)
 
     elif category == 'mention':
-        embed = discord.Embed(title="Mention",
+        embed = nextcord.Embed(title="Mention",
                               description="**,hugs @user** - Gives the selected user a hug \n\n**,hugsRole @role** - "
                                           "group hug \n\n **,waves @user** - waves at a user \n\n**,wavesRole @role** "
                                           "- waves at a group \n\n",
                               color=0x66abf9)
 
     elif category == 'minigames':
-        embed = discord.Embed(title="Minigames",
+        embed = nextcord.Embed(title="Minigames",
                               description="**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount "
                                           "\n\n**,cup bet** - Play the classic 'guess where the gem' is game, "
                                           "pick the right cup and win!"
@@ -193,13 +172,13 @@ async def help(ctx, category=''):
                               color=0x66abf9)
 
     elif category == 'misc':
-        embed = discord.Embed(title="Misc",
+        embed = nextcord.Embed(title="Misc",
                               description="**,randomnumber a b ** - display rng [a,b] \n\n**,kittyclap** - send a "
                                           "kittyclap",
                               color=0x66abf9)
 
     elif category == 'role':
-        embed = discord.Embed(title="Role Based",
+        embed = nextcord.Embed(title="Role Based",
                               description="**,collect** - obtain a role! 12 hour cooldown \n\n**,activate role** - "
                                           "activate a ,collect role\n\n**,trade your role @user their role** - trade "
                                           "roles \n\n**,myroles** - display a list of your roles \n\n**,"
@@ -209,19 +188,19 @@ async def help(ctx, category=''):
                               color=0x66abf9)
 
     elif category == 'string':
-        embed = discord.Embed(title="String",
+        embed = nextcord.Embed(title="String",
                               description="**,fw message** - add sparkles between words \n**,spaced message** - "
                                           "space out your message \n\n**,spongebob message** - SpOnGeBoB MeMe",
                               color=0x66abf9)
 
     elif category == "weather":
-        embed = discord.Embed(title="Misc",
+        embed = nextcord.Embed(title="Misc",
                               description="**,weather city** - Find out the weather in your city! Sometimes you might "
                                           "have to add the country code, eg: London,CA",
                               color=0x66abf9)
 
     else:
-        embed = discord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
+        embed = nextcord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
             **,help Astrology** - To view commands based on Astrology such as zodiac and birthday \n\n\
             **,help Decision** - To view commands to help your decision making such as coinflip and 8ball \n\n\
             **,help Economy** - To view commands based on Economy such as daily and selling/buying roles \n\n\
@@ -239,8 +218,9 @@ async def help(ctx, category=''):
 
 
 @client.command(pass_context=True)
+@commands.guild_only()
 async def about(ctx):
-    embed = discord.Embed(title="About",
+    embed = nextcord.Embed(title="About",
                           description="Kiwi is one of SFU Dodo Club's mascots, and is also our main Discord bot. Kiwi "
                                       "is constantly being updated and is maintend by myself. Kiwi is currently being "
                                       "hosted on Heroku under a Hobby Plan and has an MySQL Database connected to it.",
@@ -249,10 +229,10 @@ async def about(ctx):
                      icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
-    embed.add_field(name="Github", value='[https://github.com/sarbjotm/Kiwi](https://github.com/sarbjotm/Kiwi)',
+    embed.add_field(name="Github", value='[https://github.com/SFU-Dodo-Club/Kiwi/](https://github.com/SFU-Dodo-Club/Kiwi/)',
                     inline=False)
     embed.add_field(name="Donations",
-                    value=f"I fianace this bot personally. Donations will help offset my costs of running and "
+                    value=f"I finance this bot personally. Donations will help offset my costs of running and "
                           f"maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:["
                           f"https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)",
                     inline=False)

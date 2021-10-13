@@ -1,9 +1,9 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import random
 import os
-from discord.ext.commands import has_permissions, has_role
-from discord.utils import get
+from nextcord.ext.commands import has_permissions, has_role
+from nextcord.utils import get
 import re
 
 from myconstants import pollOptions
@@ -26,7 +26,7 @@ class Moderator(commands.Cog):
             guild = ctx.guild
             colour_of_role = '0x' + str(colour)
             print(colour_of_role)
-            await guild.create_role(name=role, color=discord.Colour(int(f'{colour}', 16)))
+            await guild.create_role(name=role, color=nextcord.Colour(int(f'{colour}', 16)))
             print("role Created")
             await ctx.send(f"{role} created with colour code {colour_of_role}")
         else:
@@ -54,14 +54,14 @@ class Moderator(commands.Cog):
     @commands.command()
     @commands.has_role('Dodo Op')
     @commands.guild_only()
-    async def mute(self, ctx, member: discord.Member, reason = None):
-        role = discord.utils.get(ctx.guild.roles, name="Muted")
+    async def mute(self, ctx, member: nextcord.Member, reason = None):
+        role = nextcord.utils.get(ctx.guild.roles, name="Muted")
         await member.add_roles(role)
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} muted {member} for {reason}")
-        embed = discord.Embed(title="Muted",description=f"You have been muted.\nReason: {reason}", color=0xff0000)
+        embed = nextcord.Embed(title="Muted",description=f"You have been muted.\nReason: {reason}", color=0xff0000)
         await member.send(embed=embed)
 
     @mute.error
@@ -74,12 +74,12 @@ class Moderator(commands.Cog):
     @commands.command()
     @commands.has_role('Dodo Op')
     @commands.guild_only()
-    async def unmute(self, ctx, member: discord.Member):
-        role = discord.utils.get(ctx.guild.roles, name="Muted")
+    async def unmute(self, ctx, member: nextcord.Member):
+        role = nextcord.utils.get(ctx.guild.roles, name="Muted")
         await member.remove_roles(role)
         channel = ctx.guild.get_channel(int(853152816398729286))
         await channel.send(f"{ctx.message.author} unmuted {member}")
-        embed = discord.Embed(title="Unmuted",description=f"You have been unmuted", color=0xff0000)
+        embed = nextcord.Embed(title="Unmuted",description=f"You have been unmuted", color=0xff0000)
         await member.send(embed=embed)
         
     @mute.error
@@ -103,13 +103,13 @@ class Moderator(commands.Cog):
     @commands.command()
     @commands.has_role('Dodo Op')
     @commands.guild_only()
-    async def ban(self, ctx, member: discord.Member, *, reason=None):
+    async def ban(self, ctx, member: nextcord.Member, *, reason=None):
         await member.ban(reason=reason)
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} banned {member} for {reason}")
-        embed = discord.Embed(title="Banned",description=f"You have been banned.\nReason: {reason}", color=0xff0000)
+        embed = nextcord.Embed(title="Banned",description=f"You have been banned.\nReason: {reason}", color=0xff0000)
         await member.send(embed=embed)
 
     @ban.error
@@ -121,13 +121,13 @@ class Moderator(commands.Cog):
     @commands.command()
     @commands.has_role('Dodo Op')
     @commands.guild_only()
-    async def kick(self, ctx, member: discord.Member, *, reason=None):
+    async def kick(self, ctx, member: nextcord.Member, *, reason=None):
         await member.kick(reason=reason)
         channel = ctx.guild.get_channel(int(853152816398729286))
         if reason is None:
             reason = "N/A"
         await channel.send(f"{ctx.message.author} muted {member} for {reason}")
-        embed = discord.Embed(title="Kicked",description=f"You have been kicked.\nReason: {reason}", color=0xff0000)
+        embed = nextcord.Embed(title="Kicked",description=f"You have been kicked.\nReason: {reason}", color=0xff0000)
         await member.send(embed=embed)
 
     @kick.error

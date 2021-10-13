@@ -1,8 +1,8 @@
 import os, random, asyncio, requests
 import mysql
 
-from discord.ext import commands
-import discord
+from nextcord.ext import commands
+import nextcord
 
 from bs4 import BeautifulSoup
 
@@ -10,13 +10,67 @@ from myconstants import numbers, suits, words_10k, words_20k_includes_swears
 from dbcontroller import connect_to_db, close_db, get_balance, update_money
 from async_util import wait_for_response
 
+
+class HitOrStand(nextcord.ui.View):
+    def __init__(self, ctx):
+        super().__init__(timeout = 20.0)
+        self.ctx = ctx
+        self.value = None
+
+    async def interaction_check(self, interaction: nextcord.Interaction):
+        if interaction.user and interaction.user.id == self.ctx.author.id:
+            return True
+        else:
+            await interaction.response.send_message('This game is not yours', ephemeral=True)
+            return False
+
+    @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
+    async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = True
+        self.stop()
+
+    @nextcord.ui.button(label='Stand', style=nextcord.ButtonStyle.red)
+    async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = False
+        self.stop()
+
+class CupShuffle(nextcord.ui.View):
+    def __init__(self, ctx):
+        super().__init__(timeout = 20.0)
+        self.ctx = ctx
+        self.value = ""
+
+    async def interaction_check(self, interaction: nextcord.Interaction):
+        if interaction.user and interaction.user.id == self.ctx.author.id:
+            return True
+        else:
+            await interaction.response.send_message('This game is not yours', ephemeral=True)
+            return False
+
+    @nextcord.ui.button(label='1', style=nextcord.ButtonStyle.green)
+    async def one_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "1"
+        print("HELLO")
+        self.stop()
+
+    @nextcord.ui.button(label='2', style=nextcord.ButtonStyle.blurple)
+    async def two_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "2"
+        self.stop()
+
+    @nextcord.ui.button(label='3', style=nextcord.ButtonStyle.red)
+    async def three_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        self.value = "3"
+        self.stop()
+
+
 class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.command(aliases=['21'])
     @commands.guild_only()
-    async def blackjack(self, ctx, bet):
+    async def blackjack(self, ctx, bet = 0):
         cards_dictionary = {
             "A": 4,
             2: 4,
@@ -54,7 +108,8 @@ class Games(commands.Cog):
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
-                embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                view = HitOrStand(ctx)
+                embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                 user_blackjack = False
                 user_cards = []
                 user_int = 0
@@ -99,7 +154,8 @@ class Games(commands.Cog):
 
                     cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
                     dealer_suit = random.choice(suits)
-                    while str(dealer_card) + dealer_suit in user_cards or str(dealer_card) + dealer_suit in dealer_cards:
+                    while str(dealer_card) + dealer_suit in user_cards or str(
+                            dealer_card) + dealer_suit in dealer_cards:
                         dealer_suit = random.choice(suits)
                     dealer_cards.append(str(dealer_card) + dealer_suit)
                     if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
@@ -140,9 +196,10 @@ class Games(commands.Cog):
                 dealer_description = f"{dealer_description} \n \nScore: {mystery_score} or {mystery_score2}"
                 embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}", inline=True)
                 embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                embed.add_field(name=f"What would you like to do? You have 20 seconds to decide", value="Enter Hit or Stand",
+                embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
+                                value="Hit or Stand",
                                 inline=False)
-                game_message = await ctx.send(embed=embed)
+                game_message = await ctx.send(embed=embed, view=view)
 
                 while 1:
                     if user_int >= 22 and user_int2 >= 22:
@@ -151,63 +208,55 @@ class Games(commands.Cog):
                     elif user_int == 21 or user_int2 == 21:
                         break
 
-                    try:
-                        msg = await self.client.wait_for(
-                            "message",
-                            timeout=20,
-                            check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
-                        )
-
-                        msg_str = msg.content.strip().lower()
-                        if msg_str == "hit" or msg_str == ",hit":
-                            embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
-                            user_description = ''
+                    view.view = None
+                    await view.wait()
+                    if view.value:
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
+                        user_description = ''
+                        user_card = random.choice(numbers)
+                        while cards_dictionary[user_card] == 0:
                             user_card = random.choice(numbers)
-                            while cards_dictionary[user_card] == 0:
-                                user_card = random.choice(numbers)
 
-                            cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                        cards_dictionary[user_card] = cards_dictionary[user_card] - 1
+                        user_suit = random.choice(suits)
+                        while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
                             user_suit = random.choice(suits)
-                            while str(user_card) + user_suit in user_cards or str(user_card) + user_suit in dealer_cards:
-                                user_suit = random.choice(suits)
-                            user_cards.append(str(user_card) + user_suit)
-                            if user_card == "J" or user_card == "K" or user_card == "Q":
-                                user_int = user_int + 10
-                                user_int2 = user_int2 + 10
-                            elif user_card == "A":
-                                user_int = user_int + 1
-                                if user_int2 + 11 <= 21:
-                                    user_int2 = user_int2 + 11
-                                else:
-                                    user_int2 = user_int2 + 1
+                        user_cards.append(str(user_card) + user_suit)
+                        if user_card == "J" or user_card == "K" or user_card == "Q":
+                            user_int = user_int + 10
+                            user_int2 = user_int2 + 10
+                        elif user_card == "A":
+                            user_int = user_int + 1
+                            if user_int2 + 11 <= 21:
+                                user_int2 = user_int2 + 11
                             else:
-                                user_int = user_int + user_card
-                                user_int2 = user_int2 + user_card
-
-                            for cards in user_cards:
-                                user_description = user_description + cards + " "
-                            user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
-                            embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
-                                            inline=True)
-                            embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                            embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
-                                            value="Enter Hit or Stand", inline=False)
-                            await msg.delete(delay=0)
-                            await game_message.edit(embed=embed)
+                                user_int2 = user_int2 + 1
                         else:
-                            await msg.delete(delay=0)
-                            break
+                            user_int = user_int + user_card
+                            user_int2 = user_int2 + user_card
 
-                    except asyncio.TimeoutError:
+                        for cards in user_cards:
+                            user_description = user_description + cards + " "
+                        user_description = f"{user_description} \n \n Score: {user_int} or {user_int2}"
+                        embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
+                                        inline=True)
+                        embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
+                        embed.add_field(name=f"What would you like to do? You have 20 seconds to decide",
+                                        value="Hit or Stand", inline=False)
+
+
+                        view = HitOrStand(ctx)
+                        await game_message.edit(embed=embed, view=view)
+                    else:
                         break
-
+                await game_message.delete(delay=0)
                 if user_int >= 22 and user_int2 >= 22:
-                    embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                    embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                     embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                     inline=True)
                     embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                     embed.add_field(name=f"Outcome", value=f"**Bust! You have lost {str(bet)}**", inline=False)
-                    await game_message.edit(embed=embed)
+                    await ctx.send(embed=embed)
                     c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -232,7 +281,8 @@ class Games(commands.Cog):
                                     dealer_card = random.choice(numbers)
                                 cards_dictionary[dealer_card] = cards_dictionary[dealer_card] - 1
                                 dealer_suit = random.choice(suits)
-                                while str(dealer_card) + dealer_suit in user_cards or str(dealer_card) + dealer_suit in dealer_cards:
+                                while str(dealer_card) + dealer_suit in user_cards or str(
+                                        dealer_card) + dealer_suit in dealer_cards:
                                     dealer_suit = random.choice(suits)
                                 dealer_cards.append(str(dealer_card) + dealer_suit)
                                 if dealer_card == "J" or dealer_card == "K" or dealer_card == "Q":
@@ -259,14 +309,14 @@ class Games(commands.Cog):
                     dealer_description = f"{dealer_description} \n \n Score: {dealer_int} or {dealer_int2}"
 
                     if user_blackjack is True:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         bet = bet * 2
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**Blackjack! You have won {str(bet)} Dodo Dollars!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -274,13 +324,13 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_blackjack is True:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
+                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi got Blackjack!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -288,13 +338,13 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif user_int < dealer_int < 22:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xfd4f58)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)} Dodo Dollars! Kiwi wins!**",
                                         inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money - {bet}
                         WHERE id = {ctx.message.author.id}
@@ -302,20 +352,20 @@ class Games(commands.Cog):
                         db.commit()
 
                     elif dealer_int == user_int:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0xeecb76)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have tied! No one wins**", inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
 
                     else:
-                        embed = discord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
+                        embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x8ebd9d)
                         embed.add_field(name=f"{str(ctx.message.author)[:-5]}'s Hand", value=f"{user_description}",
                                         inline=True)
                         embed.add_field(name=f"Kiwi's Hand", value=f"{dealer_description}", inline=True)
                         embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await game_message.edit(embed=embed)
+                        await ctx.send(embed=embed)
                         c.execute(f"""UPDATE dodos
                         SET money = money + {bet}
                         WHERE id = {ctx.message.author.id}
@@ -330,8 +380,11 @@ class Games(commands.Cog):
 
     @blackjack.error
     async def blackjack_error(self, ctx, error):
+        await ctx.send("Make sure to bet some money! For example: ,blackjack 100")
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
+
+
 
     @commands.command(aliases=['cup', 'cups'])
     @commands.guild_only()
@@ -342,90 +395,59 @@ class Games(commands.Cog):
         else:
             user_id = ctx.message.author.id
             db, cur = connect_to_db()
-            balance = get_balance(cur, user_id) 
+            balance = get_balance(cur, user_id)
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
+                view = CupShuffle(ctx)
                 gem = random.randint(1, 3)
                 embed_description = "Which Kiwi has the hidden gem \n 🥝 🥝 🥝"
                 ending_description = ""
-                embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
-                                      color=0x99c0dd)
-                await ctx.send(embed=embed)
-                await ctx.send(f'Which Kiwi would you like to pick 1, 2, 3? If you do not answer in 20 seconds '
-                    'I will randomly pick for you.')
+                embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=embed_description,
+                                       color=0x99c0dd)
+                embed.add_field(name=f"Instructions", value=f"Where is the trophy hidden? You have 20 seconds until I pick for you",
+                                inline=True)
+                game_message = await ctx.send(embed=embed, view=view)
+                await view.wait()
 
-                try:
-                    msg = await self.client.wait_for(
-                        "message",
-                        timeout=20,
-                        check=lambda message: message.author == ctx.message.author and message.channel == ctx.channel
-                    )
-                    msg = msg.content.strip().lower()
-                    try:
-                        msg = int(msg)
-                    except:
-                        await ctx.send("Gonna give you a random variable for not following rules.")
-                        msg = random.randint(1, 4)
-                    if msg == gem:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                              color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await ctx.send(embed=embed)
+                if view.value == "1":
+                    msg = 1
+                elif view.value == "2":
+                    msg = 2
+                elif view.value == "3":
+                    msg = 3
+                else:
+                    msg = random.randint(1,4)
+                print("Assigned values...")
+                await game_message.delete(delay=0)
+                if msg == gem:
+                    for i in range(1, 4):
+                        if i == gem:
+                            ending_description = ending_description + "🏆 "
+                        else:
+                            ending_description = ending_description + "🥝 "
+                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                           color=0x99c0dd)
+                    embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
+                    await ctx.send(embed=embed)
+                    update_money(db, cur, user_id, bet)
+                else:
+                    for i in range(1, 4):
+                        if i == gem:
+                            ending_description = ending_description + "🏆 "
+                        elif i == msg:
+                            ending_description = ending_description + "❌ "
+                        else:
+                            ending_description = ending_description + "🥝 "
+                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
+                                          color=0x99c0dd)
+                    embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
+                    embed.set_footer(text=f"Winning Kiwi was number {gem}")
+                    await ctx.send(embed=embed)
 
-                        update_money(db, cur, user_id, bet)
-                    else:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            elif i == msg:
-                                ending_description = ending_description + "❌ "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                              color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
-                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
-                        await ctx.send(embed=embed)
+                    update_money(db, cur, user_id, -bet)
 
-                        update_money(db, cur, user_id, -bet)
 
-                except asyncio.TimeoutError:
-                    user_guess = random.randint(1, 3)
-                    await ctx.send(f"Assuming you meant to guess kiwi number: {user_guess}")
-                    if user_guess == gem:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                              color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                        await ctx.send(embed=embed)
-
-                        update_money(db, cur, user_id, bet)
-                    else:
-                        for i in range(1, 4):
-                            if i == gem:
-                                ending_description = ending_description + "🏆 "
-                            elif i == user_guess:
-                                ending_description = ending_description + "❌ "
-                            else:
-                                ending_description = ending_description + "🥝 "
-                        embed = discord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                              color=0x99c0dd)
-                        embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
-                        embed.set_footer(text=f"Winning Kiwi was number {gem}")
-                        await ctx.send(embed=embed)
-
-                        update_money(db, cur, user_id, -bet)
-                        
             close_db(cur, db)
 
     @cupshuffle.error
@@ -443,7 +465,7 @@ class Games(commands.Cog):
         else:
             user_id = ctx.message.author.id
             db, cur = connect_to_db()
-            balance = get_balance(cur, user_id) 
+            balance = get_balance(cur, user_id)
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
                 close_db(cur, db)
@@ -451,7 +473,7 @@ class Games(commands.Cog):
 
             # collect 5 random title & img-src pairs. Choose 1 to be the main image.
             pairs = generate_random_images(5, False)
-            target_i = random.randint(0, len(pairs)-1)
+            target_i = random.randint(0, len(pairs) - 1)
             target_pair = pairs[target_i]
 
             # TODO: utilize https://github.com/RobertJGabriel/Google-profanity-words and parse all the user facing 
@@ -461,65 +483,69 @@ class Games(commands.Cog):
             line1 = "Which caption do you think corresponds to the following image?\n\n".format(bet)
             desc = "**Choice 1:** \t`{}` \n**Choice 2:** \t`{}` \n**Choice 3:** \t`{}` \n**Choice 4:** \t`{}` \n**Choice 5:** \t`{}`\n\n".format(
                 pairs[0]["title"], pairs[1]["title"], pairs[2]["title"], pairs[3]["title"], pairs[4]["title"])
-            end_line =  "You have 30s to respond with your choice of 1, 2, 3, 4, or 5."
-            embed_msg = discord.Embed(
-                title="Dodo Club Casino | Image Match Game", 
-                description=line1+desc+end_line, 
+            end_line = "You have 30s to respond with your choice of 1, 2, 3, 4, or 5."
+            embed_msg = nextcord.Embed(
+                title="Dodo Club Casino | Image Match Game",
+                description=line1 + desc + end_line,
                 color=0x5ce6cc)
 
             # TODO: make it so that this image is downloaded then served, so that the website can't be easily traced.
             # Or just add a time-limit, but only when I finally decide to improve 
-            embed_msg.set_image(url=target_pair["img"]) 
+            embed_msg.set_image(url=target_pair["img"])
             embed_msg.set_footer(text="no_pain_no_gain={}".format(no_pain_no_gain))
             await ctx.send(embed=embed_msg)
 
             response = await wait_for_response(self, ctx, 20)
-            
+
             if response == None:
                 await ctx.send("You have 10s left, choose quickly!")
                 response = await wait_for_response(self, ctx, 10)
 
             # verify, then manage the money won / lost here
-            valid_responses = { "choice 1":1, "choice 2":2, "choice 3":3, "choice 4":4, "choice 5":5, "1":1, "2":2, "3":3, "4":4, "5":5 }
+            valid_responses = {"choice 1": 1, "choice 2": 2, "choice 3": 3, "choice 4": 4, "choice 5": 5, "1": 1,
+                               "2": 2, "3": 3, "4": 4, "5": 5}
             if not response in valid_responses:
                 line1 = "Invalid response, you lose {} Dodo Dollars!\n".format(bet)
-                line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
-                embed_msg = discord.Embed(
-                    title="Dodo Club Casino | Image Match Game", 
-                    description=line1+line2, 
+                line2 = "The correct answer was {}, `{}`".format(target_i + 1, pairs[target_i]["title"])
+                embed_msg = nextcord.Embed(
+                    title="Dodo Club Casino | Image Match Game",
+                    description=line1 + line2,
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
 
-            elif valid_responses[response] != target_i+1:
+            elif valid_responses[response] != target_i + 1:
                 line1 = "Wrong answer, you lose {} Dodo Dollars!\n".format(bet)
-                line2 = "The correct answer was {}, `{}`".format(target_i+1, pairs[target_i]["title"])
-                embed_msg = discord.Embed(
-                    title="Dodo Club Casino | Image Match Game", 
-                    description=line1+line2, 
+                line2 = "The correct answer was {}, `{}`".format(target_i + 1, pairs[target_i]["title"])
+                embed_msg = nextcord.Embed(
+                    title="Dodo Club Casino | Image Match Game",
+                    description=line1 + line2,
                     color=0xf27961)
                 update_money(db, cur, user_id, -bet)
-            
+
             else:
                 line1 = "Correct answer, you win {} Dodo Dollars!".format(bet)
-                embed_msg = discord.Embed(
-                    title="Dodo Club Casino | Image Match Game", 
-                    description=line1, 
+                embed_msg = nextcord.Embed(
+                    title="Dodo Club Casino | Image Match Game",
+                    description=line1,
                     color=0x70febc)
                 update_money(db, cur, user_id, bet)
-            
+
             await ctx.send(embed=embed_msg)
             close_db(cur, db)
-        
+
     @image_match.error
     async def image_match_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Syntax for this command is: `,image_match bet <True>`, where \"< >\" denotes an optional parameter.")
+        await ctx.send(
+            "Syntax for this command is: `,image_match bet <True>`, where \"< >\" denotes an optional parameter.")
         await channel.send(f"{ctx.message.author} experienced a error using image_match. {error}")
+
 
 # --------------------------------------------------------------------------- #
 
 def setup(client):
     client.add_cog(Games(client))
+
 
 def test():
     print("testing image_match")
@@ -529,25 +555,26 @@ def test():
     # collect 5 random title & img-src pairs. Choose 1 to be the main image.
     pairs = generate_random_images(5, True)
     print(str(pairs))
-    target_pair = pairs[random.randint(0, len(pairs)-1)]
+    target_pair = pairs[random.randint(0, len(pairs) - 1)]
     print(str(target_pair))
 
     # send an embed and wait 30s for answer -> send a followup message when there is only 10s left.
-    embed_msg = discord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
+    embed_msg = nextcord.Embed(title="Dodo Club Casino | Image Match Game", description="Options:", color=0x70febc)
     # TODO: make it so that this is downloaded, then served so that the website can't be easily traced.
     # Or just add a time-limit.
-    embed_msg.set_image(url=target_pair["img"]) 
+    embed_msg.set_image(url=target_pair["img"])
     for (i, pair) in enumerate(pairs):
         embed_msg.add_field(name="*Choice {}*".format(i), value=pair["title"])
-    
+
     print(embed_msg)
+
 
 # --------------------------------------------------------------------------- #
 # Helper Functions: (these do the heavy lifting)
 
 # TODO: option to show the secret words
 def generate_random_images(num_images, includes_swears, debug=False):
-    word_list = words_20k_includes_swears if includes_swears else words_10k 
+    word_list = words_20k_includes_swears if includes_swears else words_10k
 
     images = None
     width, height = 0, 0
@@ -565,9 +592,10 @@ def generate_random_images(num_images, includes_swears, debug=False):
         # make an html request & parse the document
         r = requests.get(url)
         if r.status_code != 200:
-            if debug: print("Huh, something went wrong. It should work if you try again right away, but if not please let someone know. ^-^")
+            if debug: print(
+                "Huh, something went wrong. It should work if you try again right away, but if not please let someone know. ^-^")
         soup = BeautifulSoup(r.text, 'html.parser')
-    
+
         images = soup.body.div.next_sibling.next_sibling.table
         if images == None:
             if debug: print("Ooops somthing messed up")
@@ -583,12 +611,12 @@ def generate_random_images(num_images, includes_swears, debug=False):
 
     num_duplicate_captions = 0
 
-    chosen_titles = [] # probably faster than a hashset
+    chosen_titles = []  # probably faster than a hashset
     chosen = set()
     choices_list = []
     while len(choices_list) < num_images:
-        x = random.randint(0, width-1)
-        y = random.randint(0, height-1)
+        x = random.randint(0, width - 1)
+        y = random.randint(0, height - 1)
         if debug: print("{} {}".format(x, y))
 
         identity_str = "{},{}".format(x, y)
@@ -599,17 +627,17 @@ def generate_random_images(num_images, includes_swears, debug=False):
             stub_head = messy_pair.div.div.div.div.table
             # TODO: write a function which does a http request for the full title of the webpage here, 
             # defaulting to the short one on failure.
-            img = stub_head.tr.td.a.div.img.get("src") 
+            img = stub_head.tr.td.a.div.img.get("src")
             title = stub_head.tr.next_sibling.td.a.div.span.span.get_text()
 
             if num_duplicate_captions < num_images and title in chosen_titles:
                 num_duplicate_captions += 1
                 continue
-            
+
             chosen_titles.append(title)
             chosen.add(identity_str)
             choices_list.append({"img": img, "title": title})
-    
+
     if debug: print("num duplicates: {}".format(num_duplicate_captions))
 
     return choices_list

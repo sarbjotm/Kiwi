@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import requests
 from requests.exceptions import Timeout
 from bs4 import BeautifulSoup
@@ -48,7 +48,7 @@ class Horoscope(commands.Cog):
                 today_career = soup.find("a", {"id": "src-horo-matchcareer"}).text
                 today_career = today_career.replace("\n", " ")
 
-                embed = discord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope",
+                embed = nextcord.Embed(title=f"{sign[0].upper() + sign[1:].lower()} Horoscope",
                                       description=f" **Daily Horoscope** \n \n {today_horoscope} \n \n **Today's Compatibility** \n \n",
                                       color=0x968cec)
                 embed.set_thumbnail(url=zodiacAvatars[int(number)])

@@ -1,4 +1,4 @@
-discord.py[voice]
+nextcord==2.0.0a3
 mysql-connector-python~=8.0.24
 bs4~=0.0.1
 requests~=2.25.1

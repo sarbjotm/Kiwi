@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import os
 import random
 import mysql
@@ -28,7 +28,7 @@ class Economy(commands.Cog):
 
         """)
         money_amount = ''.join(map(str, c.fetchall()[0]))
-        money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
         await ctx.send(f'You have {money_amount} {money_symbol}')
         c.close()
         db.close()
@@ -60,7 +60,7 @@ class Economy(commands.Cog):
             WHERE id = {ctx.message.author.id}
         """)
         money_amount = ''.join(map(str, c.fetchall()[0]))
-        money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+        money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
         if amount < 0:
             await ctx.send(f"Oh no! Kiwi stole ${amount * -1}. Your new total is {money_amount} {money_symbol}")
         else:
@@ -87,7 +87,7 @@ class Economy(commands.Cog):
     @commands.command(aliases=['shopinfo'])
     @commands.guild_only()
     async def shop(self, ctx):
-        embed = discord.Embed(title="Kiwi Shop", color=0xe392fe)
+        embed = nextcord.Embed(title="Kiwi Shop", color=0xe392fe)
         embed.set_thumbnail(url="https://i.pinimg.com/originals/6c/ce/3e/6cce3e4715c7886a4d599e3f029ef012.png")
         for i in range(0, len(rolesList)):
             embed.add_field(name=rolesList[i], value="3500 Dodo Dollars", inline=True)
@@ -155,7 +155,7 @@ class Economy(commands.Cog):
 
                     """)
                     money_amount = ''.join(map(str, c.fetchall()[0]))
-                    money_symbol = discord.utils.get(ctx.message.guild.emojis, name='money')
+                    money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
                     await ctx.send(f"You sold your role(s) for ${total_profit} {money_symbol}. Your new total is {money_amount} {money_symbol}")
 
                     c.execute(f"""SELECT {role}
@@ -166,10 +166,10 @@ class Economy(commands.Cog):
                     role_amount = ''.join(map(str, c.fetchall()[0]))
 
                     if int(role_amount) == 0:
-                        role_remove = discord.utils.get(ctx.guild.roles, name=dodo_role)
+                        role_remove = nextcord.utils.get(ctx.guild.roles, name=dodo_role)
                         if role_remove in ctx.message.author.roles:
                             await ctx.message.author.remove_roles(role_remove)
-                        role_remove = discord.utils.get(ctx.guild.roles, name=role)
+                        role_remove = nextcord.utils.get(ctx.guild.roles, name=role)
                         if role_remove in ctx.message.author.roles:
                             await ctx.message.author.remove_roles(role_remove)
 
@@ -231,7 +231,7 @@ class Economy(commands.Cog):
                     WHERE id = {ctx.message.author.id}
                     """)
                     db.commit()
-                    role_bought = discord.utils.get(ctx.guild.roles, name=dodo_role)
+                    role_bought = nextcord.utils.get(ctx.guild.roles, name=dodo_role)
                     await ctx.message.author.add_roles(role_bought)
                     c.execute(f"""UPDATE dodos
                     SET {role} = {role} + {quantity}
@@ -270,7 +270,7 @@ class Economy(commands.Cog):
             username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
             money = str(leaders[i][1])
             description_embed = description_embed + str(position) + ". " + str(username) + "-" + str(money) + "\n"
-        embed = discord.Embed(title="Richest Dodos", color=0xe392fe)
+        embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
         embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
         embed.add_field(name="Top 5", value=description_embed, inline=True)
         await ctx.send(embed=embed)
@@ -279,7 +279,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def give(self, ctx, member: discord.Member, money):
+    async def give(self, ctx, member: nextcord.Member, money):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],

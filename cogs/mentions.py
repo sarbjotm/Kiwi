@@ -1,5 +1,5 @@
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 import mysql
 import os
 
@@ -13,7 +13,7 @@ class Interactions(commands.Cog):
 
     @commands.command(aliases=['wave'])
     @commands.guild_only()
-    async def waves(self, ctx, member: discord.Member):
+    async def waves(self, ctx, member: nextcord.Member):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} waves to {member.mention}")
         await ctx.send("https://media.tenor.com/images/ba69533b59d3ceaae8775a0550ff8037/tenor.gif")
@@ -26,11 +26,11 @@ class Interactions(commands.Cog):
 
     @commands.command(aliases=['hug'])
     @commands.guild_only()
-    async def hugs(self, ctx, member: discord.Member):
+    async def hugs(self, ctx, member: nextcord.Member):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} gibs beeeeg hug to {member.mention}")
         await ctx.send("https://media.tenor.com/images/0a1652de311806ce55820a7115993853/tenor.gif")
- 
+
     @hugs.error
     async def hugs_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
@@ -39,7 +39,7 @@ class Interactions(commands.Cog):
 
     @commands.command(aliases=['hugRole', 'hugsrole', 'grouphug'])
     @commands.guild_only()
-    async def hugsRole(self, ctx, role: discord.Role):
+    async def hugsRole(self, ctx, role: nextcord.Role):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} gibs beeeeg group hug to {role.mention}")
         await ctx.send("https://media.tenor.com/images/0a1652de311806ce55820a7115993853/tenor.gif")
@@ -52,7 +52,7 @@ class Interactions(commands.Cog):
 
     @commands.command(aliases=['waveRole', 'waverole', 'groupwave'])
     @commands.guild_only()
-    async def wavesRole(self, ctx, role: discord.Role):
+    async def wavesRole(self, ctx, role: nextcord.Role):
         await ctx.message.delete(delay=0)
         await ctx.send(f"{ctx.message.author.mention} waves to {role.mention}")
         await ctx.send("https://media4.giphy.com/media/3pZipqyo1sqHDfJGtz/200.gif")
@@ -70,7 +70,7 @@ class Interactions(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def info(self, ctx, member: discord.Member = None):
+    async def info(self, ctx, member: nextcord.Member = None):
         if member is None:
             member = ctx.message.author
         db = mysql.connector.connect(
@@ -95,17 +95,16 @@ class Interactions(commands.Cog):
                 empty_role = empty_role + "Dodo " + role + ", "
             else:
                 embed_description = embed_description + role_count + " Dodo " + role + " Roles\n"
-        
 
         if empty_role != " ":
             empty_role = empty_role.strip()
             empty_role = empty_role.rstrip(empty_role[-1])
             empty_role = empty_role + " have not been obtained"
             embed_description = embed_description + "\n \n" + empty_role
-            
-        embed = discord.Embed(title=member.display_name + "'s Information", description=embed_description,
+
+        embed = nextcord.Embed(title=member.display_name + "'s Information", description=embed_description,
                               color=0xe392fe)
-        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_thumbnail(url=member.avatar.url)
 
         c.execute(f"""SELECT money
                         FROM dodos
@@ -118,9 +117,9 @@ class Interactions(commands.Cog):
                         WHERE id = {member.id}
 
         """)
-        
+
         embed.add_field(name=f"Money Balance", value=f"{money}", inline=True)
-        
+
         dob = "N/A"
         birthday = ''.join(map(str, c.fetchall()[0]))
         if birthday == '0' or birthday == '0000' or birthday == 0 or birthday == 0000:
@@ -133,7 +132,7 @@ class Interactions(commands.Cog):
             else:
                 dob = months.get(str(birthday)[0])
                 dob = dob + " " + str(birthday)[1:]
-                
+
             embed.add_field(name=f"Birthday", value=f"{dob}", inline=True)
         await ctx.send(embed=embed)
         c.close()
