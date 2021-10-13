@@ -13,7 +13,7 @@ from async_util import wait_for_response
 
 class HitOrStand(nextcord.ui.View):
     def __init__(self, ctx):
-        super().__init__()
+        super().__init__(timeout = 20.0)
         self.ctx = ctx
         self.value = None
 
