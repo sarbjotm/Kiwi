@@ -79,7 +79,7 @@ class Games(commands.Cog):
             if bet > int(balance):
                 await ctx.send("You do not have that much money!")
             else:
-                view = HitOrStand(self, ctx)
+                view = HitOrStand(ctx)
                 embed = nextcord.Embed(title="Dodo Club Casino | Blackjack", color=0x99c0dd)
                 user_blackjack = False
                 user_cards = []
@@ -216,7 +216,7 @@ class Games(commands.Cog):
                                         value="Enter Hit or Stand", inline=False)
 
 
-                        view = HitOrStand(self, ctx)
+                        view = HitOrStand(ctx)
                         await game_message.edit(embed=embed, view=view)
                     else:
                         break
@@ -359,7 +359,7 @@ class Games(commands.Cog):
     async def ask(self, ctx):
         """Asks the user a question to confirm something."""
         # We create the view and assign it to a variable so we can wait for it later.
-        view = HitOrStand(self, ctx)
+        view = HitOrStand(ctx)
         await ctx.send('Do you want to continue?', view=view)
         # Wait for the View to stop listening for input...
         await view.wait()
