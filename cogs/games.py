@@ -351,7 +351,7 @@ class Games(commands.Cog):
 
     @blackjack.error
     async def blackjack_error(self, ctx, error):
-        channel = ctx.guild.get_channel(os.environ['CHANNEL'])
+        #channel = ctx.guild.get_channel(os.environ['CHANNEL'])
         await channel.send(f"{ctx.message.author} experienced a error using blackjack. {error}")
 
     @commands.command()
