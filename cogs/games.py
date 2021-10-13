@@ -439,8 +439,7 @@ class Games(commands.Cog):
                     embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
                                            color=0x99c0dd)
                     embed.add_field(name=f"Outcome", value=f"**You have won {str(bet)}!**", inline=False)
-                    await game_message.edit(embed=embed
-
+                    await game_message.edit(embed=embed)
                     update_money(db, cur, user_id, bet)
 
             close_db(cur, db)
