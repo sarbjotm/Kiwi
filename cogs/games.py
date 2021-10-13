@@ -12,9 +12,17 @@ from async_util import wait_for_response
 
 
 class HitOrStand(nextcord.ui.View):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, ctx, *, timeout = 20.0):
+        super().__init__(timeout=timeout)
+        self.ctx = ctx
         self.value = None
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if interaction.user and interaction.user.id == self.ctx.author.id
+            return True
+        else:
+            await interaction.response.send_message('This game is not yours', ephemeral=True)
+            return False
 
     @nextcord.ui.button(label='Hit', style=nextcord.ButtonStyle.green)
     async def confirm(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
