@@ -18,7 +18,7 @@ class HitOrStand(nextcord.ui.View):
         self.value = None
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        if interaction.user and interaction.user.id == self.ctx.author.id
+        if interaction.user and interaction.user.id == self.ctx.author.id:
             return True
         else:
             await interaction.response.send_message('This game is not yours', ephemeral=True)
