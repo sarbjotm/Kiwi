@@ -442,24 +442,6 @@ class Games(commands.Cog):
                     await game_message.edit(embed=embed
 
                     update_money(db, cur, user_id, bet)
-                else:
-                    for i in range(1, 4):
-                        if i == gem:
-                            ending_description = ending_description + "🏆 "
-                        elif i == msg:
-                            ending_description = ending_description + "❌ "
-                        else:
-                            ending_description = ending_description + "🥝 "
-                    embed = nextcord.Embed(title="Dodo Club Casino | Cup Shuffle", description=ending_description,
-                                           color=0x99c0dd)
-                    embed.add_field(name=f"Outcome", value=f"**You have lost {str(bet)}!**", inline=False)
-                    embed.set_footer(text=f"Winning Kiwi was number {gem}")
-                    await game_message.edit(embed=embed
-
-                    update_money(db, cur, user_id, -bet)
-
-
-
 
             close_db(cur, db)
 
