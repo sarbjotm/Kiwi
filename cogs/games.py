@@ -12,12 +12,12 @@ from async_util import wait_for_response
 
 
 class HitOrStand(nextcord.ui.View):
-    def __init__(self, ctx, *, timeout = 20.0):
-        super().__init__(timeout=timeout)
+    def __init__(self, ctx):
+        super().__init__()
         self.ctx = ctx
         self.value = None
 
-    async def interaction_check(self, interaction: nextcord.Interaction) -> bool:
+    async def interaction_check(self, interaction: nextcord.Interaction):
         if interaction.user and interaction.user.id == self.ctx.author.id:
             return True
         else:
