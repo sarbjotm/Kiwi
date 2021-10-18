@@ -456,6 +456,14 @@ class Games(commands.Cog):
         await ctx.send("Syntax for this command is: **,cupshuffle bet**")
         await channel.send(f"{ctx.message.author} experienced a error using cupshuffle. {error}")
 
+    @commands.command(aliases=['halloween'])
+    @commands.guild_only()
+    async def trickortreat(self, ctx):
+        embed_description = "You're quite brave for daring to play this game. The rules are quite simple, you will either become \ "
+                            "rich beyond your wildest dreams or I will own your soul... my legal department just told me \ "
+                            "I cannot do that, instead I'll take away a percentage of your money.. \n \n All you have to \ "
+                            "do is pick the house with the treat. Although I cannot promise how many houses there will be... **Do you accept?**"
+
     @commands.command(aliases=['match_image', 'img_match', 'match_img', 'trivia'])
     @commands.guild_only()
     async def image_match(self, ctx, bet, no_pain_no_gain=False):
@@ -539,7 +547,6 @@ class Games(commands.Cog):
         await ctx.send(
             "Syntax for this command is: `,image_match bet <True>`, where \"< >\" denotes an optional parameter.")
         await channel.send(f"{ctx.message.author} experienced a error using image_match. {error}")
-
 
 # --------------------------------------------------------------------------- #
 

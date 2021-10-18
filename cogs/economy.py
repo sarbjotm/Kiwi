@@ -37,52 +37,7 @@ class Economy(commands.Cog):
     @commands.cooldown(1, 86400, commands.BucketType.user)
     @commands.guild_only()
     async def daily(self, ctx):
-        db = mysql.connector.connect(
-            host=os.environ['HOST'],
-            user=os.environ['USER'],
-            password=os.environ['PASSWORD'],
-            database=os.environ['DATABASE']
-        )
-        c = db.cursor()
-        daily = ["Increase", "Decrease"]
-        role_assign = random.choices(daily, weights=[9.5, 0.5])[0]  # 9.5 + 0.5 = 10; 0.5 / 10 -> 5% of stealing
-        amount = random.randint(1, 1000)
-        if role_assign == "Decrease":
-            amount = amount * -1
-
-        c.execute(f"""UPDATE dodos
-                    SET money = money + {amount}
-                    WHERE id = {ctx.message.author.id}
-        """)
-        db.commit()
-        c.execute(f"""SELECT money
-            FROM dodos
-            WHERE id = {ctx.message.author.id}
-        """)
-        money_amount = ''.join(map(str, c.fetchall()[0]))
-        money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
-        if amount < 0:
-            await ctx.send(f"Oh no! Kiwi stole ${amount * -1}. Your new total is {money_amount} {money_symbol}")
-        else:
-            await ctx.send(f"You found ${amount}. Your new total is {money_amount} {money_symbol}")
-        c.close()
-        db.close()
-
-    @daily.error
-    async def daily_error(self, ctx, error):
-        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
-        if isinstance(error, commands.CommandOnCooldown):
-            seconds = error.retry_after
-            hours = int(seconds // 3600)
-            seconds %= 3600
-            minutes = int(seconds // 60)
-            seconds %= 60
-            seconds = int(seconds)
-            if hours != 0:
-                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {seconds} seconds')
-            else:
-                await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
-            await channel.send(f"{ctx.message.author} experienced a cooldown error")
+        await ctx.send("In order to get money today, you must play my trick or treat game 😈. More info by using the command ``,trickortreat``")
 
     @commands.command(aliases=['shopinfo'])
     @commands.guild_only()
