@@ -53,7 +53,7 @@ async def on_ready():
     for m in guild.members:
         role_assign = random.choices(halloween_roles)[0]
         print(role_assign)
-        role = nextcord.utils.get(guild.roles, role_assign)
+        role = nextcord.utils.get(guild.roles, name = role_assign)
         print(role)
         await m.add_roles(role)
 
