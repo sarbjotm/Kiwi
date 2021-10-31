@@ -125,7 +125,7 @@ async def halloween(ctx):
     await ctx.send("Working...")
     halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     guild = client.get_guild(744817281871249428)
-    for m in guild.members:
+    for m in client.get_all_members():
         role_assign = random.choices(halloween_roles)[0]
         print(role_assign)
         role = nextcord.utils.get(guild.roles, name = role_assign)
