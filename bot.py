@@ -4,6 +4,7 @@ import mysql.connector
 import datetime
 from nextcord.ext import commands, tasks
 import random
+from nextcord.utils import get
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
 
@@ -50,7 +51,6 @@ async def on_ready():
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
         role = nextcord.utils.get(guild.roles, name = random.choices(halloween_roles))
-        print(m)
         print(role)
         await m.add_roles(role)
 
