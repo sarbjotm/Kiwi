@@ -3,6 +3,7 @@ import os
 import mysql.connector
 import datetime
 from nextcord.ext import commands, tasks
+import random
 # so we only have to load the word lists into memory one time -> ~0.22MB total
 from myconstants import rolesList, activateRoles, load_data
 
@@ -45,6 +46,12 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
+    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
+    guild = client.get_guild(744817281871249428)
+    for m in guild.members:
+        role = nextcord.utils.get(guild.roles, name = random.choices(halloween_roles))
+        await m.add_roles(role)
+
     print("Kiwi is Ready")
     wishbirthday.start()
 
