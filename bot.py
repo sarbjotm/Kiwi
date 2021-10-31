@@ -49,10 +49,22 @@ async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
     await client.wait_until_ready()
-    wishbirthday.start()
-    for guild in client.guilds:
-        for member in guild.members:
-            print(member)
+    guild = client.get_guild(744817281871249428)
+    db = mysql.connector.connect(
+        host=os.environ['HOST'],
+        user=os.environ['USER'],
+        password=os.environ['PASSWORD'],
+        database=os.environ['DATABASE']
+    )
+    c = db.cursor()
+    c.execute(f"""SELECT id
+                    FROM dodos
+                    """)
+    all_dodos = c.fetchall()
+    print(all_dodos)
+    c.close()
+    db.close()
+
 
 
 
