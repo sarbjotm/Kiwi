@@ -47,10 +47,13 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
-    await client.wait_until_ready()
     print("Kiwi is Ready")
+    await client.wait_until_ready()
     wishbirthday.start()
-    print(client.get_all_members())
+    for guild in client.guilds:
+        for member in guild.members:
+            print(member)
+
 
 
 
