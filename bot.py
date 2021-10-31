@@ -103,6 +103,11 @@ async def on_member_join(member):
     db.commit()
     c.close()
     db.close()
+    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
+    role_assign = random.choices(halloween_roles)[0]
+    print(role_assign)
+    role = discord.utils.get(guild.roles, name=role_assign)
+    await member.add_roles(role)
     await channel.send(f"Added {member} to database")
 
 
