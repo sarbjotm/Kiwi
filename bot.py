@@ -50,6 +50,7 @@ async def on_ready():
     await client.wait_until_ready()
     print("Kiwi is Ready")
     wishbirthday.start()
+    print(client.get_all_members())
 
 
 
