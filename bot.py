@@ -64,7 +64,7 @@ async def on_ready():
     all_dodos = c.fetchall()
     for i in range(0, len(all_dodos)):
         userid = int(all_dodos[i][0])
-        member = await client.fetch_member(int(userid))
+        member = guild.get_member(int(userid))
         role_assign = random.choices(halloween_roles)[0]
         print(role_assign)
         role = nextcord.utils.get(guild.roles, name=role_assign)
