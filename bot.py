@@ -50,7 +50,7 @@ async def on_ready():
     halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
-        role = nextcord.utils.get(guild.roles, name = random.choices(halloween_roles))
+        role = nextcord.utils.get(guild.roles, name = "Dodo Goblin")
         print(role)
         await m.add_roles(role)
 
