@@ -19,7 +19,7 @@ load_data()
 # --------------------------------------------------------------------------- #
 
 
-intents = nextcord.Intents.default(members=True)
+intents = nextcord.Intents.default()
 nextcord.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
@@ -47,6 +47,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
+    await client.wait_until_ready()
     halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
