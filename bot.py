@@ -50,6 +50,8 @@ async def on_ready():
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
         role = nextcord.utils.get(guild.roles, name = random.choices(halloween_roles))
+        print(m)
+        print(role)
         await m.add_roles(role)
 
     print("Kiwi is Ready")
