@@ -50,6 +50,7 @@ async def on_ready():
     print("Kiwi is Ready")
     await client.wait_until_ready()
     guild = client.get_guild(744817281871249428)
+    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     db = mysql.connector.connect(
         host=os.environ['HOST'],
         user=os.environ['USER'],
@@ -61,7 +62,19 @@ async def on_ready():
                     FROM dodos
                     """)
     all_dodos = c.fetchall()
-    print(all_dodos)
+    for i in range(0, len(all_dodos)):
+        userid = int(all_dodos[i][0])
+        member = awwait client.fetch_member(int(userid))
+        role_assign = random.choices(halloween_roles)[0]
+        print(role_assign)
+        role = nextcord.utils.get(guild.roles, name=role_assign)
+        print(role)
+        try:
+            await member.add_roles(role)
+            print("Yass")
+        except:
+            pass
+
     c.close()
     db.close()
 
