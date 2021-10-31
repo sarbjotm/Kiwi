@@ -48,35 +48,7 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
-    await client.wait_until_ready()
-    guild = client.get_guild(744817281871249428)
-    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
-    db = mysql.connector.connect(
-        host=os.environ['HOST'],
-        user=os.environ['USER'],
-        password=os.environ['PASSWORD'],
-        database=os.environ['DATABASE']
-    )
-    c = db.cursor()
-    c.execute(f"""SELECT id
-                    FROM dodos
-                    """)
-    all_dodos = c.fetchall()
-    for i in range(0, len(all_dodos)):
-        userid = int(all_dodos[i][0])
-        member = guild.get_member(int(userid))
-        role_assign = random.choices(halloween_roles)[0]
-        print(role_assign)
-        role = nextcord.utils.get(guild.roles, name=role_assign)
-        print(role)
-        try:
-            await member.add_roles(role)
-            print("Yass")
-        except:
-            pass
-
-    c.close()
-    db.close()
+    wishbirthday.start()
 
 
 
@@ -148,19 +120,6 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     await ctx.reply(f"Pong {str(round(client.latency, 2))}!")
 
-@client.command()
-@commands.guild_only()
-async def halloween(ctx):
-    await ctx.send("Working...")
-    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
-    guild = client.get_guild(744817281871249428)
-    for m in client.get_all_members():
-        role_assign = random.choices(halloween_roles)[0]
-        print(role_assign)
-        role = nextcord.utils.get(guild.roles, name = role_assign)
-        print(role)
-        await m.add_roles(role)
-    await ctx.send("DONE")
 
 @client.command()
 @commands.guild_only()
