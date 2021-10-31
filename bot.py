@@ -50,14 +50,7 @@ async def on_ready():
     await client.wait_until_ready()
     print("Kiwi is Ready")
     wishbirthday.start()
-    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
-    guild = client.get_guild(744817281871249428)
-    for m in guild.members:
-        role_assign = random.choices(halloween_roles)[0]
-        print(role_assign)
-        role = nextcord.utils.get(guild.roles, name = role_assign)
-        print(role)
-        await m.add_roles(role)
+
 
 
 @tasks.loop(minutes=1440)
@@ -125,7 +118,21 @@ async def on_command_error(ctx, error):
 @commands.guild_only()
 async def ping(ctx):
     await ctx.reply(f"Pong {str(round(client.latency, 2))}!")
-    
+
+@client.command()
+@commands.guild_only()
+async def halloween(ctx):
+    await ctx.send("Working...")
+    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
+    guild = client.get_guild(744817281871249428)
+    for m in guild.members:
+        role_assign = random.choices(halloween_roles)[0]
+        print(role_assign)
+        role = nextcord.utils.get(guild.roles, name = role_assign)
+        print(role)
+        await m.add_roles(role)
+    await ctx.send("DONE")
+
 @client.command()
 @commands.guild_only()
 async def hit(ctx):
