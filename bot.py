@@ -19,7 +19,7 @@ load_data()
 # --------------------------------------------------------------------------- #
 
 
-intents = nextcord.Intents.default()
+intents = nextcord.Intents.default(members=True)
 nextcord.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
@@ -50,7 +50,7 @@ async def on_ready():
     halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
-        role = nextcord.utils.get(guild.roles, name = "Dodo Goblin")
+        role = nextcord.utils.get(guild.roles, name = random.choices(halloween_roles))
         print(role)
         await m.add_roles(role)
 
