@@ -48,6 +48,8 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     await client.wait_until_ready()
+    print("Kiwi is Ready")
+    wishbirthday.start()
     halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
     guild = client.get_guild(744817281871249428)
     for m in guild.members:
@@ -56,9 +58,6 @@ async def on_ready():
         role = nextcord.utils.get(guild.roles, name = role_assign)
         print(role)
         await m.add_roles(role)
-
-    print("Kiwi is Ready")
-    wishbirthday.start()
 
 
 @tasks.loop(minutes=1440)
