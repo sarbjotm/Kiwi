@@ -143,7 +143,7 @@ class Utilities(commands.Cog):
         )
         c = db.cursor()
         role_assign = random.choices(rolesList,
-                                     weights=[0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                                     weights=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                               1, 1])[0]
         print(role_assign)
         role = nextcord.utils.get(ctx.guild.roles, name=role_assign)
