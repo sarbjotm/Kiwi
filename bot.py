@@ -122,8 +122,8 @@ async def hit(ctx):
     pass
 
 
-@commands.guild_only()s
-@client.command(pass_context=True)
+@client.group(invoke_without_command = True)
+@commands.guild_only()
 async def help(ctx):
     embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")
     embed.add_field(name="Astrology/Birthday", value="``birthday``, ``horoscope``")
@@ -133,6 +133,7 @@ async def help(ctx):
     await ctx.send(embed=embed)
 #
 #
+
 # #Astrology/Birthday
 # @help.command()
 # async def birthday(ctx):
