@@ -213,7 +213,7 @@ async def sell(ctx):
     await ctx.send(embed=embed)
 
 @help.command()
-async def sell(ctx):
+async def shop(ctx):
     embed = nextcord.Embed(title = "shop", description = "View prices of the shop. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",shop")
     embed.add_field(name="Example", value=",shop")
