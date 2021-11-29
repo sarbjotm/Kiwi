@@ -1,9 +1,10 @@
 import nextcord
-from nextcord.ext import commands
 import requests
+import datetime
+
+from nextcord.ext import commands
 from requests.exceptions import Timeout
 from bs4 import BeautifulSoup
-
 from myconstants import zodiacSigns, zodiacAvatars
 
 
@@ -11,16 +12,22 @@ class Outline(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    # TODO: Allow an option to view NEXT semesters by adding next parametre.Check for next semester by either grabbing date/time or increasing from current semester by if statement
     @commands.command(aliases=['sfu'])
     @commands.guild_only()
-    async def outline(self, ctx, course, section="D100"):
+    async def outline(self, ctx, course, section="D100", next=""):
         course_name = course[0:len(course) - 3]
         course_number = course[len(course) - 3:]
+        year = str(datetime.datetime.today().year)
+        current_month = datetime.datetime.today().month
+        semester = "fall" if current_month >= 9 else "spring" if current_month <= 4 else "summer"
+
+        if str(next).lower() == "next":
+            year = current_year if semester != "fall" else current_year + 1
+            semester = "spring" if current_month >= 9 else "summer" if current_month <= 4 else "fall"
 
         try:
             source = requests.get(
-                f'http://www.sfu.ca/students/calendar/2021/fall/courses/{course_name.lower()}/{course_number}',
+                f'http://www.sfu.ca/students/calendar/{year}/{semester}/courses/{course_name.lower()}/{course_number}',
                 timeout=5)
 
         except Timeout:
@@ -104,7 +111,7 @@ class Outline(commands.Cog):
     @outline.error
     async def outline_error(self, ctx, error):
         channel = ctx.guild.get_channel(os.environ['CHANNEL'])
-        await ctx.send("Error Occured. Make sure the class exists and is offered in the Fall 2021 semester")
+        await ctx.send(f"Error Occured. Make sure the class exists and is offered during {semester} {year}. Alternatively check if SFU has released class schedules.")
         await channel.send(f"{ctx.message.author} experienced a error using outline/sfu. {error}")
 
 
