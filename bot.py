@@ -139,7 +139,7 @@ async def birthday(ctx):
     embed.add_field(name = "Syntax", value = ",birthday [mmdd] OR ,setbirthday [mmdd]")
     embed.add_field(name="Example", value=",setbirthday 0930 \n,setbirthday 0105")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 @help.command()
 async def horoscope(ctx):
@@ -147,7 +147,7 @@ async def horoscope(ctx):
     embed.add_field(name = "Syntax", value = ",horoscope [zodiac_sign] OR ,zodiac [zodiac_sign]")
     embed.add_field(name="Example", value=",zodiac libra")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 
 
@@ -159,7 +159,7 @@ async def bal(ctx):
     embed.add_field(name = "Syntax", value = ",bal")
     embed.add_field(name="Example", value=",bal ")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 
 @help.command()
@@ -168,7 +168,7 @@ async def buy(ctx):
     embed.add_field(name = "Syntax", value = ",buy [quantity] [role name]")
     embed.add_field(name="Example", value=",buy 1 Dodo Green")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 @help.command()
 async def daily(ctx):
@@ -176,7 +176,7 @@ async def daily(ctx):
     embed.add_field(name = "Syntax", value = ",daily")
     embed.add_field(name="Example", value=",daily")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 @help.command()
 async def keep(ctx):
@@ -185,7 +185,7 @@ async def keep(ctx):
     embed.add_field(name="Example", value=",keep 3")
     embed.add_field(name="Explanation", value=",This will sell all of your roles individually until all of your roles are 3 or less. ")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 
 @help.command()
@@ -194,7 +194,7 @@ async def give(ctx):
     embed.add_field(name = "Syntax", value = ",give [@User] [amount]")
     embed.add_field(name="Example", value=",give @Amander 1160")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 
 @help.command()
@@ -202,6 +202,7 @@ async def leaderboard(ctx):
     embed = nextcord.Embed(title = "leaderboard", description = "See the top 5 richest Dodos on the server. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",leaderboard")
     embed.add_field(name="Example", value=",leaderboard")
+    await ctx.send(embed=embed, ephemeral=True)
 
 
 @help.command()
@@ -210,7 +211,7 @@ async def sell(ctx):
     embed.add_field(name = "Syntax", value = ",sell [amount] [role]")
     embed.add_field(name="Example", value=",sell 2 Dodo Green")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 
 @help.command()
 async def shop(ctx):
@@ -218,7 +219,7 @@ async def shop(ctx):
     embed.add_field(name = "Syntax", value = ",shop")
     embed.add_field(name="Example", value=",shop")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+    await ctx.send(embed=embed, ephemeral=True)
 #
 
 # @commands.guild_only()
