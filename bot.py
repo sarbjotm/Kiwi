@@ -127,7 +127,7 @@ async def hit(ctx):
 @client.command(pass_context=True)
 async def help(ctx):
     embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")
-    embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``keep``, ``give`` ``sell``, ``shop``")
+    embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
 
 
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
@@ -138,6 +138,8 @@ async def bal(ctx):
     embed = nextcord.Embed(title = "Bal", description = "View how much money you have. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",bal")
     embed.add_field(name="Example", value=",bal ")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
 
 
 @help.command()
@@ -145,12 +147,59 @@ async def buy(ctx):
     embed = nextcord.Embed(title = "Buy", description = "Use buy to buy roles with your server currency. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",buy [quantity] [role name]")
     embed.add_field(name="Example", value=",buy 1 Dodo Green")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
 
 @help.command()
 async def daily(ctx):
-    embed = nextcord.Embed(title = "daily", description = "Daily is used to get server currency. You will gain between 1 and 1000 Dodo Dollars, but there is a small (~5%) chance to lose money")
+    embed = nextcord.Embed(title = "daily", description = "Daily is used to get server currency. You will gain between 1 and 1000 Dodo Dollars, but there is a small (~5%) chance to lose money. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",daily")
     embed.add_field(name="Example", value=",daily")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+@help.command()
+async def keep(ctx):
+    embed = nextcord.Embed(title = "keep", description = "Keep is used to sell all your roles, until your roles are <= to the number you specified. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",keep [quantity]")
+    embed.add_field(name="Example", value=",keep 3")
+    embed.add_field(name="Explanation", value=",This will sell all of your roles individually until all of your roles are 3 or less. ")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+
+@help.command()
+async def give(ctx):
+    embed = nextcord.Embed(title = "give", description = "Give another server member money. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",give [@User] [amount]")
+    embed.add_field(name="Example", value=",give @Amander 1160")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+
+@help.command()
+async def leaderboard(ctx):
+    embed = nextcord.Embed(title = "leaderboard", description = "See the top 5 richest Dodos on the server. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",leaderboard")
+    embed.add_field(name="Example", value=",leaderboard")
+
+
+@help.command()
+async def sell(ctx):
+    embed = nextcord.Embed(title = "sell", description = "Sell roles individually. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",sell [amount] [role]")
+    embed.add_field(name="Example", value=",sell 2 Dodo Green")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+@help.command()
+async def sell(ctx):
+    embed = nextcord.Embed(title = "shop", description = "View prices of the shop. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",shop")
+    embed.add_field(name="Example", value=",shop")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
 
 # @commands.guild_only()
 # async def help(ctx, category=''):
