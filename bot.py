@@ -124,101 +124,101 @@ async def ping(ctx):
 async def hit(ctx):
     pass
 
-@client.command(pass_context=True)
-@commands.guild_only()
-async def help(ctx, category=''):
-    category = str(category).lower()
-    if category == 'astrology':
-        embed = nextcord.Embed(title="Astrology and Birthday", description="**,horoscope zodiac** - This will return your \
-            Daily Horoscope based off of your zodiac sign \n\n \
-            **,birthday mmdd** - This will set your birthday! Kiwi will wish you a happy birthday on your special day",
-                              color=0x66abf9)
-
-    elif category == 'decision':
-        embed = nextcord.Embed(title="Decision Making",
-                              description="**,8ball question** - ask Kiwi a question \n\n**,coinflip** - flip a coin "
-                                          "\n\n**,poll \"Question\" option1 option2 ... option10** - Display a poll "
-                                          "with n (2 <= n <= 10) options or a yes/no without any options shown",
-                              color=0x66abf9)
-
-    elif category == 'economy':
-        embed = nextcord.Embed(title="Economy",
-                              description="**,bal** - View your balance \n\n**,buy quantity role** Buy a role \n\n "
-                                          "**,daily** - Recieve between 1-1000 discord dollars \n\n**,give @User x** "
-                                          "- Give @User x dodo dollars \n\n**,leaderboard** - See top 5 Richest Dodos "
-                                          "\n\n **,sell quantity role** - sell your roles for money \n\n**,"
-                                          "shop** - see prices for roles",
-                              color=0x66abf9)
-
-    elif category == 'help':
-        embed = nextcord.Embed(title="Help",
-                              description="**,help** - To view all categories otherwise do **,help category** for "
-                                          "info regarding the specified category \n\n **,ping** - See if bot is "
-                                          "offline \n\n",
-                              color=0x66abf9)
-
-    elif category == 'mention':
-        embed = nextcord.Embed(title="Mention",
-                              description="**,hugs @user** - Gives the selected user a hug \n\n**,hugsRole @role** - "
-                                          "group hug \n\n **,waves @user** - waves at a user \n\n**,wavesRole @role** "
-                                          "- waves at a group \n\n",
-                              color=0x66abf9)
-
-    elif category == 'minigames':
-        embed = nextcord.Embed(title="Minigames",
-                              description="**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount "
-                                          "\n\n**,cup bet** - Play the classic 'guess where the gem' is game, "
-                                          "pick the right cup and win!"
-                                          "\n\n**,trivia bet <safe_filter_off=false>** - Kiwi finds a random image"
-                                          "online and 4 similar captions; you have to figure out which one is real!"
-                                          "The safe filter is initially on, however if you turn it off kiwi can be more"
-                                          "risky with their search terms.",
-                              color=0x66abf9)
-
-    elif category == 'misc':
-        embed = nextcord.Embed(title="Misc",
-                              description="**,randomnumber a b ** - display rng [a,b] \n\n**,kittyclap** - send a "
-                                          "kittyclap",
-                              color=0x66abf9)
-
-    elif category == 'role':
-        embed = nextcord.Embed(title="Role Based",
-                              description="**,collect** - obtain a role! 12 hour cooldown \n\n**,activate role** - "
-                                          "activate a ,collect role\n\n**,trade your role @user their role** - trade "
-                                          "roles \n\n**,myroles** - display a list of your roles \n\n**,"
-                                          "roles** - display a list of collectable roles \n\n **,hide role** - hide a "
-                                          "role from your profile \n\n**,show role** - make a role appear on profile "
-                                          "\n\n **,hideall** - hide all roles \n\n**,showall** - show all roles",
-                              color=0x66abf9)
-
-    elif category == 'string':
-        embed = nextcord.Embed(title="String",
-                              description="**,fw message** - add sparkles between words \n**,spaced message** - "
-                                          "space out your message \n\n**,spongebob message** - SpOnGeBoB MeMe",
-                              color=0x66abf9)
-
-    elif category == "weather":
-        embed = nextcord.Embed(title="Misc",
-                              description="**,weather city** - Find out the weather in your city! Sometimes you might "
-                                          "have to add the country code, eg: London,CA",
-                              color=0x66abf9)
-
-    else:
-        embed = nextcord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
-            **,help Astrology** - To view commands based on Astrology such as zodiac and birthday \n\n\
-            **,help Decision** - To view commands to help your decision making such as coinflip and 8ball \n\n\
-            **,help Economy** - To view commands based on Economy such as daily and selling/buying roles \n\n\
-            **,help Help** - To view help based commands such as help and ping \n\n\
-            **,help Mention** - To view commands that allow you to interact with other members such as hug and wave \n\n\
-            **,help Minigames** - To view commands that allow you to play games such as blackjack and cup shuffle \n\n\
-            **,help Misc** - To view random commands such as kittyclap and random number picking \n\n\
-            **,help Role** - To view commands based on Roles such as collecting and trading \n\n\
-            **,help String** - To view commands that alter your messages such as sparkles and spaced \n\n\
-            **,help Weather** - To view commands based on the Weather such as weather \n\n \
-            To learn more about me use the command **,about**", color=0x66abf9)
-
-    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+# @client.command(pass_context=True)
+# @commands.guild_only()
+# async def help(ctx, category=''):
+#     category = str(category).lower()
+#     if category == 'astrology':
+#         embed = nextcord.Embed(title="Astrology and Birthday", description="**,horoscope zodiac** - This will return your \
+#             Daily Horoscope based off of your zodiac sign \n\n \
+#             **,birthday mmdd** - This will set your birthday! Kiwi will wish you a happy birthday on your special day",
+#                               color=0x66abf9)
+#
+#     elif category == 'decision':
+#         embed = nextcord.Embed(title="Decision Making",
+#                               description="**,8ball question** - ask Kiwi a question \n\n**,coinflip** - flip a coin "
+#                                           "\n\n**,poll \"Question\" option1 option2 ... option10** - Display a poll "
+#                                           "with n (2 <= n <= 10) options or a yes/no without any options shown",
+#                               color=0x66abf9)
+#
+#     elif category == 'economy':
+#         embed = nextcord.Embed(title="Economy",
+#                               description="**,bal** - View your balance \n\n**,buy quantity role** Buy a role \n\n "
+#                                           "**,daily** - Recieve between 1-1000 discord dollars \n\n**,give @User x** "
+#                                           "- Give @User x dodo dollars \n\n**,leaderboard** - See top 5 Richest Dodos "
+#                                           "\n\n **,sell quantity role** - sell your roles for money \n\n**,"
+#                                           "shop** - see prices for roles",
+#                               color=0x66abf9)
+#
+#     elif category == 'help':
+#         embed = nextcord.Embed(title="Help",
+#                               description="**,help** - To view all categories otherwise do **,help category** for "
+#                                           "info regarding the specified category \n\n **,ping** - See if bot is "
+#                                           "offline \n\n",
+#                               color=0x66abf9)
+#
+#     elif category == 'mention':
+#         embed = nextcord.Embed(title="Mention",
+#                               description="**,hugs @user** - Gives the selected user a hug \n\n**,hugsRole @role** - "
+#                                           "group hug \n\n **,waves @user** - waves at a user \n\n**,wavesRole @role** "
+#                                           "- waves at a group \n\n",
+#                               color=0x66abf9)
+#
+#     elif category == 'minigames':
+#         embed = nextcord.Embed(title="Minigames",
+#                               description="**,blackjack bet** - Play blackjack with Kiwi! Bet is your betting amount "
+#                                           "\n\n**,cup bet** - Play the classic 'guess where the gem' is game, "
+#                                           "pick the right cup and win!"
+#                                           "\n\n**,trivia bet <safe_filter_off=false>** - Kiwi finds a random image"
+#                                           "online and 4 similar captions; you have to figure out which one is real!"
+#                                           "The safe filter is initially on, however if you turn it off kiwi can be more"
+#                                           "risky with their search terms.",
+#                               color=0x66abf9)
+#
+#     elif category == 'misc':
+#         embed = nextcord.Embed(title="Misc",
+#                               description="**,randomnumber a b ** - display rng [a,b] \n\n**,kittyclap** - send a "
+#                                           "kittyclap",
+#                               color=0x66abf9)
+#
+#     elif category == 'role':
+#         embed = nextcord.Embed(title="Role Based",
+#                               description="**,collect** - obtain a role! 12 hour cooldown \n\n**,activate role** - "
+#                                           "activate a ,collect role\n\n**,trade your role @user their role** - trade "
+#                                           "roles \n\n**,myroles** - display a list of your roles \n\n**,"
+#                                           "roles** - display a list of collectable roles \n\n **,hide role** - hide a "
+#                                           "role from your profile \n\n**,show role** - make a role appear on profile "
+#                                           "\n\n **,hideall** - hide all roles \n\n**,showall** - show all roles",
+#                               color=0x66abf9)
+#
+#     elif category == 'string':
+#         embed = nextcord.Embed(title="String",
+#                               description="**,fw message** - add sparkles between words \n**,spaced message** - "
+#                                           "space out your message \n\n**,spongebob message** - SpOnGeBoB MeMe",
+#                               color=0x66abf9)
+#
+#     elif category == "weather":
+#         embed = nextcord.Embed(title="Misc",
+#                               description="**,weather city** - Find out the weather in your city! Sometimes you might "
+#                                           "have to add the country code, eg: London,CA",
+#                               color=0x66abf9)
+#
+#     else:
+#         embed = nextcord.Embed(title="Kiwi Bot | Information", description="Hello there! My name is Kiwi thank you for joining the Dodo Server. To see what commands I have enter one of the following commands \n\n \
+#             **,help Astrology** - To view commands based on Astrology such as zodiac and birthday \n\n\
+#             **,help Decision** - To view commands to help your decision making such as coinflip and 8ball \n\n\
+#             **,help Economy** - To view commands based on Economy such as daily and selling/buying roles \n\n\
+#             **,help Help** - To view help based commands such as help and ping \n\n\
+#             **,help Mention** - To view commands that allow you to interact with other members such as hug and wave \n\n\
+#             **,help Minigames** - To view commands that allow you to play games such as blackjack and cup shuffle \n\n\
+#             **,help Misc** - To view random commands such as kittyclap and random number picking \n\n\
+#             **,help Role** - To view commands based on Roles such as collecting and trading \n\n\
+#             **,help String** - To view commands that alter your messages such as sparkles and spaced \n\n\
+#             **,help Weather** - To view commands based on the Weather such as weather \n\n \
+#             To learn more about me use the command **,about**", color=0x66abf9)
+#
+#     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+#     await ctx.send(embed=embed)
 
 
 @client.command(pass_context=True)
