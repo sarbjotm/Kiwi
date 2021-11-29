@@ -19,7 +19,7 @@ load_data()
 # --------------------------------------------------------------------------- #
 
 
-intents = nextcord.Intents.default()
+intents = nextcord.Intents.all()
 nextcord.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
