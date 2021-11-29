@@ -126,17 +126,31 @@ async def hit(ctx):
 @commands.guild_only()
 @client.command(pass_context=True)
 async def help(ctx):
-    embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")    embed.add_field(name = "Economy", value = "``buy``, ``daily``, ``give`` ``sell``, ``shop``")
+    embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``keep``, ``give`` ``sell``, ``shop``")
 
 
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)
 
 @help.command()
+async def bal(ctx):
+    embed = nextcord.Embed(title = "Bal", description = "View how much money you have. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",bal")
+    embed.add_field(name="Example", value=",bal ")
+
+
+@help.command()
 async def buy(ctx):
     embed = nextcord.Embed(title = "Buy", description = "Use buy to buy roles with your server currency. As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",buy [quantity] [role name]")
     embed.add_field(name="Example", value=",buy 1 Dodo Green")
+
+@help.command()
+async def daily(ctx):
+    embed = nextcord.Embed(title = "daily", description = "Daily is used to get server currency. You will gain between 1 and 1000 Dodo Dollars, but there is a small (~5%) chance to lose money")
+    embed.add_field(name = "Syntax", value = ",daily")
+    embed.add_field(name="Example", value=",daily")
 
 # @commands.guild_only()
 # async def help(ctx, category=''):
