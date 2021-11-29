@@ -128,7 +128,8 @@ async def help(ctx):
     embed = nextcord.Embed(title = "Help", description = "Use ``,help <command>`` for extended information. \n[] means required parameters and {} means option parameters")
     embed.add_field(name="Astrology/Birthday", value="``birthday``, ``horoscope``")
     embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
-    embed.add_field(name = "Help", value = "``help``, ``ping``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
+    embed.add_field(name = "Help", value = "``help``, ``ping``")
+    embed.add_field(name="Interactions", value="``hug``, ``hugsRoles``, ``info``, ``waves``, ``wavesRoles``")
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)
 #
