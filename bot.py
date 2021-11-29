@@ -227,13 +227,13 @@ async def shop(ctx):
 
 
 #Help  -----------------------
-@help.command()
-async def help(ctx):
-    embed = nextcord.Embed(title = "Help", description = "View the previous help message. As a reminder: [] means required parameters and {} means option parameters")
-    embed.add_field(name = "Syntax", value = ",help")
-    embed.add_field(name="Example", value=",help")
-    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
-    await ctx.send(embed=embed)
+# @help.command()
+# async def help(ctx):
+#     embed = nextcord.Embed(title = "Help", description = "View the previous help message. As a reminder: [] means required parameters and {} means option parameters")
+#     embed.add_field(name = "Syntax", value = ",help")
+#     embed.add_field(name="Example", value=",help")
+#     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+#     await ctx.send(embed=embed)
 
 @help.command()
 async def ping(ctx):
