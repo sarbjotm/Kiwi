@@ -82,13 +82,6 @@ async def wishbirthday():
 async def on_member_join(member):
     guild = client.get_guild(int(os.environ['GUILD']))
     channel = guild.get_channel(int(os.environ['GUILD']))
-    if 'h0nde' in member.name.lower() or 'honde' in member.name.lower():
-        await member.ban(reason='h0nde')
-        return
-    if str(member.id) == '445926522222542850':
-        await member.ban(reason='')
-        return
-
     db = mysql.connector.connect(
         host=os.environ['HOST'],
         user=os.environ['USER'],
