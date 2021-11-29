@@ -77,6 +77,7 @@ async def wishbirthday():
 
 @client.event
 async def on_member_join(member):
+    print("Testing If Enters Here")
     guild = client.get_guild(int(os.environ['GUILD']))
     channel = guild.get_channel(int(os.environ['GUILD']))
     db = mysql.connector.connect(
@@ -85,7 +86,7 @@ async def on_member_join(member):
         password=os.environ['PASSWORD'],
         database=os.environ['DATABASE']
     )
-
+    print("Testing If Enters Here 2")
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000',0,0,0,0,0,0,0)
@@ -93,11 +94,7 @@ async def on_member_join(member):
     db.commit()
     c.close()
     db.close()
-    halloween_roles = ["Dodo Goblin", "Dodo Ghost", "Dodo Witch", "Dodo Pumpkin", "Dodo Skeleton"]
-    role_assign = random.choices(halloween_roles)[0]
-    print(role_assign)
-    role = discord.utils.get(guild.roles, name=role_assign)
-    await member.add_roles(role)
+    print("Testing If Commits")
     await channel.send(f"Added {member} to database")
 
 
