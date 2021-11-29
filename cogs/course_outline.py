@@ -7,12 +7,11 @@ from bs4 import BeautifulSoup
 from myconstants import zodiacSigns, zodiacAvatars
 
 
-# Horoscope Alterations
 class Outline(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    # Horoscope function - get daily horoscope from horoscope.com based from zodiac sign
+    # TODO: Allow an option to view NEXT semesters by adding next parametre.Check for next semester by either grabbing date/time or increasing from current semester by if statement
     @commands.command(aliases=['sfu'])
     @commands.guild_only()
     async def outline(self, ctx, course, section="D100"):
