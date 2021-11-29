@@ -51,9 +51,6 @@ async def on_ready():
     wishbirthday.start()
 
 
-
-
-
 @tasks.loop(minutes=1440)
 async def wishbirthday():
     current_date = str(datetime.datetime.now())
@@ -124,7 +121,23 @@ async def ping(ctx):
 async def hit(ctx):
     pass
 
-# @client.command(pass_context=True)
+
+@client.group(invoke_without_command = True)
+@commands.guild_only()
+@client.command(pass_context=True)
+async def help(ctx):
+    embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")    embed.add_field(name = "Economy", value = "``buy``, ``daily``, ``give`` ``sell``, ``shop``")
+
+
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+@help.command()
+async def buy(ctx):
+    embed = nextcord.Embed(title = "Buy", description = "Use buy to buy roles with your server currency. As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",buy [quantity] [role name]")
+    embed.add_field(name="Example", value=",buy 1 Dodo Green")
+
 # @commands.guild_only()
 # async def help(ctx, category=''):
 #     category = str(category).lower()
