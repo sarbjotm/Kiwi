@@ -143,6 +143,7 @@ async def birthday(ctx):
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)
 
+@help.command()
 async def horoscope(ctx):
     embed = nextcord.Embed(title = "Horoscope", description = "View your horoscope! As a reminder: [] means required parameters and {} means option parameters")
     embed.add_field(name = "Syntax", value = ",horoscope [zodiac_sign] OR ,zodiac [zodiac_sign]")
