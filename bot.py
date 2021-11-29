@@ -127,12 +127,33 @@ async def hit(ctx):
 @client.command(pass_context=True)
 async def help(ctx):
     embed = nextcord.Embed(title = "Help", description = "Use ,help <command> for extended information. [] means required parameters and {} means option parameters")
+    embed.add_field(name="Astrology/Birthday", value="``birthday``, ``horoscope``")
     embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
-
 
     embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
     await ctx.send(embed=embed)
 
+
+#Astrology/Birthday
+@help.command()
+async def birthday(ctx):
+    embed = nextcord.Embed(title = "Birthday", description = "Set your birthday! As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",birthday [mmdd] OR ,setbirthday [mmdd]")
+    embed.add_field(name="Example", value=",setbirthday 0930 \n,setbirthday 0105")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+async def horoscope(ctx):
+    embed = nextcord.Embed(title = "Horoscope", description = "View your horoscope! As a reminder: [] means required parameters and {} means option parameters")
+    embed.add_field(name = "Syntax", value = ",horoscope [zodiac_sign] OR ,zodiac [zodiac_sign]")
+    embed.add_field(name="Example", value=",zodiac libra")
+    embed.set_author(name="Kiwi", icon_url="https://raw.githubusercontent.com/Sarbjotm/Kiwi/main/kiwi.png")
+    await ctx.send(embed=embed)
+
+
+
+
+#Economy
 @help.command()
 async def bal(ctx):
     embed = nextcord.Embed(title = "Bal", description = "View how much money you have. As a reminder: [] means required parameters and {} means option parameters")
@@ -204,11 +225,6 @@ async def sell(ctx):
 # @commands.guild_only()
 # async def help(ctx, category=''):
 #     category = str(category).lower()
-#     if category == 'astrology':
-#         embed = nextcord.Embed(title="Astrology and Birthday", description="**,horoscope zodiac** - This will return your \
-#             Daily Horoscope based off of your zodiac sign \n\n \
-#             **,birthday mmdd** - This will set your birthday! Kiwi will wish you a happy birthday on your special day",
-#                               color=0x66abf9)
 #
 #     elif category == 'decision':
 #         embed = nextcord.Embed(title="Decision Making",
