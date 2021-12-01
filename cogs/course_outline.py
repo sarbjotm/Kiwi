@@ -22,7 +22,7 @@ class Outline(commands.Cog):
         semester = "fall" if current_month >= 9 else "spring" if current_month <= 4 else "summer"
 
         if str(next).lower() == "next":
-            year = year if semester != "fall" else current_year + 1
+            year = year if semester != "fall" else year + 1
             semester = "spring" if current_month >= 9 else "summer" if current_month <= 4 else "fall"
 
         try:
@@ -58,7 +58,7 @@ class Outline(commands.Cog):
 
             try:
                 source = requests.get(
-                    f'http://www.sfu.ca/outlines.html?2021/fall/{course_name.lower()}/{course_number}/{section}',
+                    f'http://www.sfu.ca/outlines.html?{year}/fall/{course_name.lower()}/{course_number}/{section}',
                     timeout=5).text
 
             except Timeout:
