@@ -77,16 +77,14 @@ async def wishbirthday():
 
 @client.event
 async def on_member_join(member):
-    print("Testing If Enters Here")
     guild = client.get_guild(int(os.environ['GUILD']))
-    channel = guild.get_channel(int(os.environ['GUILD']))
+    channel = guild.get_channel(int(os.environ['CHANNEL']))
     db = mysql.connector.connect(
         host=os.environ['HOST'],
         user=os.environ['USER'],
         password=os.environ['PASSWORD'],
         database=os.environ['DATABASE']
     )
-    print("Testing If Enters Here 2")
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
                   VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000',0,0,0,0,0,0,0)
@@ -94,7 +92,6 @@ async def on_member_join(member):
     db.commit()
     c.close()
     db.close()
-    print("Testing If Commits")
     await channel.send(f"Added {member} to database")
 
 
@@ -113,12 +110,6 @@ async def ping(ctx):
     await ctx.reply(f"Pong {str(round(client.latency, 2))}!")
 
 
-@client.command()
-@commands.guild_only()
-async def hit(ctx):
-    pass
-
-
 @client.group(invoke_without_command = True)
 @commands.guild_only()
 async def help(ctx):
@@ -128,6 +119,7 @@ async def help(ctx):
     embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
     embed.add_field(name = "Help", value = "``help``, ``ping``")
     embed.add_field(name="Interactions", value="``hugs``, ``hugsRoles``, ``info``, ``waves``, ``wavesRoles``")
+    embed.add_field(name="Moderations", value="``To be checked then added``")
     embed.add_field(name="Minigames", value="``blackjack``, ``cupshuffle``, ``trivia``")
     embed.add_field(name="Other", value="``fw``, ``outline``, ``spaced``, ``spongebob``, ``travisclap``, ``weather``")
     embed.add_field(name="Role Based", value="``activate``, ``collect``, ``hide``, ``hideall``, ``myroles``, ``roles``,  ``show``, ``showall``, ``trade``")
