@@ -22,7 +22,7 @@ class Outline(commands.Cog):
         semester = "fall" if current_month >= 9 else "spring" if current_month <= 4 else "summer"
 
         if str(next).lower() == "next":
-            year = year if semester != "fall" else year + 1
+            year = year if semester != "fall" else int(year) + 1
             semester = "spring" if current_month >= 9 else "summer" if current_month <= 4 else "fall"
 
         try:
