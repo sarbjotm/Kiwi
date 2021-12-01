@@ -58,7 +58,7 @@ class Outline(commands.Cog):
 
             try:
                 source = requests.get(
-                    f'http://www.sfu.ca/outlines.html?{year}/fall/{course_name.lower()}/{course_number}/{section}',
+                    f'http://www.sfu.ca/outlines.html?{year}/{semester}/{course_name.lower()}/{course_number}/{section}',
                     timeout=5).text
 
             except Timeout:
