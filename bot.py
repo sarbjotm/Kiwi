@@ -51,7 +51,7 @@ async def on_ready():
     guild = client.get_guild(744817281871249428)
     channel = guild.get_channel(744818329427902504)
     emojiDescription = "🌱 - she/her \n\n🌲 - he/him \n\n🌴 - they/them \n \n🌵 - fae/faer \n\n🌿 - ze/zir \n\n☘ - xe/xem \n\n🌳 - ze/hir \n\n🍃 - any "
-    embed=discord.Embed(title="Pronouns", description = emojiDescription, color=0xe392fe)
+    embed=nextcord.Embed(title="Pronouns", description = emojiDescription, color=0xe392fe)
     roleMessage = await channel.send(embed=embed)
     for i in emojisToAdd:
         await roleMessage.add_reaction(i)
