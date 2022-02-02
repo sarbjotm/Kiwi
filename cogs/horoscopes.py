@@ -36,6 +36,7 @@ class Horoscope(commands.Cog):
                 for element in article:
                     today_horoscope += ''.join(element.findAll(text=True)) + '\n'
                 #today_horoscope = str(today_horoscope)
+                today_horoscope = today_horoscope.strip()s
                 today_horoscope = today_horoscope.replace("people", "dodos")
                 today_horoscope = today_horoscope.replace("somebody", "some dodo")
                 today_horoscope = today_horoscope.replace("person", "dodo")
