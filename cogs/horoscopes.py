@@ -28,7 +28,9 @@ class Horoscope(commands.Cog):
 
             else:
                 soup = BeautifulSoup(source, 'lxml')
-                today_horoscope = soup.p.text
+                #today_horoscope = soup.p.text
+                paragraph = soup.find('p')
+                today_horoscope = paragraph.get_text()
                 today_horoscope = str(today_horoscope)
                 today_horoscope = today_horoscope.replace("people", "dodos")
                 today_horoscope = today_horoscope.replace("somebody", "some dodo")
