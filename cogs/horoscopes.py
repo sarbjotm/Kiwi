@@ -30,6 +30,8 @@ class Horoscope(commands.Cog):
                 soup = BeautifulSoup(source, 'lxml')
                 #today_horoscope = soup.p.text
                 today_horoscope = ''
+                soup.find("p", {"class": "show-small"}).decompose()
+                soup.find("p", {"class": "hide-small"}).decompose()
                 article = soup.find("div", {"class": "main-horoscope"}).findAll('p')
                 for element in article:
                     today_horoscope += '\n' + ''.join(element.findAll(text=True))
