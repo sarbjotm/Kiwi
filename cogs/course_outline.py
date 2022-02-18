@@ -36,9 +36,11 @@ class Outline(commands.Cog):
             else:
                 soup = BeautifulSoup(source, 'lxml')
                 course_description = soup.find_all('p')
-                embed_description = course_description[0].get_text() + "\n"
-                embed_title = soup.find("h2", {"id": "title"})
-                embed_title = embed_title.text.split()
+                embed_description = course_description[1].get_text() + "\n"
+                course_title = soup.find("h2", {"id": "title"})
+                embed_title = str(course_name).upper() + str(course_number) + " - "
+                for i in range(o, len(course_title) - 1):
+                    embed_title = embed_title + course_title[i] + " "
                 time = soup.find("li", {"class": "course-times"})
                 if time is None:
                     time = ["Course Times + Location:", "N/A"]
