@@ -38,9 +38,9 @@ class Outline(commands.Cog):
                 course_description = soup.find_all('p')
                 embed_description = course_description[1].get_text() + "\n \n"
                 course_title = soup.find("h2", {"id": "title"}).get_text()
-                embed_title = str(course_name).upper() + str(course_number) + str(section).upper() + " - "
-                for i in range(0, len(course_title)):
-                    embed_title = embed_title + course_title[i] + " "
+                embed_title = str(course_name).upper() + str(course_number) + str(section).upper() + " - " + course_title
+#                 for i in range(0, len(course_title)):
+#                     embed_title = embed_title + course_title[i] + " "
                 time = soup.find("li", {"class": "course-times"})
                 if time is None:
                     time = ["Course Times + Location:", "N/A"]
