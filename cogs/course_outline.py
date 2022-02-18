@@ -25,6 +25,61 @@ class Outline(commands.Cog):
             year = year if semester != "fall" else int(year) + 1
             semester = "spring" if current_month >= 9 else "summer" if current_month <= 4 else "fall"
 
+            try:
+                source = requests.get(
+                    f'http://www.sfu.ca/outlines.html?{year}/{semester}/{course_name.lower()}/{course_number}/{section}',
+                    timeout=5).text
+
+            except Timeout:
+                await ctx.send("Error accessing server data, please try again later")
+
+            else:
+                soup = BeautifulSoup(source, 'lxml')
+                course_description = soup.find_all('p')
+                embed_description = course_description[0].get_text() + "\n"
+                embed_title = soup.find("h2", {"id": "title"})
+                embed_title = embed_title.text.split()
+                time = soup.find("li", {"class": "course-times"})
+                if time is None:
+                    time = ["Course Times + Location:", "N/A"]
+                else:
+                    time = time.text.split()
+
+                prereq = soup.find("li", {"class": "prereq"})
+                if prereq is None:
+                    prereq = ["Prerequisites:", "N/A"]
+                else:
+                    prereq = prereq.text.split()
+                instructor = soup.find("li", {"class": "instructor"})
+
+                if instructor is None:
+                    instructor = ["Instructor:", "N/A"]
+                else:
+                    instructor = instructor.text.split()
+
+                for i in range(0, len(prereq)):
+                    embed_description = embed_description + prereq[i] + " "
+
+                embed_description = embed_description + "\n \n"
+
+                for i in range(0, len(instructor)):
+                    embed_description = embed_description + instructor[i] + " "
+
+                embed_description = embed_description + "\n \n"
+                for i in range(0, len(time)):
+                    if len(time[i]) > 2 and (time[i][0] + time[i][1] == "PM" or time[i][0] + time[i][1] == "AM"):
+                        embed_description = embed_description + time[i][0] + time[i][1] + " " + time[i][2:]
+                    else:
+                        embed_description = embed_description + time[i] + " "
+
+                    if time[i] == "Location:" or time[i] == "Burnaby" or time[i] == "Surrey":
+                        embed_description = embed_description + "\n"
+
+                embed_description = embed_description.strip(" ")
+                embed = nextcord.Embed(title=embed_title, description=embed_description, color=0xa6192e)
+                await ctx.send(embed=embed)            
+                return
+
         try:
             source = requests.get(
                 f'http://www.sfu.ca/students/calendar/{year}/{semester}/courses/{course_name.lower()}/{course_number}',
