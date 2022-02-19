@@ -34,6 +34,18 @@ class Outline(commands.Cog):
                 await ctx.send("Error accessing server data, please try again later")
 
             else:
+                if source.status_code == 404:
+                    embed = nextcord.Embed(title="Course Not Found", description="404 Error: This course does not exist for said semester or at all",
+                                          color=0xa6192e)
+                    await ctx.send(embed=embed)
+                    return
+
+                elif source.status_code != 200:
+                    embed = nextcord.Embed(title="Error Accessing Webpage", description=f"{source} error. Try again later",
+                                          color=0xa6192e)
+                    await ctx.send(embed=embed)
+                    return
+                
                 soup = BeautifulSoup(source, 'lxml')
                 course_description = soup.find_all('p')
                 embed_description = course_description[1].get_text() + "\n \n"
