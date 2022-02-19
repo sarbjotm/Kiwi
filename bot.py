@@ -115,7 +115,7 @@ async def ping(ctx):
 async def help(ctx):
     embed = nextcord.Embed(title = "Help", description = "Use ``,help <command>`` for extended information. \n[] means required parameters and {} means option parameters")
     embed.add_field(name="Astrology/Birthday", value="``birthday``, ``horoscope``")
-    embed.add_field(name="Decision Making", value="``8ball``, ``coinflip``, ``poll``")
+    embed.add_field(name="Decision Making", value="``_8ball``, ``coinflip``, ``poll``")
     embed.add_field(name = "Economy", value = "``bal``, ``buy``, ``daily``, ``give``, ``keep``, ``leaderboard``, ``sell``, ``shop``")
     embed.add_field(name = "Help", value = "``help``, ``ping``")
     embed.add_field(name="Interactions", value="``hugs``, ``hugsRoles``, ``info``, ``waves``, ``wavesRoles``")
