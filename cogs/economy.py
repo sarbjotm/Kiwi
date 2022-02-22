@@ -270,10 +270,11 @@ class Economy(commands.Cog):
             username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
             money = str(leaders[i][1])
             description_embed = description_embed + str(position) + ". " + str(username) + "-" + str(money) + "\n"
-        embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
-        embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
-        embed.add_field(name="Top 5", value=description_embed, inline=True)
-        await ctx.send(embed=embed)
+#         embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
+#         embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
+#         embed.add_field(name="Top 5", value=description_embed, inline=True)
+#         await ctx.send(embed=embed)
+        await ctx.send(description_embed)
         c.close()
         db.close()
 
