@@ -265,6 +265,7 @@ class Economy(commands.Cog):
                 ORDER BY money DESC LIMIT 5""")
         leaders = c.fetchall()
         description_embed = ""
+        await ctx.send("Working...")
         for i in range(0, 5):
             position = i + 1
             username = await ctx.message.channel.guild.fetch_member(int(leaders[i][0]))
@@ -274,7 +275,7 @@ class Economy(commands.Cog):
 #         embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
 #         embed.add_field(name="Top 5", value=description_embed, inline=True)
 #         await ctx.send(embed=embed)
-        await ctx.send(description_embed)
+        await ctx.send("Uhhhh... I'm thinking. Remind Amander to look into this")
         c.close()
         db.close()
 
