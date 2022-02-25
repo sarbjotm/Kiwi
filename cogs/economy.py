@@ -268,7 +268,7 @@ class Economy(commands.Cog):
 
         for i in range(0, 5):
             position = i + 1
-            username = int(leaders[i][0]}
+            username = int(leaders[i][0])
             money = str(leaders[i][1])
             description_embed = description_embed + str(position) + ". " + "<@" + str(username) + "> " + "-" + str(money) + "\n"
         embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
