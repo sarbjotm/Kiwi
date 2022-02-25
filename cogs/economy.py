@@ -267,7 +267,7 @@ class Economy(commands.Cog):
         description_embed = ""
 #        await ctx.send("Working...")
 #        await ctx.send("Uhhhh... I'm thinking. Remind Amander to look into this")
-        for i in range(0, 5):
+        for i in range(0, 1):
             position = i + 1
             username = await client.fetch_user(int(leaders[i][0]))
             username = username.name
