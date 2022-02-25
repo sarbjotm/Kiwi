@@ -266,7 +266,7 @@ class Economy(commands.Cog):
         leaders = c.fetchall()
         description_embed = ""
         for i in range(0, 2):
-            await ctx.send(leaders[i])
+            await ctx.send(client.fetch_user(int(leaders[i][0])))
 #        await ctx.send("Working...")
 #        await ctx.send("Uhhhh... I'm thinking. Remind Amander to look into this")
 #         for i in range(0, 1):
