@@ -28,7 +28,7 @@ class Outline(commands.Cog):
             try:
                 source = requests.get(
                     f'http://www.sfu.ca/outlines.html?{year}/{semester}/{course_name.lower()}/{course_number}/{section}',
-                    timeout=5).text
+                    timeout=5)
 
             except Timeout:
                 await ctx.send("Error accessing server data, please try again later")
