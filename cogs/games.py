@@ -273,8 +273,8 @@ class Games(commands.Cog):
                                 break
                             elif dealer_int >= 17 and dealer_int2 >= 17:
                                 break
-                            elif dealer_int >= user_int:
-                                break
+#                             elif dealer_int >= user_int:
+#                                 break
                             else:
                                 dealer_card = random.choice(numbers)
                                 while cards_dictionary[dealer_card] == 0:
