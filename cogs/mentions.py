@@ -10,6 +10,19 @@ from myconstants import rolesList, activateRoles, months
 class Interactions(commands.Cog):
     def __init__(self, client):
         self.client = client
+        
+    @commands.command(aliases=['poke'])
+    @commands.guild_only()
+    async def pokes(self, ctx, member: nextcord.Member):
+        await ctx.message.delete(delay=0)
+        await ctx.send(f"{ctx.message.author.mention} poke pokeity poke poke to {member.mention}")
+        await ctx.send("https://media.tenor.com/BEJ8ZjZoySQAAAAC/chicken-chicken-bro.gif")
+
+    @pokes.error
+    async def pokes_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("Error Occured. Make sure you have mentioned a user to poke at")
+        await channel.send(f"{ctx.message.author} experienced an error using poke")
 
     @commands.command(aliases=['wave'])
     @commands.guild_only()
@@ -22,7 +35,7 @@ class Interactions(commands.Cog):
     async def waves_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a user to wave at")
-        await channel.send(f"{ctx.message.author} experienced a error using wave")
+        await channel.send(f"{ctx.message.author} experienced an error using wave")
 
     @commands.command(aliases=['hug'])
     @commands.guild_only()
@@ -35,7 +48,7 @@ class Interactions(commands.Cog):
     async def hugs_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a user to hug")
-        await channel.send(f"{ctx.message.author} experienced a error using hug")
+        await channel.send(f"{ctx.message.author} experienced an error using hug")
 
     @commands.command(aliases=['hugRole', 'hugsrole', 'grouphug'])
     @commands.guild_only()
@@ -48,7 +61,7 @@ class Interactions(commands.Cog):
     async def hugsRole_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occured. Make sure you have mentioned a role to give a group hug to")
-        await channel.send(f"{ctx.message.author} experienced a error using grouphug")
+        await channel.send(f"{ctx.message.author} experienced an error using grouphug")
 
     @commands.command(aliases=['waveRole', 'waverole', 'groupwave'])
     @commands.guild_only()
@@ -61,7 +74,20 @@ class Interactions(commands.Cog):
     async def wavesRole_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         await ctx.send("Error Occurred. Make sure you have mentioned a role to wave at a group")
-        await channel.send(f"{ctx.message.author} experienced a error using wavesRole")
+        await channel.send(f"{ctx.message.author} experienced an error using wavesRole")
+    
+    @commands.command(aliases=['pokeRole', 'pokerole', 'pokewave'])
+    @commands.guild_only()
+    async def pokesRole(self, ctx, role: nextcord.Role):
+        await ctx.message.delete(delay=0)
+        await ctx.send(f"{ctx.message.author.mention} poke pokeity poke poke to {role.mention}")
+        await ctx.send("https://media.tenor.com/BEJ8ZjZoySQAAAAC/chicken-chicken-bro.gif")
+
+    @pokesRole.error
+    async def pokesRole_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        await ctx.send("Error Occurred. Make sure you have mentioned a role to poke at a group")
+        await channel.send(f"{ctx.message.author} experienced an error using pokesRole")
 
     @commands.command(aliases=["bringpeace"])
     @commands.guild_only()
