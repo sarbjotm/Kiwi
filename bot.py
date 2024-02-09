@@ -48,7 +48,22 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
-    wishbirthday.start()
+    # wishbirthday.start()
+    db = mysql.connector.connect(
+        host=os.environ['HOST'],
+        user=os.environ['USER'],
+        password=os.environ['PASSWORD'],
+        database=os.environ['DATABASE']
+    )
+    c = db.cursor()
+    guild = client.get_guild(744817281871249428)
+    for member in server.members:
+        c.execute(f"""INSERT INTO dodos 
+                      VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
+                  """)
+        db.commit()
+        c.close()
+    db.close()
 
 
 @tasks.loop(minutes=1440)
