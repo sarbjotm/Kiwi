@@ -63,7 +63,8 @@ async def on_ready():
                        VALUES ('{member.id}',{moneyrandom},1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
                   """)
         db.commit()
-        c.close()
+    
+    c.close()
     db.close()
     channel = guild.get_channel(755511228654420121)
     await channel.send(f"👀 - here for a quick second")
