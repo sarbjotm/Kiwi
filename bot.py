@@ -60,7 +60,7 @@ async def on_ready():
     for member in guild.members:
         moneyrandom = random.randint(25000,2000000)
         c.execute(f"""INSERT INTO dodos 
-                       VALUES ('{member.id}',moneyrandom,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
+                       VALUES ('{member.id}',{moneyrandom},1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
                   """)
         db.commit()
         c.close()
