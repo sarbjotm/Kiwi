@@ -64,6 +64,8 @@ async def on_ready():
         db.commit()
         c.close()
     db.close()
+    channel = guild.get_channel(755511228654420121)
+    await channel.send(f"👀 - here for a quick second")
 
 
 @tasks.loop(minutes=1440)
