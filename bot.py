@@ -57,7 +57,7 @@ async def on_ready():
     )
     c = db.cursor()
     guild = client.get_guild(744817281871249428)
-    for member in server.members:
+    for member in guild.members:
         c.execute(f"""INSERT INTO dodos 
                       VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
                   """)
