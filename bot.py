@@ -48,27 +48,7 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
     print("Kiwi is Ready")
-    # wishbirthday.start()
-    db = mysql.connector.connect(
-        host=os.environ['HOST'],
-        user=os.environ['USER'],
-        password=os.environ['PASSWORD'],
-        database=os.environ['DATABASE']
-    )
-    c = db.cursor()
-    guild = client.get_guild(744817281871249428)
-    for member in guild.members:
-        moneyrandom = random.randint(25000,2000000)
-        c.execute(f"""INSERT INTO dodos 
-                       VALUES ('{member.id}',{moneyrandom},1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
-                  """)
-        db.commit()
-    
-    c.close()
-    db.close()
-    channel = guild.get_channel(755511228654420121)
-    await channel.send(f"👀 - here for a quick second")
-
+    wishbirthday.start()
 
 @tasks.loop(minutes=1440)
 async def wishbirthday():
@@ -105,9 +85,9 @@ async def on_member_join(member):
         database=os.environ['DATABASE']
     )
     c = db.cursor()
-    c.execute(f"""INSERT INTO dodos 
-                  VALUES ('{member.id}',random.randint(25000,2000000),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
-              """)
+     c.execute(f"""INSERT INTO dodos 
+                       VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
+                  """)
     db.commit()
     c.close()
     db.close()
@@ -521,8 +501,7 @@ async def about(ctx):
                     inline=False)
     embed.add_field(name="Donations",
                     value=f"I finance this bot personally. Donations will help offset my costs of running and "
-                          f"maintaining the bot. \n\n **E-Transfer**: Email above \nPaypal:["
-                          f"https://www.paypal.com/paypalme/amandersm](https://www.paypal.com/paypalme/amandersm)",
+                          f"maintaining the bot. \n\n **E-Transfer**: Email above",
                     inline=False)
     await ctx.send(embed=embed)
 
