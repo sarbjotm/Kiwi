@@ -58,8 +58,9 @@ async def on_ready():
     c = db.cursor()
     guild = client.get_guild(744817281871249428)
     for member in guild.members:
+        
         c.execute(f"""INSERT INTO dodos 
-                      VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
+                      VALUES ('{member.id}',
                   """)
         db.commit()
         c.close()
@@ -104,7 +105,7 @@ async def on_member_join(member):
     )
     c = db.cursor()
     c.execute(f"""INSERT INTO dodos 
-                  VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000',0,0,0,0,0,0,0)
+                  VALUES ('{member.id}',random.randint(25000,2000000),1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'0000')
               """)
     db.commit()
     c.close()
