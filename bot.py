@@ -85,7 +85,7 @@ async def on_member_join(member):
         database=os.environ['DATABASE']
     )
     c = db.cursor()
-     c.execute(f"""INSERT INTO dodos 
+    c.execute(f"""INSERT INTO dodos 
                        VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
                   """)
     db.commit()
