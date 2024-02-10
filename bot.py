@@ -498,7 +498,6 @@ async def about(ctx):
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
     embed.add_field(name="Github", value='[Kiwi Github Link](https://github.com/SFU-Dodo-Club/Kiwi/)',
                     inline=False)
-                    inline=False)
     await ctx.send(embed=embed)
 
 
