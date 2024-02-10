@@ -96,8 +96,7 @@ class Economy(commands.Cog):
             database=os.environ['DATABASE']
         )
         possible_values = [0,250,500,1000,2500,5000,10000,25000,50000,100000]
-        amount = random.choices(possible_values, weights = (20.25,20,17,12.25,10,7,6,5,2,0.5))
-        print(amount)
+        amount = random.choices(possible_values, weights = (20.25,20,17,12.25,10,7,6,5,2,0.5))[0]
         c = db.cursor()
         c.execute(f"""UPDATE dodos
                     SET money = money + {amount}
