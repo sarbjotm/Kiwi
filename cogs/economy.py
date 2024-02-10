@@ -114,7 +114,7 @@ class Economy(commands.Cog):
         c.close()
         db.close()
 
-    @daily.error
+    @spin.error
     async def spin_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         if isinstance(error, commands.CommandOnCooldown):
