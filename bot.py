@@ -496,12 +496,8 @@ async def about(ctx):
     embed.set_author(name="Amander",
                      icon_url="https://i.pinimg.com/originals/81/d7/d0/81d7d0dac44a4689449748532aac9f37.png")
     embed.add_field(name="Discord", value="<@264645255427522560>", inline=True)
-    embed.add_field(name="Email", value=f"{os.environ['EMAIL']}", inline=True)
-    embed.add_field(name="Github", value='[https://github.com/SFU-Dodo-Club/Kiwi/](https://github.com/SFU-Dodo-Club/Kiwi/)',
+    embed.add_field(name="Github", value='[Kiwi Github Link](https://github.com/SFU-Dodo-Club/Kiwi/)',
                     inline=False)
-    embed.add_field(name="Donations",
-                    value=f"I finance this bot personally. Donations will help offset my costs of running and "
-                          f"maintaining the bot. \n\n **E-Transfer**: Email above",
                     inline=False)
     await ctx.send(embed=embed)
 
