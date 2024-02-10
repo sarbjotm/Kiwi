@@ -88,7 +88,8 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 86400, commands.BucketType.user)
     @commands.guild_only()
-    async def spin(self, ctx):
+    async def thisisatest(self, ctx):
+        print("thisisatest")
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
@@ -115,8 +116,8 @@ class Economy(commands.Cog):
         await ctx.send(f"You found ${amount}. Your new total is {money_amount} {money_symbol}")
         print("done")
         
-    @spin.error
-    async def spin_error(self, ctx, error):
+    @thisisatest.error
+    async def thisisatest_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
