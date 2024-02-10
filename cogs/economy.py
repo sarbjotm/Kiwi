@@ -84,6 +84,52 @@ class Economy(commands.Cog):
                 await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
             await channel.send(f"{ctx.message.author} experienced a cooldown error")
 
+
+    @commands.command()
+    @commands.cooldown(1, 86400, commands.BucketType.user)
+    @commands.guild_only()
+    async def spin(self, ctx):
+        db = mysql.connector.connect(
+            host=os.environ['HOST'],
+            user=os.environ['USER'],
+            password=os.environ['PASSWORD'],
+            database=os.environ['DATABASE']
+        )
+        possible_values = [0,250,600,1000,2500,5000,10000,25000,50000,100000]
+        amount = random.choices(possible_values, weights = (16,16,13,13,11,11,7,7,5,3,1))
+        c = db.cursor()
+        c.execute(f"""UPDATE dodos
+                    SET money = money + {amount}
+                    WHERE id = {ctx.message.author.id}
+        """)
+        db.commit()
+        c.execute(f"""SELECT money
+            FROM dodos
+            WHERE id = {ctx.message.author.id}
+        """)
+        money_amount = ''.join(map(str, c.fetchall()[0]))
+        money_symbol = nextcord.utils.get(ctx.message.guild.emojis, name='money')
+       
+        await ctx.send(f"You found ${amount}. Your new total is {money_amount} {money_symbol}")
+        c.close()
+        db.close()
+
+    @daily.error
+    async def spin_error(self, ctx, error):
+        channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
+        if isinstance(error, commands.CommandOnCooldown):
+            seconds = error.retry_after
+            hours = int(seconds // 3600)
+            seconds %= 3600
+            minutes = int(seconds // 60)
+            seconds %= 60
+            seconds = int(seconds)
+            if hours != 0:
+                await ctx.send(f'Try again in {hours} hours {minutes} minutes and {seconds} seconds')
+            else:
+                await ctx.send(f'Try again in {minutes} minutes and {seconds} seconds')
+            await channel.send(f"{ctx.message.author} experienced a cooldown error")
+
     @commands.command(aliases=['shopinfo'])
     @commands.guild_only()
     async def shop(self, ctx):
