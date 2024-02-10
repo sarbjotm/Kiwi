@@ -88,16 +88,15 @@ class Economy(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 86400, commands.BucketType.user)
     @commands.guild_only()
-    async def thisisatest(self, ctx):
-        print("thisisatest")
+    async def spin(self, ctx):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
             user=os.environ['USER'],
             password=os.environ['PASSWORD'],
             database=os.environ['DATABASE']
         )
-        possible_values = [0,250,600,1000,2500,5000,10000,25000,50000,100000]
-        amount = random.choices(possible_values, weights = (16,16,13,13,11,11,7,7,5,3,1))
+        possible_values = [0,250,500,1000,2500,5000,10000,25000,50000,100000]
+        amount = random.choices(possible_values, weights = (20.25,20,17,12.25,10,7,6,5,2,0.5))
         print(amount)
         c = db.cursor()
         c.execute(f"""UPDATE dodos
@@ -114,10 +113,9 @@ class Economy(commands.Cog):
         c.close()
         db.close()
         await ctx.send(f"You found ${amount}. Your new total is {money_amount} {money_symbol}")
-        print("done")
         
-    @thisisatest.error
-    async def thisisatest_error(self, ctx, error):
+    @spin.error
+    async def spin_error(self, ctx, error):
         channel = ctx.guild.get_channel(int(os.environ['CHANNEL']))
         if isinstance(error, commands.CommandOnCooldown):
             seconds = error.retry_after
