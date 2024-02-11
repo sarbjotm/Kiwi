@@ -114,7 +114,7 @@ async def on_command_error(ctx, error):
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
 
 
-@commands.command()
+@client.command()
 @commands.guild_only()
 async def leaderboard(ctx):
     db = mysql.connector.connect(
