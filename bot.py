@@ -69,7 +69,7 @@ async def wishbirthday():
     birthday_dodos = c.fetchall()
     for i in range(0, len(birthday_dodos)):
         username = await client.fetch_user(int(birthday_dodos[i][0]))
-        await channel.send(f"Happy Birthday {username.display_name}/{username.global_name}!")
+        await channel.send(f"Happy Birthday {username.display_name}/{username.name}!")
     c.close()
     db.close()
 
@@ -135,7 +135,7 @@ async def leaderboard(ctx):
         username = int(leaders[i][0])
         username = await client.fetch_user(username)
         money = str(leaders[i][1])
-        description_embed = description_embed + str(position) + ". " + username.display_name + " (" + username.global_name + "): " + str(money) + "\n"
+        description_embed = description_embed + str(position) + ". " + username.display_name + " (" + username.name + "): " + str(money) + "\n"
     embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
     embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
     embed.add_field(name="Top 5", value=description_embed, inline=True)
