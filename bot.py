@@ -85,13 +85,24 @@ async def on_member_join(member):
         database=os.environ['DATABASE']
     )
     c = db.cursor()
-    c.execute(f"""INSERT INTO dodos 
-                       VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
-                  """)
-    db.commit()
+
+
+    c.execute(f"""SELECT id
+            FROM dodos
+            WHERE id = {member.id}
+            ORDER BY id""")
+    
+    users = c.fetchall() 
+                  
+    if len(users) == 0:
+        c.execute(f"""INSERT INTO dodos 
+                           VALUES ('{member.id}',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0000')
+                      """)
+        db.commit()
+        await channel.send(f"Added {member} to database")
+    
     c.close()
     db.close()
-    await channel.send(f"Added {member} to database")
 
 
 @client.event
@@ -102,6 +113,36 @@ async def on_command_error(ctx, error):
         await ctx.send(f"That command does not exist. Use ,help for a list of commands")
         await channel.send(f"{ctx.message.author} tried to use a command that does not exist {error}")
 
+
+@commands.command()
+@commands.guild_only()
+async def leaderboard(self, ctx):
+    db = mysql.connector.connect(
+        host=os.environ['HOST'],
+        user=os.environ['USER'],
+        password=os.environ['PASSWORD'],
+        database=os.environ['DATABASE']
+    )
+    c = db.cursor()
+    c.execute(f"""SELECT id, money
+            FROM dodos
+            ORDER BY money DESC LIMIT 5""")
+    leaders = c.fetchall()
+    description_embed = ""
+    
+    for i in range(0, 5):
+        position = i + 1
+        username = int(leaders[i][0])
+        username = await client.fetch_user(username)
+        money = str(leaders[i][1])
+        description_embed = description_embed + str(position) + ". " + username.display_name + ": " + str(money) + "\n"
+    embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
+    embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
+    embed.add_field(name="Top 5", value=description_embed, inline=True)
+    await ctx.send(embed=embed)
+
+    c.close()
+    db.close()
 
 @client.command()
 @commands.guild_only()

@@ -297,35 +297,6 @@ class Economy(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def leaderboard(self, ctx):
-        db = mysql.connector.connect(
-            host=os.environ['HOST'],
-            user=os.environ['USER'],
-            password=os.environ['PASSWORD'],
-            database=os.environ['DATABASE']
-        )
-        c = db.cursor()
-        c.execute(f"""SELECT id, money
-                FROM dodos
-                ORDER BY money DESC LIMIT 5""")
-        leaders = c.fetchall()
-        description_embed = ""
-
-        for i in range(0, 5):
-            position = i + 1
-            username = int(leaders[i][0])
-            money = str(leaders[i][1])
-            description_embed = description_embed + str(position) + ". " + "<@" + str(username) + ">" + " : " + str(money) + "\n"
-        embed = nextcord.Embed(title="Richest Dodos", color=0xe392fe)
-        embed.set_thumbnail(url="https://i.imgur.com/5wjePlr.png")
-        embed.add_field(name="Top 5", value=description_embed, inline=True)
-        await ctx.send(embed=embed)
-        
-        c.close()
-        db.close()
-
-    @commands.command()
-    @commands.guild_only()
     async def give(self, ctx, member: nextcord.Member, money):
         db = mysql.connector.connect(
             host=os.environ['HOST'],
