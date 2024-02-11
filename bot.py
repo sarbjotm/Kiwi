@@ -47,6 +47,7 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
+    await client.get_all_members()
     print("Kiwi is Ready")
     wishbirthday.start()
 
