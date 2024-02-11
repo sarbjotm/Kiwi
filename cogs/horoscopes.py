@@ -32,9 +32,10 @@ class Horoscope(commands.Cog):
                 today_horoscope = ''
                 soup.find("p", {"class": "show-small"}).decompose()
                 soup.find("p", {"class": "hide-small"}).decompose()
-                article = soup.find("div", {"class": "main-horoscope"}).findAll('p')
-                for element in article:
-                    today_horoscope += ''.join(element.findAll(text=True)) + '\n'
+                article = soup.find("div", {"class": "main-horoscope"}).find('p')
+                
+                # for element in article:
+                today_horoscope += ''.join(article.findAll(text=True)) + '\n'
                 #today_horoscope = str(today_horoscope)
                 today_horoscope = today_horoscope.strip()
                 today_horoscope = today_horoscope.replace("people", "dodos")
