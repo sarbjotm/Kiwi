@@ -68,7 +68,7 @@ class Games(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(aliases=['21'])
+    @commands.command(aliases=['21','bj'])
     @commands.guild_only()
     async def blackjack(self, ctx, bet = 0):
         cards_dictionary = {
