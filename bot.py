@@ -68,8 +68,8 @@ async def wishbirthday():
                 WHERE birthday = {current_date}""")
     birthday_dodos = c.fetchall()
     for i in range(0, len(birthday_dodos)):
-        username = await client.fetch_user(int(birthday_dodos[i][0])
-        await channel.send(f"Happy Birthday {username.display_name}/{username.global_name}!!")
+        username = await client.fetch_user(int(birthday_dodos[i][0]))
+        await channel.send(f"Happy Birthday {username.display_name}/{username.global_name}!")
     c.close()
     db.close()
 
