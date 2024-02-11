@@ -20,6 +20,7 @@ load_data()
 
 
 intents = nextcord.Intents.all()
+
 nextcord.members = True
 client = commands.Bot(command_prefix=',', intents=intents)
 client.remove_command('help')
@@ -47,7 +48,6 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(activity=nextcord.Activity(type=nextcord.ActivityType.listening, name=" ,help"))
-    await client.get_all_members()
     print("Kiwi is Ready")
     wishbirthday.start()
 
